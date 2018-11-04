@@ -64,24 +64,25 @@ class App extends Component {
             </Navbar.MenuEntry>
           </Navbar.Menu>
           <Sidebar.Core>
-            <Sidebar.Item active text="Dashboard" iconClass="fa-dashboard">
+            <li className="header">MAIN NAVIGATION</li>
+            <Sidebar.Item active text="Dashboard" icon="fa-dashboard">
               <Sidebar.Item text="Dashboard v1" link="/dashboard" />
               <Sidebar.Item text="Dashboard v2" link="/dashboardv2" />
             </Sidebar.Item>
-            <Sidebar.Item link="#" text="Layout Options" iconClass="fa-files-o" labels={[{ type: 'primary', text: 4 }]}>
+            <Sidebar.Item link="#" text="Layout Options" icon="fa-files-o" labels={[{ type: 'primary', text: 4 }]}>
               <Sidebar.Item text="Top Navigation" link="/top-nav" />
               <Sidebar.Item text="Boxed" link="/boxed" />
               <Sidebar.Item text="Fixed" link="/fixed" />
               <Sidebar.Item text="Collapsed Sidebar" link="/collapsed-sidebar" />
             </Sidebar.Item>
-            <Sidebar.Item link="/widgets" text="Widgets" iconClass="fa-th" labels={[{ color: 'green', text: 'new', small: true }]} />
-            <Sidebar.Item text="Charts" iconClass="fa-pie-chart">
+            <Sidebar.Item link="/widgets" text="Widgets" icon="fa-th" labels={[{ color: 'green', text: 'new', small: true }]} />
+            <Sidebar.Item text="Charts" icon="fa-pie-chart">
               <Sidebar.Item text="ChartJS" link="/chart-js" />
               <Sidebar.Item text="Morris" link="/morris" />
               <Sidebar.Item text="Flot" link="/flot" />
               <Sidebar.Item text="Collapsed Sidebar" link="/collapsed-sidebar" />
             </Sidebar.Item>
-            <Sidebar.Item link="#" text="UI Elements" iconClass="fa-laptop">
+            <Sidebar.Item link="#" text="UI Elements" icon="fa-laptop">
               <Sidebar.Item text="General" link="/ui-elements/general" />
               <Sidebar.Item text="Icons" link="/ui-elements/icons" />
               <Sidebar.Item text="Buttons" link="/ui-elements/buttons" />
@@ -89,19 +90,19 @@ class App extends Component {
               <Sidebar.Item text="Timeline" link="/ui-elements/timeline" />
               <Sidebar.Item text="Modals" link="/ui-elements/modals" />
             </Sidebar.Item>
-            <Sidebar.Item link="#" text="Forms" iconClass="fa-edit">
+            <Sidebar.Item link="#" text="Forms" icon="fa-edit">
               <Sidebar.Item text="General Elements" link="/forms/general" />
               <Sidebar.Item text="Advanced Elements" link="/forms/advanced" />
               <Sidebar.Item text="Editors" link="/forms/editors" />
             </Sidebar.Item>
-            <Sidebar.Item link="#" text="Tables" iconClass="fa-edit">
+            <Sidebar.Item link="#" text="Tables" icon="fa-edit">
               <Sidebar.Item text="Simple tables" link="/tables/simple" />
               <Sidebar.Item text="Data tables" link="/tables/data" />
             </Sidebar.Item>
-            <Sidebar.Item link="/calendar" text="Calendar" iconClass="fa-calendar" labels={[{ small: true, text: 3, color: 'red' }, { small: true, text: 17, color: 'blue' }]}>
+            <Sidebar.Item link="/calendar" text="Calendar" icon="fa-calendar" labels={[{ small: true, text: 3, color: 'red' }, { small: true, text: 17, color: 'blue' }]}>
             </Sidebar.Item>
-            <Sidebar.Item link="/mailbox" text="Mailbox" iconClass="fa-envelope" labels={[{ small: true, text: 12, color: 'yellow' }, { small: true, text: 16, color: 'green' }, { small: true, text: 5, color: 'red' }]} />
-            <Sidebar.Item link="#" text="Examples" iconClass="fa-folder">
+            <Sidebar.Item link="/mailbox" text="Mailbox" icon="fa-envelope" labels={[{ small: true, text: 12, color: 'yellow' }, { small: true, text: 16, color: 'green' }, { small: true, text: 5, color: 'red' }]} />
+            <Sidebar.Item link="#" text="Examples" icon="fa-folder">
               <Sidebar.Item text="Invoice" link="/examples/invoice" />
               <Sidebar.Item text="Profile" link="/examples/profile" />
               <Sidebar.Item text="Login" link="/examples/login" />
@@ -112,7 +113,7 @@ class App extends Component {
               <Sidebar.Item text="Blank Page" link="/examples/blank-page" />
               <Sidebar.Item text="Pace Page" link="/examples/pace-page" />
             </Sidebar.Item>
-            <Sidebar.Item link="#" text="Multilevel" iconClass="fa-share">
+            <Sidebar.Item link="#" text="Multilevel" icon="fa-share">
               <Sidebar.Item text="Level One" link="/mulitlevel/one" />
               <Sidebar.Item text="Level One" link="/mulitlevel/one">
                 <Sidebar.Item text="Level Two" link="/mulitlevel/two" />
@@ -124,11 +125,11 @@ class App extends Component {
               </Sidebar.Item>
               <Sidebar.Item text="Level One" link="/mulitlevel/one" />
             </Sidebar.Item>
-            <Sidebar.Item link="/component-test" text="Component Tests" iconClass="fa-circle-o" color="aqua" />
+            <Sidebar.Item link="/component-test" text="Component Tests" icon="fa-circle-o" color="aqua" />
             <li className="header">LABELS</li>
-            <Sidebar.Item link="#" text="Important" iconClass="fa-circle-o" color="red" />
-            <Sidebar.Item link="#" text="Warning" iconClass="fa-circle-o" color="yellow" />
-            <Sidebar.Item link="#" text="Information" iconClass="fa-circle-o" color="aqua" />
+            <Sidebar.Item link="#" text="Important" icon="fa-circle-o" color="red" />
+            <Sidebar.Item link="#" text="Warning" icon="fa-circle-o" color="yellow" />
+            <Sidebar.Item link="#" text="Information" icon="fa-circle-o" color="aqua" />
           </Sidebar.Core>
           <DashboardV2 path="/" exact />
           <Dashboard path="/dashboard" exact />

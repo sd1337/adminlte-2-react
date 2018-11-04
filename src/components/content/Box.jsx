@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Types } from '../PropTypes';
 
@@ -180,19 +181,21 @@ class Box extends Component {
 
   render() {
     const {
-      type, options, iconClass, title, titleRight, collapsable, closable, loaded,
+      type, options, icon, title, titleRight, collapsable, closable, loaded,
       noPadding, badge, toolIcon, customOptions, className, footerClass,
       collapsed, solid, textCenter, padding, bodyClassName, border, style,
     } = this.props;
     const { footer: footerContent, header: headerContent, children } = this.props;
 
+    const localToolIcon = toolIcon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).map(p => (p.length === 0 ? 'fas' : p));
     const hasOptions = !!(options);
     const hasFooter = !!(footerContent);
     const hasHeaderContent = !!(headerContent);
-    const hasIcon = !!(iconClass);
+    const hasIcon = !!(icon);
+    const localIcon = hasIcon ? icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0) : null;
     const hasTitle = title !== ' ';
     const hasHeader = hasOptions || hasHeaderContent || hasIcon || hasTitle
-    || collapsable || closable || badge || customOptions;
+      || collapsable || closable || badge || customOptions;
 
     const joinedClassName = [
       'box',
@@ -219,7 +222,7 @@ class Box extends Component {
       <div ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>
         {hasHeader && (
           <div className={headerClass}>
-            {hasIcon && <i className={`fa ${iconClass}`} />}
+            {hasIcon && <FontAwesomeIcon icon={localIcon} />}
             {title ? <h3 className="box-title">{title}</h3> : null}
             {titleRight ? <h3 className="box-title pull-right">{titleRight}</h3> : null}
             {hasHeaderContent && headerContent}
@@ -227,14 +230,14 @@ class Box extends Component {
               {badge}
               {collapsable && (
                 <button type="button" className="btn btn-box-tool" data-widget="collapse">
-                  <i className={`fa ${collapsed ? 'fa-plus' : 'fa-minus'}`} />
+                  <FontAwesomeIcon icon={collapsed ? 'plus' : 'minus'} />
                 </button>
               )}
               {customOptions}
               {hasOptions && (
                 <div className="btn-group">
                   <button type="button" className="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                    <i className={`fa ${toolIcon}`} />
+                    <FontAwesomeIcon icon={localToolIcon} />
 
                   </button>
                   <ul className="dropdown-menu" role="menu">
@@ -242,7 +245,7 @@ class Box extends Component {
                   </ul>
                 </div>
               )}
-              {closable && <button type="button" className="btn btn-box-tool" data-widget="remove"><i className="fa fa-times" /></button>}
+              {closable && <button type="button" className="btn btn-box-tool" data-widget="remove"><FontAwesomeIcon icon="times" /></button>}
             </div>
           </div>
         )}
@@ -271,7 +274,7 @@ Box.propTypes = {
   type: PropTypes.oneOf(Types),
   /* eslint-disable react/forbid-prop-types */
   options: PropTypes.array,
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   titleRight: PropTypes.bool,
   loaded: PropTypes.bool,
   noPadding: PropTypes.bool,
@@ -312,12 +315,12 @@ Box.defaultProps = {
   footer: null,
   type: null,
   options: null,
-  iconClass: null,
+  icon: null,
   titleRight: false,
   loaded: true,
   noPadding: false,
   badge: null,
-  toolIcon: 'fa-wrench',
+  toolIcon: 'wrench',
   customOptions: null,
   className: null,
   footerClass: null,

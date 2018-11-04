@@ -9,10 +9,11 @@ import { Colors } from '../PropTypes';
 const Infobox = ({
   iconClass, iconColor, text, number,
 }) => {
-  const icon = iconClass.startsWith('ion') ? <Ionicon icon={iconClass} fontSize="45px" color="#ffffff" style={{ paddingTop: '7px' }} /> : <FontAwesomeIcon icon={iconClass} />;
+  const isIonIcon = iconClass.startsWith('ion');
+  const icon = isIonIcon ? <Ionicon icon={iconClass} fontSize="45px" color="#ffffff" /> : <FontAwesomeIcon icon={iconClass.match(/^([fab|fas]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} />;
   return (
     <div className="info-box">
-      <span className={`info-box-icon bg-${iconColor}`}>{icon}</span>
+      <span className={`info-box-icon bg-${iconColor}${isIonIcon ? ' info-box-ionicon' : ''}`}>{icon}</span>
 
       <div className="info-box-content">
         <span className="info-box-text">{text}</span>

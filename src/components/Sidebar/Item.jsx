@@ -3,21 +3,23 @@ import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import uuidv4 from 'uuid';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { Colors } from '../PropTypes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Colors, TypeMappings } from '../PropTypes';
 
 const Item = ({
-  iconClass, link, text, labels, color, history, children, isSubItem,
+  icon, link, text, labels, color, history, children, isSubItem,
 }) => {
   const active = history.location.pathname === link;
   const mappedLabels = labels.map(p => (p.small ? <small key={uuidv4()} className={`label pull-right bg-${p.color}`}>{p.text}</small> : <span key={uuidv4()} className={`label label-${p.type} pull-right`}>{p.text}</span>));
-  const hasColor = !!(color);
+  const localColor = color ? TypeMappings.byColor[color].colorCode : null;
+  const localIcon = icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
 
   const hasChildren = !!(children);
   if (isSubItem) {
     return (
       <li className={`${active && 'active'} ${hasChildren && 'treeview'}`}>
         <Link to={link}>
-          <i className={`fa ${iconClass}`} />
+          <FontAwesomeIcon color={localColor} icon={localIcon} style={{ marginRight: '8px' }} />
           {' '}
           {text}
           {hasChildren && (
@@ -44,11 +46,15 @@ const Item = ({
     return (
       <li className={`${active ? 'active ' : ''}treeview${activeChild ? ' menu-open' : ''}`}>
         <Link to={link}>
-          <i className={`fa ${iconClass} ${hasColor && `text-${color}`}`} />
+          <FontAwesomeIcon
+            color={localColor}
+            icon={localIcon}
+            style={{ marginRight: '6px' }}
+          />
           {' '}
           <span>{text}</span>
           <span className="pull-right-container">
-            {<i className="fa fa-angle-left pull-right" />}
+            {<FontAwesomeIcon className="pull-right" icon="angle-left" />}
             {mappedLabels}
           </span>
         </Link>
@@ -60,7 +66,11 @@ const Item = ({
   return (
     <li className={`${active ? 'active ' : ''}treeview${active ? ' menu-open' : ''}`}>
       <Link to={link}>
-        <i className={`fa ${iconClass} ${hasColor && `text-${color}`}`} />
+        <FontAwesomeIcon
+          color={localColor}
+          icon={localIcon}
+          style={{ marginRight: '6px' }}
+        />
         {' '}
         <span>{text}</span>
         <span className="pull-right-container">
@@ -85,7 +95,7 @@ Item.propTypes = {
     });
     return error;
   },
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   link: PropTypes.string,
   text: PropTypes.string.isRequired,
   labels: PropTypes.arrayOf(PropTypes.shape({
@@ -97,7 +107,7 @@ Item.propTypes = {
 
 Item.defaultProps = {
   children: null,
-  iconClass: 'fa-circle-o',
+  icon: 'far-circle',
   link: '#',
   labels: [],
   color: null,

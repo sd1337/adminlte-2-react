@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 
 import '../css/bootstrap.min.css';
@@ -21,9 +22,6 @@ import 'jquery';
 import 'bootstrap';
 import '../adminlte/js/adminlte';
 import 'jquery-sparkline';
-
-import uuidv4 from 'uuid';
-
 
 import * as Sidebar from './Sidebar/Sidebar';
 import Content from './Content';
@@ -71,7 +69,7 @@ import Label from './content/Label';
 import Calendar from './content/Calendar';
 
 
-library.add(fab, fas);
+library.add(fab, fas, far);
 
 class Core extends Component {
   componentDidMount() {
@@ -150,7 +148,7 @@ class Core extends Component {
           return (
             <Route
               modal={P.props.modal}
-              key={uuidv4}
+              key={P.props.path}
               path={P.props.path}
               exact={P.props.exact}
               component={AsyncComponent(() => import(P.props.component))}
@@ -160,10 +158,10 @@ class Core extends Component {
         return (
           <Route
             modal={P.props.modal}
-            key={uuidv4}
+            key={P.props.path}
             path={P.props.path}
             exact={P.props.exact}
-            render={props => React.cloneElement(P, { key: uuidv4(), ...props })}
+            render={props => React.cloneElement(P, { key: P.props.key ? P.props.key : P.props.path, ...props })}
           />
         );
       }

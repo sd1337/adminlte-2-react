@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Types } from '../PropTypes';
+import './Alert.css';
 
 
 const Alert = ({
-  closable, type, iconClass, title, children,
+  closable, type, icon, title, children,
 }) => {
   const className = [
     'alert',
@@ -15,9 +16,9 @@ const Alert = ({
   return (
     <div className={className}>
       {closable && <button type="button" className="close" data-dismiss="alert" aria-hidden="true">&times;</button>}
-      {(iconClass || title) && (
+      {(icon || title) && (
         <h4>
-          <i className={`icon fa ${iconClass}`} />
+          {icon && <FontAwesomeIcon className="icon" icon={icon.match(/^([fab|fas]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} size="18px" />}
           {' '}
           <span>{title}</span>
         </h4>
@@ -30,7 +31,7 @@ const Alert = ({
 Alert.propTypes = {
   closable: PropTypes.bool,
   type: PropTypes.oneOf(Types),
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   title: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -41,7 +42,7 @@ Alert.propTypes = {
 Alert.defaultProps = {
   closable: false,
   type: null,
-  iconClass: null,
+  icon: null,
   title: null,
   children: null,
 };

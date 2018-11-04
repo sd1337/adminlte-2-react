@@ -40,6 +40,11 @@
   line-height: 90px;
   background: rgba(0, 0, 0, 0.2);
 }
+
+.info-box-ionicon {
+  padding: 7px;
+}
+
 .info-box-icon > img {
   max-width: 100%;
 }
