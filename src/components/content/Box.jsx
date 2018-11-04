@@ -169,7 +169,8 @@ class Box extends Component {
     }
   }
 
-  static getLoadingContent() {
+  /* eslint-disable-next-line class-methods-use-this */
+  getLoadingContent() {
     return (
       <div className="overlay">
         <i className="fa fa-refresh fa-spin" />

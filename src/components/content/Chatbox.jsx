@@ -75,7 +75,8 @@ class Chatbox extends Component {
     lastMessage: 'Never mind I found...',
   }]
 
-  static getMessage({ message, timestamp, user }, users) {
+  /* eslint-disable-next-line class-methods-use-this */
+  getMessage({ message, timestamp, user }, users) {
     const { name, image, side } = users[user];
     const otherSide = side === 'right' ? 'left' : 'right';
     const infoClass = side === 'right' ? ' right' : '';
@@ -134,7 +135,8 @@ class Chatbox extends Component {
     );
   }
 
-  static getContact({
+  /* eslint-disable-next-line class-methods-use-this */
+  getContact({
     name, image, lastTimestamp, lastMessage, to,
   }) {
     return (

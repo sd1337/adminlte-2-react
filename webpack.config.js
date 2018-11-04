@@ -1,7 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/components/AdminLTE.jsx',
+  mode: 'development',
+  entry: ['babel-polyfill', './src/components/AdminLTE.jsx'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
@@ -17,7 +18,8 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['env', 'stage-2'],
-          }, 
+            plugins: ['transform-runtime'],
+          },
         },
       },
       {
@@ -51,4 +53,5 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
   },
+  devtool: 'source-map',
 };

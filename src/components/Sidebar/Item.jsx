@@ -6,7 +6,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Colors } from '../PropTypes';
 
 const Item = ({
-  iconClass = 'fa-circle-o', link = '#', text, labels = [], color, history, children, isSubItem,
+  iconClass, link, text, labels, color, history, children, isSubItem,
 }) => {
   const active = history.location.pathname === link;
   const mappedLabels = labels.map(p => (p.small ? <small key={uuidv4()} className={`label pull-right bg-${p.color}`}>{p.text}</small> : <span key={uuidv4()} className={`label label-${p.type} pull-right`}>{p.text}</span>));
@@ -98,8 +98,8 @@ Item.propTypes = {
 Item.defaultProps = {
   children: null,
   iconClass: 'fa-circle-o',
-  link: null,
-  labels: null,
+  link: '#',
+  labels: [],
   color: null,
   history: null,
   isSubItem: false,

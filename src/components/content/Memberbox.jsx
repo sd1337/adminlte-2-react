@@ -48,7 +48,8 @@ class Memberbox extends Component {
     setTimeout(() => { that.setState({ users: that.users }); }, 2000);
   }
 
-  static getUser({ name, lastOnline, image }) {
+  /* eslint-disable-next-line class-methods-use-this */
+  getUser({ name, lastOnline, image }) {
     return (
       <li key={uuidv4()}>
         <img src={image} alt="User" />
