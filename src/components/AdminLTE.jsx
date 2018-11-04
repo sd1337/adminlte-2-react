@@ -5,9 +5,15 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
+
 import '../css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-import '../css/ionicons.min.css';
+// import '../css/ionicons.min.css';
 import 'source-sans-pro/source-sans-pro.css';
 import '../adminlte/css/AdminLTE.css';
 
@@ -64,6 +70,8 @@ import Badge from './content/Badge';
 import Label from './content/Label';
 import Calendar from './content/Calendar';
 
+
+library.add(fab, fas);
 
 class Core extends Component {
   componentDidMount() {
@@ -163,7 +171,7 @@ class Core extends Component {
     });
     const nonModalRoutes = routes.filter(p => !p.props.modal);
     const modalRoutes = routes.filter(p => p.props.modal);
-    debugger;
+    // debugger;
     const sidebar = content.filter(p => typeof p.type === 'function' && (p.type.name === 'Sidebar' || (p.type.default && p.type.default.name === 'Sidebar')))[0];
     const footer = content.filter(p => typeof p.type === 'function' && p.type.name === 'Footer')[0];
     // const bodyOptions = ['sidebar-mini, login-page', 'layout-top-nav', 'layout-boxed'

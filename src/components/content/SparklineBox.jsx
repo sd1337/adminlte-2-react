@@ -8,7 +8,7 @@ const SparklineBox = ({
   header, text, chartData, color,
 }) => (
   <div className="description-block margin-bottom">
-    <Sparkbar color={`${color || '#fff'}`} data={chartData} />
+    <Sparkbar padding color={`${color || '#fff'}`} data={chartData} />
     <h5 className="description-header">{header}</h5>
     <span className="description-text">{text}</span>
   </div>

@@ -17,7 +17,9 @@ class Sparkbar extends Component {
 
   render() {
     const { data, padding } = this.props;
-    return (<div className={padding ? 'pad' : ''} ref={(c) => { this.main = c; }}>{data.join(',')}</div>);
+    const classes = ['sparkpad',
+      padding ? 'pad' : ''].join(' ');
+    return (<div className={classes} ref={(c) => { this.main = c; }}>{data.join(',')}</div>);
   }
 }
 
