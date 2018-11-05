@@ -5,8 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Types } from '../PropTypes';
 
 class Box extends Component {
+  state = {
+    // eslint-disable-next-line react/destructuring-assignment
+    collapsed: this.props.collapsed,
+  }
+
   componentDidMount() {
     {
+      const that = this;
       // 'use strict';
       /* eslint-disable-next-line global-require */
       const $ = require('jquery');
@@ -64,7 +70,6 @@ class Box extends Component {
         const { collapseIcon, expandIcon } = this.options;
 
         $(this.element).removeClass(ClassName.collapsed);
-
         $(this.element)
           .children(`${Selector.header}, ${Selector.body}, ${Selector.footer}`)
           .children(Selector.tools)
@@ -75,6 +80,7 @@ class Box extends Component {
         $(this.element).children(`${Selector.body}, ${Selector.footer}`)
           .slideDown(this.options.animationSpeed, () => {
             $(this.element).trigger(expandedEvent);
+            that.setState({ collapsed: false });
           });
       };
 
@@ -93,6 +99,7 @@ class Box extends Component {
           .slideUp(this.options.animationSpeed, () => {
             $(this.element).addClass(ClassName.collapsed);
             $(this.element).trigger(collapsedEvent);
+            that.setState({ collapsed: true });
           });
       };
 
@@ -109,8 +116,6 @@ class Box extends Component {
 
       /* eslint-disable-next-line no-underscore-dangle */
       BoxWidget.prototype._setUpListeners = function _setUpListeners() {
-        const that = this;
-
         $(this.element).on('click', this.options.collapseTrigger, function click(event) {
           if (event) event.preventDefault();
           that.toggle($(this));
@@ -183,8 +188,9 @@ class Box extends Component {
     const {
       type, options, icon, title, titleRight, collapsable, closable, loaded,
       noPadding, badge, toolIcon, customOptions, className, footerClass,
-      collapsed, solid, textCenter, padding, bodyClassName, border, style,
+      solid, textCenter, padding, bodyClassName, border, style,
     } = this.props;
+    const { collapsed } = this.state;
     const { footer: footerContent, header: headerContent, children } = this.props;
 
     const localToolIcon = toolIcon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).map(p => (p.length === 0 ? 'fas' : p));

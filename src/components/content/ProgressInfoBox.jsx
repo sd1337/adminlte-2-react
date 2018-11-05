@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ProgressInfoBox = ({
-  progress, progressText, iconColor, iconClass, text, number,
+  progress, progressText, color, icon, text, number,
 }) => {
   const hasProgressText = !!(progressText);
   return (
-    <div className={`info-box bg-${iconColor}`}>
-      <span className="info-box-icon"><i className={iconClass} /></span>
+    <div className={`info-box bg-${color}`}>
+      <span className="info-box-icon"><i className={icon} /></span>
 
       <div className="info-box-content">
         <span className="info-box-text">{text}</span>
@@ -26,8 +27,8 @@ const ProgressInfoBox = ({
 };
 
 ProgressInfoBox.propTypes = {
-  iconClass: PropTypes.string.isRequired,
-  iconColor: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
   text: PropTypes.string,
   number: PropTypes.string.isRequired,
   progress: PropTypes.number.isRequired,
@@ -40,3 +41,4 @@ ProgressInfoBox.defaultProps = {
 };
 
 export default ProgressInfoBox;
+x;

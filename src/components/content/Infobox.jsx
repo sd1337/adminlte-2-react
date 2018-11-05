@@ -7,13 +7,13 @@ import { Colors } from '../PropTypes';
 
 
 const Infobox = ({
-  iconClass, iconColor, text, number,
+  icon, iconColor, text, number,
 }) => {
-  const isIonIcon = iconClass.startsWith('ion');
-  const icon = isIonIcon ? <Ionicon icon={iconClass} fontSize="45px" color="#ffffff" /> : <FontAwesomeIcon icon={iconClass.match(/^([fab|fas]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} />;
+  const isIonIcon = icon.startsWith('ion');
+  const iconLocal = isIonIcon ? <Ionicon icon={icon} fontSize="45px" color="#ffffff" /> : <FontAwesomeIcon icon={icon.match(/^([fab|fas]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} />;
   return (
     <div className="info-box">
-      <span className={`info-box-icon bg-${iconColor}${isIonIcon ? ' info-box-ionicon' : ''}`}>{icon}</span>
+      <span className={`info-box-icon bg-${iconColor}${isIonIcon ? ' info-box-ionicon' : ''}`}>{iconLocal}</span>
 
       <div className="info-box-content">
         <span className="info-box-text">{text}</span>
@@ -24,7 +24,7 @@ const Infobox = ({
 };
 
 Infobox.propTypes = {
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   iconColor: PropTypes.oneOf(Colors),
   text: PropTypes.string,
   number: PropTypes.oneOf([PropTypes.string, PropTypes.node,
@@ -32,7 +32,7 @@ Infobox.propTypes = {
 };
 
 Infobox.defaultProps = {
-  iconClass: null,
+  icon: null,
   iconColor: null,
   text: null,
   number: null,
