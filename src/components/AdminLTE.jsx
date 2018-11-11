@@ -31,7 +31,6 @@ import * as Navbar from './NavbarMenu/Menu';
 import Row from './content/Row';
 import Col from './content/Col';
 import Infobox from './content/Infobox';
-import ProgressInfoBox from './content/ProgressInfoBox';
 import Box from './content/Box';
 import DescriptionBlock from './content/DescriptionBlock';
 import ProgressGroup from './content/ProgressGroup';
@@ -245,7 +244,7 @@ export default Core;
 
 export {
   Core, Sidebar, Content, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box
-  , DescriptionBlock, ProgressGroup, ProgressInfoBox, Button, DataTable, Checkbox, Tabs
+  , DescriptionBlock, ProgressGroup, Button, DataTable, Checkbox, Tabs
   , TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox
   , Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar

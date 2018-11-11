@@ -20,12 +20,17 @@
   height: 2px;
 }
 .info-box .progress,
-.info-box .progress .progress-bar {
+.info-box .progress .progress-bar{
   border-radius: 0;
 }
 .info-box .progress .progress-bar {
   background: #fff;
 }
+
+.info-box .progress .progress-bar.progress-icon-only {
+  background: #000;
+}
+
 .info-box-icon {
   border-top-left-radius: 2px;
   border-top-right-radius: 0;

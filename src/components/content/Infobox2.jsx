@@ -1,12 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Ionicon from 'react-ionicons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Colors } from '../PropTypes';
 
 const Infobox2 = ({
-  color, title, subTitle, text, footerText, iconClass, footerIconClass, onFooterClick, to,
+  color, title, subTitle, text, footerText, icon, footerIcon, onFooterClick, to,
 }) => {
-  const fullIconClass = iconClass.startsWith('fa') ? `fa ${iconClass}` : `ion ${iconClass}`;
+  const isIonIcon = icon.startsWith('ion');
+  let iconLocal;
+  if (!isIonIcon) {
+    const faIconClass = icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
+    iconLocal = <FontAwesomeIcon icon={faIconClass} size="sm" />;
+  } else {
+    iconLocal = <Ionicon icon={icon} fontSize="85px" color="rgba(0,0,0,0.15)" />;
+  }
+  const localFooterIcon = footerIcon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
   return (
     <div className={`small-box bg-${color}`}>
       <div className="inner">
@@ -17,12 +27,12 @@ const Infobox2 = ({
         <p>{text}</p>
       </div>
       <div className="icon">
-        <i className={fullIconClass} />
+        {iconLocal}
       </div>
       <a href={to} onClick={onFooterClick} className="small-box-footer">
         {footerText}
         {' '}
-        <i className={`fa ${footerIconClass}`} />
+        <FontAwesomeIcon icon={localFooterIcon} />
       </a>
     </div>
   );
@@ -34,8 +44,8 @@ Infobox2.propTypes = {
   subTitle: PropTypes.string,
   text: PropTypes.string,
   footerText: PropTypes.string,
-  iconClass: PropTypes.string,
-  footerIconClass: PropTypes.string,
+  icon: PropTypes.string.isRequired,
+  footerIcon: PropTypes.string,
   onFooterClick: PropTypes.func,
   to: PropTypes.string,
 };
@@ -46,8 +56,7 @@ Infobox2.defaultProps = {
   subTitle: null,
   text: null,
   footerText: null,
-  iconClass: null,
-  footerIconClass: null,
+  footerIcon: 'fas-arrow-alt-circle-right',
   onFooterClick: null,
   to: '/',
 };

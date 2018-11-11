@@ -18,7 +18,7 @@ const Alert = ({
       {closable && <button type="button" className="close" data-dismiss="alert" aria-hidden="true">&times;</button>}
       {(icon || title) && (
         <h4>
-          {icon && <FontAwesomeIcon className="icon" icon={icon.match(/^([fab|fas]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} size="18px" />}
+          {icon && <FontAwesomeIcon className="icon" icon={icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} size="18px" />}
           {' '}
           <span>{title}</span>
         </h4>

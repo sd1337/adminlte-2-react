@@ -7,35 +7,56 @@ import { Colors } from '../PropTypes';
 
 
 const Infobox = ({
-  icon, iconColor, text, number,
+  icon, text, number, color, progress, progressText, iconColorOnly,
 }) => {
+  const hasProgressText = !!(progressText);
+  const hasProgress = !!(progressText);
   const isIonIcon = icon.startsWith('ion');
-  const iconLocal = isIonIcon ? <Ionicon icon={icon} fontSize="45px" color="#ffffff" /> : <FontAwesomeIcon icon={icon.match(/^([fab|fas]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} />;
+  const faIconClass = icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
+  const iconLocal = isIonIcon ? <Ionicon icon={icon} fontSize="45px" color="#ffffff" /> : <FontAwesomeIcon icon={faIconClass} />;
+  const infoBoxClass = iconColorOnly ? 'info-box' : `info-box bg-${color}`;
+  const iconClass = iconColorOnly ? `info-box-icon bg-${color}${isIonIcon ? ' info-box-ionicon' : ''}` : `info-box-icon${isIonIcon ? ' info-box-ionicon' : ''}`;
+  const progressClass = iconColorOnly ? 'progress-bar progress-icon-only' : 'progress-bar';
   return (
-    <div className="info-box">
-      <span className={`info-box-icon bg-${iconColor}${isIonIcon ? ' info-box-ionicon' : ''}`}>{iconLocal}</span>
+    <div className={infoBoxClass}>
+      <span className={iconClass}>{iconLocal}</span>
 
       <div className="info-box-content">
         <span className="info-box-text">{text}</span>
         <span className="info-box-number">{number}</span>
+        {hasProgress && (
+        <div className="progress">
+          <div className={progressClass} style={{ width: `${progress}%` }} />
+        </div>
+        )}
+        {hasProgressText && (
+          <span className="progress-description">
+            {progressText}
+          </span>
+        )}
       </div>
     </div>
   );
 };
 
 Infobox.propTypes = {
-  icon: PropTypes.string,
-  iconColor: PropTypes.oneOf(Colors),
+  icon: PropTypes.string.isRequired,
   text: PropTypes.string,
   number: PropTypes.oneOf([PropTypes.string, PropTypes.node,
     PropTypes.arrayOf(PropTypes.oneOf([PropTypes.string, PropTypes.node]))]),
+  color: PropTypes.oneOf(Colors),
+  progress: PropTypes.number,
+  progressText: PropTypes.string,
+  iconColorOnly: PropTypes.bool,
 };
 
 Infobox.defaultProps = {
-  icon: null,
-  iconColor: null,
   text: null,
   number: null,
+  color: null,
+  progress: null,
+  progressText: null,
+  iconColorOnly: true,
 };
 
 export default Infobox;
