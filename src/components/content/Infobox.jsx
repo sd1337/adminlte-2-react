@@ -4,6 +4,7 @@ import Ionicon from 'react-ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Infobox.css';
 import { Colors } from '../PropTypes';
+import { splitIcon } from '../Utilities';
 
 
 const Infobox = ({
@@ -11,8 +12,8 @@ const Infobox = ({
 }) => {
   const hasProgressText = !!(progressText);
   const hasProgress = !!(progressText);
-  const isIonIcon = icon.startsWith('ion');
-  const faIconClass = icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
+  const isIonIcon = icon.startsWith('ion') || icon.startsWith('ios');
+  const faIconClass = splitIcon(icon);
   const iconLocal = isIonIcon ? <Ionicon icon={icon} fontSize="45px" color="#ffffff" /> : <FontAwesomeIcon icon={faIconClass} />;
   const infoBoxClass = iconColorOnly ? 'info-box' : `info-box bg-${color}`;
   const iconClass = iconColorOnly ? `info-box-icon bg-${color}${isIonIcon ? ' info-box-ionicon' : ''}` : `info-box-icon${isIonIcon ? ' info-box-ionicon' : ''}`;
@@ -25,9 +26,9 @@ const Infobox = ({
         <span className="info-box-text">{text}</span>
         <span className="info-box-number">{number}</span>
         {hasProgress && (
-        <div className="progress">
-          <div className={progressClass} style={{ width: `${progress}%` }} />
-        </div>
+          <div className="progress">
+            <div className={progressClass} style={{ width: `${progress}%` }} />
+          </div>
         )}
         {hasProgressText && (
           <span className="progress-description">
@@ -43,7 +44,7 @@ Infobox.propTypes = {
   icon: PropTypes.string.isRequired,
   text: PropTypes.string,
   number: PropTypes.oneOf([PropTypes.string, PropTypes.node,
-    PropTypes.arrayOf(PropTypes.oneOf([PropTypes.string, PropTypes.node]))]),
+  PropTypes.arrayOf(PropTypes.oneOf([PropTypes.string, PropTypes.node]))]),
   color: PropTypes.oneOf(Colors),
   progress: PropTypes.number,
   progressText: PropTypes.string,

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Types } from '../PropTypes';
+import { splitIcon } from '../Utilities';
 import './Alert.css';
 
 
@@ -18,7 +19,7 @@ const Alert = ({
       {closable && <button type="button" className="close" data-dismiss="alert" aria-hidden="true">&times;</button>}
       {(icon || title) && (
         <h4>
-          {icon && <FontAwesomeIcon className="icon" icon={icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0)} size="18px" />}
+          {icon && <FontAwesomeIcon className="icon" icon={splitIcon(icon)} size="18px" />}
           {' '}
           <span>{title}</span>
         </h4>

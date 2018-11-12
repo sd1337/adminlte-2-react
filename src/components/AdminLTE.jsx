@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 import '../css/bootstrap.min.css';
@@ -190,6 +191,7 @@ class Core extends Component {
             </a>
             <nav className="navbar navbar-static-top">
               <div className="sidebar-toggle" data-toggle="push-menu" role="button">
+                <FontAwesomeIcon icon={['fas', 'bars']} />
                 <span className="sr-only">Toggle navigation</span>
               </div>
               <div className="navbar-custom-menu">

@@ -5,6 +5,7 @@ import uuidv4 from 'uuid';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Colors, TypeMappings } from '../PropTypes';
+import { splitIcon } from '../Utilities';
 
 const Item = ({
   icon, link, text, labels, color, history, children, isSubItem,
@@ -12,7 +13,7 @@ const Item = ({
   const active = history.location.pathname === link;
   const mappedLabels = labels.map(p => (p.small ? <small key={uuidv4()} className={`label pull-right bg-${p.color}`}>{p.text}</small> : <span key={uuidv4()} className={`label label-${p.type} pull-right`}>{p.text}</span>));
   const localColor = color ? TypeMappings.byColor[color].colorCode : null;
-  const localIcon = icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
+  const localIcon = splitIcon(icon);
 
   const hasChildren = !!(children);
   if (isSubItem) {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Types } from '../PropTypes';
+import { splitIcon } from '../Utilities';
 
 class Box extends Component {
   state = {
@@ -193,12 +194,12 @@ class Box extends Component {
     const { collapsed } = this.state;
     const { footer: footerContent, header: headerContent, children } = this.props;
 
-    const localToolIcon = toolIcon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).map(p => (p.length === 0 ? 'fas' : p));
+    const localToolIcon = splitIcon(toolIcon);
     const hasOptions = !!(options);
     const hasFooter = !!(footerContent);
     const hasHeaderContent = !!(headerContent);
     const hasIcon = !!(icon);
-    const localIcon = hasIcon ? icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0) : null;
+    const localIcon = hasIcon ? splitIcon(icon) : null;
     const hasTitle = title !== ' ';
     const hasHeader = hasOptions || hasHeaderContent || hasIcon || hasTitle
       || collapsable || closable || badge || customOptions;

@@ -3,20 +3,22 @@ import PropTypes from 'prop-types';
 
 import Ionicon from 'react-ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './Infobox2.css';
 import { Colors } from '../PropTypes';
+import { splitIcon } from '../Utilities';
 
 const Infobox2 = ({
   color, title, subTitle, text, footerText, icon, footerIcon, onFooterClick, to,
 }) => {
-  const isIonIcon = icon.startsWith('ion');
+  const isIonIcon = icon.startsWith('ion') || icon.startsWith('ios');
   let iconLocal;
   if (!isIonIcon) {
-    const faIconClass = icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
+    const faIconClass = splitIcon(icon);
     iconLocal = <FontAwesomeIcon icon={faIconClass} size="sm" />;
   } else {
-    iconLocal = <Ionicon icon={icon} fontSize="85px" color="rgba(0,0,0,0.15)" />;
+    iconLocal = <Ionicon icon={icon} fontSize="90px" color="rgba(0,0,0,0.15)" />;
   }
-  const localFooterIcon = footerIcon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0);
+  const localFooterIcon = splitIcon(footerIcon);
   return (
     <div className={`small-box bg-${color}`}>
       <div className="inner">
@@ -26,7 +28,7 @@ const Infobox2 = ({
         </h3>
         <p>{text}</p>
       </div>
-      <div className="icon">
+      <div className={`icon ${isIonIcon ? ' icon-ion' : ''}`}>
         {iconLocal}
       </div>
       <a href={to} onClick={onFooterClick} className="small-box-footer">
