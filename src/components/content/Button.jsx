@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import uuidv4 from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { splitIcon } from '../Utilities';
 import ButtonGroup from './ButtonGroup';
 
 class Button extends Component {
   render() {
     const {
-      id, size, type, block, iconClass, color, classes, flat, text, alignRight, disabled,
+      id, size, type, block, icon, color, classes, flat, text, alignRight, disabled,
       margin, pullRight = alignRight, pullLeft, to, app, badge, badgeText, onClick, split,
     } = this.props;
     let { children } = this.props;
@@ -27,6 +29,9 @@ class Button extends Component {
       app ? 'btn-app' : '',
     ].join(' ');
 
+    const hasIcon = !!(icon);
+    const localIcon = hasIcon ? splitIcon(icon) : null;
+
     const button = (
       <button
         id={id || ''}
@@ -36,9 +41,9 @@ class Button extends Component {
       //  style={{ marginRight: '0.2em' }}
       >
         {badge && <span className={`badge bg-${badge}`}>{badgeText}</span>}
-        {iconClass && <i className={`fa ${iconClass}`} />}
-        {iconClass && text ? ' ' : ''}
-        {text}
+        {icon && <FontAwesomeIcon icon={localIcon} />}
+        {icon && text ? ' ' : ''}
+        {text || ''}
       </button>
     );
 
@@ -68,8 +73,8 @@ class Button extends Component {
       return (
         <React.Fragment>
           <button type="button" className={`${buttonClasses} dropdown-toggle`} data-toggle="dropdown">
-            {`${text} `}
-            <span className="fa fa-caret-down" />
+            {`${text || ''} `}
+            <FontAwesomeIcon icon={['fas', 'caret-down']} />
           </button>
           <ul className="dropdown-menu">
             {children}
@@ -86,7 +91,7 @@ Button.propTypes = {
   size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
   type: PropTypes.oneOf(['default', 'primary', 'danger', 'info', 'success', 'warning']),
   block: PropTypes.bool,
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   color: PropTypes.string,
   classes: PropTypes.string,
   flat: PropTypes.bool,
@@ -113,7 +118,7 @@ Button.defaultProps = {
   size: null,
   type: 'default',
   block: false,
-  iconClass: null,
+  icon: null,
   color: null,
   classes: null,
   flat: false,

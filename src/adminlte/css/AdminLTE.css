@@ -2157,9 +2157,13 @@ a:focus {
 }
 .btn-app > .fa,
 .btn-app > .glyphicon,
-.btn-app > .ion {
+.btn-app > .ion,
+.btn-app > svg {
   font-size: 20px;
   display: block;
+}
+.btn-app > svg {
+  margin: auto;
 }
 .btn-app:hover {
   background: #f4f4f4;
