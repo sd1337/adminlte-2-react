@@ -17,6 +17,8 @@ class Tabs extends Component {
     super(props);
     const { activeKey } = props;
     this.state.activeKey = activeKey;
+
+    this.onSelect = this.onSelect.bind(this);
   }
 
   onSelect(activeKeyParam) {
