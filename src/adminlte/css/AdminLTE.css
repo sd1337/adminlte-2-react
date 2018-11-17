@@ -334,7 +334,8 @@ a:focus {
 }
 .content-header > .breadcrumb > li > a > .fa,
 .content-header > .breadcrumb > li > a > .glyphicon,
-.content-header > .breadcrumb > li > a > .ion {
+.content-header > .breadcrumb > li > a > .ion,
+.content-header > .breadcrumb > li > a > svg {
   margin-right: 5px;
 }
 .content-header > .breadcrumb > li + li:before {

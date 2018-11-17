@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 class Content extends Component {
@@ -52,9 +53,8 @@ class Content extends Component {
           <ol className="breadcrumb">
             <li>
               <Link to={homeRoute}>
-                <i className="fa fa-dashboard" />
-                {' '}
-                Home
+                <FontAwesomeIcon icon={['fas', 'tachometer-alt']} />
+                {' Home'}
               </Link>
             </li>
             <li className="active">{title}</li>
