@@ -23,9 +23,6 @@ class Box extends Component {
         animationSpeed: 500,
         collapseTrigger: '[data-widget="collapse"]',
         removeTrigger: '[data-widget="remove"]',
-        collapseIcon: 'fa-minus',
-        expandIcon: 'fa-plus',
-        removeIcon: 'fa-times',
       };
 
       const Selector = {
@@ -57,7 +54,6 @@ class Box extends Component {
       };
 
       BoxWidget.prototype.toggle = function toggle() {
-        debugger;
         const isOpen = !$(this.element).is(Selector.collapsed);
         if (isOpen) {
           this.collapse();
@@ -68,15 +64,8 @@ class Box extends Component {
 
       BoxWidget.prototype.expand = function expand() {
         const expandedEvent = $.Event(Event.expanded);
-        const { collapseIcon, expandIcon } = this.options;
 
         $(this.element).removeClass(ClassName.collapsed);
-        $(this.element)
-          .children(`${Selector.header}, ${Selector.body}, ${Selector.footer}`)
-          .children(Selector.tools)
-          .find(`.${expandIcon}`)
-          .removeClass(expandIcon)
-          .addClass(collapseIcon);
 
         $(this.element).children(`${Selector.body}, ${Selector.footer}`)
           .slideDown(this.options.animationSpeed, () => {
@@ -87,14 +76,6 @@ class Box extends Component {
 
       BoxWidget.prototype.collapse = function collapse() {
         const collapsedEvent = $.Event(Event.collapsed);
-        const { collapseIcon, expandIcon } = this.options;
-
-        $(this.element)
-          .children(`${Selector.header}, ${Selector.body}, ${Selector.footer}`)
-          .children(Selector.tools)
-          .find(`.${collapseIcon}`)
-          .removeClass(collapseIcon)
-          .addClass(expandIcon);
 
         $(this.element).children(`${Selector.body}, ${Selector.footer}`)
           .slideUp(this.options.animationSpeed, () => {
