@@ -1610,7 +1610,9 @@ a:focus {
   border-radius: 3px;
 }
 .box .overlay > .fa,
-.overlay-wrapper .overlay > .fa {
+.overlay-wrapper .overlay > .fa,
+.box .overlay > svg,
+.overlay-wrapper .overlay > svg {
   position: absolute;
   top: 50%;
   left: 50%;

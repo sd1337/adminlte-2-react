@@ -67,6 +67,7 @@ import {
 import Badge from './content/Badge';
 import Label from './content/Label';
 import Calendar from './content/Calendar';
+import LoadingOverlay from './content/LoadingOverlay';
 
 
 library.add(fab, fas, far);
@@ -252,5 +253,5 @@ export {
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar
   , Divider, Inputs
   , Colors, Types, Sizes, Themes, FormTypes
-  , Badge, Label, Calendar,
+  , Badge, Label, Calendar, LoadingOverlay,
 };

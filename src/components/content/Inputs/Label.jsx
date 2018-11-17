@@ -7,12 +7,14 @@ import Col from '../Col';
 import { FormTypes } from '../../PropTypes';
 
 const Label = ({
-  label, labelXs, labelSm = 2, labelMd, labelLg, name,
-  xs, sm = 10, md, lg, help, labelIconClass, type, children,
+  label, labelXs, labelSm, labelMd, labelLg, name,
+  xs, sm, md, lg, help, labelIconClass, type, children,
+  ...props
 }) => {
-  let { labelPosition } = this.props;
+  let { labelPosition } = props;
   let localLabel = label;
-  labelPosition = label ? 'left' : 'none';
+  if(!labelPosition)
+    labelPosition = label ? 'left' : 'none';
   if (localLabel && labelIconClass) { localLabel = ` ${localLabel}`; }
   const groupClasses = [
     'form-group',
@@ -26,7 +28,6 @@ const Label = ({
       labelMd ? `col-md-${labelMd}` : null,
       labelLg ? `col-lg-${labelLg}` : null,
     ].filter(p => p).join(' ');
-
     return (
       <div className={groupClasses}>
         <label htmlFor={name} className={labelClasses}>
@@ -82,7 +83,7 @@ Label.defaultProps = {
   labelMd: null,
   labelLg: null,
   xs: null,
-  sm: 2,
+  sm: 10,
   md: null,
   lg: null,
   help: null,

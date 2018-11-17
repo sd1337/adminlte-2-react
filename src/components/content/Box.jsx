@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Types } from '../PropTypes';
+import LoadingOverlay from './LoadingOverlay';
 import { splitIcon } from '../Utilities';
 
 class Box extends Component {
@@ -243,7 +244,7 @@ class Box extends Component {
         <div className={bodyClass}>
           {children}
         </div>
-        {!loaded && this.getLoadingContent()}
+        {!loaded && <LoadingOverlay />}
         {hasFooter && (
           <div className={`box-footer${footerClass ? ` ${footerClass}` : ''}`}>
             {footerContent}

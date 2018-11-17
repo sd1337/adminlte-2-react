@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Label from './Label';
 
-import { Sizes, FormTypes } from '../../PropTypes';
+import { Sizes } from '../../PropTypes';
 
 
 class Text extends Component {
@@ -10,15 +10,16 @@ class Text extends Component {
 
   render() {
     const {
-      iconClassLeft, iconClassRight, addonLeft, addonRight, inputType, size,
+      iconLeft, iconRight, addonLeft, addonRight, inputType, size,
       checkboxLeft, checkboxRight, radioLeft, radioRight, buttonLeft, buttonRight,
-      rows, width, ...props
+      rows, width, name, id, value, placeholder, disabled,
+      onBlur, onChange, onFocus, onSelect, onKeyDown, onKeyUp, onKeyPress,
     } = this.props;
     const inputClasses = [
       inputType !== 'file' ? 'form-control' : null,
       size ? `input-${size}` : null,
     ].filter(p => p).join(' ');
-    if (iconClassLeft || iconClassRight || addonLeft || addonRight
+    if (iconLeft || iconRight || addonLeft || addonRight
       || checkboxLeft || checkboxRight || radioLeft || radioRight
       || buttonLeft || buttonRight) {
       const groupClasses = [
@@ -29,7 +30,7 @@ class Text extends Component {
         <Label {...this.props}>
           <div className={groupClasses} style={{ width }}>
             {addonLeft && <span className="input-group-addon">{addonLeft}</span>}
-            {iconClassLeft && <span className="input-group-addon"><i className={`fa ${iconClassLeft}`} /></span>}
+            {iconLeft && <span className="input-group-addon"><i className={`fa ${iconLeft}`} /></span>}
             {checkboxLeft && <span className="input-group-addon"><input type="checkbox" /></span>}
             {radioLeft && <span className="input-group-addon"><input type="radio" /></span>}
             {buttonLeft && <div className="input-group-btn">{buttonLeft}</div>}
@@ -39,12 +40,41 @@ class Text extends Component {
                   ref={(c) => { this.ref = c; }}
                   type={inputType}
                   className={inputClasses}
-                  {...props}
+                  name={name}
+                  id={id}
+                  value={value}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  onFocus={onFocus}
+                  onSelect={onSelect}
+                  onKeyDown={onKeyDown}
+                  onKeyUp={onKeyUp}
+                  onKeyPress={onKeyPress}
                 />
               )
-              : <textarea ref={(c) => { this.ref = c; }} className={inputClasses} {...props} />}
+              : (
+                <textarea
+                  ref={(c) => { this.ref = c; }}
+                  className={inputClasses}
+                  name={name}
+                  id={id}
+                  value={value}
+                  placeholder={placeholder}
+                  disabled={disabled}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  onFocus={onFocus}
+                  onSelect={onSelect}
+                  onKeyDown={onKeyDown}
+                  onKeyUp={onKeyUp}
+                  onKeyPress={onKeyPress}
+                  rows={rows}
+                />
+              )}
             {addonRight && <span className="input-group-addon">{addonRight}</span>}
-            {iconClassRight && <span className="input-group-addon"><i className={`fa ${iconClassRight}`} /></span>}
+            {iconRight && <span className="input-group-addon"><i className={`fa ${iconRight}`} /></span>}
             {checkboxRight && <span className="input-group-addon"><input type="checkbox" /></span>}
             {radioRight && <span className="input-group-addon"><input type="radio" /></span>}
             {buttonRight && <div className="input-group-btn">{buttonRight}</div>}
@@ -55,34 +85,56 @@ class Text extends Component {
     return (
       <Label {...this.props}>
         {
-            inputType !== 'textarea'
-              ? (
-                <input
-                  ref={(c) => { this.ref = c; }}
-                  type={inputType}
-                  className={inputClasses}
-                  {...props}
-                  style={{ width }}
-                />
-              )
-              : (
-                <textarea
-                  ref={(c) => { this.ref = c; }}
-                  className={inputClasses}
-                  rows={rows}
-                  {...props}
-                  style={{ width }}
-                />
-              )
-          }
+          inputType !== 'textarea'
+            ? (
+              <input
+                ref={(c) => { this.ref = c; }}
+                type={inputType}
+                className={inputClasses}
+                name={name}
+                id={id}
+                value={value}
+                placeholder={placeholder}
+                disabled={disabled}
+                onBlur={onBlur}
+                onChange={onChange}
+                onFocus={onFocus}
+                onSelect={onSelect}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                onKeyPress={onKeyPress}
+                style={{ width }}
+              />
+            )
+            : (
+              <textarea
+                ref={(c) => { this.ref = c; }}
+                className={inputClasses}
+                name={name}
+                id={id}
+                value={value}
+                placeholder={placeholder}
+                disabled={disabled}
+                onBlur={onBlur}
+                onChange={onChange}
+                onFocus={onFocus}
+                onSelect={onSelect}
+                onKeyDown={onKeyDown}
+                onKeyUp={onKeyUp}
+                onKeyPress={onKeyPress}
+                rows={rows}
+                style={{ width }}
+              />
+            )
+        }
       </Label>
     );
   }
 }
 
 Text.propTypes = {
-  iconClassLeft: PropTypes.string,
-  iconClassRight: PropTypes.string,
+  iconLeft: PropTypes.string,
+  iconRight: PropTypes.string,
   addonLeft: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
   addonRight: PropTypes.oneOf([PropTypes.string, PropTypes.node]),
   inputType: PropTypes.string,
@@ -100,25 +152,19 @@ Text.propTypes = {
   buttonRight: PropTypes.node,
   rows: PropTypes.number,
   width: PropTypes.string,
+  onBlur: PropTypes.func,
   onChange: PropTypes.func,
-  label: PropTypes.string,
-  labelPosition: PropTypes.oneOf(['above', 'left', 'none']),
-  labelXs: PropTypes.number,
-  labelSm: PropTypes.number,
-  labelMd: PropTypes.number,
-  labelLg: PropTypes.number,
-  xs: PropTypes.number,
-  sm: PropTypes.number,
-  md: PropTypes.number,
-  lg: PropTypes.number,
-  help: PropTypes.string,
-  labelIconClass: PropTypes.string,
-  type: PropTypes.oneOf(FormTypes),
+  onFocus: PropTypes.func,
+  onSelect: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyUp: PropTypes.func,
+  onKeyPress: PropTypes.func,
+  ...Label.propTypes,
 };
 
 Text.defaultProps = {
-  iconClassLeft: null,
-  iconClassRight: null,
+  iconLeft: null,
+  iconRight: null,
   addonLeft: null,
   addonRight: null,
   inputType: 'text',
@@ -136,20 +182,13 @@ Text.defaultProps = {
   buttonRight: null,
   rows: null,
   width: null,
+  onBlur: null,
   onChange: null,
-  label: null,
-  labelPosition: null,
-  labelXs: null,
-  labelSm: 2,
-  labelMd: null,
-  labelLg: null,
-  xs: null,
-  sm: 2,
-  md: null,
-  lg: null,
-  help: null,
-  labelIconClass: null,
-  type: null,
+  onFocus: null,
+  onSelect: null,
+  onKeyDown: null,
+  onKeyUp: null,
+  onKeyPress: null,
 };
 
 export default Text;
