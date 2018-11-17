@@ -57,8 +57,8 @@ class Box extends Component {
       };
 
       BoxWidget.prototype.toggle = function toggle() {
+        debugger;
         const isOpen = !$(this.element).is(Selector.collapsed);
-
         if (isOpen) {
           this.collapse();
         } else {
@@ -117,15 +117,17 @@ class Box extends Component {
 
       /* eslint-disable-next-line no-underscore-dangle */
       BoxWidget.prototype._setUpListeners = function _setUpListeners() {
+        const that2 = this;
+
         $(this.element).on('click', this.options.collapseTrigger, function click(event) {
           if (event) event.preventDefault();
-          that.toggle($(this));
+          that2.toggle($(this));
           return false;
         });
 
         $(this.element).on('click', this.options.removeTrigger, function click(event) {
           if (event) event.preventDefault();
-          that.remove($(this));
+          that2.remove($(this));
           return false;
         });
       };
@@ -229,9 +231,10 @@ class Box extends Component {
       <div ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>
         {hasHeader && (
           <div className={headerClass}>
-            {hasIcon && <FontAwesomeIcon icon={localIcon} />}
-            {title ? <h3 className="box-title">{title}</h3> : null}
-            {titleRight ? <h3 className="box-title pull-right">{titleRight}</h3> : null}
+            <h3 className={`box-title${titleRight ? ' pull-right' : ''}`}>
+              {hasIcon && <FontAwesomeIcon icon={localIcon} />}
+              {title && ` ${title}`}
+            </h3>
             {hasHeaderContent && headerContent}
             <div className="box-tools pull-right">
               {badge}

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Tab, TabContent, Nav, NavItem,
 } from 'react-bootstrap';
 import uuidv4 from 'uuid';
+import { splitIcon } from '../Utilities';
 
 const { Container: TabContainer } = Tab;
 class Tabs extends Component {
@@ -29,10 +31,11 @@ class Tabs extends Component {
   render() {
     const {
       children, pullRight = false, contentHeight, mountOnEnter = false,
-      unmountOnExit = false, id = uuidv4(), iconClass, title, titleLeft = false,
+      unmountOnExit = false, id = uuidv4(), icon, title, titleLeft = false,
     } = this.props;
     const { activeKey } = this.state;
-    const hasIcon = !!(iconClass);
+    const hasIcon = !!(icon);
+    const localIcon = hasIcon ? splitIcon(icon) : null;
     const hasTitle = !!(title);
     const hasIconOrHeader = hasIcon || hasTitle;
     const localChildren = children && children.length ? children : [children];
@@ -50,7 +53,7 @@ class Tabs extends Component {
             ))}
             {hasIconOrHeader && (
               <li className={`header${titleLeft ? ' pull-left' : ''}`}>
-                {hasIcon && <i className={`fa ${iconClass}`} />}
+                {hasIcon && <FontAwesomeIcon icon={localIcon} />}
                 {hasTitle ? ` ${title}` : ''}
               </li>
             )}
@@ -83,7 +86,7 @@ Tabs.propTypes = {
   mountOnEnter: PropTypes.bool,
   unmountOnExit: PropTypes.bool,
   id: PropTypes.string,
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   title: PropTypes.string,
   titleLeft: PropTypes.bool,
 };
@@ -95,7 +98,7 @@ Tabs.defaultProps = {
   mountOnEnter: false,
   unmountOnExit: false,
   id: uuidv4(),
-  iconClass: null,
+  icon: null,
   title: null,
   titleLeft: false,
 };
