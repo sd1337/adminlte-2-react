@@ -15,7 +15,7 @@ class Select extends Component {
         <label htmlFor={name}>{label}</label>
         <select ref={(c) => { this.input = c; }} name={name} className="form-control" disabled={disabled} multiple={multiple} value={value} onChange={onChange}>
           {options.map(p => (
-            <option key={uuidv4()} value={p.value}>{p.label}</option>
+            <option key={p.value} value={p.value}>{p.label}</option>
           ))}
         </select>
       </div>

@@ -160,15 +160,6 @@ class Box extends Component {
     }
   }
 
-  /* eslint-disable-next-line class-methods-use-this */
-  getLoadingContent() {
-    return (
-      <div className="overlay">
-        <i className="fa fa-refresh fa-spin" />
-      </div>
-    );
-  }
-
   render() {
     const {
       type, options, icon, title, titleRight, collapsable, closable, loaded,

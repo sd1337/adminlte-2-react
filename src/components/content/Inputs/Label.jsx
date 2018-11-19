@@ -13,8 +13,7 @@ const Label = ({
 }) => {
   let { labelPosition } = props;
   let localLabel = label;
-  if(!labelPosition)
-    labelPosition = label ? 'left' : 'none';
+  if (!labelPosition) { labelPosition = label ? 'left' : 'none'; }
   if (localLabel && labelIconClass) { localLabel = ` ${localLabel}`; }
   const groupClasses = [
     'form-group',

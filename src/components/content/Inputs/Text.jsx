@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Label from './Label';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import Label from './Label';
 import { Sizes } from '../../PropTypes';
+import { splitIcon } from '../../Utilities';
 
 
 class Text extends Component {
@@ -26,11 +28,13 @@ class Text extends Component {
         'input-group',
         size ? `input-group-${size}` : null,
       ].filter(p => p).join(' ');
+      const iconLeftClass = splitIcon(iconLeft);
+      const iconRightClass = splitIcon(iconRight);
       return (
         <Label {...this.props}>
           <div className={groupClasses} style={{ width }}>
             {addonLeft && <span className="input-group-addon">{addonLeft}</span>}
-            {iconLeft && <span className="input-group-addon"><i className={`fa ${iconLeft}`} /></span>}
+            {iconLeft && <span className="input-group-addon"><FontAwesomeIcon icon={iconLeftClass} /></span>}
             {checkboxLeft && <span className="input-group-addon"><input type="checkbox" /></span>}
             {radioLeft && <span className="input-group-addon"><input type="radio" /></span>}
             {buttonLeft && <div className="input-group-btn">{buttonLeft}</div>}
@@ -74,7 +78,7 @@ class Text extends Component {
                 />
               )}
             {addonRight && <span className="input-group-addon">{addonRight}</span>}
-            {iconRight && <span className="input-group-addon"><i className={`fa ${iconRight}`} /></span>}
+            {iconRight && <span className="input-group-addon"><FontAwesomeIcon icon={iconRightClass} /></span>}
             {checkboxRight && <span className="input-group-addon"><input type="checkbox" /></span>}
             {radioRight && <span className="input-group-addon"><input type="radio" /></span>}
             {buttonRight && <div className="input-group-btn">{buttonRight}</div>}

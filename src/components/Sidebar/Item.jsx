@@ -25,7 +25,7 @@ const Item = ({
           {text}
           {hasChildren && (
             <span className="pull-right-container">
-              <i className="fa fa-angle-left pull-right" />
+              <FontAwesomeIcon className="pull-right" icon="angle-left" />
             </span>
           )}
         </Link>
