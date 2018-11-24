@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Item from './Item';
+import Header from './Header';
 
-const Sidebar = ({ children, header }) => (
+const Sidebar = ({ children }) => (
   <aside className="main-sidebar">
     <section className="sidebar">
       {/* <div className="user-panel">
@@ -28,7 +28,6 @@ const Sidebar = ({ children, header }) => (
   </form> */}
 
       <ul className="sidebar-menu" data-widget="tree">
-        {header && <li className="header">{header}</li>}
         {children}
       </ul>
     </section>
@@ -36,20 +35,18 @@ const Sidebar = ({ children, header }) => (
 );
 
 Sidebar.defaultProps = {
-  header: null,
   children: null,
 };
 
 Sidebar.propTypes = {
-  header: PropTypes.string,
   children(props, propName, componentName) {
     const prop = props[propName];
     let error;
     React.Children.forEach(prop, (el) => {
       if (error) return;
-      if (el.type !== Item && el.type !== 'li') {
+      if (el.type !== Item && el.type !== Header && el.type !== 'li') {
         error = new Error(
-          `\`${componentName}\` only accepts \`Item's and li's\`.`,
+          `\`${componentName}\` only accepts \`Item's, Header's, and li's\`.`,
         );
       }
     });
@@ -57,4 +54,4 @@ Sidebar.propTypes = {
   },
 };
 export default Sidebar;
-export { Item, Sidebar as Core };
+export { Item, Sidebar as Core, Header };
