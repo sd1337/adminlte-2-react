@@ -34,9 +34,11 @@ This is the wrapper for the sidebar items, it can be either placed as a child of
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| **text** | string |  | Display text of the item |
 | children | `<Item />` |  | A nested `Item` will be displayed as a sublevel item and allows for multilevel menus |
 | icon | oneOf: `string`, `[string]` | `'far-circle'` | Icon on the left side |
 | link | string | # | Relative links should refere to anonther page components `path` property and absolute links are simple |
+| labels | 
 
 #### Header
 

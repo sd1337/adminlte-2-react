@@ -11,7 +11,8 @@ const Item = ({
   icon, link, text, labels, color, history, children, isSubItem,
 }) => {
   const active = history.location.pathname === link;
-  const mappedLabels = labels.map(p => (p.small ? <small key={uuidv4()} className={`label pull-right bg-${p.color}`}>{p.text}</small> : <span key={uuidv4()} className={`label label-${p.type} pull-right`}>{p.text}</span>));
+  const localLabels = labels.length ? labels : (labels && [labels]) || [];
+  const mappedLabels = localLabels.map(p => (p.small ? <small key={uuidv4()} className={`label pull-right bg-${p.color}`}>{p.text}</small> : <span key={uuidv4()} className={`label label-${p.type} pull-right`}>{p.text}</span>));
   const localColor = color ? TypeMappings.byColor[color].colorCode : null;
   const localIcon = splitIcon(icon);
 
@@ -110,7 +111,7 @@ Item.defaultProps = {
   children: null,
   icon: 'far-circle',
   link: '#',
-  labels: [],
+  labels: null,
   color: null,
   history: null,
   isSubItem: false,
