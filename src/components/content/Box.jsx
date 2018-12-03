@@ -164,10 +164,10 @@ class Box extends Component {
     const {
       type, options, icon, title, titleRight, collapsable, closable, loaded,
       noPadding, badge, toolIcon, customOptions, className, footerClass,
-      solid, textCenter, padding, bodyClassName, border, style,
+      solid, textCenter, padding, bodyClassName, border, style, footer: footerContent,
+      header: headerContent, children,
     } = this.props;
     const { collapsed } = this.state;
-    const { footer: footerContent, header: headerContent, children } = this.props;
 
     const localToolIcon = splitIcon(toolIcon);
     const hasOptions = !!(options);

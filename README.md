@@ -8,6 +8,27 @@ Yet another project based on the great [AdminLTE](https://adminlte.io/) Control 
 
 ## Components
 
+### General UI Type/Coloring options
+Several components have a property `type` or `color` that allows the usage of the following values to give different accents to the component
+
+| Type | Color | ColorCode |
+| ---- | ----- | --------- |
+| `default` | `gray` | `#d2d6de` |
+| `primary` | `light-blue` | `#3c8dbc` |
+| `info` | `aqua` | `#00c0ef` |
+| `success` | `green` | `#00a65a` |
+| `warning` | `yellow` | `#f39c12` |
+| `danger` | `red` | `#f56954` |
+
+In addition there are several colors available without a corresponding type
+| `navy` | 
+| `teal` | 
+| `purple` | 
+| `orange` | 
+| `maroon` | 
+| `black` | 
+
+
 ### AdminLTE
 
 ##### Props
@@ -73,6 +94,17 @@ This is the wrapper for the sidebar items, it can be either placed as a child of
 ### Content
 
 #### Box
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| title | `string` |  | Boxtitle |
+| collapsable | `boolean` | `false` | Toggles the possibility to minimize |
+| closable | `boolean` | `false` | Toggles the possibility to close a box |
+| header | `node` |  | Content to be rendered in the header position of the box |
+| footer | `node` |  | Content to be rendered in the footer position of the box |
+| footer | `node` |  | Content to be rendered in the footer position of the box |
 
 #### Col
 
