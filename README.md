@@ -11,6 +11,8 @@ Yet another project based on the great [AdminLTE](https://adminlte.io/) Control 
 ### General UI Type/Coloring options
 Several components have a property `type` or `color` that allows the usage of the following values to give different accents to the component
 
+### Types and Colors
+
 | Type | Color | ColorCode |
 | ---- | ----- | --------- |
 | `default` | `gray` | `#d2d6de` |
@@ -20,13 +22,21 @@ Several components have a property `type` or `color` that allows the usage of th
 | `warning` | `yellow` | `#f39c12` |
 | `danger` | `red` | `#f56954` |
 
+### Additional Colors
+
 In addition there are several colors available without a corresponding type
+| Color |
+| ----- |
 | `navy` | 
 | `teal` | 
 | `purple` | 
 | `orange` | 
 | `maroon` | 
 | `black` | 
+
+### Icons
+
+AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay up to date, we migrated font awesome to version 5.x. Therefore the syntax for icons is no longer `fa-icon` but instead `far/fas/fab-icon`. All available icons can be found on the respective websites ([font-awesome](https://fontawesome.com/icons?d=gallery), [ionicons](https://ionicons.com/))
 
 
 ### AdminLTE
@@ -40,18 +50,9 @@ In addition there are several colors available without a corresponding type
 | titleShort | oneOf: `string`, `[string]` | `['Admin', 'LTE']` | Title in header bar when the sidebar is collapsed, if an array is supplied the first element will be rendered bold and the second normal |
 | titleShort | oneOf: `'black-light'`, `'black'`, `'blue'`, `'blue-light'`, `'green'`, `'green-light'`, `'purple'`, `'purple-light'`, `'red'`, `'red-light'`, `'yellow'`, `'yellow-light'` | `'blue'` | Colortheme for AdminLTE |
 | browserTitle | string | Untitled | Browsertitle, can be set here globally or for each site indvidually |
+| sidebar | arrayOf: `<Item />`, `<Header />`, `<li />`|  | Sidebar items |
 
-### Sidebar
-
-This is the wrapper for the sidebar items, it can be either placed as a child of `AdminLTE` or into the `sidebar` property of `AdminLTE`
-
-##### Props
-
-| Name    | Type    | Default | Description |
-| --------|---------|---------|-------------|
-| children | oneOf: `<Item />`, `<Header />`, `<li />`|  | Item |
-
-#### Item
+#### Sidebar.Item
 
 ##### Props
 
@@ -104,25 +105,116 @@ This is the wrapper for the sidebar items, it can be either placed as a child of
 | closable | `boolean` | `false` | Toggles the possibility to close a box |
 | header | `node` |  | Content to be rendered in the header position of the box |
 | footer | `node` |  | Content to be rendered in the footer position of the box |
-| footer | `node` |  | Content to be rendered in the footer position of the box |
+| type | [type](#types-and-colors) |  | Box accent |
+| options | `node` |  | Icon with options placed next to the close, collapse icons |
+| icon | [icon](#icons) |  | Boxicon |
+| titleRight | `boolean` | `false` | Right align box title |
+| loaded | `boolean` | `true` | Loading spinner for ajax content |
+| noPadding | `boolean` | `false` | Removes box padding for tighter fitting |
+| badge | [Badge](#badge), arrayOf: [Badge](#badge) |  | Badge(s) placed in header |
+| toolIcon | [icon](#icons) | `wrench` | Custom icon for tools menu |
+| customOptions | `node` |  | Options for tool menu in header |
+| className | `string` |  |  |
+| footerClass | `string` |  | custom `className` for the footer region |
+| collapsed | `boolean` | `false` | Initial collapsed state |
+| solid | `boolean` | `false` | Solid box styling option |
+| textCenter | `boolean` | `false` | Centered text styling in body |
+| padding | `boolean` | `false` | Additional body padding |
+| bodyClassName | `string` |  | custom `className` for the body region |
+| border | `boolean` | `false` | Visible border around box |
+| style | `style` | null | Inline style info for the box |
+| children | `node` |  | Box content rendered in body |
 
 #### Col
 
+react-bootstrap `Col` component
+
 #### Row
+
+react-bootstrap `Row` component
 
 #### Alert
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| closable | `boolean` | `false` | Make alert closable |
+| type | [type](#types-and-colors) |  | Alert acent |
+| icon | [icon](#icons) |  | Icon display left to text |
+| title | `string` |  | Alert title |
+| children | `node` |  | Alert content |
+
 #### Badge
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| color | [color](#types-and-colors) |  | Badge color |
+| text | `string` |  | Badge text |
 
 #### Button
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| id | `string` |  | Button id |
+| size | oneOf: `'xs'`, `'sm'`, `'md'`, `'lg'` |  | Button size |
+| type | [type](#types-and-colors) | `default` | Button accent |
+| block | `boolean` |  | Display as block |
+| icon | [icon](#icons) |  | Button icon |
+| color | [color](#types-and-colors) |  | Button color can be used instead of type |
+| classes | `string` |  | Button additional button classes |
+| flat | `boolean` | `false` | Flat button styling |
+| text | `string` |  | Button text |
+| pullRight | `boolean` | `false` | Pull button right |
+| pullLeft | `boolean` | `false` | Pull button left |
+| disabled | `boolean` | `false` | Disable button |
+| margin | `boolean` | `false` | Additional margin around button |
+| to | `string` | `false` | Button link, relative uri's should be valid router routes |
+| app | `boolean` | `false` | App button styling |
+| badge | [Badge](#badge), arrayOf: [Badge](#badge) |  | Badge placed in button |
+| onClick | `function` |  | On click action |
+| split | `boolean` | `false` | Split button and submenu |
+| children | `node` |  | Button submenu entries |
+
 #### ButtonGroup
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| pullRight | `boolean` | `false` | Pull button group right |
+| margin | `boolean` | `false` | Additional margin around button group |
+| vertical | `boolean` | `false` | Vertical align button group |
+| children | `<Button />` |  | Button rendered in group |
 
 #### Calendar
 
+**_Work in progress_**
+
+jQuery full calendar component
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+
 #### Callout
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| type | [type](#types-and-colors) |  | Callout accent |
+| title | `string` |  | Callout title |
+| children | `node` |  | Callout content |
+
 #### Chatbox
+
+**_Work in progress_** - Use at your own risk
 
 #### Checkbox
 

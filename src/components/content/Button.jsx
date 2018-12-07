@@ -40,7 +40,7 @@ class Button extends Component {
         className={buttonClasses}
       //  style={{ marginRight: '0.2em' }}
       >
-        {badge && <span className={`badge bg-${badge}`}>{badgeText}</span>}
+        {badge}
         {icon && <FontAwesomeIcon icon={localIcon} />}
         {icon && text ? ' ' : ''}
         {text || ''}
@@ -103,8 +103,7 @@ Button.propTypes = {
   margin: PropTypes.bool,
   to: PropTypes.string,
   app: PropTypes.bool,
-  badge: PropTypes.string,
-  badgeText: PropTypes.string,
+  badge: PropTypes.node,
   onClick: PropTypes.func,
   split: PropTypes.bool,
   children: PropTypes.oneOfType([
@@ -131,7 +130,6 @@ Button.defaultProps = {
   to: null,
   app: null,
   badge: null,
-  badgeText: null,
   onClick: null,
   split: null,
   children: null,
