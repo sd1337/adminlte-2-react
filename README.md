@@ -212,9 +212,9 @@ jQuery full calendar component
 | title | `string` |  | Callout title |
 | children | `node` |  | Callout content |
 
-#### Chatbox
+#### Chatbox - **_Work in progress_**
 
-**_Work in progress_** - Use at your own risk
+Undocumented use at your own risk
 
 #### Checkbox
 

@@ -72,7 +72,7 @@ import LoadingOverlay from './content/LoadingOverlay';
 
 library.add(fab, fas, far);
 
-class Core extends Component {
+class AdminLTE extends Component {
   componentDidMount() {
     const { theme = 'blue', browserTitle } = this.props;
     if (theme) {
@@ -123,6 +123,8 @@ class Core extends Component {
   }
 
   render() {
+    // eslint-disable-next-line no-unused-vars
+    const { sidebar, controlSidebar } = this.props;
     let { children, title, titleShort } = this.props;
     {
       if (!children.length) { children = [children]; }
@@ -171,7 +173,6 @@ class Core extends Component {
     const nonModalRoutes = routes.filter(p => !p.props.modal);
     const modalRoutes = routes.filter(p => p.props.modal);
     // debugger;
-    const sidebar = content.filter(p => typeof p.type === 'function' && (p.type.name === 'Sidebar' || (p.type.default && p.type.default.name === 'Sidebar')))[0];
     const footer = content.filter(p => typeof p.type === 'function' && p.type.name === 'Footer')[0];
     // const bodyOptions = ['sidebar-mini, login-page', 'layout-top-nav', 'layout-boxed'
     // , 'fixed sidebar-mini', 'sidebar-mini-expand-feature', 'sidebar-collapse'
@@ -200,7 +201,7 @@ class Core extends Component {
               </div>
             </nav>
           </header>
-          {sidebar}
+          <Sidebar>{sidebar}</Sidebar>
           <Switch>
             {modalRoutes}
           </Switch>
@@ -218,7 +219,7 @@ class Core extends Component {
   }
 }
 
-Core.propTypes = {
+AdminLTE.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -233,20 +234,23 @@ Core.propTypes = {
   ]),
   theme: PropTypes.oneOf(Themes),
   browserTitle: PropTypes.string,
+  sidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  controlSidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
-Core.defaultProps = {
+AdminLTE.defaultProps = {
   children: null,
   title: ['Admin', 'LTE'],
   titleShort: ['A', 'LT'],
   browserTitle: 'Untitled',
   theme: 'blue',
+  controlSidebar: null,
 };
 
-export default Core;
+export default AdminLTE;
 
 export {
-  Core, Sidebar, Content, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box
+  AdminLTE, Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box
   , DescriptionBlock, ProgressGroup, Button, DataTable, Checkbox, Tabs
   , TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox
   , Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem
