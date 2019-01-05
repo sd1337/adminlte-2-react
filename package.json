@@ -40,6 +40,8 @@
     "jquery-ui": "^1.12.1",
     "popper.js": "^1.14.4",
     "prop-types": "^15.6.2",
+    "rc-slider": "^8.6.4",
+    "rc-tooltip": "^3.7.3",
     "react": "^16.6.0",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-slider": "^2.1.5",

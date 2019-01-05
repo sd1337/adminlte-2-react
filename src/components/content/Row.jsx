@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
+import { Row } from 'react-bootstrap';
 
-import Col from './Col';
+/* import Col from './Col';
 
 class Row extends Component {
   render() {
@@ -43,6 +44,6 @@ Row.propTypes = {
 Row.defaultProps = {
   children: null,
   margin: false,
-};
+}; */
 
 export default Row;

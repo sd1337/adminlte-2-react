@@ -11,6 +11,7 @@ class Button extends Component {
   render() {
     const {
       id, size, type, block, icon, color, classes, flat, text, alignRight, disabled,
+      // eslint-disable-next-line react/prop-types, no-unused-vars
       margin, pullRight = alignRight, pullLeft, to, app, badge, badgeText, onClick, split,
     } = this.props;
     let { children } = this.props;

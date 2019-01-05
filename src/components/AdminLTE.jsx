@@ -67,8 +67,8 @@ import {
 import Badge from './content/Badge';
 import Label from './content/Label';
 import Calendar from './content/Calendar';
-import LoadingOverlay from './content/LoadingOverlay';
-
+import LoadingSpinner from './content/LoadingSpinner';
+import AsyncContent from './content/AsyncContent';
 
 library.add(fab, fas, far);
 
@@ -123,8 +123,6 @@ class AdminLTE extends Component {
   }
 
   render() {
-    // eslint-disable-next-line no-unused-vars
-    const { sidebar, controlSidebar } = this.props;
     let { children, title, titleShort } = this.props;
     {
       if (!children.length) { children = [children]; }
@@ -140,14 +138,14 @@ class AdminLTE extends Component {
       titleShort = [titleShort];
     }
     const [titleShortBold, titleShotThin = ''] = titleShort;
-    let [menu] = children && children.length && children.filter(p => typeof p.type === 'function' && p.type.name === 'Menu');
-    if (children.findIndex(p => typeof p.type === 'function' && p.type.name === 'ControlSidebar') > 0) {
-      menu = React.cloneElement(menu, { additionalMenus: [<Navbar.ControlSidebarEntry key="control-sidebar-entry"></Navbar.ControlSidebarEntry>] });
+    let [menu] = children && children.length && children.filter(p => p.type === Navbar.Menu);
+    if (children.findIndex(p => p.type === ControlSidebar) > 0) {
+      menu = React.cloneElement(menu, { additionalMenus: [React.createElement(Navbar.ControlSidebarEntry, { key: 'control-sidebar-entry' })] });
     }
     const content = children.filter(p => p !== menu);
     const routes = content.filter(p => (p.props && p.props.path) || (typeof p.type === 'function' && p.type === Redirect)).map((P) => {
       if (P.type !== Route || P.type !== Redirect) {
-        if (P.type.name === 'AsyncContent') {
+        if (P.type === AsyncContent) {
           return (
             <Route
               modal={P.props.modal}
@@ -172,11 +170,13 @@ class AdminLTE extends Component {
     });
     const nonModalRoutes = routes.filter(p => !p.props.modal);
     const modalRoutes = routes.filter(p => p.props.modal);
-    // debugger;
-    const footer = content.filter(p => typeof p.type === 'function' && p.type.name === 'Footer')[0];
-    // const bodyOptions = ['sidebar-mini, login-page', 'layout-top-nav', 'layout-boxed'
-    // , 'fixed sidebar-mini', 'sidebar-mini-expand-feature', 'sidebar-collapse'
-    // , 'hold-transition', 'login-page']
+
+    const {
+      sidebar = content.find(p => p.type === Sidebar.Core),
+      controlSidebar,
+      footer = content.find(p => p.type === Footer),
+    } = this.props;
+
     return (
       <Router>
         <div className="wrapper">
@@ -201,7 +201,7 @@ class AdminLTE extends Component {
               </div>
             </nav>
           </header>
-          <Sidebar>{sidebar}</Sidebar>
+          <Sidebar.Core>{sidebar}</Sidebar.Core>
           <Switch>
             {modalRoutes}
           </Switch>
@@ -235,6 +235,7 @@ AdminLTE.propTypes = {
   theme: PropTypes.oneOf(Themes),
   browserTitle: PropTypes.string,
   sidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  footer: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   controlSidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
@@ -245,17 +246,18 @@ AdminLTE.defaultProps = {
   browserTitle: 'Untitled',
   theme: 'blue',
   controlSidebar: null,
+  footer: null,
 };
 
 export default AdminLTE;
 
 export {
-  AdminLTE, Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box
+  Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box
   , DescriptionBlock, ProgressGroup, Button, DataTable, Checkbox, Tabs
   , TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox
   , Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar
   , Divider, Inputs
   , Colors, Types, Sizes, Themes, FormTypes
-  , Badge, Label, Calendar, LoadingOverlay,
+  , Badge, Label, Calendar, LoadingSpinner,
 };

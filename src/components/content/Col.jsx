@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
+
+/* import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const $ = require('jquery');
@@ -26,7 +28,7 @@ class Col extends Component {
       textCenter, size, span, xs, sm, md, lg, offsetXs, offsetSm,
       offsetMd, offsetLg, classes: propClasses, children,
     } = this.props;
-    /* eslint-disable-next-line no-nested-ternary */
+    // eslint-disable-next-line no-nested-ternary, max-len
     const classes = typeof propClasses === 'string' ? propClasses : propClasses ? propClasses.length ? propClasses.map(p => `col-${p.size}-${p.span}`).join(' ') : `col-${propClasses.size}-${propClasses.span}` : null;
     const { sortable = false } = this.props;
     const xsClass = xs ? `col-xs-${xs}` : null;
@@ -102,6 +104,6 @@ Col.defaultProps = {
   offsetMd: null,
   offsetLg: null,
   children: null,
-};
+}; */
 
 export default Col;

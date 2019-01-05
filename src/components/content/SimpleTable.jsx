@@ -64,7 +64,10 @@ SimpleTable.propTypes = {
 
   })).isRequired,
   columns: PropTypes.arrayOf(PropTypes.shape({
-
+    title: PropTypes.string,
+    data: PropTypes.string,
+    width: PropTypes.string,
+    render: PropTypes.func,
   })),
   condensed: PropTypes.bool,
   striped: PropTypes.bool,

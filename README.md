@@ -220,7 +220,29 @@ Undocumented use at your own risk
 
 #### SimpleTable
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| data | `array` |  | Array of objects matching the column description |
+| columns | `array` |  | Column descriptions, see [next table](#column-options) for reference |
+
+##### Column Options
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| title | `string` |  | Column title |
+| data | `string` |  | Data property containing the data to be rendered in the column |
+| width | `string` |  | Use this prop to give the column a fixed width |
+| render | `function` |  | Custom render function for the column with arguments `(data, rowData, rowIndex)` |
+
 #### DataTable
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| options | `array` |  | Array of objects matching the column description |
 
 #### Description
 
