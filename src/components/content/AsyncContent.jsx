@@ -24,3 +24,5 @@ AsyncContent.defaultProps = {
   exact: false,
   component: null,
 };
+
+export default AsyncComponent;

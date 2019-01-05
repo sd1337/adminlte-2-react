@@ -173,7 +173,7 @@ class AdminLTE extends Component {
 
     const {
       sidebar = content.find(p => p.type === Sidebar.Core),
-      controlSidebar,
+      //controlSidebar,
       footer = content.find(p => p.type === Footer),
     } = this.props;
 
@@ -236,7 +236,7 @@ AdminLTE.propTypes = {
   browserTitle: PropTypes.string,
   sidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   footer: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-  controlSidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+//  controlSidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
 AdminLTE.defaultProps = {
@@ -245,7 +245,7 @@ AdminLTE.defaultProps = {
   titleShort: ['A', 'LT'],
   browserTitle: 'Untitled',
   theme: 'blue',
-  controlSidebar: null,
+//  controlSidebar: null,
   footer: null,
 };
 

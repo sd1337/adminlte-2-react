@@ -5,7 +5,6 @@ const Sizes = ['xs', 'sm', 'md', 'lg'];
 const FormTypes = ['warning', 'success', 'error'];
 const Themes = ['black-light', 'black', 'blue', 'blue-light', 'green', 'green-light',
   'purple', 'purple-light', 'red', 'red-light', 'yellow', 'yellow-light'];
-const SliderColors = ['red', 'blue', 'green', 'yellow', 'aqua', 'purple'];
 
 const localTypes = {
   default: {
@@ -60,5 +59,5 @@ const types = {
 };
 
 export {
-  Colors, Types, Sizes, FormTypes, Themes, SliderColors, types as TypeMappings,
+  Colors, Types, Sizes, FormTypes, Themes, types as TypeMappings,
 };
