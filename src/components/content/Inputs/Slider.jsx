@@ -32,7 +32,7 @@ const handle = (props) => {
 
 const trackStyle = {
   height: '10px',
-  top: 0,
+  top: '5px',
   bottom: 0,
   position: 'absolute',
   //backgroundColor: '#932ab6',
@@ -45,12 +45,19 @@ const trackStyle = {
 
 const handleStyle = {
   position: 'absolute',
-  top: '0px',
   width: '20px',
   height: '20px',
   backgroundColor: '#444',
-  // backgroundImage: 'linear-gradient(to bottom,#337ab7 0,#2e6da4 100%)',
-  // backgroundRepeat: 'repeat - x',
+  filter: 'none',
+  boxShadow: 'inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)',
+  border: '0 solid transparent',
+};
+
+const handleStyleVertical = {
+  position: 'absolute',
+  width: '20px',
+  height: '20px',
+  backgroundColor: '#444',
   filter: 'none',
   boxShadow: 'inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)',
   border: '0 solid transparent',
@@ -67,16 +74,17 @@ const railStyle = {
   height: '10px',
   width: '100%',
   marginTop: '-5px',
-  top: '4px',
+  top: '9px',
   left: '0',
 };
 
 const Slider = ({
-  value, defaultValue, color, ...props
+  value, defaultValue, color, vertical, ...props
 }) => {
   let Elem = null;
   let actualHandleStyle;
   let actualTrackStyle;
+  let actualRailStyle;
   let trackColor;
   switch (color) {
     case 'light-blue':
@@ -121,20 +129,35 @@ const Slider = ({
   if ((value && value.length) || (defaultValue && defaultValue.length)) {
     Elem = Range;
     let maxValue = (value && value.length) || (defaultValue && defaultValue.length);
-    actualHandleStyle = [];
-    actualTrackStyle = [];
-    for (let i = 0; i < maxValue; ++i) {
-      actualHandleStyle.push(handleStyle);
-      if (i < maxValue - 1) {
-        actualTrackStyle.push({ backgroundColor: trackColor, ...trackStyle });
+    if (!vertical) {
+      actualRailStyle = railStyle;
+      actualHandleStyle = [];
+      actualTrackStyle = [];
+      for (let i = 0; i < maxValue; ++i) {
+        actualHandleStyle.push({ ...handleStyle});
+        if (i < maxValue - 1) {
+          actualTrackStyle.push({ backgroundColor: trackColor, ...trackStyle });
+        }
+      }
+    } else {
+      actualHandleStyle = [];
+      for (let i = 0; i < maxValue; ++i) {
+        actualHandleStyle.push(handleStyle);
       }
     }
   } else {
     Elem = RcSlider;
-    actualHandleStyle = handleStyle;
-    actualTrackStyle = { backgroundColor: trackColor, ...trackStyle };
+    if (!vertical) {
+      actualHandleStyle = {top: '0px', ...handleStyle};
+      actualRailStyle = railStyle;
+      actualTrackStyle = { backgroundColor: trackColor, ...trackStyle };
+    } else {
+      actualHandleStyle = handleStyle;
+      actualTrackStyle = undefined;
+      actualRailStyle = undefined;
+    }
   }
-  
+
 
   return (
     <Elem
@@ -143,18 +166,22 @@ const Slider = ({
       handle={handle}
       trackStyle={actualTrackStyle}
       handleStyle={actualHandleStyle}
-      railStyle={railStyle}
-     {...props} 
+      railStyle={actualRailStyle}
+      {...{ vertical, ...props }}
     />);
 };
 
 
 Slider.propTypes = {
   color: PropTypes.oneOf(Colors),
+  vertical: PropTypes.bool,
+  value: PropTypes.any,
 };
 
 Slider.defaultProps = {
   color: 'light-blue',
+  vertical: false,
+  value: undefined
 };
 
 export default Slider;
