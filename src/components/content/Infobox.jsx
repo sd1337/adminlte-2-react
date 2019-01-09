@@ -43,8 +43,8 @@ const Infobox = ({
 Infobox.propTypes = {
   icon: PropTypes.string.isRequired,
   text: PropTypes.string,
-  number: PropTypes.oneOf([PropTypes.string, PropTypes.node,
-  PropTypes.arrayOf(PropTypes.oneOf([PropTypes.string, PropTypes.node]))]),
+  number: PropTypes.oneOfType([PropTypes.string, PropTypes.node,
+  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node]))]),
   color: PropTypes.oneOf(Colors),
   progress: PropTypes.number,
   progressText: PropTypes.string,

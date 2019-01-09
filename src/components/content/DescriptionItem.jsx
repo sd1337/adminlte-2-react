@@ -12,7 +12,7 @@ const DescriptionItem = ({ text, label, noText }) => {
 };
 
 DescriptionItem.propTypes = {
-  text: PropTypes.,
+  text: PropTypes.string,
   label: PropTypes.string,
   noText: PropTypes.bool,
 };

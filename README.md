@@ -60,7 +60,7 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 | --------|---------|---------|-------------|
 | **text** | string |  | Display text of the item |
 | children | `<Item />` |  | A nested `Item` will be displayed as a sublevel item and allows for multilevel menus |
-| icon | oneOf: `string`, `[string]` | `'far-circle'` | Icon on the left side |
+| icon | [icon](#icons) | `'far-circle'` | Icon on the left side |
 | link | string | `'#'` | Relative links should refere to anonther page components `path` property and absolute links are simple |
 | labels | arrayOf: `{small: boolean, color: string, text: string, type:string}`|  | Description for one or more labels |
 | color | `string` |  | Iconcolor |
@@ -270,27 +270,77 @@ Undocumented use at your own risk
 
 Simple wrapper over `<dl>`
 
+##### Props
+
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
 | horizontal | `bool` | `false` | Will render the list horizontal |
 
 #### DescriptionItem
 
+##### Props
+
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
-| horizontal | `bool` | `false` | Will render the list horizontal |
+| text | `string` |  |  |
+| label | `string` |  |  |
+| noText | `bool` | false | Use this if you only want to render a label |
 
 #### DescriptionBlock
 
+A block content element containing several text elements (`text` and `header`) a percentage description and indicator.
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **percentage** | `number` |  |  |
+| **percentageColor** | [color](#types-and-colors) |  |  |
+| **header** | `string` |  |  |
+| **text** | `string` |  |  |
+| **indication** | oneOf: `left`, `right`, `up`, `down` |  |  |
+
 #### Divider
+
+Include a divider to give a better distinction between sidebar entries 
 
 #### Infobox
 
+Infobox with icon, text and optional progress information
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **icon** | [icon](#icons) |  |  |
+| text | `string` |  |  |
+| number | `string` |  | Bold text displayed in center, usually a number |
+| color | [color](#types-and-colors) |  |  |
+| progress | `number` |  |  |
+| progressText | `string` |  |  |
+| iconColorOnly | `string` |  | Alternate styling that colors only the icon instead of the entire box |
+
 #### Infobox2
+
+An alternative info box with similar props but other styling
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **icon** | [icon](#icons) |  |  |
+| color | [color](#types-and-colors) |  |  |
+| title | `string` |  |  |
+| subTitle | `string` |  |  |
+| text | `string` |  |  |
+| footerText | `string` |  |  |
+| footerIcon | [icon](#icons) | `fas-arrow-alt-circle-right` |  |
+| onFooterClick | `function` |  | Callback on footer click |
+| to | `route` |  | Can be used instead of onFooterClick to route instead to another page directly |
 
 #### Label
 
-#### LoadingOverlay
+#### LoadingSpinner
 
 #### LoginCore
 
