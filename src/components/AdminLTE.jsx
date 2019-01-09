@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -19,7 +20,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'source-sans-pro/source-sans-pro.css';
 import '../adminlte/css/AdminLTE.css';
 
-import 'jquery';
+import jQuery from 'jquery'
 import 'bootstrap';
 import '../adminlte/js/adminlte';
 import 'jquery-sparkline';
