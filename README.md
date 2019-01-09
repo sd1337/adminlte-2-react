@@ -276,6 +276,10 @@ Simple wrapper over `<dl>`
 
 #### DescriptionItem
 
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| horizontal | `bool` | `false` | Will render the list horizontal |
+
 #### DescriptionBlock
 
 #### Divider
