@@ -226,6 +226,12 @@ Undocumented use at your own risk
 | --------|---------|---------|-------------|
 | data | `array` |  | Array of objects matching the column description |
 | columns | `array` |  | Column descriptions, see [next table](#column-options) for reference |
+| condensed | `bool` | `false` | Compact data layout |
+| striped | `bool` | `false` | Alternate row coloring |
+| noMargin | `bool` | `false` | Removes table margin |
+| border | `bool` |  `false`| Show borders around cells |
+| responsive | `bool` | `false` | Resize table of window resize |
+| hover | `bool` | `false` | Highlight hovered rows |
 
 ##### Column Options
 
@@ -242,13 +248,35 @@ Undocumented use at your own risk
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
-| options | `array` |  | Array of objects matching the column description |
+| options | `object` |  | Array of objects matching the column description |
+| ajaxMap | `function` |  | Allows custom argument mapping for ajax based data source, equivalent to `on('preXhr.dt')` |
+| ajaxResponseMap | `function` |  | Mapping function for data retrieved on ajax based data source, equivalent to `on('preXhr.dt')` |
+| data | `array` |  | Array of objects matching the column description |
+| columns | `array` |  | Column descriptions, see [next table](#column-options) for reference |
+| setDataTableRef | `function` |  | Callback that gets passed the datatable api() ref |
+| onSelect | `function` |  | Callback after row gets selected - arguments `(rowdata)` |
+| onDeselect | `function` |  | Callback after row deselect - arguments `(rowdata)` |
+| footer | `bool` | `false` | Renders column headers on bottom of table |
+| hover | `bool` | `false` | Highlight hovered rows |
+| border | `bool` | `false` | Show borders around cells |
+| condensed | `bool` | `false` | Compact data layout |
+| striped | `bool` | `false` | Alternate row coloring |
+| noMargin | `bool` | `false` | Removes table margin |
+| responsive | `bool` | `false` | Resize table of window resize |
+| selectedRows | `[object]` |  | Allows passing in the currently selected rows |
+| onClickEvents | `object` |  | Row level bound click events based on `class` on cell dom element. Example `render: (data) => ``<div class="on-click-event">${data}</div>``'` will bind to an object `{onClickEvent: (data, rowIndex, rowData) => {console.log("do stuff with row data")}}` |
 
 #### Description
 
-#### DescriptionBlock
+Simple wrapper over `<dl>`
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| horizontal | `bool` | `false` | Will render the list horizontal |
 
 #### DescriptionItem
+
+#### DescriptionBlock
 
 #### Divider
 

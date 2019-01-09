@@ -9,6 +9,35 @@ const $ = require('jquery');
 $.DataTable = require('datatables.net-bs');
 require('datatables.net-select-bs');
 
+const arrayEquals = (a, b) => {
+  // if the other array is a falsy value, return
+  if (!b) {
+    return false;
+  }
+
+  // compare lengths - can save a lot of time
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0, l = a.length; i < l; i++) {
+    // Check if we have nested arrays
+    if (a[i] instanceof Array && b[i] instanceof Array) {
+      // recurse into the nested arrays
+      if (!a[i].equals(b[i])) {
+        return false;
+      }
+    } else if (a[i] !== b[i]) {
+      // Warning - two different object instances will never be equal: {x:20} != {x:20}
+      return false;
+    }
+  }
+  return true;
+};
+
+const camelToKebap = string => string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+
 class DataTable extends Component {
   state = {
     options: null,
@@ -33,10 +62,8 @@ class DataTable extends Component {
     const { options } = this.state;
 
     const api = $(this.main).dataTable({
-      //    dom: '<"data-table-wrapper"t>',
       data,
       columns: (options && options.columns) || columns,
-      // ordering: false,
       ...options,
     }).api();
     this.api = api;
@@ -57,8 +84,39 @@ class DataTable extends Component {
     }
   }
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate({ data, selectedRows }) {
+    const { data: propData, selectedRows: propSelectedRows } = this.props;
+    if (data !== propData
+      || !arrayEquals(selectedRows, propSelectedRows)) {
+      return true;
+    }
     return false;
+  }
+
+  componentDidUpdate() {
+    const { onClickEvents } = this.props;
+    const { api } = this;
+    const ids = [];
+    $('.selected', this.main).each(function each() {
+      ids.push(this.id);
+    });
+
+    api.clear();
+    const { data } = this.props;
+    if (data) { api.rows.add(data); }
+    api.draw();
+    let { selectedRows } = this.props;
+    if (selectedRows) {
+      selectedRows = selectedRows.length ? selectedRows : [selectedRows];
+      selectedRows.forEach((item) => {
+        // eslint-disable-next-line eqeqeq
+        if (!ids.find(p => p == selectedRows[0])) api.row(`#${item}`).select();
+        else $(`#${item}`, this.main).addClass('selected');
+      });
+    }
+    if (onClickEvents) {
+      this.bindOnClickEvents(onClickEvents, api);
+    }
   }
 
   componentWillUnmount() {
@@ -68,12 +126,24 @@ class DataTable extends Component {
       .destroy(true);
   }
 
+  bindOnClickEvents(onClickEvents, api) {
+    Object.entries(onClickEvents).forEach(([key, value]) => {
+      $(`tbody .${camelToKebap(key)}`, this.main).each(function each() {
+        const cell = api.cell($(this).parents('td'));
+        const cellData = cell.data();
+        const row = cell.row($(this).parents('tr'));
+        const rowIndex = row.index();
+        const rowData = row.data();
+        $(this).on('click', () => value(cellData, rowIndex, rowData));
+      });
+    });
+  }
+
   render() {
     const {
       options, columns, footer, hover, border, condensed,
     } = this.props;
     const columns2 = (options && options.columns) || columns;
-    const hasFooter = !!(footer);
     const headerColumns = columns2.map(p => (
       <th
         key={uuidv4()}
@@ -94,7 +164,7 @@ class DataTable extends Component {
       <div>
         <table ref={(c) => { this.main = c; }} className={classes} width="100%">
           <thead><tr>{headerColumns}</tr></thead>
-          {hasFooter && <tfoot><tr>{headerColumns}</tr></tfoot>}
+          {footer && <tfoot><tr>{headerColumns}</tr></tfoot>}
         </table>
       </div>
     );
@@ -107,22 +177,17 @@ DataTable.propTypes = {
   }).isRequired,
   ajaxMap: PropTypes.func,
   ajaxResponseMap: PropTypes.func,
-  data: PropTypes.shape({
-
-  }),
-  columns: PropTypes.shape({
-
-  }),
+  data: PropTypes.arrayOf(PropTypes.shape({ })),
+  columns: PropTypes.arrayOf(PropTypes.shape({ })),
   setDataTableRef: PropTypes.func,
   onSelect: PropTypes.func,
   onDeselect: PropTypes.func,
-  footer: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  footer: PropTypes.bool,
   hover: PropTypes.bool,
   border: PropTypes.bool,
   condensed: PropTypes.bool,
+  selectedRows: PropTypes.shape({ }),
+  onClickEvents: PropTypes.shape({ }),
 };
 
 DataTable.defaultProps = {
@@ -133,10 +198,12 @@ DataTable.defaultProps = {
   setDataTableRef: null,
   onSelect: null,
   onDeselect: null,
-  footer: null,
+  footer: false,
   hover: true,
   border: false,
   condensed: false,
+  selectedRows: null,
+  onClickEvents: null,
 };
 
 export default DataTable;

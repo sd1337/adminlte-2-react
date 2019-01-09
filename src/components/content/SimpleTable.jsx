@@ -24,7 +24,7 @@ class SimpleTable extends Component {
       <tr key={`${key}-${rowIdx}`}>
         {columns.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
       </tr>
-    )) : null;
+    )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
     let headers;
     const hasHeaders = columns.filter(p => p.title).length > 0;
     if (hasHeaders) { headers = columns.map(p => <th key={`${key}-${p.title}`} style={{ width: p.width }}>{p.title}</th>); }
@@ -62,7 +62,7 @@ class SimpleTable extends Component {
 SimpleTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
 
-  })).isRequired,
+  })),
   columns: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string,
     data: PropTypes.string,
@@ -78,6 +78,7 @@ SimpleTable.propTypes = {
 };
 
 SimpleTable.defaultProps = {
+  data: null,
   columns: null,
   condensed: false,
   striped: false,
