@@ -1,7 +1,7 @@
 {
-  "name": "adminlte-react",
+  "name": "adminlte-2-react",
   "version": "0.1.0",
-  "description": "AdminLTE template ported to React",
+  "description": "AdminLTE 2.x.x. template ported to React",
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,7 +13,10 @@
     "react",
     "reactjs",
     "admin",
-    "template"
+    "template",
+    "bootstrap",
+    "datatables",
+    "admin"
   ],
   "author": {
     "name": "Nikolaus Sperat",
