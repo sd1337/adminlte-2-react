@@ -48,7 +48,7 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 | children | node |  | NavbarMenu, Sidebar and Content Components belong here |
 | title | oneOf: `string`, `[string]` | `['Admin', 'LTE']` | Title in header bar, if an array is supplied the first element will be rendered bold and the second normal |
 | titleShort | oneOf: `string`, `[string]` | `['Admin', 'LTE']` | Title in header bar when the sidebar is collapsed, if an array is supplied the first element will be rendered bold and the second normal |
-| titleShort | oneOf: `'black-light'`, `'black'`, `'blue'`, `'blue-light'`, `'green'`, `'green-light'`, `'purple'`, `'purple-light'`, `'red'`, `'red-light'`, `'yellow'`, `'yellow-light'` | `'blue'` | Colortheme for AdminLTE |
+| theme | oneOf: `'black-light'`, `'black'`, `'blue'`, `'blue-light'`, `'green'`, `'green-light'`, `'purple'`, `'purple-light'`, `'red'`, `'red-light'`, `'yellow'`, `'yellow-light'` | `'blue'` | Colortheme for AdminLTE |
 | browserTitle | string | Untitled | Browsertitle, can be set here globally or for each site indvidually |
 | sidebar | arrayOf: `<Item />`, `<Header />`, `<li />`|  | Sidebar items |
 
