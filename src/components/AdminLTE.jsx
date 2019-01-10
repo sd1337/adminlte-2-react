@@ -235,8 +235,8 @@ AdminLTE.propTypes = {
   ]),
   theme: PropTypes.oneOf(Themes),
   browserTitle: PropTypes.string,
-  sidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  footer: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  sidebar: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  footer: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 //  controlSidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
