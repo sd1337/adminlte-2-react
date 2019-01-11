@@ -20,7 +20,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'source-sans-pro/source-sans-pro.css';
 import '../adminlte/css/AdminLTE.css';
 
-import jQuery from 'jquery'
+import jQuery from 'jquery';
 import 'bootstrap';
 import '../adminlte/js/adminlte';
 import 'jquery-sparkline';
@@ -126,6 +126,7 @@ class AdminLTE extends Component {
   render() {
     let { children, title, titleShort } = this.props;
     {
+      if (!children) children = [<div>No content</div>];
       if (!children.length) { children = [children]; }
       let temp = children.filter(p => Object.prototype.toString.call(p) !== '[object Array]');
       children.filter(p => Object.prototype.toString.call(p) === '[object Array]').forEach((p) => { temp = temp.concat(p); });
@@ -174,7 +175,7 @@ class AdminLTE extends Component {
 
     const {
       sidebar = content.find(p => p.type === Sidebar.Core),
-      //controlSidebar,
+      // controlSidebar,
       footer = content.find(p => p.type === Footer),
     } = this.props;
 
@@ -246,7 +247,7 @@ AdminLTE.defaultProps = {
   titleShort: ['A', 'LT'],
   browserTitle: 'Untitled',
   theme: 'blue',
-//  controlSidebar: null,
+  //  controlSidebar: null,
   footer: null,
 };
 

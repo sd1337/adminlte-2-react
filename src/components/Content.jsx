@@ -20,7 +20,7 @@ class Content extends Component {
 
   render() {
     const {
-      title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true, modalFooter, children, history,
+      title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true, modalFooter, children, history, onHide, modalSize,
     } = this.props;
 
     if (modal) {
@@ -28,8 +28,10 @@ class Content extends Component {
         <Modal
           backdrop
           show={show}
-          onHide={() => { history.push(modalCloseTo); }}
-          onExited={() => { history.push(modalCloseTo); }}
+          // eslint-disable-next-line no-unused-expressions
+          onHide={() => { if (modalCloseTo) { history.push(modalCloseTo); } if (onHide) onHide(); }}
+          onExited={() => { if (modalCloseTo) { history.push(modalCloseTo); } }}
+          bsSize={modalSize}
         >
           <Modal.Header closeButton>
             <Modal.Title>{title}</Modal.Title>
@@ -78,6 +80,8 @@ Content.propTypes = {
   children: PropTypes.node,
   browserTitle: PropTypes.string,
   history: ReactRouterPropTypes.history,
+  onHide: PropTypes.func,
+  modalSize: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
 };
 
 Content.defaultProps = {
@@ -91,6 +95,8 @@ Content.defaultProps = {
   children: null,
   browserTitle: null,
   history: null,
+  onHide: null,
+  modalSize: null,
 };
 
 export default withRouter(Content);
