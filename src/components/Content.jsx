@@ -4,6 +4,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Types } from './PropTypes';
 
 
 class Content extends Component {
@@ -20,10 +21,12 @@ class Content extends Component {
 
   render() {
     const {
-      title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true, modalFooter, children, history, onHide, modalSize,
+      title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true, 
+      modalFooter, children, history, onHide, modalSize, modalType, modalCloseButton,
     } = this.props;
 
     if (modal) {
+      const dialogClassName = modalType ? `modal-${modalType}` : null;
       return (
         <Modal
           backdrop
@@ -32,14 +35,15 @@ class Content extends Component {
           onHide={() => { if (modalCloseTo) { history.push(modalCloseTo); } if (onHide) onHide(); }}
           onExited={() => { if (modalCloseTo) { history.push(modalCloseTo); } }}
           bsSize={modalSize}
+          dialogClassName={dialogClassName}
         >
-          <Modal.Header closeButton>
+          <Modal.Header closeButton={modalCloseButton}>
             <Modal.Title>{title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {children}
           </Modal.Body>
-          <Modal.Footer>{modalFooter}</Modal.Footer>
+          {modalFooter && <Modal.Footer>{modalFooter}</Modal.Footer>}
         </Modal>
       );
     }
@@ -82,6 +86,8 @@ Content.propTypes = {
   history: ReactRouterPropTypes.history,
   onHide: PropTypes.func,
   modalSize: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
+  modalType: PropTypes.oneOf(Types),
+  modalCloseButton: PropTypes.bool,
 };
 
 Content.defaultProps = {
@@ -97,6 +103,8 @@ Content.defaultProps = {
   history: null,
   onHide: null,
   modalSize: null,
+  modalType: null,
+  modalCloseButton: true,
 };
 
 export default withRouter(Content);

@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route, Redirect,
+  BrowserRouter as Router, Switch, Route, Redirect, Link,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -17,7 +17,7 @@ import '../css/bootstrap.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 // import '../css/ionicons.min.css';
-import 'source-sans-pro/source-sans-pro.css';
+import '../css/source-sans-pro.css';
 import '../adminlte/css/AdminLTE.css';
 
 import 'bootstrap';
@@ -69,6 +69,8 @@ import Label from './content/Label';
 import Calendar from './content/Calendar';
 import LoadingSpinner from './content/LoadingSpinner';
 import AsyncContent from './content/AsyncContent';
+import BoxPane from './content/BoxPane';
+import ButtonToolbar from './content/ButtonToolbar';
 
 library.add(fab, fas, far);
 
@@ -78,7 +80,7 @@ class AdminLTE extends Component {
     if (theme) {
       document.body.className += ` skin-${theme} sidebar-mini`;
     }
-    document.title = browserTitle;
+    if (browserTitle) document.title = browserTitle;
     switch (theme) {
       case 'black-light':
         require('../adminlte/css/skins/skin-black-light.css');
@@ -123,7 +125,10 @@ class AdminLTE extends Component {
   }
 
   render() {
-    let { children, title, titleShort } = this.props;
+    let {
+      children, title, titleShort,
+    } = this.props;
+    const { homeTo } = this.props;
     {
       if (!children) children = [<div>No content</div>];
       if (!children.length) { children = [children]; }
@@ -163,7 +168,8 @@ class AdminLTE extends Component {
             key={P.props.path}
             path={P.props.path}
             exact={P.props.exact}
-            render={props => React.cloneElement(P, { key: P.props.key ? P.props.key : P.props.path, ...props })}
+            render={props => React.cloneElement(P,
+              { key: P.props.key ? P.props.key : P.props.path, ...props })}
           />
         );
       }
@@ -182,7 +188,7 @@ class AdminLTE extends Component {
       <Router>
         <div className="wrapper">
           <header className="main-header">
-            <a href="index2.html" className="logo">
+            <Link className="logo" to={homeTo}>
               <span className="logo-mini">
                 <b>{titleShortBold}</b>
                 {titleShotThin}
@@ -191,7 +197,7 @@ class AdminLTE extends Component {
                 <b>{titleBold}</b>
                 {titlethin}
               </span>
-            </a>
+            </Link>
             <nav className="navbar navbar-static-top">
               <div className="sidebar-toggle" data-toggle="push-menu" role="button">
                 <FontAwesomeIcon icon={['fas', 'bars']} />
@@ -212,8 +218,6 @@ class AdminLTE extends Component {
             </Switch>
           </div>
           {footer}
-          <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js" />
-          <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js" />
         </div>
       </Router>
     );
@@ -235,19 +239,21 @@ AdminLTE.propTypes = {
   ]),
   theme: PropTypes.oneOf(Themes),
   browserTitle: PropTypes.string,
-  sidebar: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  sidebar: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   footer: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-//  controlSidebar: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+  homeTo: PropTypes.string,
 };
 
 AdminLTE.defaultProps = {
   children: null,
   title: ['Admin', 'LTE'],
   titleShort: ['A', 'LT'],
-  browserTitle: 'Untitled',
+  browserTitle: null,
   theme: 'blue',
   //  controlSidebar: null,
   footer: null,
+  sidebar: undefined,
+  homeTo: '/',
 };
 
 export default AdminLTE;
@@ -260,5 +266,5 @@ export {
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar
   , Divider, Inputs
   , Colors, Types, Sizes, Themes, FormTypes
-  , Badge, Label, Calendar, LoadingSpinner,
+  , Badge, Label, Calendar, LoadingSpinner, BoxPane, ButtonToolbar,
 };

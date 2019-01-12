@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Colors } from '../PropTypes';
 
@@ -8,7 +9,7 @@ const DescriptionBlock = ({
 }) => (
   <div className="description-block border-right">
     <span className={`description-percentage text-${percentageColor}`}>
-      <i className={`fa fa-caret-${indication}`} />
+      <FontAwesomeIcon icon={['fas', `caret-${indication}`]} />
       {` ${percentage}%`}
     </span>
     <h5 className="description-header">{header}</h5>

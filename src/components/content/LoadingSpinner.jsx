@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './LoadingSpinner.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { splitIcon } from '../Utilities';
 
 const LoadingSpinner = ({ icon, size }) => (
   <div className="overlay">
-    <i style={{ fontSize: size }} className={`fa ${icon} fa-spin`} />
+    <FontAwesomeIcon spin icon={splitIcon(icon)} size={size}/>
   </div>
 );
 
@@ -14,7 +16,7 @@ LoadingSpinner.propTypes = {
   size: PropTypes.string,
 };
 LoadingSpinner.defaultProps = {
-  icon: 'fa-refresh',
+  icon: 'fas-sync-alt',
   size: '30px',
 };
 

@@ -303,7 +303,7 @@ Box.defaultProps = {
   loaded: true,
   noPadding: false,
   badge: null,
-  toolIcon: 'wrench',
+  toolIcon: 'fas-wrench',
   customOptions: null,
   className: null,
   footerClass: null,

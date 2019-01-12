@@ -7,6 +7,8 @@ Samples can be found under <a href="https://react.sper.at" ref="noopender norefe
 
 `npm i adminlte-2-react`
 
+## Hello-World
+
 
 ## Components
 
@@ -54,7 +56,11 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 | browserTitle | string | Untitled | Browsertitle, can be set here globally or for each site indvidually |
 | sidebar | arrayOf: `<Item />`, `<Header />`, `<li />`|  | Sidebar items |
 
-#### Sidebar.Item
+### Sidebar
+
+#### Item
+
+This component is used to render the sidebar entries. Multilevel entries can be achieved by simply passing furhter items as children.
 
 ##### Props
 
@@ -63,12 +69,14 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 | **text** | string |  | Display text of the item |
 | children | `<Item />` |  | A nested `Item` will be displayed as a sublevel item and allows for multilevel menus |
 | icon | [icon](#icons) | `'far-circle'` | Icon on the left side |
-| link | string | `'#'` | Relative links should refere to anonther page components `path` property and absolute links are simple |
+| link | string | `'#'` | Relative links should refere to anonther page components `path` property and absolute links are simple anchors |
 | labels | arrayOf: `{small: boolean, color: string, text: string, type:string}`|  | Description for one or more labels |
 | color | `string` |  | Iconcolor |
 | isSubItem | `boolean` |  | True if its a nested sidebar item, will be set automatically |
 
 #### Header
+
+Header is used to seperate side bar items into multiple groups
 
 ##### Props
 
@@ -95,6 +103,13 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 #### Item
 
 ### Content
+
+Main content container for normal and modal content
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
 
 #### Box
 
@@ -158,6 +173,8 @@ react-bootstrap `Row` component
 
 #### Button
 
+As mentioned in [`react-bootstrap`](https://react-bootstrap.github.io/components/buttons/), react does not render new elements on new lines thus buttons side by side will be rendered without margin, to counteract that you can wrap your `<Button/>`'s with `<ButtonGroup />`
+
 ##### Props
 
 | Name    | Type    | Default | Description |
@@ -177,6 +194,7 @@ react-bootstrap `Row` component
 | margin | `boolean` | `false` | Additional margin around button |
 | to | `string` | `false` | Button link, relative uri's should be valid router routes |
 | app | `boolean` | `false` | App button styling |
+| outline | `boolean` | `false` | Button outline styling |
 | badge | [Badge](#badge), arrayOf: [Badge](#badge) |  | Badge placed in button |
 | onClick | `function` |  | On click action |
 | split | `boolean` | `false` | Split button and submenu |

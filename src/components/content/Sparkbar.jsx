@@ -25,7 +25,10 @@ class Sparkbar extends Component {
 
 Sparkbar.propTypes = {
   color: PropTypes.string.isRequired,
-  height: PropTypes.number.isRequired,
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   data: PropTypes.arrayOf(PropTypes.number).isRequired,
   padding: PropTypes.bool,
 };

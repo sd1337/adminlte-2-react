@@ -593,6 +593,7 @@ a:focus {
   .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
     display: none !important;
     -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
   .sidebar-mini.sidebar-collapse .main-header .logo {
     width: 50px;

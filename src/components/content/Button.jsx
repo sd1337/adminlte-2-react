@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { splitIcon } from '../Utilities';
 import ButtonGroup from './ButtonGroup';
+import './Button.css';
 
 class Button extends Component {
   render() {
@@ -13,6 +14,7 @@ class Button extends Component {
       id, size, type, block, icon, color, classes, flat, text, alignRight, disabled,
       // eslint-disable-next-line react/prop-types, no-unused-vars
       margin, pullRight = alignRight, pullLeft, to, app, badge, badgeText, onClick, split,
+      outline,
     } = this.props;
     let { children } = this.props;
     const buttonClasses = ['btn',
@@ -28,6 +30,7 @@ class Button extends Component {
       margin ? 'margin' : '',
       flat ? 'btn-flat' : '',
       app ? 'btn-app' : '',
+      outline ? 'btn-outline' : '',
     ].join(' ');
 
     const hasIcon = !!(icon);
@@ -104,6 +107,7 @@ Button.propTypes = {
   margin: PropTypes.bool,
   to: PropTypes.string,
   app: PropTypes.bool,
+  outline: PropTypes.bool,
   badge: PropTypes.node,
   onClick: PropTypes.func,
   split: PropTypes.bool,
@@ -130,6 +134,7 @@ Button.defaultProps = {
   margin: false,
   to: null,
   app: null,
+  outline: null,
   badge: null,
   onClick: null,
   split: null,

@@ -23,6 +23,10 @@
     "email": "niko@sper.at"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sd1337/adminlte-2-react.git"
+  },
   "peerDependencies": {
     "react": "^16.6.0"
   },

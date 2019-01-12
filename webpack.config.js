@@ -8,6 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
     libraryTarget: 'commonjs2',
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -37,7 +38,7 @@ module.exports = {
             },
           },
           {
-              loader: 'resolve-url-loader',
+            loader: 'resolve-url-loader',
           },
           {
             loader: 'postcss-loader',
@@ -60,15 +61,21 @@ module.exports = {
         ],
       },
       {
-        oneOf: [
-          {
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.css$/],
-            loader: require.resolve('file-loader'),
-            options: {
-              name: 'static/media/[name].[hash:8].[ext]',
-            },
-          },
-        ],
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[hash:8].[ext]',
+            outputPath: 'static/fonts/'
+          }
+        }]
+      },
+      {
+        exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.css$/, /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/],
+        loader: require.resolve('file-loader'),
+        options: {
+          name: 'static/media/[name].[hash:8].[ext]',
+        },
       },
     ],
   },
