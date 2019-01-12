@@ -5,7 +5,7 @@ Samples can be found under <a href="https://react.sper.at" ref="noopender norefe
 
 ## Installation
 
-`npm i adminlte-react`
+`npm i adminlte-2-react`
 
 
 ## Components

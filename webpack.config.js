@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require("webpack");
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: ['babel-polyfill', './src/components/AdminLTE.jsx'],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -20,30 +20,54 @@ module.exports = {
           options: {
             presets: ['env', 'stage-2'],
             plugins: ['transform-runtime'],
+            sourceMap: true,
           },
         },
       },
       {
-        oneOf: [{
-          test: /\.css$/,
-          exclude: /(node_modules|bower_components|build)/,
-          use: [
-            require.resolve('style-loader'),
-            {
-              loader: require.resolve('css-loader'),
-              options: {
-                importLoaders: 1,
-              },
-            },
-          ],
-        },
-        {
-          exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
-          loader: require.resolve('file-loader'),
-          options: {
-            name: 'static/media/[name].[hash:8].[ext]',
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader',
           },
-        },
+          {
+            loader: require.resolve('css-loader'),
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+              loader: 'resolve-url-loader',
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-flexbugs-fixes'),
+                require('autoprefixer')({
+                  browsers: [
+                    '>1%',
+                    'last 4 versions',
+                    'Firefox ESR',
+                    'not ie < 9', // React doesn't support IE8 anyway
+                  ],
+                  flexbox: 'no-2009',
+                }),
+              ],
+            },
+          },
+        ],
+      },
+      {
+        oneOf: [
+          {
+            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.css$/],
+            loader: require.resolve('file-loader'),
+            options: {
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
         ],
       },
     ],
