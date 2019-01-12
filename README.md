@@ -9,6 +9,56 @@ Samples can be found under <a href="https://react.sper.at" ref="noopender norefe
 
 ## Hello-World
 
+Easiest to achieve with `create-react-app`. Create a new project using `cra` and install `adminlte-2-react`.
+Copy this to App.js created by `create-react-app` 
+```
+import React, { Component } from 'react';
+import AdminLTE, { Sidebar, Content, Row, Col, Box, Button } from 'adminlte-2-react';
+
+const { Item } = Sidebar;
+
+class HelloWorld extends Component {
+  state = {}
+
+  render() {
+    return (<Content title="Hello World" subTitle="Getting started with adminlte-2-react" browserTitle="Hello World">
+      <Row>
+        <Col xs={6}>
+          <Box title="My first box" type="primary" closable collapsible footer={<Button type="danger" text="Danger Button" />}>
+            Hello World
+          </Box>
+        </Col>
+        <Col xs={6}>
+          <Box title="Another box">
+            Content goes here
+          </Box>
+        </Col>
+      </Row>
+    </Content>);
+  }
+}
+
+class App extends Component {
+
+  sidebar = [
+    <Item key="hello" text="Hello" to="/hello-world" />
+  ]
+
+  render() {
+    return (
+      <AdminLTE title={["Hello", "World"]} titleShort={["He", "we"]} theme="blue" sidebar={this.sidebar}>
+        <HelloWorld path="/hello-world" />
+      </AdminLTE>
+    );
+  }
+}
+
+export default App;
+
+```
+
+Create a new jsx 
+
 
 ## Components
 
@@ -173,7 +223,7 @@ react-bootstrap `Row` component
 
 #### Button
 
-As mentioned in [`react-bootstrap`](https://react-bootstrap.github.io/components/buttons/), react does not render new elements on new lines thus buttons side by side will be rendered without margin, to counteract that you can wrap your `<Button/>`'s with `<ButtonGroup />`
+As mentioned in [`react-bootstrap`](https://react-bootstrap.github.io/components/buttons/), React does not render new elements on new lines thus buttons side by side will be rendered without margin, to counteract that you can wrap your `<Button/>`'s with `<ButtonGroup />`
 
 ##### Props
 
