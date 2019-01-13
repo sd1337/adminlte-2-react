@@ -2,24 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Colors } from '../PropTypes';
+import { splitIcon } from '../Utilities';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const NavListItem = ({
-  iconClass, text, iconLabel, onClick, color = 'red', to,
-}) => (
+  icon, text, iconLabel, onClick, color = 'red', to,
+}) => {
+  localIcon = splitIcon(icon);
+  return(
   <li>
     <a href={to} onClick={onClick}>
       {text}
       <span className={`pull-right text-${color}`}>
-        <i className={`fa ${iconClass}`} />
+        <FontAwesomeIcon icon={localIcon} />
         {' '}
         {iconLabel}
       </span>
     </a>
   </li>
-);
+)};
 
 NavListItem.propTypes = {
-  iconClass: PropTypes.string,
+  icon: PropTypes.string,
   text: PropTypes.string,
   iconLabel: PropTypes.string,
   onClick: PropTypes.func,
@@ -28,7 +32,7 @@ NavListItem.propTypes = {
 };
 
 NavListItem.defaultProps = {
-  iconClass: 'fa-circle-o',
+  icon: 'far-circle',
   text: null,
   iconLabel: null,
   onClick: null,
