@@ -14,8 +14,8 @@ class InputWrapper extends Component {
     const {
       iconLeft, iconRight, addonLeft, addonRight, size,
       checkboxLeft, checkboxRight, radioLeft, radioRight, buttonLeft, buttonRight,
-      width, children, checkboxLeftProps, checkboxRightProps, radioLeftProps, radioRightProps,
-      ...props
+      children, checkboxLeftProps, checkboxRightProps, radioLeftProps, radioRightProps,
+      width, ...props
     } = this.props;
     if (iconLeft || iconRight || addonLeft || addonRight
       || checkboxLeft || checkboxRight || radioLeft || radioRight
@@ -68,6 +68,8 @@ InputWrapper.propTypes = {
   radioRightProps: PropTypes.shape({}),
   buttonLeft: PropTypes.node,
   buttonRight: PropTypes.node,
+  children: PropTypes.node.isRequired,
+  width: PropTypes.string,
 };
 
 InputWrapper.defaultProps = {
@@ -86,6 +88,7 @@ InputWrapper.defaultProps = {
   radioRightProps: null,
   buttonLeft: null,
   buttonRight: null,
+  width: null,
 };
 
 export default InputWrapper;

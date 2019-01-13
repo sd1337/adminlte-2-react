@@ -41,7 +41,7 @@ class Select2 extends Component {
 
   componentDidMount() {
     const {
-      placeholder, multiple, options, widgetOptions, ...props
+      placeholder, multiple, options, defaultWidgetOptions, allowClear, ...props
     } = this.props;
     const isSimpleArray = options.find(p => !p.value);
     const usesLabels = options.find(p => !!p.label);
@@ -51,19 +51,17 @@ class Select2 extends Component {
     const $ref = $(this.domRef).select2({
       placeholder,
       data,
-      ...widgetOptions,
+      allowClear,
+      ...defaultWidgetOptions,
     });
 
     const handleEvent = (event, callback) => {
-      const { params } = event;
-      const { data: data2 } = params || {};
-      if (data2) {
-        // null
-      } else {
-        // const { target: { value } } = event;
-      }
       const value = getValue($ref.select2('data'), isSimpleArray, usesLabels, multiple);
-      callback(value);
+      // eslint-disable-next-line no-param-reassign
+      event.params = {};
+      // eslint-disable-next-line no-param-reassign
+      event.params.data = value;
+      callback(event);
     };
     const boundHandlers = {};
 
@@ -160,7 +158,11 @@ class Select2 extends Component {
 
           const handleEvent = (event, callback2) => {
             const value2 = getValue($ref.select2('data'), this.isSimpleArray, this.usesLabels, multiple);
-            callback2(value2);
+            // eslint-disable-next-line no-param-reassign
+            event.params = {};
+            // eslint-disable-next-line no-param-reassign
+            event.params.data = value2;
+            callback2(event);
           };
 
           const actualCallback = (e) => { handleEvent(e, callback); };
@@ -237,12 +239,12 @@ class Select2 extends Component {
 Select2.propTypes = {
   placeholder: PropTypes.string,
   multiple: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.shape({
+  options: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
     ]),
-  })),
+  })), PropTypes.arrayOf(PropTypes.string)]),
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
@@ -252,21 +254,23 @@ Select2.propTypes = {
     PropTypes.number,
   ]),
   disabled: PropTypes.bool,
-  widgetOptions: PropTypes.shape({
+  defaultWidgetOptions: PropTypes.shape({
 
   }),
   name: PropTypes.string,
+  allowClear: PropTypes.bool,
 };
 
 Select2.defaultProps = {
-  placeholder: null,
+  placeholder: '',
   multiple: false,
   options: null,
   value: null,
   defaultValue: null,
   disabled: false,
-  widgetOptions: {},
+  defaultWidgetOptions: {},
   name: null,
+  allowClear: false,
 };
 
 export default Select2;

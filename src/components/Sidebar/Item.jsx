@@ -22,7 +22,7 @@ const Item = ({
   icon, link, text, labels, color, history, children, isSubItem, activeOn, to
 }) => {
   const localTo = to || link;
-  const active = isActiveItem({ localTo, activeOn, history });
+  const active = isActiveItem({ link: localTo, activeOn, history });
   const localLabels = labels && labels.length ? labels : (labels && [labels]) || [];
   const mappedLabels = localLabels.map(p => (p.small ? <small key={uuidv4()} className={`label pull-right bg-${p.color}`}>{p.text}</small> : <span key={uuidv4()} className={`label label-${p.type} pull-right`}>{p.text}</span>));
   const localColor = color ? TypeMappings.byColor[color].colorCode : null;
@@ -56,7 +56,7 @@ const Item = ({
     if (!children.length) { children = [children]; }
     /* eslint-disable-next-line no-param-reassign */
     children = children.map(p => React.cloneElement(p, { isSubItem: true }));
-    const activeChild = !!(children.find(p => isActiveItem({ history, ...p.props })));
+    const activeChild = !!(children.find(p => isActiveItem({ history, link: p.props.to || p.props.link, ...p.props })));
     return (
       <li className={`${active ? 'active ' : ''}treeview${activeChild ? ' menu-open' : ''}`}>
         <Link to={localTo}>
