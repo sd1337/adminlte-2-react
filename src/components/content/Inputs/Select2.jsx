@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import select2 from 'select2';
+import 'select2';
 import 'select2/dist/css/select2.css';
 
 import './Select2.css';
@@ -11,6 +11,7 @@ const $ = require('jquery');
 // test2
 
 const optionToSelect2 = (scopedOptions, simple) => (!simple
+  // eslint-disable-next-line max-len
   ? scopedOptions.map(({ value: id, label: text, ...props }) => ({ id, text: text || id, ...props }))
   : scopedOptions.map(p => ({ id: p, text: p })));
 
@@ -40,7 +41,7 @@ class Select2 extends Component {
 
   componentDidMount() {
     const {
-      placeholder, multiple, options, ...props
+      placeholder, multiple, options, widgetOptions, ...props
     } = this.props;
     const isSimpleArray = options.find(p => !p.value);
     const usesLabels = options.find(p => !!p.label);
@@ -50,6 +51,7 @@ class Select2 extends Component {
     const $ref = $(this.domRef).select2({
       placeholder,
       data,
+      ...widgetOptions,
     });
 
     const handleEvent = (event, callback) => {
@@ -73,6 +75,7 @@ class Select2 extends Component {
       $ref.on(jQueryEvent, actualCallback);
     };
 
+    // Find all Eventhandler Props and bind them
     Object.entries(props)
       .filter(([key]) => key.startsWith('on'))
       .forEach(bindEvent);
@@ -88,18 +91,28 @@ class Select2 extends Component {
     this.$ref = $ref;
   }
 
-  shouldComponentUpdate({ options, value, ...props }) {
-    const { options: propOptions, multiple, value: propValue } = this.props;
-    if (!arrayEquals(options, propOptions)) {
-      console.log(`Select2 with label ${this.props.label} will update because of options`);
+  shouldComponentUpdate({
+    options, value, disabled, ...props
+  }) {
+    const {
+      options: propOptions, multiple, value: propValue, disabled: propDisabled,
+    } = this.props;
+    if (disabled !== propDisabled) {
       return true;
     }
+    // Options changed
+    if (!arrayEquals(options, propOptions)) {
+      // console.log(`Select2 with label ${this.props.label} will update because of options`);
+      return true;
+    }
+    // Value changed
     if ((value || propValue) && multiple ? !arrayEquals(value, propValue) : value !== propValue) {
-      console.log(`Select2 with label ${this.props.label} will update because of value`);
+      // console.log(`Select2 with label ${this.props.label} will update because of value`);
       return true;
     }
     const BreakException = {};
     const { boundHandlers } = this;
+    // Eventhandler changed
     try {
       Object.entries(props)
         .filter(([key]) => key.startsWith('on'))
@@ -109,28 +122,36 @@ class Select2 extends Component {
           }
         });
     } catch (e) {
-      console.log(`Select2 with label ${this.props.label} will update because of callback`);
+      // console.log(`Select2 with label ${this.props.label} will update because of callback`);
       return true;
     }
     return false;
   }
 
-  componentDidUpdate({ value: oldValue }) {
-    console.log(`Select2 with label ${this.props.label} did update`);
-    const { value, multiple } = this.props;
+  componentDidUpdate({ value: oldValue, disabled: oldDisabled }) {
+    // console.log(`Select2 with label ${this.props.label} did update`);
+    const { value, multiple, disabled } = this.props;
     const $ref = $(this.domRef);
+
+    if (disabled !== oldDisabled) {
+      // console.log(disabled ? `Disabling Select2 with label ${this.props.label}` : `Enabling Select2 with label ${this.props.label}`);
+      $ref.prop('disabled', disabled);
+    }
+    // If value changed update select2 value
     if (value !== oldValue) {
-      console.log(`Updating value from Select2 with label ${this.props.label}`);
+      // console.log(`Updating value from Select2 with label ${this.props.label}`);
       $ref.val(value).trigger('change.select2');
     }
+    // Loop Eventhandler Props and unbinded removed events and bind new events
     Object.entries(this.props)
       .filter(([key]) => key.startsWith('on'))
       .forEach(([eventName, callback]) => {
         const boundHandler = this.boundHandlers[eventName] || {};
         {
           const { callback: storedCallback, actualCallback, jQueryEvent } = boundHandler;
+          // Eventhandler exists and new handler is different from old
           if (storedCallback && callback !== storedCallback) {
-            console.log(`Unbinding event ${eventName} from Select2 with label ${this.props.label}`);
+            // console.log(`Unbinding event ${eventName} from Select2 with label ${this.props.label}`);
             $ref.unbind(jQueryEvent, actualCallback);
           }
         }
@@ -138,20 +159,14 @@ class Select2 extends Component {
           const jQueryEvent = this.toJQueryEvent(eventName);
 
           const handleEvent = (event, callback2) => {
-            const { params } = event;
-            const { data: data2 } = params || {};
-            if (data2) {
-              // null
-            } else {
-              // const { target: { value } } = event;
-            }
             const value2 = getValue($ref.select2('data'), this.isSimpleArray, this.usesLabels, multiple);
             callback2(value2);
           };
 
           const actualCallback = (e) => { handleEvent(e, callback); };
+          // Store bound event handler to be able to later remove it
           this.boundHandlers[eventName] = { callback, actualCallback, jQueryEvent };
-          console.log(`Binding new event ${eventName} from Select2 with label ${this.props.label}`);
+          // console.log(`Binding new event ${eventName} from Select2 with label ${this.props.label}`);
           $ref.on(jQueryEvent, actualCallback);
         }
       });
@@ -159,8 +174,7 @@ class Select2 extends Component {
 
   componentWillUnmount() {
     $(this.domRef)
-      .select2()
-      .destroy(true);
+      .select2('destroy');
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -212,7 +226,6 @@ class Select2 extends Component {
           className="form-control"
           disabled={disabled}
           multiple={multiple}
-          value={value}
           defaultValue={defaultValue}
           style={{ width: '100%' }}
         />
@@ -222,7 +235,38 @@ class Select2 extends Component {
 }
 
 Select2.propTypes = {
+  placeholder: PropTypes.string,
+  multiple: PropTypes.bool,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+  })),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  disabled: PropTypes.bool,
+  widgetOptions: PropTypes.shape({
 
+  }),
+  name: PropTypes.string,
+};
+
+Select2.defaultProps = {
+  placeholder: null,
+  multiple: false,
+  options: null,
+  value: null,
+  defaultValue: null,
+  disabled: false,
+  widgetOptions: {},
+  name: null,
 };
 
 export default Select2;
