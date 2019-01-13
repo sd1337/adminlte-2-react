@@ -101,7 +101,10 @@ Item.propTypes = {
     PropTypes.arrayOf(PropTypes.node,),
   ]),
   icon: PropTypes.string,
-  link: PropTypes.string,
+  link: function(props, propName) {
+    const prop = props[propName];
+    return new Error("This prop is deprecated and will be removed in future releases, please use the prop \"to\" instead");
+  },
   text: PropTypes.string.isRequired,
   labels: PropTypes.arrayOf(PropTypes.shape({
   })),

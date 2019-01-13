@@ -9,13 +9,14 @@ class Select extends Component {
     const {
       options, label, name, disabled, multiple, value, onChange,
     } = this.props;
+    const localOptions = Array.isArray(options) && options.find(p => !!p.value) ? options : options.map(p => ({ value: p, text: p.text || p.label }));
     return (
       <div className="form-group">
         {/* eslint-disable jsx-a11y/label-has-for */}
         <label htmlFor={name}>{label}</label>
         <select ref={(c) => { this.input = c; }} name={name} className="form-control" disabled={disabled} multiple={multiple} value={value} onChange={onChange}>
-          {options.map(p => (
-            <option key={p.value} value={p.value}>{p.label}</option>
+          {localOptions.map(p => (
+            <option key={p.value} value={p.value}>{p.text || p.value}</option>
           ))}
         </select>
       </div>
@@ -28,7 +29,7 @@ Select.propTypes = {
     value: PropTypes.string.isRequired,
     checked: PropTypes.bool,
     disabled: PropTypes.bool,
-    label: PropTypes.string,
+    text: PropTypes.string,
   })).isRequired,
   name: PropTypes.string,
   label: PropTypes.string,

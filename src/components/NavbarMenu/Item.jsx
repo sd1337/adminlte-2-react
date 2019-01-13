@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 /* eslint-disable-next-line camelcase */
-import user2_160x160 from '../../adminlte/img/user2-160x160.jpg';
+// import user2_160x160 from '../../adminlte/img/user2-160x160.jpg';
 
 class Item extends Component {
   state = {}
@@ -15,7 +15,7 @@ class Item extends Component {
             <a>
               <div className="pull-left">
                 {/* eslint-disable-next-line camelcase */}
-                <img src={user2_160x160} className="img-circle" alt="User" />
+                <img src={null} className="img-circle" alt="User" />
               </div>
               <h4>
                 Support Team

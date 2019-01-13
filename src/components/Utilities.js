@@ -1,5 +1,30 @@
 
 const splitIcon = icon => (icon ? icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0) : null);
-const others = 'a';
+const arrayEquals = (a, b) => {
+  // if the other array is a falsy value, return
+  if (!b) {
+    return false;
+  }
 
-export { splitIcon, others };
+  // compare lengths - can save a lot of time
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0, l = a.length; i < l; i++) {
+    // Check if we have nested arrays
+    if (a[i] instanceof Array && b[i] instanceof Array) {
+      // recurse into the nested arrays
+      if (!a[i].equals(b[i])) {
+        return false;
+      }
+    } else if (a[i] !== b[i]) {
+      // Warning - two different object instances will never be equal: {x:20} != {x:20}
+      return false;
+    }
+  }
+  return true;
+};
+
+export { splitIcon, arrayEquals };

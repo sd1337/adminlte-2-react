@@ -3,38 +3,12 @@ import PropTypes from 'prop-types';
 
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
 import 'datatables.net-select-bs/css/select.bootstrap.css';
+import { arrayEquals } from '../Utilities';
 
 const uuidv4 = require('uuid/v4');
 const $ = require('jquery');
 $.DataTable = require('datatables.net-bs');
 require('datatables.net-select-bs');
-
-const arrayEquals = (a, b) => {
-  // if the other array is a falsy value, return
-  if (!b) {
-    return false;
-  }
-
-  // compare lengths - can save a lot of time
-  if (a.length !== b.length) {
-    return false;
-  }
-
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0, l = a.length; i < l; i++) {
-    // Check if we have nested arrays
-    if (a[i] instanceof Array && b[i] instanceof Array) {
-      // recurse into the nested arrays
-      if (!a[i].equals(b[i])) {
-        return false;
-      }
-    } else if (a[i] !== b[i]) {
-      // Warning - two different object instances will never be equal: {x:20} != {x:20}
-      return false;
-    }
-  }
-  return true;
-};
 
 const camelToKebap = string => string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
