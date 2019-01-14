@@ -1,39 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import packageInfo from '../../package.json';
 
-const Footer = ({ version = '1.0', copyright = 'a' }) => {
-  const myFooter = (
-    <React.Fragment>
-      <strong>
-        Copyright &copy; 2014-2016
-        {' '}
-        <a href="https://adminlte.io">Almsaeed Studio</a>
-        .
-      </strong>
-      {' '}
-      All rights reserved.
-    </React.Fragment>
-  );
-  return (
-    <footer className="main-footer">
+const { name, version: packageVersion, repository: { url } } = packageInfo;
+
+const Footer = ({ children, includeVersionInfo }) => (
+  <footer className="main-footer">
+    {includeVersionInfo
+      && (
       <div className="pull-right hidden-xs">
-        <b>Version</b>
-        {' '}
-        {version}
+        <a href={url.replace('git+', '')} target="_blank" rel="noopener noreferrer">{name}</a>
+        {' v'}
+        {packageVersion}
       </div>
-      {copyright && myFooter}
-    </footer>
-  );
-};
+      )}
+    {'\u00A0'}
+    {children}
+  </footer>
+);
 
 Footer.propTypes = {
-  version: PropTypes.string,
-  copyright: PropTypes.string,
+  children: PropTypes.node,
+  includeVersionInfo: PropTypes.bool,
 };
 
 Footer.defaultProps = {
-  version: '1.0',
-  copyright: 'a',
+  children: null,
+  includeVersionInfo: true,
 };
 
 export default Footer;

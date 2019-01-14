@@ -57,8 +57,6 @@ export default App;
 
 ```
 
-Create a new jsx 
-
 
 ## Components
 
