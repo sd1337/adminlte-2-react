@@ -1,7 +1,7 @@
 # adminlte-react
 Yet another project based on the great [AdminLTE](https://adminlte.io/) Control Panel Template. This is not because of a not invented here syndrom but because the other projects seem not very active or did not meet the expectations I had in using such a react component. The philosophy for this project was to make it as easy as possible to use from a developer standpoint and rework it where I've seen the use to. Currently it does still depend on jQuery here and there (especially the DataTables Component).
 
-Samples can be found under <a href="https://react.sper.at" ref="noopender noreferrer">react.sper.at</a>
+Samples can be found under <a href="https://react.sper.at" ref="noopender noreferrer">react.sper.at</a> and sourcecode on <a href="https://github.com/sd1337/adminlte-2-react-examples" ref="noopender noreferrer">github</a>
 
 ## Installation
 
