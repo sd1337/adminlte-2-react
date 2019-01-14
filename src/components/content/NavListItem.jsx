@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const NavListItem = ({
   icon, text, iconLabel, onClick, color = 'red', to,
 }) => {
-  localIcon = splitIcon(icon);
+  const localIcon = splitIcon(icon);
   return(
   <li>
     <a href={to} onClick={onClick}>
