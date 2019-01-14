@@ -43,6 +43,7 @@ const Label = ({
         </label>
         <Col xs={xs} sm={sm} md={md} lg={lg}>
           {children}
+          {help && <p className="help-block">{help}</p>}
         </Col>
       </div>
     );
@@ -59,7 +60,12 @@ const Label = ({
       </div>
     );
   }
-  return children;
+  return (
+    <div className={groupClasses}>
+      {children}
+      {help && <p className="help-block">{help}</p>}
+    </div>
+  );
 };
 
 Label.propTypes = {

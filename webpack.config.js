@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require("webpack");
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
@@ -8,7 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
     libraryTarget: 'commonjs2',
-    publicPath: "/",
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -66,9 +66,9 @@ module.exports = {
           loader: 'file-loader',
           options: {
             name: '[name].[hash:8].[ext]',
-            outputPath: 'static/fonts/'
-          }
-        }]
+            outputPath: 'static/fonts/',
+          },
+        }],
       },
       {
         exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.css$/, /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/],
@@ -88,9 +88,9 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
-    })
-  ]
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery',
+    }),
+  ],
 };

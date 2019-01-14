@@ -9,17 +9,17 @@ import { splitIcon } from '../Utilities';
 
 const isActiveItem = ({ link, activeOn, history }) => {
   const { location } = history || {};
-  const { pathname } = location || { pathname: "" };
+  const { pathname } = location || { pathname: '' };
   let activeArray = [];
   if (activeOn) {
-    activeArray = activeOn.length && typeof activeOn !== "string" ? activeOn : [activeOn];
+    activeArray = activeOn.length && typeof activeOn !== 'string' ? activeOn : [activeOn];
   }
   const active = pathname === link || !!(activeArray.find(p => pathname.match(new RegExp(p))));
   return active;
-}
+};
 
 const Item = ({
-  icon, link, text, labels, color, history, children, isSubItem, activeOn, to
+  icon, link, text, labels, color, history, children, isSubItem, activeOn, to,
 }) => {
   const localTo = to || link;
   const active = isActiveItem({ link: localTo, activeOn, history });
@@ -47,7 +47,8 @@ const Item = ({
             {children}
           </ul>
         )}
-      </li>);
+      </li>
+    );
   }
 
 
@@ -75,7 +76,8 @@ const Item = ({
         <ul className="treeview-menu" style={{ display: activeChild ? 'block' : 'none' }}>
           {children}
         </ul>
-      </li>);
+      </li>
+    );
   }
   return (
     <li className={`${active ? 'active ' : ''}treeview${active ? ' menu-open' : ''}`}>
@@ -98,12 +100,15 @@ const Item = ({
 Item.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.node,
-    PropTypes.arrayOf(PropTypes.node,),
+    PropTypes.arrayOf(PropTypes.node),
   ]),
   icon: PropTypes.string,
-  link: function(props, propName) {
+  // eslint-disable-next-line consistent-return
+  link(props, propName) {
     const prop = props[propName];
-    return new Error("This prop is deprecated and will be removed in future releases, please use the prop \"to\" instead");
+    if (prop) {
+      return new Error('This prop is deprecated and will be removed in future releases, please use the prop "to" instead');
+    }
   },
   text: PropTypes.string.isRequired,
   labels: PropTypes.arrayOf(PropTypes.shape({
@@ -121,7 +126,7 @@ Item.propTypes = {
 Item.defaultProps = {
   children: null,
   icon: 'far-circle',
-  link: '#',
+  link: null,
   labels: null,
   color: null,
   history: null,
