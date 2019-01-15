@@ -38,7 +38,6 @@ import ProgressGroup from './content/ProgressGroup';
 import Button from './content/Button';
 import ButtonGroup from './content/ButtonGroup';
 import DataTable from './content/DataTable';
-import Checkbox from './content/Checkbox';
 import Tabs from './content/Tabs';
 import TabContent from './content/TabContent';
 import Description from './content/Description';
