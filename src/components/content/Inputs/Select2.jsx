@@ -10,44 +10,27 @@ import { arrayEquals } from '../../Utilities';
 const $ = require('jquery');
 // test2
 
-const optionToSelect2 = (scopedOptions, simple) => (!simple
-  // eslint-disable-next-line max-len
-  ? scopedOptions.map(({ value: id, label: text, ...props }) => ({ id, text: text || id, ...props }))
-  : scopedOptions.map(p => ({ id: p, text: p })));
-
-const optionsFromSelect2 = (select2Options, simple, usesLabels) => (!simple
-  ? select2Options.map((p) => {
-    if (usesLabels) {
-      const { id: value, text: label, ...props } = p;
-      return { value, label, ...props };
-    }
-    const { id: value, ...props } = p;
-    return { value, ...props };
-  })
-  : select2Options.map(({ id }) => id));
-
-const getValue = (select2Options, simple, usesLabels, multiple) => {
-  let value = optionsFromSelect2(select2Options, simple, usesLabels);
-  if (!multiple && value.length > 0) {
-    [value] = value;
-  }
-  return value;
-};
-
 class Select2 extends Component {
   state = {}
 
   boundHandlers = {}
 
+  internalOptions = {}
+
+  actualOptions = {}
+
+  constructor(props) {
+    super(props);
+    const { options } = props;
+    this.mapOptions(options);
+  }
+
   componentDidMount() {
     const {
-      placeholder, multiple, options, defaultWidgetOptions, allowClear, ...props
+      placeholder, multiple, options, defaultWidgetOptions, allowClear, value,
+       ...props
     } = this.props;
-    const isSimpleArray = options.find(p => !p.value);
-    const usesLabels = options.find(p => !!p.label);
-    this.usesLabels = usesLabels;
-    this.isSimpleArray = isSimpleArray;
-    const data = optionToSelect2(options, isSimpleArray, usesLabels);
+    const data = this.internalOptions;
     const $ref = $(this.domRef).select2({
       placeholder,
       data,
@@ -56,11 +39,11 @@ class Select2 extends Component {
     });
 
     const handleEvent = (event, callback) => {
-      const value = getValue($ref.select2('data'), isSimpleArray, usesLabels, multiple);
+      const value2 = this.getValue($ref.select2('data'), multiple);
       // eslint-disable-next-line no-param-reassign
       event.params = {};
       // eslint-disable-next-line no-param-reassign
-      event.params.data = value;
+      event.params.data = value2;
       callback(event);
     };
     const boundHandlers = {};
@@ -75,17 +58,18 @@ class Select2 extends Component {
 
     // Find all Eventhandler Props and bind them
     Object.entries(props)
-      .filter(([key]) => key.startsWith('on'))
+      .filter(([key, value2]) => key.startsWith('on') && value2)
       .forEach(bindEvent);
 
     this.boundHandlers = boundHandlers;
     $ref.on('select2:select', () => {
-      const newValue = getValue($ref.select2('data'), isSimpleArray, usesLabels, multiple);
+      const newValue = this.getValue($ref.select2('data'), multiple);
       const { value: propValue } = this.props;
       if (propValue && newValue !== propValue) {
         $ref.val(propValue).trigger('change.select2');
       }
     });
+    $ref.val(value).trigger("change.select2");
     this.$ref = $ref;
   }
 
@@ -126,9 +110,11 @@ class Select2 extends Component {
     return false;
   }
 
-  componentDidUpdate({ value: oldValue, disabled: oldDisabled }) {
+  componentDidUpdate({ value: oldValue, disabled: oldDisabled, options: oldOptions }) {
     // console.log(`Select2 with label ${this.props.label} did update`);
-    const { value, multiple, disabled } = this.props;
+    const {
+      value, multiple, disabled, options,
+    } = this.props;
     const $ref = $(this.domRef);
 
     if (disabled !== oldDisabled) {
@@ -157,7 +143,7 @@ class Select2 extends Component {
           const jQueryEvent = this.toJQueryEvent(eventName);
 
           const handleEvent = (event, callback2) => {
-            const value2 = getValue($ref.select2('data'), this.isSimpleArray, this.usesLabels, multiple);
+            const value2 = this.getValue($ref.select2('data'), multiple);
             // eslint-disable-next-line no-param-reassign
             event.params = {};
             // eslint-disable-next-line no-param-reassign
@@ -172,11 +158,63 @@ class Select2 extends Component {
           $ref.on(jQueryEvent, actualCallback);
         }
       });
+    if (!arrayEquals(options, oldOptions)) {
+      const currVal = $ref.val();
+      $ref.find('option').remove();
+      this.mapOptions(options);
+      this.internalOptions.forEach(({ id, text }) => {
+        // eslint-disable-next-line no-undef
+        const newOption = new Option(text, id, false, false);
+        $ref.append(newOption);
+      });
+      $ref.val(currVal);
+      $ref.trigger('select2:change');
+      // debugger;
+    }
   }
 
   componentWillUnmount() {
     $(this.domRef)
       .select2('destroy');
+  }
+
+  singleOptionToSelect2 = (p) => {
+    if (typeof p === 'object') {
+      const { value: id, label: text, ...props } = p;
+      return { id, text: text || id, ...props };
+    }
+    return { id: p, text: p };
+  }
+
+  optionsToSelect2 = scopedOptions => scopedOptions.map(this.singleOptionToSelect2);
+
+  optionsFromSelect2 = select2Options => select2Options.map(({ id }) => this.mapped[id].actual);
+
+  getValue = (select2Options, multiple) => {
+    let value = this.optionsFromSelect2(select2Options);
+    if (!multiple && value.length > 0) {
+      [value] = value;
+    }
+    return value;
+  };
+
+  mapOptions(options) {
+    this.actualOptions = options;
+    this.internalOptions = this.optionsToSelect2(options);
+    const mapped = {};
+    options.forEach((p, i) => {
+      if (typeof p === 'object') {
+        const { value } = p;
+        mapped[value] = {};
+        mapped[value].actual = value;
+        mapped[value].internal = this.internalOptions[i];
+      } else {
+        mapped[p] = {};
+        mapped[p].actual = p;
+        mapped[p].internal = this.internalOptions[i];
+      }
+    });
+    this.mapped = mapped;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -215,6 +253,7 @@ class Select2 extends Component {
     }
     return jQueryEvent;
   }
+
 
   render() {
     const {
@@ -259,6 +298,15 @@ Select2.propTypes = {
   }),
   name: PropTypes.string,
   allowClear: PropTypes.bool,
+  onChange: PropTypes.func,
+  onBeforeClose: PropTypes.func,
+  onClose: PropTypes.func,
+  onBeforeOpening: PropTypes.func,
+  onOpen: PropTypes.func,
+  onBeforeSelect: PropTypes.func,
+  onSelect: PropTypes.func,
+  onBeforeUnselect: PropTypes.func,
+  onUnselect: PropTypes.func,
 };
 
 Select2.defaultProps = {
@@ -271,6 +319,15 @@ Select2.defaultProps = {
   defaultWidgetOptions: {},
   name: null,
   allowClear: false,
+  onChange: null,
+  onBeforeClose: null,
+  onClose: null,
+  onBeforeOpening: null,
+  onOpen: null,
+  onBeforeSelect: null,
+  onSelect: null,
+  onBeforeUnselect: null,
+  onUnselect: null,
 };
 
 export default Select2;

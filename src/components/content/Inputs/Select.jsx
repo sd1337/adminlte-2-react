@@ -9,7 +9,8 @@ class Select extends Component {
     const {
       options, label, name, disabled, multiple, value, onChange,
     } = this.props;
-    const localOptions = Array.isArray(options) && options.find(p => !!p.value) ? options : options.map(p => ({ value: p, text: p.text || p.label }));
+    const localOptions = Array.isArray(options) && options
+      .find(p => !!p.value) ? options : options.map(p => ({ value: p, text: p.text || p.label }));
     return (
       <div className="form-group">
         {/* eslint-disable jsx-a11y/label-has-for */}

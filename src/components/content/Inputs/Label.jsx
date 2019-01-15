@@ -3,6 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import {
+//   FormGroup, ControlLabel, FormControl, HelpBlock,
+// } from 'react-bootstrap';
 
 import Col from '../Col';
 import { FormTypes } from '../../PropTypes';
@@ -14,13 +17,12 @@ const Label = ({
   ...props
 }) => {
   let { labelPosition } = props;
-  let localLabel = label;
-  if (!labelPosition) { labelPosition = label ? 'left' : 'none'; }
+  const localLabel = label;
+  if (!labelPosition) { labelPosition = 'left'; }
   let localIcon;
   if (localLabel && labelIcon) {
     const hasIcon = !!(labelIcon);
     localIcon = hasIcon ? splitIcon(labelIcon) : null;
-    localLabel = `${localLabel}`;
   }
   const groupClasses = [
     'form-group',
@@ -34,6 +36,18 @@ const Label = ({
       labelMd ? `col-md-${labelMd}` : null,
       labelLg ? `col-lg-${labelLg}` : null,
     ].filter(p => p).join(' ');
+    let colProps = {
+      xs, sm, md, lg,
+    };
+    if (!localLabel) {
+      colProps = {
+        xsOffset: labelXs,
+        smOffset: labelSm,
+        mdOffset: labelMd,
+        lgOffset: labelLg,
+        ...colProps,
+      };
+    }
     return (
       <div className={groupClasses}>
         <label htmlFor={name} className={labelClasses}>
@@ -41,7 +55,7 @@ const Label = ({
           {labelIcon && ' '}
           {localLabel}
         </label>
-        <Col xs={xs} sm={sm} md={md} lg={lg}>
+        <Col {...colProps}>
           {children}
           {help && <p className="help-block">{help}</p>}
         </Col>

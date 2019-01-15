@@ -11,17 +11,17 @@ import './Button.css';
 class Button extends Component {
   render() {
     const {
-      id, size, type, block, icon, color, classes, flat, text, alignRight, disabled,
+      id, size, type, block, icon, color, flat, text, alignRight, disabled,
       // eslint-disable-next-line react/prop-types, no-unused-vars
       margin, pullRight = alignRight, pullLeft, to, app, badge, badgeText, onClick, split,
-      outline,
+      outline, className,
     } = this.props;
     let { children } = this.props;
     const buttonClasses = ['btn',
       block ? 'btn-block' : '',
       `btn-${type}`,
       flat ? 'btn-flat' : '',
-      classes ? classes.join(' ') : '',
+      className ? className.join(' ') : '',
       color ? `bg-${color}` : '',
       size ? `btn-${size}` : '',
       pullRight ? 'pull-right' : '',
@@ -31,7 +31,7 @@ class Button extends Component {
       flat ? 'btn-flat' : '',
       app ? 'btn-app' : '',
       outline ? 'btn-outline' : '',
-    ].join(' ');
+    ].filter(p => p).join(' ');
 
     const hasIcon = !!(icon);
     const localIcon = hasIcon ? splitIcon(icon) : null;
@@ -97,7 +97,7 @@ Button.propTypes = {
   block: PropTypes.bool,
   icon: PropTypes.string,
   color: PropTypes.string,
-  classes: PropTypes.string,
+  className: PropTypes.string,
   flat: PropTypes.bool,
   text: PropTypes.string,
   alignRight: PropTypes.bool,
@@ -124,7 +124,7 @@ Button.defaultProps = {
   block: false,
   icon: null,
   color: null,
-  classes: null,
+  className: null,
   flat: false,
   text: null,
   alignRight: false,

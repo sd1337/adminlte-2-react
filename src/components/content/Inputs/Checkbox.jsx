@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import InputWrapper from './InputWrapper';
 
 class Checkbox extends Component {
   state = {}
 
   render() {
     const {
-      label, onChange, disabled, name, value,
+      text, onChange, disabled, name, value, ...props
     } = this.props;
     return (
-      <div className="checkbox">
-        <label htmlFor={name}>
-          <input ref={(c) => { this.input = c; }} name={name} onChange={onChange} checked={value} disabled={disabled} {...this.props} type="checkbox" />
-          {label ? ` ${label}` : ''}
-        </label>
-      </div>
+      <InputWrapper {...props}>
+        <input
+          name={name}
+          onChange={onChange}
+          checked={value}
+          disabled={disabled}
+          {...this.props}
+          type="checkbox"
+        />
+        {text ? ` ${text}` : ''}
+      </InputWrapper>
     );
   }
 }
 
 Checkbox.propTypes = {
-  label: PropTypes.string,
+  text: PropTypes.string,
   checked: PropTypes.bool,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
@@ -30,7 +36,7 @@ Checkbox.propTypes = {
 };
 
 Checkbox.defaultProps = {
-  label: null,
+  text: null,
   checked: null,
   onChange: null,
   disabled: false,
