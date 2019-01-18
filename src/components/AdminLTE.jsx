@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 /* eslint-disable global-require */
 import React, { Component } from 'react';
 import {
@@ -19,6 +20,7 @@ import 'font-awesome/css/font-awesome.min.css';
 // import '../css/ionicons.min.css';
 import '../css/source-sans-pro.css';
 import '../adminlte/css/AdminLTE.css';
+// import '../css/less/AdminLTE.less';
 
 import 'bootstrap';
 import '../adminlte/js/adminlte';
@@ -177,11 +179,25 @@ class AdminLTE extends Component {
     const nonModalRoutes = routes.filter(p => !p.props.modal);
     const modalRoutes = routes.filter(p => p.props.modal);
 
+    const childSidebar = content.find(p => p.type === Sidebar.Core);
+    const childFooter = content.find(p => p.type === Footer);
     const {
-      sidebar = content.find(p => p.type === Sidebar.Core),
+      sidebar: propSidebar,
       // controlSidebar,
-      footer = content.find(p => p.type === Footer),
+      footer: propFooter,
     } = this.props;
+
+    if (childSidebar && propSidebar) {
+      // eslint-disable-next-line no-console
+      console.error('Pass sidebar either as prop or child but not both');
+    }
+
+    if (childFooter && propFooter) {
+      // eslint-disable-next-line no-console
+      console.error('Pass footer either as prop or child but not both');
+    }
+    const sidebar = childSidebar || <Sidebar.Core>{propSidebar}</Sidebar.Core>;
+    const footer = childFooter || propFooter;
 
     return (
       <Router>
@@ -207,7 +223,7 @@ class AdminLTE extends Component {
               </div>
             </nav>
           </header>
-          <Sidebar.Core>{sidebar}</Sidebar.Core>
+          {sidebar}
           <Switch>
             {modalRoutes}
           </Switch>
@@ -259,7 +275,7 @@ export default AdminLTE;
 
 export {
   Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box
-  , DescriptionBlock, ProgressGroup, Button, DataTable, Checkbox, Tabs
+  , DescriptionBlock, ProgressGroup, Button, DataTable, Tabs
   , TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox
   , Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar

@@ -14,6 +14,7 @@ import { splitIcon } from '../../Utilities';
 const Label = ({
   label, labelXs, labelSm, labelMd, labelLg, name,
   xs, sm, md, lg, help, labelIcon, type, children,
+  labelClass,
   ...props
 }) => {
   let { labelPosition } = props;
@@ -29,12 +30,13 @@ const Label = ({
     type ? `has-${type}` : null,
   ].filter(p => p).join(' ');
   if (labelPosition === 'left') {
-    const labelClasses = [
+    const localLabelClasses = [
       'control-label',
       labelXs ? `col-xs-${labelXs}` : null,
       labelSm ? `col-sm-${labelSm}` : null,
       labelMd ? `col-md-${labelMd}` : null,
       labelLg ? `col-lg-${labelLg}` : null,
+      labelClass,
     ].filter(p => p).join(' ');
     let colProps = {
       xs, sm, md, lg,
@@ -50,7 +52,7 @@ const Label = ({
     }
     return (
       <div className={groupClasses}>
-        <label htmlFor={name} className={labelClasses}>
+        <label htmlFor={name} className={localLabelClasses}>
           {labelIcon && <FontAwesomeIcon icon={localIcon} />}
           {labelIcon && ' '}
           {localLabel}
@@ -106,6 +108,7 @@ Label.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  labelClass: PropTypes.string,
 };
 
 Label.defaultProps = {
@@ -123,6 +126,7 @@ Label.defaultProps = {
   labelIcon: null,
   type: null,
   name: uuidv4(),
+  labelClass: null,
 };
 
 export default Label;

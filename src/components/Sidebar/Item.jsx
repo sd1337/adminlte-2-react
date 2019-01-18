@@ -19,7 +19,7 @@ const isActiveItem = ({ link, activeOn, history }) => {
 };
 
 const Item = ({
-  icon, link, text, labels, color, history, children, isSubItem, activeOn, to,
+  icon, link, text, labels, color, history, children, activeOn, to,
 }) => {
   const localTo = to || link;
   const active = isActiveItem({ link: localTo, activeOn, history });
@@ -29,70 +29,61 @@ const Item = ({
   const localIcon = splitIcon(icon);
 
   const hasChildren = !!(children);
-  if (isSubItem) {
-    return (
-      <li className={`${active && 'active'} ${hasChildren && 'treeview'}`}>
-        <Link to={localTo}>
-          <FontAwesomeIcon color={localColor} icon={localIcon} style={{ marginRight: '8px' }} />
-          {' '}
-          {text}
-          {hasChildren && (
-            <span className="pull-right-container">
-              <FontAwesomeIcon className="pull-right" icon="angle-left" />
-            </span>
-          )}
-        </Link>
-        {hasChildren && (
-          <ul className="treeview-menu">
-            {children}
-          </ul>
-        )}
-      </li>
+  const hasLabels = Array.isArray(localLabels);
+  let localChildren = children;
+  let activeChild = false;
+  if (hasChildren) {
+    localChildren = children.map(p => React.cloneElement(p, { key: p.to }));
+    activeChild = !!(localChildren.find(p => isActiveItem({
+      history,
+      link: p.props.to || p.props.link,
+      ...p.props,
+    })));
+  }
+  let actualComponent = (
+    <React.Fragment>
+      <FontAwesomeIcon
+        color={localColor}
+        icon={localIcon}
+        style={{ marginRight: '6px' }}
+      />
+      {' '}
+      <span>{text}</span>
+      {(hasChildren || hasLabels) && (
+        <span className="pull-right-container">
+          {hasChildren && <FontAwesomeIcon className="pull-right" icon="angle-left" />}
+          {hasLabels && mappedLabels}
+        </span>
+      )}
+    </React.Fragment>
+  );
+  if (localTo) {
+    actualComponent = (
+      <Link to={localTo}>
+        {actualComponent}
+      </Link>
+    );
+  } else {
+    actualComponent = (
+      // eslint-disable-next-line no-script-url, jsx-a11y/anchor-is-valid
+      <a href="javascript:void(0)">
+        {actualComponent}
+      </a>
     );
   }
-
-
-  if (hasChildren) {
-    /* eslint-disable-next-line no-param-reassign */
-    if (!children.length) { children = [children]; }
-    /* eslint-disable-next-line no-param-reassign */
-    children = children.map(p => React.cloneElement(p, { isSubItem: true }));
-    const activeChild = !!(children.find(p => isActiveItem({ history, link: p.props.to || p.props.link, ...p.props })));
-    return (
-      <li className={`${active ? 'active ' : ''}treeview${activeChild ? ' menu-open' : ''}`}>
-        <Link to={localTo}>
-          <FontAwesomeIcon
-            color={localColor}
-            icon={localIcon}
-            style={{ marginRight: '6px' }}
-          />
-          {' '}
-          <span>{text}</span>
-          <span className="pull-right-container">
-            {<FontAwesomeIcon className="pull-right" icon="angle-left" />}
-            {mappedLabels}
-          </span>
-        </Link>
+  const liClasses = [
+    (active) ? 'active' : null,
+    hasChildren ? 'treeview' : null,
+    activeChild ? 'menu-open' : null,
+  ].filter(p => p).join(' ');
+  return (
+    <li className={liClasses}>
+      {actualComponent}
+      {hasChildren && (
         <ul className="treeview-menu" style={{ display: activeChild ? 'block' : 'none' }}>
           {children}
         </ul>
-      </li>
-    );
-  }
-  return (
-    <li className={`${active ? 'active ' : ''}treeview${active ? ' menu-open' : ''}`}>
-      <Link to={localTo}>
-        <FontAwesomeIcon
-          color={localColor}
-          icon={localIcon}
-          style={{ marginRight: '6px' }}
-        />
-        {' '}
-        <span>{text}</span>
-        <span className="pull-right-container">
-          {mappedLabels}
-        </span>
-      </Link>
+      )}
     </li>
   );
 };
@@ -111,26 +102,31 @@ Item.propTypes = {
     }
   },
   text: PropTypes.string.isRequired,
-  labels: PropTypes.arrayOf(PropTypes.shape({
-  })),
+  labels: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.shape({
+    }),
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.arrayOf(PropTypes.shape({
+    })),
+  ]),
   color: PropTypes.oneOf(Colors),
   history: ReactRouterPropTypes.history,
-  isSubItem: PropTypes.bool,
   activeOn: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.arrayOf(PropTypes.string),
   ]),
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
 };
 
 Item.defaultProps = {
   children: null,
   icon: 'far-circle',
-  link: null,
+  link: undefined,
   labels: null,
   color: null,
   history: null,
-  isSubItem: false,
   activeOn: null,
+  to: undefined,
 };
 export default withRouter(Item);

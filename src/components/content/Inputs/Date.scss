@@ -1,0 +1,146 @@
+.SingleDatePicker,
+.SingleDatePicker .DateInput,
+.DateRangePicker,
+.DateRangePicker .DateRangePickerInput {
+	width: 100%;
+}
+
+.SingleDatePicker .SingleDatePickerInput {
+	width: 100%;
+	border: 0;
+}
+
+.SingleDatePicker .DateInput {
+	width: 100%;
+}
+
+.DateInput_input {
+	padding: 6px 12px;
+	width: 100%;
+	border-bottom: 0;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+}
+
+.SingleDatePicker .DateInput_input {
+	border: 1px solid #ccc;
+}
+
+.DateRangePicker .DateInput{
+	width: 46%
+}
+
+.DateRangePicker .DateRangePickerInput_arrow{
+	width: 8%
+}
+
+/* .CalendarMonth_caption {
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 24px;
+} */
+
+.DateInput_input:focus {
+	border-color: #3c8dbc;
+}
+
+.DateInput_fang {
+	top: 40px !important;
+}
+
+.SingleDatePicker_picker,
+.DateRangePicker_picker {
+	top: 51px !important;
+  z-index: 100;
+}
+
+/*
+default: #f4f4f4 border #ddd
+primary: #3c8dbc border #367fa9
+success: #00a65a border #008d4c
+info: #00c0ef border #00acd6
+danger: #dd4b39 border #d73925
+warning: #f39c12 border #e08e0b
+*/
+
+.PresetDateRangePicker_button {
+	border-radius: 3px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border: 1px solid transparent;
+}
+
+@mixin calendar($color, $borderColor) {
+
+	.CalendarDay__selected,
+	.CalendarDay__selected:active,
+	.CalendarDay__selected:hover {
+		background: $color;
+		border: 1px double $borderColor;
+	}
+
+	.PresetDateRangePicker_button {
+		border: $borderColor;
+		color: $color;
+	}
+
+	.PresetDateRangePicker_button__selected {
+		background: $color
+	}
+
+	.DayPickerKeyboardShortcuts_show__bottomRight::before,
+	.DayPickerKeyboardShortcuts_show__topRight::before,
+	.DayPickerKeyboardShortcuts_show__topLeft::before {
+		border-right: 33px solid $color;
+	}
+
+	.CalendarDay__selected_span {
+		background: $color;
+		opacity: 0.65;
+		border: 1px double rgba($borderColor, .65);
+		color: #fff;
+	}
+
+	.CalendarDay__hovered_span {
+		background: $color;
+		border: 1px double rgba($borderColor, .65);
+		opacity: 0.65;
+		color: #fff;
+	}
+
+	.CalendarDay__hovered_span:active,
+	.CalendarDay__hovered_span:hover {
+		background: $color;
+		border: 1px double rgba($borderColor, .80);
+		opacity: 0.80;
+		color: #fff;
+	}
+}
+
+.date-default {
+	@include calendar(#f4f4f4, #ddd)
+}
+
+.date-primary {
+	@include calendar(#3c8dbc, #367fa9)
+}
+
+.date-info {
+	@include calendar(#00c0ef, #00acd6)
+}
+
+.date-success {
+	@include calendar(#00a65a, #008d4c)
+}
+
+.date-danger {
+	@include calendar(#dd4b39, #d73925)
+}
+
+.date-warning {
+	@include calendar(#f39c12, #e08e0b)
+}

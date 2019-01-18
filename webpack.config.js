@@ -10,75 +10,98 @@ module.exports = {
     libraryTarget: 'commonjs2',
     publicPath: '/',
   },
+  // optimization: {
+  //   minimizer: [
+  //     new UglifyJSPlugin({
+  //       include: path.resolve(__dirname, 'src/components'),
+  //       uglifyOptions: {
+  //         ecma: 5,
+  //         warnings: true,
+  //         mangle: false,
+  //         keep_fnames: true,
+  //         output: {
+  //           beautify: true,
+  //           comments: true,
+  //         },
+  //       },
+  //     }),
+  //   ],
+  // },
   module: {
-    rules: [
-      {
-        test: /\.js[x]?$/,
-        include: path.resolve(__dirname, 'src'),
-        exclude: /(node_modules|bower_components|build)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env', 'stage-2'],
-            plugins: ['transform-runtime'],
-            sourceMap: true,
-          },
-        },
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: require.resolve('css-loader'),
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'resolve-url-loader',
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                // eslint-disable-next-line global-require
-                require('postcss-flexbugs-fixes'),
-                // eslint-disable-next-line global-require
-                require('autoprefixer')({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009',
-                }),
-              ],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-            name: '[name].[hash:8].[ext]',
-            outputPath: 'static/fonts/',
-          },
-        }],
-      },
-      {
-        exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.css$/, /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/],
-        loader: require.resolve('file-loader'),
+    rules: [{
+      test: /\.js[x]?$/,
+      include: path.resolve(__dirname, 'src'),
+      exclude: /(node_modules|bower_components|build)/,
+      use: {
+        loader: 'babel-loader',
         options: {
-          name: 'static/media/[name].[hash:8].[ext]',
+          presets: ['env', 'stage-2'],
+          plugins: ['transform-runtime'],
+          sourceMap: true,
         },
       },
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        'style-loader', // creates style nodes from JS strings
+        'css-loader', // translates CSS into CommonJS
+        'sass-loader', // compiles Sass to CSS, using Node Sass by default
+      ],
+    },
+    {
+      test: /\.css$/,
+      use: [{
+        loader: 'style-loader',
+      },
+      {
+        loader: require.resolve('css-loader'),
+        options: {
+          sourceMap: true,
+        },
+      },
+      {
+        loader: 'resolve-url-loader',
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          ident: 'postcss',
+          plugins: () => [
+            // eslint-disable-next-line global-require
+            require('postcss-flexbugs-fixes'),
+            // eslint-disable-next-line global-require
+            require('autoprefixer')({
+              browsers: [
+                '>1%',
+                'last 4 versions',
+                'Firefox ESR',
+                'not ie < 9', // React doesn't support IE8 anyway
+              ],
+              flexbox: 'no-2009',
+            }),
+          ],
+        },
+      },
+      ],
+    },
+    {
+      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: '[name].[hash:8].[ext]',
+          outputPath: 'static/fonts/',
+        },
+      }],
+    },
+    {
+      exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.css$/, /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/, /\.scss$/],
+      loader: require.resolve('file-loader'),
+      options: {
+        name: 'static/media/[name].[hash:8].[ext]',
+      },
+    },
     ],
   },
   externals: {

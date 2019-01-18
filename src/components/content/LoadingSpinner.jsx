@@ -17,7 +17,7 @@ LoadingSpinner.propTypes = {
 };
 LoadingSpinner.defaultProps = {
   icon: 'fas-sync-alt',
-  size: '30px',
+  size: '3x',
 };
 
 export default LoadingSpinner;

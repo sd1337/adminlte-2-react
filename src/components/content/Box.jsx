@@ -256,7 +256,10 @@ Box.propTypes = {
   ]),
   type: PropTypes.oneOf(Types),
   /* eslint-disable react/forbid-prop-types */
-  options: PropTypes.array,
+  options: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   icon: PropTypes.string,
   titleRight: PropTypes.bool,
   loaded: PropTypes.bool,

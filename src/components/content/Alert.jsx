@@ -29,7 +29,7 @@ class Alert extends Component {
         <BsAlert bsStyle={type} onDismiss={onDismiss || (closable ? this.onDismiss : null)}>
           {(icon || title) && (
             <h4>
-              {icon && <FontAwesomeIcon className="icon" icon={splitIcon(icon)} size="18px" />}
+              {icon && <FontAwesomeIcon className="icon" icon={splitIcon(icon)} />}
               {' '}
               <span>{title}</span>
             </h4>
@@ -54,7 +54,7 @@ Alert.propTypes = {
 
 Alert.defaultProps = {
   closable: false,
-  onDismiss: false,
+  onDismiss: null,
   type: null,
   icon: null,
   title: null,

@@ -17,13 +17,13 @@ class InputWrapper extends Component {
       children, checkboxLeftProps, checkboxRightProps, radioLeftProps, radioRightProps,
       width, ...props
     } = this.props;
+    const groupClasses = [
+      'input-group',
+      size ? `input-group-${size}` : null,
+    ].filter(p => p).join(' ');
     if (iconLeft || iconRight || addonLeft || addonRight
       || checkboxLeft || checkboxRight || radioLeft || radioRight
       || buttonLeft || buttonRight) {
-      const groupClasses = [
-        'input-group',
-        size ? `input-group-${size}` : null,
-      ].filter(p => p).join(' ');
       const iconLeftClass = splitIcon(iconLeft);
       const iconRightClass = splitIcon(iconRight);
       return (
@@ -46,7 +46,9 @@ class InputWrapper extends Component {
     }
     return (
       <Label {...this.props}>
-        {children}
+        <div className={groupClasses} style={{ width }}>
+          {children}
+        </div>
       </Label>
     );
   }
@@ -88,7 +90,7 @@ InputWrapper.defaultProps = {
   radioRightProps: null,
   buttonLeft: null,
   buttonRight: null,
-  width: null,
+  width: '100%',
 };
 
 export default InputWrapper;

@@ -18,12 +18,13 @@ SparklineBox.propTypes = {
   header: PropTypes.string,
   text: PropTypes.string,
   chartData: PropTypes.arrayOf(PropTypes.number).isRequired,
-  color: PropTypes.oneOf(Colors).isRequired,
+  color: PropTypes.oneOf(Colors),
 };
 
 SparklineBox.defaultProps = {
   header: null,
   text: null,
+  color: null,
 };
 
 

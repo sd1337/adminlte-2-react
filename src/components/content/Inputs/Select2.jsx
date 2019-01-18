@@ -23,12 +23,13 @@ class Select2 extends Component {
     super(props);
     const { options } = props;
     this.mapOptions(options);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentDidMount() {
     const {
       placeholder, multiple, options, defaultWidgetOptions, allowClear, value,
-       ...props
+      ...props
     } = this.props;
     const data = this.internalOptions;
     const $ref = $(this.domRef).select2({
@@ -62,14 +63,8 @@ class Select2 extends Component {
       .forEach(bindEvent);
 
     this.boundHandlers = boundHandlers;
-    $ref.on('select2:select', () => {
-      const newValue = this.getValue($ref.select2('data'), multiple);
-      const { value: propValue } = this.props;
-      if (propValue && newValue !== propValue) {
-        $ref.val(propValue).trigger('change.select2');
-      }
-    });
-    $ref.val(value).trigger("change.select2");
+    $ref.on('select2:select', () => this.handleSelect);
+    $ref.val(value).trigger('change.select2');
     this.$ref = $ref;
   }
 
@@ -118,7 +113,6 @@ class Select2 extends Component {
     const $ref = $(this.domRef);
 
     if (disabled !== oldDisabled) {
-      // console.log(disabled ? `Disabling Select2 with label ${this.props.label}` : `Enabling Select2 with label ${this.props.label}`);
       $ref.prop('disabled', disabled);
     }
     // If value changed update select2 value
@@ -135,11 +129,11 @@ class Select2 extends Component {
           const { callback: storedCallback, actualCallback, jQueryEvent } = boundHandler;
           // Eventhandler exists and new handler is different from old
           if (storedCallback && callback !== storedCallback) {
-            // console.log(`Unbinding event ${eventName} from Select2 with label ${this.props.label}`);
             $ref.unbind(jQueryEvent, actualCallback);
           }
         }
-        if (callback) {
+        const { callback: storedCallback } = boundHandler;
+        if (callback && callback !== storedCallback) {
           const jQueryEvent = this.toJQueryEvent(eventName);
 
           const handleEvent = (event, callback2) => {
@@ -154,7 +148,6 @@ class Select2 extends Component {
           const actualCallback = (e) => { handleEvent(e, callback); };
           // Store bound event handler to be able to later remove it
           this.boundHandlers[eventName] = { callback, actualCallback, jQueryEvent };
-          // console.log(`Binding new event ${eventName} from Select2 with label ${this.props.label}`);
           $ref.on(jQueryEvent, actualCallback);
         }
       });
@@ -197,6 +190,15 @@ class Select2 extends Component {
     }
     return value;
   };
+
+  handleSelect() {
+    const { value: propValue, multiple } = this.props;
+    const { $ref } = this;
+    const newValue = this.getValue($ref.select2('data'), multiple);
+    if (propValue && newValue !== propValue) {
+      $ref.val(propValue).trigger('change.select2');
+    }
+  }
 
   mapOptions(options) {
     this.actualOptions = options;

@@ -160,7 +160,12 @@ DataTable.propTypes = {
   hover: PropTypes.bool,
   border: PropTypes.bool,
   condensed: PropTypes.bool,
-  selectedRows: PropTypes.shape({ }),
+  selectedRows: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({ }),
+    PropTypes.arrayOf(PropTypes.number,),
+    PropTypes.arrayOf(PropTypes.shape({ })),
+  ]),
   onClickEvents: PropTypes.shape({ }),
 };
 

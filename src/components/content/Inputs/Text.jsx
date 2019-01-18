@@ -18,47 +18,56 @@ class Text extends Component {
       inputType !== 'file' ? 'form-control' : null,
       size ? `input-${size}` : null,
     ].filter(p => p).join(' ');
+    let formElement;
+    switch (inputType) {
+      case 'textarea':
+        formElement = (
+          <textarea
+            ref={(c) => { this.ref = c; }}
+            className={inputClasses}
+            name={name}
+            id={id}
+            value={value}
+            placeholder={placeholder}
+            disabled={disabled}
+            onBlur={onBlur}
+            onChange={onChange}
+            onFocus={onFocus}
+            onSelect={onSelect}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onKeyPress={onKeyPress}
+            rows={rows}
+          />
+        );
+        break;
+      case 'readonly':
+        formElement = <div>{value || '\u00A0'}</div>;
+        break;
+      default:
+        formElement = (
+          <input
+            ref={(c) => { this.ref = c; }}
+            type={inputType}
+            className={inputClasses}
+            name={name}
+            id={id}
+            value={value}
+            placeholder={placeholder}
+            disabled={disabled}
+            onBlur={onBlur}
+            onChange={onChange}
+            onFocus={onFocus}
+            onSelect={onSelect}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
+            onKeyPress={onKeyPress}
+          />
+        );
+    }
     return (
       <InputWrapper size={size} {...props}>
-        {inputType !== 'textarea'
-          ? (
-            <input
-              ref={(c) => { this.ref = c; }}
-              type={inputType}
-              className={inputClasses}
-              name={name}
-              id={id}
-              value={value}
-              placeholder={placeholder}
-              disabled={disabled}
-              onBlur={onBlur}
-              onChange={onChange}
-              onFocus={onFocus}
-              onSelect={onSelect}
-              onKeyDown={onKeyDown}
-              onKeyUp={onKeyUp}
-              onKeyPress={onKeyPress}
-            />
-          )
-          : (
-            <textarea
-              ref={(c) => { this.ref = c; }}
-              className={inputClasses}
-              name={name}
-              id={id}
-              value={value}
-              placeholder={placeholder}
-              disabled={disabled}
-              onBlur={onBlur}
-              onChange={onChange}
-              onFocus={onFocus}
-              onSelect={onSelect}
-              onKeyDown={onKeyDown}
-              onKeyUp={onKeyUp}
-              onKeyPress={onKeyPress}
-              rows={rows}
-            />
-          )}
+        {formElement}
       </InputWrapper>
     );
   }
@@ -69,7 +78,7 @@ Text.propTypes = {
   name: PropTypes.string,
   id: PropTypes.string,
   placeholder: PropTypes.string,
-  value: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   rows: PropTypes.number,
   onBlur: PropTypes.func,
@@ -87,7 +96,7 @@ Text.defaultProps = {
   name: null,
   id: null,
   placeholder: null,
-  value: null,
+  value: undefined,
   disabled: false,
   rows: null,
   onBlur: null,

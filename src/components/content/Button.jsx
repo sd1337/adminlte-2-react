@@ -14,14 +14,14 @@ class Button extends Component {
       id, size, type, block, icon, color, flat, text, alignRight, disabled,
       // eslint-disable-next-line react/prop-types, no-unused-vars
       margin, pullRight = alignRight, pullLeft, to, app, badge, badgeText, onClick, split,
-      outline, className,
+      outline, className, value, name,
     } = this.props;
     let { children } = this.props;
     const buttonClasses = ['btn',
       block ? 'btn-block' : '',
       `btn-${type}`,
       flat ? 'btn-flat' : '',
-      className ? className.join(' ') : '',
+      className,
       color ? `bg-${color}` : '',
       size ? `btn-${size}` : '',
       pullRight ? 'pull-right' : '',
@@ -42,6 +42,8 @@ class Button extends Component {
         onClick={disabled ? null : onClick}
         type="button"
         className={buttonClasses}
+        value={value}
+        name={name}
       //  style={{ marginRight: '0.2em' }}
       >
         {badge}
@@ -115,6 +117,11 @@ Button.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  name: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -139,6 +146,8 @@ Button.defaultProps = {
   onClick: null,
   split: null,
   children: null,
+  value: null,
+  name: null,
 };
 
 export default Button;

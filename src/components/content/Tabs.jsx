@@ -7,7 +7,6 @@ import {
 import uuidv4 from 'uuid';
 import { splitIcon } from '../Utilities';
 
-const { Container: TabContainer } = Tab;
 class Tabs extends Component {
   state = {
     activeKey: null,
@@ -15,8 +14,6 @@ class Tabs extends Component {
 
   constructor(props) {
     super(props);
-    const { activeKey } = props;
-    this.state.activeKey = activeKey;
 
     this.onSelect = this.onSelect.bind(this);
   }
@@ -33,21 +30,26 @@ class Tabs extends Component {
   render() {
     const {
       children, pullRight = false, contentHeight, mountOnEnter = false,
-      unmountOnExit = false, id = uuidv4(), icon, title, titleLeft = false,
+      unmountOnExit = false, id = uuidv4(), icon, title, titleLeft = false, activeKey,
+      defaultActiveKey,
     } = this.props;
-    const { activeKey } = this.state;
     const hasIcon = !!(icon);
     const localIcon = hasIcon ? splitIcon(icon) : null;
     const hasTitle = !!(title);
     const hasIconOrHeader = hasIcon || hasTitle;
     const localChildren = children && children.length ? children : [children];
     return (
-      <TabContainer id={id} activeKey={activeKey} onSelect={this.onSelect}>
+      <Tab.Container
+        id={id}
+        defaultActiveKey={defaultActiveKey}
+        activeKey={activeKey}
+        onSelect={this.onSelect}
+      >
         <div className="nav-tabs-custom">
           <Nav bsStyle="tabs" role="tablist" pullRight={pullRight} bsClass="nav">
             {localChildren.map(p => (
               <NavItem
-                key={uuidv4()}
+                key={p.props.eventKey}
                 eventKey={p.props.eventKey}
               >
                 {p.props.title}
@@ -71,20 +73,24 @@ class Tabs extends Component {
             {children}
           </TabContent>
         </div>
-      </TabContainer>
+      </Tab.Container>
     );
   }
 }
 
 Tabs.propTypes = {
-  activeKey: PropTypes.string.isRequired,
+  activeKey: PropTypes.string,
+  defaultActiveKey: PropTypes.string,
   onSelect: PropTypes.func,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
   pullRight: PropTypes.bool,
-  contentHeight: PropTypes.number,
+  contentHeight: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+  ]),
   mountOnEnter: PropTypes.bool,
   unmountOnExit: PropTypes.bool,
   id: PropTypes.string,
@@ -94,6 +100,8 @@ Tabs.propTypes = {
 };
 
 Tabs.defaultProps = {
+  activeKey: null,
+  defaultActiveKey: null,
   onSelect: null,
   pullRight: false,
   contentHeight: null,
