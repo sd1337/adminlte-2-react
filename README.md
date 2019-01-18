@@ -24,7 +24,7 @@ class HelloWorld extends Component {
     return (<Content title="Hello World" subTitle="Getting started with adminlte-2-react" browserTitle="Hello World">
       <Row>
         <Col xs={6}>
-          <Box title="My first box" type="primary" closable collapsible footer={<Button type="danger" text="Danger Button" />}>
+          <Box title="My first box" type="primary" closable collapsable footer={<Button type="danger" text="Danger Button" />}>
             Hello World
           </Box>
         </Col>
