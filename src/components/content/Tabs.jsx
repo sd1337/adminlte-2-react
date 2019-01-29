@@ -14,15 +14,16 @@ class Tabs extends Component {
 
   constructor(props) {
     super(props);
-
+    const { activeKey, defaultActiveKey } = props;
+    this.state = { stateActiveKey: activeKey || defaultActiveKey };
     this.onSelect = this.onSelect.bind(this);
   }
 
   onSelect(activeKeyParam) {
-    const { activeKey } = this.state;
+    const { stateActiveKey } = this.state;
     const { onSelect } = this.props;
-    if (activeKey !== activeKeyParam) {
-      this.setState({ activeKey: activeKeyParam });
+    if (stateActiveKey !== activeKeyParam) {
+      this.setState({ stateActiveKey: activeKeyParam });
       if (onSelect) { onSelect(activeKeyParam); }
     }
   }
@@ -31,8 +32,8 @@ class Tabs extends Component {
     const {
       children, pullRight = false, contentHeight, mountOnEnter = false,
       unmountOnExit = false, id = uuidv4(), icon, title, titleLeft = false, activeKey,
-      defaultActiveKey,
     } = this.props;
+    const { stateActiveKey } = this.state;
     const hasIcon = !!(icon);
     const localIcon = hasIcon ? splitIcon(icon) : null;
     const hasTitle = !!(title);
@@ -41,8 +42,7 @@ class Tabs extends Component {
     return (
       <Tab.Container
         id={id}
-        defaultActiveKey={defaultActiveKey}
-        activeKey={activeKey}
+        activeKey={activeKey || stateActiveKey}
         onSelect={this.onSelect}
       >
         <div className="nav-tabs-custom">
@@ -56,10 +56,10 @@ class Tabs extends Component {
               </NavItem>
             ))}
             {hasIconOrHeader && (
-              <li className={`header${titleLeft ? ' pull-left' : ''}`}>
-                {hasIcon && <FontAwesomeIcon icon={localIcon} />}
-                {hasTitle ? ` ${title}` : ''}
-              </li>
+            <li className={`header${titleLeft ? ' pull-left' : ''}`}>
+              {hasIcon && <FontAwesomeIcon icon={localIcon} />}
+              {hasTitle ? ` ${title}` : ''}
+            </li>
             )}
           </Nav>
           <TabContent

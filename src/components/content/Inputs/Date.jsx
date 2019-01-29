@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import { SingleDatePicker } from 'react-dates';
+import { SingleDatePicker, IconPositionShape } from 'react-dates';
 import moment from 'moment';
 
 import InputWrapper from './InputWrapper';
@@ -20,7 +20,7 @@ class Date extends Component {
     this.onFocusChange = this.onFocusChange.bind(this);
   }
 
-  onChange(date, ...args) {
+  onChange(date) {
     const {
       onChange, name, id, format,
     } = this.props;
@@ -37,8 +37,12 @@ class Date extends Component {
     }
   }
 
-  onFocusChange({ focused, ...args }) {
+  onFocusChange({ focused }) {
+    const { onFocusChange } = this.props;
     this.setState({ focused });
+    if (onFocusChange) {
+      onFocusChange(focused);
+    }
   }
 
   render() {
@@ -63,6 +67,7 @@ class Date extends Component {
       regular,
       type,
       format: displayFormat,
+      dateProps,
       ...props
     } = this.props;
     const { focused } = this.state;
@@ -94,6 +99,7 @@ class Date extends Component {
             small,
             regular,
             displayFormat,
+            ...dateProps,
           }}
           />
         </div>
@@ -123,6 +129,10 @@ Date.propTypes = {
   block: PropTypes.bool,
   small: PropTypes.bool,
   regular: PropTypes.bool,
+  dateProps: PropTypes.shape({}),
+  name: PropTypes.string,
+  inputIconPosition: IconPositionShape,
+  format: PropTypes.string,
 };
 
 Date.defaultProps = {
@@ -141,6 +151,10 @@ Date.defaultProps = {
   block: false,
   small: false,
   regular: false,
+  dateProps: null,
+  name: null,
+  inputIconPosition: null,
+  format: null,
 };
 
 export default Date;

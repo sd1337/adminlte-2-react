@@ -436,10 +436,82 @@ An alternative info box with similar props but other styling
 
 #### Tabs
 
+Wrapper around react-bootstrap tabs, this can be either used as uncontrolled tabs by providing a `defaultActiveKey` property or a controlled tabs using `activeKey` and `onSelect` props
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| activeKey | `string` |  | Currently active tab, if you provide an activeKey you should also provide an `onSelect` event handler prop |
+| defaultActiveKey | `string` |  | Initially active tab, similar to react behaviour of `defaultValue` on `<input>` components this prop provides an inital state for uncontrolled tabs |
+| onChange | `function` |  | Event handler fired when a tab is changed |
+| children | `TabContent` |  | Provide multiple `TabContent` as child to render anything in tabs |
+| pullRight | `bool` | `false` | Pulls the tab header to the right side |
+| contentHeight | `string` |  | If the content height varies you can provide a fixed height to prevent moving elements when changing between tabs |
+| mountOnEnter | `false` |  | Adds the tab content to react's virtual dom at the first them it is selected |
+| unmountOnExit | `false` |  | Removes inactive tabs from react virtual dom |
+| id | `string` |  |  |
+| icon | [icon](#icons) |  | Header icon besides the title |
+| title | `string` |  |  |
+| titleLeft | `bool` | false | Pulls the title to the left side when using the `pullRight` property |
+
 #### TabContent
+
+Use TabContent in conjuction with `Tabs` to actually provide the tabular content
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| eventKey | `string` |  | Unique key used by `Tabs` to identify the currently active tab |
+| children | `node` |  | Tabular content |
 
 ### Forms
 
+A various of different form elements, ranging from simple default html forms (`Text`, `Radio`, `Select`, `Checkbox`) to advanced components based on jQuery Widgets like `Select2`, `ICheck` used by the original adminlte template and pure react based inputs like `Date`, `DateRange` (based on react-dates), `Slider` (based on rc-slider) and other components. All form components should behave like original react inputs with `defaultValue`'s and `onChange` passing more or less pure Javascript `event` objects to make it possible to work with libraries like `Formik`
+
 #### Text
 
-####
+#### Slider
+
+#### Checkbox
+
+#### Radio
+
+#### Select
+
+#### Select2
+
+#### Date
+
+This component in combination with `DateRange` is heavily based on [react-dates](https://github.com/airbnb/react-dates) with additional simplification and styling based on adminlte. It should replace `bootstrap-datepicker` component in the original theme with a pure react alternative. The most common props are directly exposed on the `Date` component, additional props can be passed by using the `dateProps` property. The full documentation of available props can be found in [react-dates SingleDatePicker documentation](https://github.com/airbnb/react-dates#singledatepicker)
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| type | [type](#types-and-colors) |  | Calendar accent |
+| value | `string`, `moment object` |  | You can either pass in a string in combination with the `format` property or an already converted `moment.js` object, as the original this component used moment as its internal representation. Note that the onChange event will always return a `string` |
+| format | `string` |  | Format string based on moment.js formatting rules |
+| onChange | `function` |  | On change event handler |
+| onFocusChange | `function` |  | On focus change event handler |
+| name | `string` |  | Name that behaves like `<input>` name prop |
+| placeholder | `string` |  |  |
+| disabled | `bool` | `false` |  |
+| required | `bool` | `false` |  |
+| readOnly | `bool` | `false` |  |
+| screenReaderInputMessage | `bool` | `false` |  |
+| showClearDate | `bool` | `false` |  |
+| customCloseIcon | `node` | |  |
+| showDefaultInputIcon | `bool` | `false` |  |
+| customInputIcon | `bool` | `false` |  |
+| noBorder | `bool` | `false` |  |
+| block | `bool` | `false` |  |
+| small | `bool` | `false` |  |
+| regular | `bool` | `false` |  |
+| inputIconPosition | `string` |  |  |
+| dateProps | `object` |  | Additional SingleDateProps that are not directly exposed, see [react-dates SingleDatePicker documentation](https://github.com/airbnb/react-dates#singledatepicker) |
+
+#### DateRange
+
+#### ICheck

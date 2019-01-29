@@ -115,6 +115,7 @@ DateRange.propTypes = {
   focused: PropTypes.oneOf(['startDate', 'endDate']),
   onFocusChange: PropTypes.func,
   format: PropTypes.string,
+  dateRangeProps: PropTypes.shape({}),
 };
 
 DateRange.defaultProps = {
@@ -122,6 +123,7 @@ DateRange.defaultProps = {
   focused: null,
   onFocusChange: null,
   format: 'moment',
+  dateRangeProps: null,
 };
 
 export default DateRange;
