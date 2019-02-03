@@ -193,12 +193,12 @@ class Box extends Component {
       textCenter ? 'text-center' : '',
       padding ? 'pad' : '',
       bodyClassName,
-    ].join(' ');
+    ].filter(p => p).join(' ');
 
     const headerClass = [
       'box-header',
       border ? 'with-border' : '',
-    ].join(' ');
+    ].filter(p => p).join(' ');
 
     return (
       <div ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>

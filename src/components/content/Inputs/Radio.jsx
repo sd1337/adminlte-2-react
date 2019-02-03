@@ -5,7 +5,7 @@ import uuidv4 from 'uuid';
 
 const Radio = ({ options, name, onChange }) => (
   <div className="form-group">
-    {options.map(p => (
+    {options && options.map(p => (
       <div className="radio" key={uuidv4()}>
         <label htmlFor={name}>
           <input name={name} type="radio" onChange={onChange} {...p} />

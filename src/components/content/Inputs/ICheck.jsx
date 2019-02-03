@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import 'icheck';
 import 'icheck/skins/all.css';
+import $ from 'jquery';
 
 import InputWrapper from './InputWrapper';
-
-const $ = require('jquery');
 
 class ICheck extends Component {
   state = {}

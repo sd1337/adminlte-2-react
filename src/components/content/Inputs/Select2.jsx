@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import 'select2';
+import $ from 'jquery';
+import select2 from 'select2';
 import 'select2/dist/css/select2.css';
 
 import './Select2.css';
 import InputWrapper from './InputWrapper';
 import { arrayEquals } from '../../Utilities';
 
-const $ = require('jquery');
+
 // test2
 
 class Select2 extends Component {
@@ -32,7 +33,8 @@ class Select2 extends Component {
       ...props
     } = this.props;
     const data = this.internalOptions;
-    const $ref = $(this.domRef).select2({
+    const $temp = $(this.domRef);
+    const $ref = $temp.select2({
       placeholder,
       data,
       allowClear,
@@ -179,7 +181,7 @@ class Select2 extends Component {
     return { id: p, text: p };
   }
 
-  optionsToSelect2 = scopedOptions => scopedOptions.map(this.singleOptionToSelect2);
+  optionsToSelect2 = scopedOptions => scopedOptions && scopedOptions.map(this.singleOptionToSelect2);
 
   optionsFromSelect2 = select2Options => select2Options.map(({ id }) => this.mapped[id].actual);
 
@@ -259,11 +261,12 @@ class Select2 extends Component {
 
   render() {
     const {
-      name, disabled, multiple, value, defaultValue, ...props
+      name, disabled, multiple, value, defaultValue, id, ...props
     } = this.props;
     return (
       <InputWrapper {...props}>
         <select
+          id={id}
           ref={(c) => { this.domRef = c; }}
           name={name}
           className="form-control"
@@ -278,6 +281,7 @@ class Select2 extends Component {
 }
 
 Select2.propTypes = {
+  id: PropTypes.string,
   placeholder: PropTypes.string,
   multiple: PropTypes.bool,
   options: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({
@@ -312,9 +316,10 @@ Select2.propTypes = {
 };
 
 Select2.defaultProps = {
+  id: null,
   placeholder: '',
   multiple: false,
-  options: null,
+  options: [],
   value: null,
   defaultValue: null,
   disabled: false,
