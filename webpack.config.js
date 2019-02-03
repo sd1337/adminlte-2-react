@@ -3,7 +3,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
-  entry: ['babel-polyfill', './src/components/AdminLTE.jsx'],
+  entry: ['@babel/polyfill', './src/components/AdminLTE.jsx'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
@@ -35,8 +35,8 @@ module.exports = {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['env', 'stage-2'],
-          plugins: ['transform-runtime'],
+          //presets: ['@babel/env', '@babel/stage-2'],
+          //plugins: ['@babel/transform-runtime'],
           sourceMap: true,
         },
       },
