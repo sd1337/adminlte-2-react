@@ -2,8 +2,8 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  // mode: 'production',
-  mode: 'development',
+  mode: 'production',
+  // mode: 'development',
   entry: ['@babel/polyfill', './src/components/AdminLTE.jsx'],
   output: {
     path: path.resolve(__dirname, 'build'),

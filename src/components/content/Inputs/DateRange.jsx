@@ -122,7 +122,7 @@ DateRange.defaultProps = {
   type: 'default',
   focused: null,
   onFocusChange: null,
-  format: 'moment',
+  format: undefined,
   dateRangeProps: null,
 };
 

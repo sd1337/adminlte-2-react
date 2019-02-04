@@ -105,6 +105,7 @@
     "node-sass": "^4.11.0",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
+    "react-moment-proptypes": "^1.6.0",
     "resolve-url-loader": "^3.0.0",
     "style-loader": "^0.23.1",
     "webpack-cli": "^3.1.2"
@@ -121,7 +122,9 @@
     }
   },
   "jest": {
-    "setupFiles": ["./src/setup-jest.js"],
+    "setupFiles": [
+      "./src/setup-jest.js"
+    ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],

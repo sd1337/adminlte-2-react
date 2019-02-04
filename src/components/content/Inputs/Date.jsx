@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import MomentPropTypes from 'react-moment-proptypes';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker, IconPositionShape } from 'react-dates';
@@ -24,9 +25,10 @@ class Date extends Component {
     const {
       onChange, name, id, format,
     } = this.props;
+    
     const fakeResult = {
       target: {
-        value: date.format(format),
+        value: date ? date.format(format) : null,
         id,
         type: 'text',
         name,
@@ -110,7 +112,10 @@ class Date extends Component {
 
 Date.propTypes = {
   type: PropTypes.oneOf(Types),
-  value: PropTypes.shape({}).isRequired,
+  value: PropTypes.oneOfType([
+    MomentPropTypes.momentObj,
+    PropTypes.string,
+  ]).isRequired,
   onChange: PropTypes.func.isRequired,
   focused: PropTypes.bool,
   onFocusChange: PropTypes.func.isRequired,
@@ -154,7 +159,7 @@ Date.defaultProps = {
   dateProps: null,
   name: null,
   inputIconPosition: null,
-  format: null,
+  format: undefined,
 };
 
 export default Date;

@@ -6,12 +6,12 @@ import {
 } from './Inputs';
 
 const Inputs = [
-  <Slider />,
+  // <Slider />,
   <Text />,
   <Checkbox />,
   <Radio />,
   <Select />,
-  // <Select2 />,
+  <Select2 />,
   <Date />,
   <DateRange />,
   <ICheck />,
@@ -21,7 +21,13 @@ Inputs.forEach((p) => {
   describe('Input tests', () => {
     it('renders', () => {
       const wrapper = mount(p);
-      expect(wrapper.find('input')).toBeDefined();
-    })
+      // expect(wrapper.exists('input') || wrapper.exists('select')).toBe(true);
+      expect(wrapper.exists('.input-group')).toBe(true);
+      wrapper.unmount();
+    });
+    it('renders label', () => {
+      const wrapper = mount(React.cloneElement(p, { label: 'input-label' }));
+      expect(wrapper.exists('.form-group'));
+    });
   });
 });

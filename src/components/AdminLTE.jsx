@@ -66,7 +66,6 @@ import {
   Colors, Types, Sizes, FormTypes, Themes,
 } from './PropTypes';
 import Badge from './content/Badge';
-import Label from './content/Label';
 import Calendar from './content/Calendar';
 import LoadingSpinner from './content/LoadingSpinner';
 import AsyncContent from './content/AsyncContent';
@@ -281,5 +280,5 @@ export {
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar
   , Divider, Inputs
   , Colors, Types, Sizes, Themes, FormTypes
-  , Badge, Label, Calendar, LoadingSpinner, BoxPane, ButtonToolbar,
+  , Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar,
 };

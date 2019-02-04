@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid';
+import InputWrapper from './InputWrapper';
 
 
-const Radio = ({ options, name, onChange }) => (
-  <div className="form-group">
+const Radio = ({
+  options, name, onChange, ...props
+}) => (
+  <InputWrapper {...{ name, ...props }}>
     {options && options.map(p => (
       <div className="radio" key={uuidv4()}>
         <label htmlFor={name}>
@@ -13,7 +16,7 @@ const Radio = ({ options, name, onChange }) => (
         </label>
       </div>
     ))}
-  </div>
+  </InputWrapper>
 );
 
 Radio.propTypes = {
