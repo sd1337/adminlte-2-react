@@ -60,7 +60,7 @@ module.exports = {
           options: {
             ident: 'postcss',
             plugins: () => [
-            // eslint-disable-next-line global-require
+              // eslint-disable-next-line global-require
               require('postcss-flexbugs-fixes'),
               // eslint-disable-next-line global-require
               require('autoprefixer')({
@@ -90,7 +90,7 @@ module.exports = {
     // },
     {
       exclude: [/\.(js|jsx|mjs)$/,
-         /\.html$/,
+        /\.html$/,
         /\.json$/,
         /\.css$/,
         // /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -115,10 +115,11 @@ module.exports = {
     fullcalendar: 'fullcalendar',
     // icheck: 'icheck',
     // jquery: 'jQuery',
-    'jquery-sparkline': 'jquery-sparkline',
+    // 'jquery-sparkline': 'jquery-sparkline',
     moment: 'moment',
     // 'react-bootstrap': 'react-bootstrap',
-    'react-dates': 'react-dates',
+    // 'react-with-styles': 'react-with-styles',
+    // 'react-dates': 'react-dates',
     'react-dom': 'react-dom',
     'react-ionicons': 'react-ionicons',
     'source-sans-pro': 'source-sans-pro',

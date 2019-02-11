@@ -280,16 +280,18 @@ class Select2 extends Component {
   }
 }
 
+const optionsPropType = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
+  PropTypes.shape({}),
+]);
+
 Select2.propTypes = {
   id: PropTypes.string,
   placeholder: PropTypes.string,
   multiple: PropTypes.bool,
-  options: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-  })), PropTypes.arrayOf(PropTypes.string)]),
+  options: PropTypes.oneOfType([PropTypes.arrayOf(optionsPropType),
+    optionsPropType]),
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
