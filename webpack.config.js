@@ -11,8 +11,8 @@ const devMode = process.env.NODE_ENV !== 'production';
 // }
 
 module.exports = {
-  // mode: devMode ? 'development' : 'production',
-  mode: 'production',
+  mode: devMode ? 'development' : 'production',
+  // mode: 'production',
   entry: ['@babel/polyfill', './src/components/AdminLTE.jsx'],
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -52,9 +52,7 @@ module.exports = {
             sourceMap: true,
           },
         },
-        {
-          loader: 'resolve-url-loader',
-        },
+        'resolve-url-loader',
         {
           loader: 'postcss-loader',
           options: {
@@ -99,7 +97,7 @@ module.exports = {
 
       options: {
         name: 'static/media/[name].[hash:8].[ext]',
-        publicPath: './',
+        publicPath: '/',
       },
     },
     ],
@@ -121,7 +119,7 @@ module.exports = {
     'react-dates': 'react-dates',
     'react-dom': 'react-dom',
     'react-ionicons': 'react-ionicons',
-    'source-sans-pro': 'source-sans-pro',
+    'source-sans-pro/source-sans-pro.css': 'source-sans-pro/source-sans-pro.css',
     // select2: 'select2',
   },
   resolve: {
