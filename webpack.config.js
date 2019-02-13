@@ -116,7 +116,7 @@ module.exports = {
     'jquery-sparkline': 'jquery-sparkline',
     moment: 'moment',
     // 'react-bootstrap': 'react-bootstrap',
-    'react-dates': 'react-dates',
+    // 'react-dates': 'react-dates',
     'react-dom': 'react-dom',
     'react-ionicons': 'react-ionicons',
     'source-sans-pro/source-sans-pro.css': 'source-sans-pro/source-sans-pro.css',
