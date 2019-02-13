@@ -93,9 +93,10 @@ module.exports = {
         /\.css$/,
         // /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         /\.scss$/],
-      loader: require.resolve('file-loader'),
+      loader: require.resolve('url-loader'),
 
       options: {
+        limit: 8192,
         name: 'static/media/[name].[hash:8].[ext]',
         publicPath: '/',
       },

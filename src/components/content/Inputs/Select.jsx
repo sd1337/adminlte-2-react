@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 
 import InputWrapper from './InputWrapper';
+import { ListOfValueShape, ValueShape, ArrayOfValueShape } from './InputShapes';
 
 class Select extends Component {
   state = {}
@@ -48,21 +49,17 @@ class Select extends Component {
 }
 
 Select.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.string.isRequired,
-    checked: PropTypes.bool,
-    disabled: PropTypes.bool,
-    text: PropTypes.string,
-  })).isRequired,
+  options: ListOfValueShape,
   name: PropTypes.string,
   label: PropTypes.string,
   disabled: PropTypes.bool,
   multiple: PropTypes.bool,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+  value: PropTypes.oneOfType([ValueShape, ArrayOfValueShape]),
   onChange: PropTypes.func,
 };
 
 Select.defaultProps = {
+  options: null,
   name: uuidv4(),
   label: null,
   disabled: false,
