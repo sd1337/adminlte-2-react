@@ -3,29 +3,43 @@ import PropTypes from 'prop-types';
 import MomentPropTypes from 'react-moment-proptypes';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import { SingleDatePicker, IconPositionShape } from 'react-dates';
+import { SingleDatePicker } from 'react-dates';
 import moment from 'moment';
+import uuid from 'uuid/v4';
 
 import InputWrapper from './InputWrapper';
 import './Date.scss';
 import { Types } from '../../PropTypes';
+import { SharedDateProps, SharedDateDefaultProps } from './InputShapes';
 
 class Date extends Component {
   state = { focused: false }
 
   constructor(props) {
     super(props);
-    const { focused } = props;
+    const { focused, value, defaultValue } = props;
     this.state.focused = focused;
     this.onChange = this.onChange.bind(this);
     this.onFocusChange = this.onFocusChange.bind(this);
+
+    this.state = {
+      internalValue: value || defaultValue,
+    }
+  }
+
+  componentDidUpdate({ value: newValue }) {
+    const { internalValue } = this.state;
+    if (newValue !== internalValue) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ internalValue: newValue });
+    }
   }
 
   onChange(date) {
     const {
       onChange, name, id, format,
     } = this.props;
-    
+
     const fakeResult = {
       target: {
         value: date ? date.format(format) : null,
@@ -50,26 +64,28 @@ class Date extends Component {
   render() {
     const {
       value,
-      onChange: onDateChange,
+      onChange,
       onFocusChange,
-      name: id,
+      name,
       placeholder,
-      disabled,
-      required,
-      readOnly,
-      screenReaderInputMessage,
-      showClearDate,
       customCloseIcon,
       showDefaultInputIcon,
       customInputIcon,
-      inputIconPosition,
+      type,
+      format: displayFormat,
+      // shared props
+      disabled,
+      required,
+      readOnly,
+      showClearDate,
       noBorder,
       block,
       small,
       regular,
-      type,
-      format: displayFormat,
+      inputIconPosition,
+      // additional
       dateProps,
+      // others
       ...props
     } = this.props;
     const { focused } = this.state;
@@ -78,29 +94,30 @@ class Date extends Component {
       date = moment(value, displayFormat);
     }
     return (
-      <InputWrapper {...{ name: id, ...props }}>
+      <InputWrapper {...{ name, ...props }}>
         <div className={`date-${type}`}>
           <SingleDatePicker {...{
             date,
             onDateChange: this.onChange,
             focused,
             onFocusChange: this.onFocusChange,
-            id,
+            id: name,
             placeholder,
-            disabled,
-            required,
-            readOnly,
-            screenReaderInputMessage,
-            showClearDate,
             customCloseIcon,
             showDefaultInputIcon,
             customInputIcon,
-            inputIconPosition,
+            displayFormat,
+            // shared props
+            disabled,
+            required,
+            readOnly,
+            showClearDate,
             noBorder,
             block,
             small,
             regular,
-            displayFormat,
+            inputIconPosition,
+            // additional props
             ...dateProps,
           }}
           />
@@ -110,56 +127,63 @@ class Date extends Component {
   }
 }
 
+const valueType = PropTypes.oneOfType([
+  MomentPropTypes.momentObj,
+  PropTypes.string,
+]);
+
 Date.propTypes = {
+  value: valueType,
+  defaultValue: valueType,
+  onChange: PropTypes.func,
+  onFocusChange: PropTypes.func,
+  id: PropTypes.string,
   type: PropTypes.oneOf(Types),
-  value: PropTypes.oneOfType([
-    MomentPropTypes.momentObj,
-    PropTypes.string,
-  ]).isRequired,
-  onChange: PropTypes.func.isRequired,
   focused: PropTypes.bool,
-  onFocusChange: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  disabled: PropTypes.bool,
-  required: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  screenReaderInputMessage: PropTypes.string,
-  showClearDate: PropTypes.bool,
+  // disabled: PropTypes.bool,
+  // required: PropTypes.bool,
+  // readOnly: PropTypes.bool,
+  // showClearDate: PropTypes.bool,
   customCloseIcon: PropTypes.node,
   showDefaultInputIcon: PropTypes.bool,
   customInputIcon: PropTypes.node,
-  // inputIconPosition: PropTypes.oneOf(['']),,
-  noBorder: PropTypes.bool,
-  block: PropTypes.bool,
-  small: PropTypes.bool,
-  regular: PropTypes.bool,
+  // inputIconPosition: PropTypes.oneOf(['before', 'after']),
+  // noBorder: PropTypes.bool,
+  // block: PropTypes.bool,
+  // small: PropTypes.bool,
+  // regular: PropTypes.bool,
   dateProps: PropTypes.shape({}),
   name: PropTypes.string,
-  inputIconPosition: IconPositionShape,
   format: PropTypes.string,
+  ...SharedDateProps,
 };
 
 Date.defaultProps = {
+  value: null,
+  defaultValue: undefined,
+  onChange: undefined,
+  onFocusChange: undefined,
+  id: undefined,
   type: 'default',
   focused: false,
   placeholder: '',
-  disabled: false,
-  required: false,
-  readOnly: false,
-  screenReaderInputMessage: null,
-  showClearDate: false,
+  // disabled: false,
+  // required: false,
+  // readOnly: false,
+  // showClearDate: false,
   customCloseIcon: null,
   showDefaultInputIcon: false,
   customInputIcon: null,
-  noBorder: false,
-  block: false,
-  small: false,
-  regular: false,
+  // noBorder: false,
+  // block: false,
+  // small: false,
+  // regular: false,
   dateProps: null,
-  name: null,
-  inputIconPosition: null,
+  name: uuid(),
+  // inputIconPosition: null,
   format: undefined,
+  ...SharedDateDefaultProps,
 };
 
 export default Date;

@@ -8,6 +8,7 @@ import moment from 'moment';
 import InputWrapper from './InputWrapper';
 import './Date.scss';
 import { Types } from '../../PropTypes';
+import { SharedDateProps, SharedDateDefaultProps } from './InputShapes';
 
 class DateRange extends Component {
   state = { focused: false, startDate: null, endDate: null }
@@ -65,8 +66,19 @@ class DateRange extends Component {
       onStartChange,
       onEndChange,
       onFocusChange,
-      dateRangeProps,
       format: displayFormat,
+      // shared props
+      disabled,
+      required,
+      readOnly,
+      showClearDate,
+      noBorder,
+      block,
+      small,
+      regular,
+      inputIconPosition,
+      // additional
+      dateRangeProps,
       ...props
     } = this.props;
     const { focused } = this.state;
@@ -91,6 +103,16 @@ class DateRange extends Component {
             focusedInput: focused,
             onFocusChange: this.onFocusChange,
             displayFormat,
+            // shared props
+            disabled,
+            required,
+            readOnly,
+            showClearDate,
+            noBorder,
+            block,
+            small,
+            regular,
+            inputIconPosition,
             ...dateRangeProps,
           }}
           />
@@ -116,6 +138,7 @@ DateRange.propTypes = {
   onFocusChange: PropTypes.func,
   format: PropTypes.string,
   dateRangeProps: PropTypes.shape({}),
+  ...SharedDateProps,
 };
 
 DateRange.defaultProps = {
@@ -124,6 +147,7 @@ DateRange.defaultProps = {
   onFocusChange: null,
   format: undefined,
   dateRangeProps: null,
+  ...SharedDateDefaultProps,
 };
 
 export default DateRange;

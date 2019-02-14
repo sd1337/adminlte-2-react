@@ -27,4 +27,31 @@ const OptionShape = PropTypes.oneOfType([
 const ListOfValueShape = PropTypes.arrayOf(OptionShape);
 const ArrayOfValueShape = PropTypes.arrayOf(ValueShape);
 
-export { OptionShape, ListOfValueShape, ValueShape, ArrayOfValueShape };
+const SharedDateProps = {
+  disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  showClearDate: PropTypes.bool,
+  inputIconPosition: PropTypes.oneOf(['before', 'after']),
+  noBorder: PropTypes.bool,
+  block: PropTypes.bool,
+  small: PropTypes.bool,
+  regular: PropTypes.bool,
+};
+
+const SharedDateDefaultProps = {
+  disabled: false,
+  required: false,
+  readOnly: false,
+  showClearDate: false,
+  noBorder: false,
+  block: false,
+  small: false,
+  regular: false,
+  inputIconPosition: null,
+};
+
+export {
+  OptionShape, ListOfValueShape, ValueShape, ArrayOfValueShape,
+  SharedDateProps, SharedDateDefaultProps,
+};
