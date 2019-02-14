@@ -2,12 +2,10 @@ import React from 'react';
 import { mount, fireEvent } from '../../Enzyme';
 
 import ICheck from './ICheck';
+import { simpleOptions, complexOptions, disabledOptions } from './InputTestUtilities';
 
 // jest.dontMock('jquery');
 
-const simpleOptions = ['a', 'b'];
-const complexOptions = [{ text: 'aText', value: 'aValue' }, { text: 'bText', value: 'bValue' }];
-const disabledOptions = [{ text: 'a', value: 'a' }, { text: 'b', value: 'b', disabled: true }];
 
 describe('ICheck tests', () => {
   const getDOMNodes = p => p.getDOMNode().getElementsByClassName('iradio_minimal-blue');

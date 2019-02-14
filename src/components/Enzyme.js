@@ -10,6 +10,7 @@ function fireEvent(el, etype) {
   } else {
     const evObj = document.createEvent('Events');
     evObj.initEvent(etype, true, false);
+    evObj.which = 1;
     el.dispatchEvent(evObj);
   }
 }

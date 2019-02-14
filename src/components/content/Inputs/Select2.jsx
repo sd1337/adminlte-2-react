@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import $ from 'jquery';
-import select2 from 'select2';
+import 'select2/dist/js/select2';
 import 'select2/dist/css/select2.css';
 
 import './Select2.css';
 import InputWrapper from './InputWrapper';
 import { arrayEquals } from '../../Utilities';
-
-
-// test2
+import { OptionShape, ValueShape, ListOfValueShape } from './InputShapes';
 
 class Select2 extends Component {
   state = {}
@@ -284,20 +282,9 @@ Select2.propTypes = {
   id: PropTypes.string,
   placeholder: PropTypes.string,
   multiple: PropTypes.bool,
-  options: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.shape({
-    value: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
-  })), PropTypes.arrayOf(PropTypes.string)]),
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  defaultValue: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  options: ListOfValueShape,
+  value: ValueShape,
+  defaultValue: ValueShape,
   disabled: PropTypes.bool,
   defaultWidgetOptions: PropTypes.shape({
 
