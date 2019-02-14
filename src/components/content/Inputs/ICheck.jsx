@@ -13,34 +13,32 @@ class ICheck extends Component {
 
   constructor(props) {
     super(props);
-    const { options } = props;
+    const { options, defaultValue, value } = props;
     this.ref = {};
-    this.state = {
-      options: this.mapAllOptions(options),
-    };
+    this.state = {};
+    this.state.internalValue = value || defaultValue;
+    this.state.options = this.mapAllOptions(options);
 
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    const $ref = $(Object.values(this.ref)).iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass: 'iradio_minimal-blue',
-    });
-    $ref.on('ifChecked', this.onChange);
-
-    this.$ref = $ref;
+    this.initializeICheck();
   }
 
   componentDidUpdate({ value: oldValue, disabled: oldDisabled, options: oldOptions }) {
     const { options, disabled, value } = this.props;
-    if (oldValue !== value || oldDisabled !== disabled || oldOptions !== options) {
+    if (oldDisabled !== disabled || oldOptions !== options) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ options: this.mapAllOptions(options) });
+      this.updateOptions();
     }
-    if (oldValue !== value || true) {
-      if (oldValue) { $(this.ref[oldValue]).iCheck('uncheck'); }
-      if (value) { $(this.ref[value]).iCheck('check'); }
+    if (oldValue !== value) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({ internalValue: value }, () => {
+        if (oldValue) { $(this.ref[oldValue]).iCheck('uncheck'); }
+        if (value) { $(this.ref[value]).iCheck('check'); }
+        this.updateOptions();
+      });
     }
   }
 
@@ -49,44 +47,58 @@ class ICheck extends Component {
   }
 
   onChange(e) {
-    console.log(`new value for ${this.props.label} is ${e.target.value}`);
-    const { onChange } = this.props;
+    const { internalValue } = this.state;
+    if (internalValue === e.target.value) {
+      return;
+    }
+    console.log(`new value for ${this.props.label || 'no label'} is ${e.target.value}`);
+    const { onChange, options } = this.props;
+    const { target: { value } } = e;
+    this.setState({ internalValue: value }, () => {
+      this.updateOptions();
+    });
     if (onChange) {
       onChange(e);
     }
   }
 
-  mapAllOptions = options => this.mapOptions(options).map(this.optionToJSXComponent);
+  mapAllOptions = options => this.mapOptions(options)
+    .map(this.optionToJSXComponent);
 
-  mapOptions = options => (Array.isArray(options) ? options.map(this.mapSingleOption) : [this.mapSingleOption(options)]);
+  mapOptions = options => (Array.isArray(options)
+    ? options.map(p => this.mapSingleOption(p)) : [this.mapSingleOption(options)]);
 
   mapSingleOption = (p) => {
-    const { disabled, value } = this.props;
+    const { disabled } = this.props;
+    const { internalValue } = this.state;
     if (typeof p === 'object') {
       const { value: propValue, text, disabled: optionDisabled } = p;
       return {
         value: propValue,
         text,
         disabled: optionDisabled || disabled,
-        checked: (value && propValue === value),
+        checked: (internalValue && internalValue === propValue) || false,
       };
     }
     return {
-      value: p, text: p, checked: (value && p === value), disabled,
+      value: p,
+      text: p,
+      checked: (internalValue && p === internalValue) || false,
+      disabled,
     };
   }
 
   optionToJSXComponent = ({
     value, text, disabled, checked,
   }) => {
-    const { name, onChange, disabled: globalDisabled } = this.props;
+    const { name, disabled: globalDisabled } = this.props;
     return (
       <label htmlFor={`${name}`} id={name} key={value} style={{ marginRight: '8px' }}>
         <input
           ref={(c) => { this.ref[value] = c; }}
           name={name}
           checked={checked}
-          onChange={onChange}
+          onChange={this.onChange}
           value={value}
           disabled={disabled || globalDisabled}
           type="radio"
@@ -97,6 +109,24 @@ class ICheck extends Component {
     );
   }
 
+  updateOptions() {
+    $(Object.values(this.ref)).iCheck('destroy');
+    const { options } = this.props;
+    this.setState({ options: this.mapAllOptions(options) }, () => {
+      this.initializeICheck();
+    });
+  }
+
+  initializeICheck() {
+    const $ref = $(Object.values(this.ref)).iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue',
+    });
+    $ref.on('ifChecked', this.onChange);
+
+    this.$ref = $ref;
+  }
+
   render() {
     const {
       options, name, onChange, disabled, value, ...props
@@ -105,7 +135,6 @@ class ICheck extends Component {
     return (
       <InputWrapper {...{ name, ...props }}>
         {stateOptions}
-        {/* {Object.values(this.options).map(({ jsx }) => jsx)} */}
       </InputWrapper>
     );
   }
@@ -116,6 +145,7 @@ ICheck.propTypes = {
   name: PropTypes.string,
   disabled: PropTypes.bool,
   value: PropTypes.oneOfType([ValueShape, ArrayOfValueShape]),
+  defaultValue: PropTypes.oneOfType([ValueShape, ArrayOfValueShape]),
   onChange: PropTypes.func,
 };
 
@@ -124,6 +154,7 @@ ICheck.defaultProps = {
   name: uuidv4(),
   disabled: false,
   value: undefined,
+  defaultValue: undefined,
   onChange: null,
 };
 
