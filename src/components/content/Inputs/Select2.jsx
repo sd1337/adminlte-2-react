@@ -162,7 +162,6 @@ class Select2 extends Component {
       });
       $ref.val(currVal);
       $ref.trigger('select2:change');
-      // debugger;
     }
   }
 

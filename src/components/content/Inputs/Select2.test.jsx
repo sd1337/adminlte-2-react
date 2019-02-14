@@ -8,7 +8,7 @@ import {
 
 import $ from 'jquery';
 
-// jest.dontMock('jquery');
+jest.dontMock('jquery');
 
 
 describe('Select2 tests', () => {
@@ -70,17 +70,26 @@ describe('Select2 tests', () => {
 
   it('renders selected value with simple option', () => {
     const changeAction = jest.fn();
-    const wrapper = mount(<Select2 options={simpleOptions} onChange={changeAction} />);
-    openDropdown(wrapper);
-    fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseover');
-    fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseup');
-    expect(changeAction).toHaveBeenCalledTimes(1);
-    // expect(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[0]).toBe(2);
+    const wrapper = mount(<Select2 options={simpleOptions} />);
+    wrapper.setProps({ value: 'a' });
+    expect(getSelect2Selection(wrapper).textContent).toBe('a');
+    wrapper.setProps({ value: 'b' });
+    expect(getSelect2Selection(wrapper).textContent).toBe('b');
+    // wrapper.setProps({ value: null });
+    // expect(getSelect2Selection(wrapper).textContent).toBe('');
+    // const domResult = getSelect2Selection(wrapper).textContent;
   });
 
   it('renders selected value with complex option', () => {
   });
 
   it('changes value on click', () => {
+    const changeAction = jest.fn();
+    const wrapper = mount(<Select2 options={simpleOptions} onChange={changeAction} />);
+    openDropdown(wrapper);
+    fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseover');
+    fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseup');
+    expect(changeAction).toHaveBeenCalledTimes(1);
+    // expect(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[0]).toBe(2);
   });
 });
