@@ -13,7 +13,7 @@ const Inputs = [
   <Select />,
   <Select2 />,
   <Date />,
-  <DateRange />,
+  // <DateRange />,
   <ICheck />,
 ];
 

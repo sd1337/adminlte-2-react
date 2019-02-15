@@ -24,31 +24,37 @@ class Date extends Component {
 
     this.state = {
       internalValue: value || defaultValue,
-    }
+    };
   }
 
-  componentDidUpdate({ value: newValue }) {
+  componentDidUpdate({ value: oldValue }, { internalValue: oldInternalValue }) {
+    const { value } = this.props;
     const { internalValue } = this.state;
-    if (newValue !== internalValue) {
+    if ((value !== undefined && (internalValue !== value))) {
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ internalValue: newValue });
+      this.setState({ internalValue: value });
     }
   }
 
   onChange(date) {
     const {
-      onChange, name, id, format,
+      onChange, name, id, format, value,
     } = this.props;
-
-    const fakeResult = {
-      target: {
-        value: date ? date.format(format) : null,
-        id,
-        type: 'text',
-        name,
-      },
-    };
+    // only set internalValue when not controlled from outside
+    if (!value) {
+      let newValue = date;
+      
+      this.setState({ internalValue: date });
+    }
     if (onChange) {
+      const fakeResult = {
+        target: {
+          value: date ? date.format(format) : null,
+          id,
+          type: 'text',
+          name,
+        },
+      };
       onChange(fakeResult);
     }
   }
@@ -67,6 +73,7 @@ class Date extends Component {
       onChange,
       onFocusChange,
       name,
+      id,
       placeholder,
       customCloseIcon,
       showDefaultInputIcon,
@@ -88,10 +95,10 @@ class Date extends Component {
       // others
       ...props
     } = this.props;
-    const { focused } = this.state;
-    let date = value;
-    if (typeof value === 'string') {
-      date = moment(value, displayFormat);
+    const { focused, internalValue } = this.state;
+    let date = internalValue;
+    if (typeof internalValue === 'string') {
+      date = moment(internalValue, displayFormat);
     }
     return (
       <InputWrapper {...{ name, ...props }}>
@@ -101,7 +108,7 @@ class Date extends Component {
             onDateChange: this.onChange,
             focused,
             onFocusChange: this.onFocusChange,
-            id: name,
+            id: id || name,
             placeholder,
             customCloseIcon,
             showDefaultInputIcon,
@@ -138,6 +145,7 @@ Date.propTypes = {
   onChange: PropTypes.func,
   onFocusChange: PropTypes.func,
   id: PropTypes.string,
+  name: PropTypes.string,
   type: PropTypes.oneOf(Types),
   focused: PropTypes.bool,
   placeholder: PropTypes.string,
@@ -154,7 +162,6 @@ Date.propTypes = {
   // small: PropTypes.bool,
   // regular: PropTypes.bool,
   dateProps: PropTypes.shape({}),
-  name: PropTypes.string,
   format: PropTypes.string,
   ...SharedDateProps,
 };
@@ -168,20 +175,11 @@ Date.defaultProps = {
   type: 'default',
   focused: false,
   placeholder: '',
-  // disabled: false,
-  // required: false,
-  // readOnly: false,
-  // showClearDate: false,
   customCloseIcon: null,
   showDefaultInputIcon: false,
   customInputIcon: null,
-  // noBorder: false,
-  // block: false,
-  // small: false,
-  // regular: false,
   dateProps: null,
   name: uuid(),
-  // inputIconPosition: null,
   format: undefined,
   ...SharedDateDefaultProps,
 };

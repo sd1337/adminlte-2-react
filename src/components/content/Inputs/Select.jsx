@@ -31,7 +31,7 @@ class Select extends Component {
     return (
       <InputWrapper {...{ name, ...props }}>
         <select name={name} className="form-control" disabled={disabled} multiple={multiple} value={value} onChange={onChange}>
-          {this.mapOptions(options).map(({
+          {options && this.mapOptions(options).map(({
             value: optionValue, text, disabled: optionDisabled,
           }) => (
             <option

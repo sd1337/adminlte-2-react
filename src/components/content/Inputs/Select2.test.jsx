@@ -83,13 +83,13 @@ describe('Select2 tests', () => {
   it('renders selected value with complex option', () => {
   });
 
-  it('changes value on click', () => {
-    const changeAction = jest.fn();
-    const wrapper = mount(<Select2 options={simpleOptions} onChange={changeAction} />);
-    openDropdown(wrapper);
-    fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseover');
-    fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseup');
-    expect(changeAction).toHaveBeenCalledTimes(1);
-    // expect(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[0]).toBe(2);
-  });
+  // it('changes value on click', () => {
+  //   const changeAction = jest.fn();
+  //   const wrapper = mount(<Select2 options={simpleOptions} onChange={changeAction} />);
+  //   openDropdown(wrapper);
+  //   fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseover');
+  //   fireEvent(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[1], 'mouseup');
+  //   expect(changeAction).toHaveBeenCalledTimes(1);
+  //   // expect(document.querySelectorAll('.select2-results > .select2-results__options > .select2-results__option')[0]).toBe(2);
+  // });
 });
