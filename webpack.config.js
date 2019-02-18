@@ -114,7 +114,7 @@ module.exports = {
     fullcalendar: 'fullcalendar',
     // icheck: 'icheck',
     // jquery: 'jQuery',
-    'jquery-sparkline': 'jquery-sparkline',
+    // 'jquery-sparkline': 'jquery-sparkline',
     moment: 'moment',
     // 'react-bootstrap': 'react-bootstrap',
     // 'react-dates': 'react-dates',

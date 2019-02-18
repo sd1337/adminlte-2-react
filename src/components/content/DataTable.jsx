@@ -25,7 +25,7 @@ class DataTable extends Component {
 
   componentDidMount() {
     const {
-      ajaxMap, ajaxResponseMap, data, columns, setDataTableRef, onSelect, onDeselect,
+      ajaxMap, ajaxResponseMap, data, columns, setDataTableRef, onSelect, onDeselect, onClickEvents,
     } = this.props;
     if (ajaxMap) {
       $(this.main).on('preXhr.dt', ajaxMap);
@@ -55,6 +55,10 @@ class DataTable extends Component {
         const data2 = dt.data();
         onDeselect(data2);
       });
+    }
+    
+    if (onClickEvents) {
+      this.bindOnClickEvents(onClickEvents, api);
     }
   }
 
