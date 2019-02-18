@@ -51,7 +51,6 @@ class ICheck extends Component {
     if (internalValue === e.target.value) {
       return;
     }
-    console.log(`new value for ${this.props.label || 'no label'} is ${e.target.value}`);
     const { onChange, options } = this.props;
     const { target: { value } } = e;
     this.setState({ internalValue: value }, () => {
@@ -77,13 +76,14 @@ class ICheck extends Component {
         value: propValue,
         text,
         disabled: optionDisabled || disabled,
-        checked: (internalValue && internalValue === propValue) || false,
+        checked: (internalValue && internalValue == propValue) || false,
       };
     }
     return {
       value: p,
       text: p,
-      checked: (internalValue && p === internalValue) || false,
+      // eslint-disable-next-line eqeqeq
+      checked: (internalValue && p == internalValue) || false,
       disabled,
     };
   }
@@ -123,7 +123,6 @@ class ICheck extends Component {
       radioClass: 'iradio_minimal-blue',
     });
     $ref.on('ifChecked', this.onChange);
-
     this.$ref = $ref;
   }
 
