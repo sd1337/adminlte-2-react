@@ -10,7 +10,7 @@ import uuid from 'uuid/v4';
 import InputWrapper from './InputWrapper';
 import './Date.scss';
 import { Types } from '../../PropTypes';
-import { SharedDateProps, SharedDateDefaultProps } from './InputShapes';
+import { SharedDateProps, SharedDateDefaultProps, DateValueShape } from './InputShapes';
 
 class Date extends Component {
   state = { focused: false }
@@ -78,7 +78,7 @@ class Date extends Component {
       customCloseIcon,
       showDefaultInputIcon,
       customInputIcon,
-      type,
+      dateType,
       format: displayFormat,
       // shared props
       disabled,
@@ -102,7 +102,7 @@ class Date extends Component {
     }
     return (
       <InputWrapper {...{ name, ...props }}>
-        <div className={`date-${type}`}>
+        <div className={`date-${dateType}`}>
           <SingleDatePicker {...{
             date,
             onDateChange: this.onChange,
@@ -134,14 +134,9 @@ class Date extends Component {
   }
 }
 
-const valueType = PropTypes.oneOfType([
-  MomentPropTypes.momentObj,
-  PropTypes.string,
-]);
-
 Date.propTypes = {
-  value: valueType,
-  defaultValue: valueType,
+  value: DateValueShape,
+  defaultValue: DateValueShape,
   onChange: PropTypes.func,
   onFocusChange: PropTypes.func,
   id: PropTypes.string,
@@ -173,6 +168,7 @@ Date.defaultProps = {
   onFocusChange: undefined,
   id: undefined,
   type: 'default',
+  dateType: 'default',
   focused: false,
   placeholder: '',
   customCloseIcon: null,

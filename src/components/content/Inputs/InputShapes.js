@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
+import MomentPropTypes from 'react-moment-proptypes';
 
 
 const ValueShape = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number,
   PropTypes.object,
+]);
+
+const DateValueShape = PropTypes.oneOfType([
+  MomentPropTypes.momentObj,
+  PropTypes.string,
 ]);
 
 const optionType = PropTypes.shape({
@@ -53,5 +59,5 @@ const SharedDateDefaultProps = {
 
 export {
   OptionShape, ListOfValueShape, ValueShape, ArrayOfValueShape,
-  SharedDateProps, SharedDateDefaultProps,
+  SharedDateProps, SharedDateDefaultProps, DateValueShape,
 };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
 import 'datatables.net-select-bs/css/select.bootstrap.css';
+import './DataTable.css';
 import { arrayEquals } from '../Utilities';
 
 const uuidv4 = require('uuid/v4');

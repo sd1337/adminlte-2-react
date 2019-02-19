@@ -17,7 +17,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
+    library: 'adminlte-2-react',
     publicPath: '/',
   },
   module: {

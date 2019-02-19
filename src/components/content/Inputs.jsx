@@ -7,6 +7,7 @@ import Select2 from './Inputs/Select2';
 import Date from './Inputs/Date';
 import DateRange from './Inputs/DateRange';
 import ICheck from './Inputs/ICheck';
+import DateTime from './Inputs/DateTime';
 
 // const Slider = import(/* webpackChunkName: "inputs.slider" */ './Inputs/Slider');
 // const Text = import(/* webpackChunkName: "inputs.text" */ './Inputs/Text');
@@ -18,5 +19,5 @@ import ICheck from './Inputs/ICheck';
 // const ICheck = import(/* webpackChunkName: "inputs.icheck" */ './Inputs/ICheck');
 
 export {
-  Slider, Text, Checkbox, Radio, Select, Select2, Date, DateRange, ICheck,
+  Slider, Text, Checkbox, Radio, Select, Select2, Date, DateRange, ICheck, DateTime,
 };
