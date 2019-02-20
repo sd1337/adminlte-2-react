@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDateTime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
+import './DateTime.css';
 import { DateValueShape } from './InputShapes';
 import InputWrapper from './InputWrapper';
 
@@ -20,6 +21,7 @@ class DateTime extends Component {
       format,
       timeFormat,
       dateTimeProps,
+      onBlur,
       ...props
     } = this.props;
     return (
@@ -36,7 +38,8 @@ class DateTime extends Component {
               placeholder,
               ...dateTimeProps ? dateTimeProps.inputProps : null,
             },
-
+            onChange,
+            onBlur,
             ...dateTimeProps,
           }}
         />
@@ -49,6 +52,7 @@ DateTime.propTypes = {
   value: DateValueShape,
   defaultValue: DateValueShape,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
   id: PropTypes.string,
   name: PropTypes.string,
   placeholder: PropTypes.string,
@@ -59,16 +63,17 @@ DateTime.propTypes = {
 };
 
 DateTime.defaultProps = {
-  value: null,
+  value: undefined,
   defaultValue: undefined,
-  onChange: null,
-  id: null,
-  name: null,
-  placeholder: null,
+  onChange: undefined,
+  onBlur: undefined,
+  id: undefined,
+  name: undefined,
+  placeholder: undefined,
   disabled: false,
   format: true,
   timeFormat: 'hh:mm',
-  dateTimeProps: null,
+  dateTimeProps: undefined,
 };
 
 export default DateTime;

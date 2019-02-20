@@ -8,6 +8,7 @@ import Date from './Inputs/Date';
 import DateRange from './Inputs/DateRange';
 import ICheck from './Inputs/ICheck';
 import DateTime from './Inputs/DateTime';
+import ImportWrapper from './Inputs/InputWrapper';
 
 // const Slider = import(/* webpackChunkName: "inputs.slider" */ './Inputs/Slider');
 // const Text = import(/* webpackChunkName: "inputs.text" */ './Inputs/Text');
@@ -20,4 +21,5 @@ import DateTime from './Inputs/DateTime';
 
 export {
   Slider, Text, Checkbox, Radio, Select, Select2, Date, DateRange, ICheck, DateTime,
+  ImportWrapper,
 };

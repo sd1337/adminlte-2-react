@@ -15,7 +15,7 @@ class InputWrapper extends Component {
       iconLeft, iconRight, addonLeft, addonRight, size,
       checkboxLeft, checkboxRight, radioLeft, radioRight, buttonLeft, buttonRight,
       children, checkboxLeftProps, checkboxRightProps, radioLeftProps, radioRightProps,
-      width, ...props
+      width, help, ...props
     } = this.props;
     const groupClasses = [
       'input-group',
@@ -49,6 +49,7 @@ class InputWrapper extends Component {
         <div className={groupClasses} style={{ width }}>
           {children}
         </div>
+        {help && <p className="help-block">{help}</p>}
       </Label>
     );
   }
@@ -72,6 +73,7 @@ InputWrapper.propTypes = {
   buttonRight: PropTypes.node,
   children: PropTypes.node.isRequired,
   width: PropTypes.string,
+  help: PropTypes.string,
 };
 
 InputWrapper.defaultProps = {
@@ -91,6 +93,7 @@ InputWrapper.defaultProps = {
   buttonLeft: null,
   buttonRight: null,
   width: '100%',
+  help: null,
 };
 
 export default InputWrapper;

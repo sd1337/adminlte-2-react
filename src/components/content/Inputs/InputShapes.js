@@ -33,6 +33,27 @@ const OptionShape = PropTypes.oneOfType([
 const ListOfValueShape = PropTypes.arrayOf(OptionShape);
 const ArrayOfValueShape = PropTypes.arrayOf(ValueShape);
 
+const SharedInputProps = {
+  name: PropTypes.string,
+  id: PropTypes.string,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
+  placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
+  readOnly: PropTypes.bool,
+};
+const SharedInputDefaultProps = {
+  name: undefined,
+  id: undefined,
+  onChange: undefined,
+  onBlur: undefined,
+  onFocus: undefined,
+  placeholder: undefined,
+  disabled: false,
+  readOnly: false,
+};
+
 const SharedDateProps = {
   disabled: PropTypes.bool,
   required: PropTypes.bool,
@@ -60,4 +81,5 @@ const SharedDateDefaultProps = {
 export {
   OptionShape, ListOfValueShape, ValueShape, ArrayOfValueShape,
   SharedDateProps, SharedDateDefaultProps, DateValueShape,
+  SharedInputProps, SharedInputDefaultProps,
 };

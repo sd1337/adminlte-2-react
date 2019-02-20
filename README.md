@@ -468,7 +468,64 @@ Use TabContent in conjuction with `Tabs` to actually provide the tabular content
 
 ### Forms
 
-A various of different form elements, ranging from simple default html forms (`Text`, `Radio`, `Select`, `Checkbox`) to advanced components based on jQuery Widgets like `Select2`, `ICheck` used by the original adminlte template and pure react based inputs like `Date`, `DateRange` (based on react-dates), `Slider` (based on rc-slider) and other components. All form components should behave like original react inputs with `defaultValue`'s and `onChange` passing more or less pure Javascript `event` objects to make it possible to work with libraries like `Formik`
+A various of different form elements, ranging from simple default html forms (`Text`, `Radio`, `Select`, `Checkbox`) to advanced components based on jQuery Widgets like `Select2`, `ICheck` used by the original adminlte template and pure react based inputs like `Date`, `DateRange` (based on react-dates), `Slider` (based on rc-slider) and other components. All form components should behave like original react inputs with `defaultValue`'s and `onChange` passing more or less pure Javascript `event` objects to make it possible to work with libraries like `Formik`.
+Note that all form elements are not directly exported by `AdminLTE` instead you should import `Inputs` and destructure the required elements.
+
+```
+import AdminLTE, { Inputs } from 'adminlte-2-react';
+
+const { Select2, Date, DateTime, Text } = Inputs;
+...
+```
+
+
+All form elements are wrap in the Component `InputWrapper` with various styling options such as icons, radio buttons, therefore all following props are shared between all form elements. If you want to add an additional element you can also wrap it with `InputWrapper` to fit it smooth into the styling of all other elements. Additional all inputs share the same labeling props to keep a similar styling.
+
+
+### The following InputWrapper and Label props are shared within all of `adminlte-2-react` input components
+
+##### InputWrapper Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| iconLeft | [icon](#icons) |  | Icon left of element |
+| iconRight | [icon](#icons) |  | Icon right of element |
+| addonLeft | `string`, `node` |  | Any content left of element |
+| addonRight | `string`, `node` |  | Any content right of element |
+| size | oneOf: `'xs'`, `'sm'`, `'md'`, `'lg'`  |  | Inputform size |
+| checkboxLeft | `bool` |  | Checkbox left of element |
+| checkboxLeftProps | `object` |  | Props for checkbox left of element |
+| checkboxRight | `bool` |  | Checkbox right of element |
+| checkboxRightProps | `object` |  | Props for checkbox right of element |
+| radioLeft | `bool` |  | Radio left of element |
+| radioLeftProps | `object` |  | Props for radio left of element |
+| radioRight | `bool` |  | Radio right of element |
+| radioRightProps | `object` |  | Props for radio right of element |
+| buttonLeft | `node` |  | Button rendered left of element |
+| buttonRight | `node` |  | Button rendered right of elemet |
+| children | `node` |  |  |
+| width | `string` |  | Fixed inputfield width |
+| help | `string` |  | Help text bellow input element |
+
+##### Label Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| label | `node` |  | Label for form element, can be a simple string or a more complex JSX component |
+| labelIcon | [icon](#icons) |  | Icon next to label |
+| labelPosition | oneOf: `above`, `left`, `none` | `left` |  |
+| labelClass | `string` |  | Additional label classes |
+| type | [type](#types-and-colors) |  | Input element accent |
+| name | `string` |  | Name property for screenreaders |
+| labelXs | `number` (0-12) |  | Bootstrap label column width, does only work when labelPosition `left` is used |
+| labelSm | `number` (0-12) |  | Bootstrap label column width, does only work when labelPosition `left` is used |
+| labelMd | `number` (0-12) |  | Bootstrap label column width, does only work when labelPosition `left` is used |
+| labelLg | `number` (0-12) |  | Bootstrap label column width, does only work when labelPosition `left` is used |
+| xs | `number` (0-12) |  | Bootstrap input element column width, does only work when labelPosition `left` is used |
+| sm | `number` (0-12) |  | Bootstrap input element column width, does only work when labelPosition `left` is used |
+| md | `number` (0-12) |  | Bootstrap input element column width, does only work when labelPosition `left` is used |
+| lg | `number` (0-12) |  | Bootstrap input element column width, does only work when labelPosition `left` is used |
+
 
 #### Text
 
@@ -513,5 +570,7 @@ This component in combination with `DateRange` is heavily based on [react-dates]
 | dateProps | `object` |  | Additional SingleDateProps that are not directly exposed, see [react-dates SingleDatePicker documentation](https://github.com/airbnb/react-dates#singledatepicker) |
 
 #### DateRange
+
+#### DateTime
 
 #### ICheck

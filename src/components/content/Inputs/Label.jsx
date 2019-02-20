@@ -13,13 +13,11 @@ import { splitIcon } from '../../Utilities';
 
 const Label = ({
   label, labelXs, labelSm, labelMd, labelLg, name,
-  xs, sm, md, lg, help, labelIcon, type, children,
-  labelClass,
+  xs, sm, md, lg, labelIcon, type, children,
+  labelClass, labelPosition,
   ...props
 }) => {
-  let { labelPosition } = props;
   const localLabel = label;
-  if (!labelPosition) { labelPosition = 'left'; }
   let localIcon;
   if (localLabel && labelIcon) {
     const hasIcon = !!(labelIcon);
@@ -59,7 +57,6 @@ const Label = ({
         </label>
         <Col {...colProps}>
           {children}
-          {help && <p className="help-block">{help}</p>}
         </Col>
       </div>
     );
@@ -72,19 +69,18 @@ const Label = ({
           {label}
         </label>
         {children}
-        {help && <p className="help-block">{help}</p>}
       </div>
     );
   }
   return (
     <div className={groupClasses}>
       {children}
-      {help && <p className="help-block">{help}</p>}
     </div>
   );
 };
 
 Label.propTypes = {
+
   label: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.node,
@@ -101,7 +97,6 @@ Label.propTypes = {
   sm: PropTypes.number,
   md: PropTypes.number,
   lg: PropTypes.number,
-  help: PropTypes.string,
   labelIcon: PropTypes.string,
   type: PropTypes.oneOf(FormTypes),
   children: PropTypes.oneOfType([
@@ -113,7 +108,7 @@ Label.propTypes = {
 
 Label.defaultProps = {
   label: null,
-  labelPosition: null,
+  labelPosition: 'left',
   labelXs: null,
   labelSm: 2,
   labelMd: null,
@@ -122,7 +117,6 @@ Label.defaultProps = {
   sm: 10,
   md: null,
   lg: null,
-  help: null,
   labelIcon: null,
   type: null,
   name: uuidv4(),
