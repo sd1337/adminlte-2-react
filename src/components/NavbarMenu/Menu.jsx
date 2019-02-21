@@ -10,7 +10,8 @@ const Menu = ({ additionalMenus, children }) => (
   <ul className="nav navbar-nav">
     {children}
     {additionalMenus}
-  </ul>);
+  </ul>
+);
 
 
 Menu.propTypes = {

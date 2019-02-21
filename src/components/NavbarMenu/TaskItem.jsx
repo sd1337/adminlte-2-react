@@ -25,7 +25,8 @@ const TaskItem = ({
         </div>
       </div>
     </a>
-  </li>);
+  </li>
+);
 
 TaskItem.propTypes = {
   value: PropTypes.number.isRequired,

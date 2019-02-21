@@ -1,63 +1,76 @@
 /* eslint-disable no-alert, jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Types } from '../PropTypes';
+import { splitIcon } from '../Utilities';
 
 const MenuEntry = ({
-  iconClass, labelClass, value, headerText, footerText, footerAction,
-  entryClass, footerLink, children,
+  icon, labelType, labelValue, headerText, footerText, onFooterClick,
+  entryClass, footerLink, children, onClick,
 }) => {
+  const hasIcon = !!(icon);
+  const localIcon = hasIcon ? splitIcon(icon) : null;
   /* eslint-disable-next-line no-nested-ternary, no-param-reassign */
-  value = children ? children.length ? children.length : 1 : 0;
+  labelValue = children ? (children.length ? children.length : 1) : labelValue;
   /* eslint-disable-next-line no-param-reassign */
-  headerText = headerText.replace('#value#', value);
-  return (
-    <li className={`dropdown ${entryClass}`}>
-      <a href="/" className="dropdown-toggle" data-toggle="dropdown">
-        <i className={`fa ${iconClass}`} />
-        {
-          value > 0 && <span className={`label label-${labelClass}`}>{value}</span>
-        }
+  headerText = headerText ? headerText.replace('#value#', labelValue) : null;
 
+  const hasChildren = !!(children);
+
+  const listClasses = [
+    hasChildren ? 'dropdown' : null,
+    entryClass,
+  ].filter(p => p).join(' ');
+
+  return (
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <li className={listClasses} onClick={onClick}>
+      <a href="/" className="dropdown-toggle" data-toggle="dropdown">
+        <FontAwesomeIcon icon={localIcon} />
+        {labelValue && <span className={`label label-${labelType}`}>{labelValue}</span>}
       </a>
-      <ul className="dropdown-menu">
-        <li className="header">{headerText}</li>
-        <li>
-          <ul className="menu">{children || <li> Nothing to see here</li>}</ul>
-        </li>
-        {footerText && <li onClick={footerAction} onKeyPress={footerAction} className="footer"><a href={footerLink}>{footerText}</a></li>}
-      </ul>
+      {hasChildren && (
+        <ul className="dropdown-menu">
+          {headerText && <li className="header">{headerText}</li>}
+          <li>
+            <ul className="menu">{children}</ul>
+          </li>
+          {footerText && <li onClick={onFooterClick} onKeyPress={onFooterClick} className="footer"><a href={footerLink}>{footerText}</a></li>}
+        </ul>
+      )}
     </li>
   );
 };
 
 MenuEntry.propTypes = {
-  iconClass: PropTypes.string,
-  labelClass: PropTypes.oneOf(Types),
-  value: PropTypes.number,
+  icon: PropTypes.string,
+  labelType: PropTypes.oneOf(Types),
+  labelValue: PropTypes.number,
   headerText: PropTypes.string,
   footerText: PropTypes.string,
-  footerAction: PropTypes.func,
+  onFooterClick: PropTypes.func,
   entryClass: PropTypes.string,
   footerLink: PropTypes.string,
-  /* TODO: make children prop more specific */
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  onClick: PropTypes.func,
 };
 
 MenuEntry.defaultProps = {
-  iconClass: null,
-  labelClass: 'success',
+  icon: null,
+  labelType: 'success',
   children: null,
-  value: null,
+  labelValue: null,
   headerText: null,
   footerText: null,
-  footerAction: null,
+  onFooterClick: null,
   entryClass: null,
   footerLink: null,
+  onClick: null,
 };
 
 export default MenuEntry;
