@@ -1,0 +1,16 @@
+.task-item > a,
+.task-item > div {
+  padding: 10px;
+}
+.task-item > a > h3,
+.task-item > div > h3 {
+  font-size: 14px;
+  padding: 0;
+  margin: 0 0 10px 0;
+  color: #666666;
+}
+.task-item > a > .progress,
+.task-item > div > .progress {
+  padding: 0;
+  margin: 0;
+}

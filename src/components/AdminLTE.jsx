@@ -26,7 +26,7 @@ import * as Sidebar from './Sidebar/Sidebar';
 import Content from './Content';
 import Footer from './Footer';
 import ControlSidebar from './ControlSidebar';
-import * as Navbar from './NavbarMenu/Menu';
+import * as Navbar from './NavbarMenu/Navbar';
 import Row from './content/Row';
 import Col from './content/Col';
 import Infobox from './content/Infobox';
@@ -140,7 +140,7 @@ class AdminLTE extends Component {
       titleShort = [titleShort];
     }
     const [titleShortBold, titleShotThin = ''] = titleShort;
-    let [menu] = children && children.length && children.filter(p => p.type === Navbar.Menu);
+    let [menu] = children && children.length && children.filter(p => p.type === Navbar.Core);
     if (children.findIndex(p => p.type === ControlSidebar) > 0) {
       menu = React.cloneElement(menu, { additionalMenus: [React.createElement(Navbar.ControlSidebarEntry, { key: 'control-sidebar-entry' })] });
     }

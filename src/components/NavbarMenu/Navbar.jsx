@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MenuEntry from './MenuEntry';
-import Item from './Item';
-import SimpleItem from './SimpleItem';
+import Entry from './Entry';
+import MessageItem from './MessageItem';
+import NotificationItem from './NotificationItem';
 import TaskItem from './TaskItem';
 import ControlSidebarEntry from './ControlSidebarEntry';
 
-const Menu = ({ additionalMenus, children }) => (
+const Navbar = ({ additionalMenus, children }) => (
   <ul className="nav navbar-nav">
     {children}
     {additionalMenus}
@@ -14,7 +14,7 @@ const Menu = ({ additionalMenus, children }) => (
 );
 
 
-Menu.propTypes = {
+Navbar.propTypes = {
   additionalMenus: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -25,11 +25,11 @@ Menu.propTypes = {
   ]),
 };
 
-Menu.defaultProps = {
+Navbar.defaultProps = {
   additionalMenus: null,
   children: null,
 };
 
 export {
-  Menu, MenuEntry, Item, SimpleItem, TaskItem, ControlSidebarEntry,
+  Navbar as Core, Entry, MessageItem, NotificationItem, TaskItem, ControlSidebarEntry,
 };// ;default Menu;

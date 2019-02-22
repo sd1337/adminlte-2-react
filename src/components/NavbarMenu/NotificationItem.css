@@ -1,0 +1,19 @@
+
+.notification-item > a,
+.notification-item > div {
+  color: #444444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+.notification-item > a > .glyphicon,
+.notification-item > a > .fa,
+.notification-item > a > .ion
+.notification-item > div > .glyphicon,
+.notification-item > div > .fa,
+.notification-item > div > .ion {
+  width: 20px;
+}
+.notification-item > div {
+  cursor:pointer;
+}

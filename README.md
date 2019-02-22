@@ -134,21 +134,81 @@ Header is used to seperate side bar items into multiple groups
 
 ### Navbar
 
-#### Menu
+It is possible to enhance the top navigation bar with clickable icons and dropdown menus to show additional interactions (e.g. notification bars)
 
-##### Props
+#### Core
+
+To use the navbar menu you have to wrap `Entries` with the Core component
+
+```
+<Navbar.Core>
+  <Entry
+    icon="fas-envelope"
+  >
+    <MessageItem>
+    ...
+  </Entry>
+</Navbar.Core>
+```
+
+#### Entry
+
+An entry is the component rendered inside the navbar it can be either used as an additional button (e.g. for logout actions) or as an menu opener rendering components of type `MessageItem`, `NotificationItem`, `TaskItem`. Additionally an colored label can be attached indicating that several actions are behind the menu. If it should act as an button provide the onClick prop otherwise provide some children to use it as an menu.
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
-| additionalMenus | node |  | Display text of the item |
+| icon | [icon](#icons) |  | Entry icon |
+| labelType | [type](#types-and-colors) |  | Label accent |
+| labelValue | `number` |  | Label value displayed on top right of entry. If you provide no value, the value is calculated as the number of nested children, to disable the label in this case provide a value of `0` |
+| headerText | `string` |  | Text above menu items in opened state |
+| footerText | `string` |  | Text bellow menu items in opened state |
+| onFooterClick | `function` |  | Action triggered on footer click |
+| className | `string` |  | Additional classes |
+| children | oneOf: `NotificationItem`, `TaskItem`, `MessageItem` |  | Additional classes |
+| onClick | `function` |  | On click action |
 
-#### MenuEntry
+#### NotificationItem
 
-#### SimpleItem
+A simple notification style navbar list item with icon
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **icon** | [icon](#icons) |  | Icon left of text |
+| **iconColor** | [color](#types-and-colors) |  | Icon color |
+| **text** | `string` |  | Item text |
+| to | `string` |  | React dom route |
+| onClick | `function` |  | On click action |
 
 #### TaskItem
 
-#### Item
+Navbar item with progressbar
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **value** | `number` |  | Progress value |
+| **barColor** | [color](#types-and-colors) |  | Progressbar color |
+| **text** | `string` |  | Item text |
+| to | `string` |  | React dom route |
+| onClick | `function` |  | On click action |
+| min | `number` | `0` | Progress minimum value |
+| max | `number` | `100` | Progress maximum value |
+
+#### MessageItem
+
+Instant message style notification
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **text** | `string` |  | Item text |
+| subText | `string` |  | Additional text |
+| imageUrl | `string` |  | User image link |
+| imageAlt | `string` |  | User image link |
+| onClick | `function` |  | On click action |
+| when | `momentObject` |  | Progress minimum value |
+| whenFormats | `object` | `{ minutes: 'mins', hours: 'hours', today: 'today', yesterday: 'yesterday', days: 'DD.MM.YYYY', }` | Alternative namings for when annotation in item |
+
+
+
 
 ### Content
 

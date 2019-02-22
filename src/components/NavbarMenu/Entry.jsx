@@ -3,25 +3,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import './Entry.css';
 import { Types } from '../PropTypes';
 import { splitIcon } from '../Utilities';
 
-const MenuEntry = ({
+const Entry = ({
   icon, labelType, labelValue, headerText, footerText, onFooterClick,
-  entryClass, footerLink, children, onClick,
+  className, children, onClick,
 }) => {
   const hasIcon = !!(icon);
   const localIcon = hasIcon ? splitIcon(icon) : null;
   /* eslint-disable-next-line no-nested-ternary, no-param-reassign */
-  labelValue = children ? (children.length ? children.length : 1) : labelValue;
+  labelValue = labelValue || (children ? (children.length ? children.length : 1) : 0);
   /* eslint-disable-next-line no-param-reassign */
   headerText = headerText ? headerText.replace('#value#', labelValue) : null;
 
   const hasChildren = !!(children);
 
   const listClasses = [
+    'navbar-menu',
     hasChildren ? 'dropdown' : null,
-    entryClass,
+    className,
   ].filter(p => p).join(' ');
 
   return (
@@ -29,7 +31,7 @@ const MenuEntry = ({
     <li className={listClasses} onClick={onClick}>
       <a href="/" className="dropdown-toggle" data-toggle="dropdown">
         <FontAwesomeIcon icon={localIcon} />
-        {labelValue && <span className={`label label-${labelType}`}>{labelValue}</span>}
+        {labelValue > 0 && <span className={`label label-${labelType}`}>{labelValue}</span>}
       </a>
       {hasChildren && (
         <ul className="dropdown-menu">
@@ -37,22 +39,21 @@ const MenuEntry = ({
           <li>
             <ul className="menu">{children}</ul>
           </li>
-          {footerText && <li onClick={onFooterClick} onKeyPress={onFooterClick} className="footer"><a href={footerLink}>{footerText}</a></li>}
+          {footerText && <li onClick={onFooterClick} onKeyPress={onFooterClick} className="footer"><div>{footerText}</div></li>}
         </ul>
       )}
     </li>
   );
 };
 
-MenuEntry.propTypes = {
+Entry.propTypes = {
   icon: PropTypes.string,
   labelType: PropTypes.oneOf(Types),
   labelValue: PropTypes.number,
   headerText: PropTypes.string,
   footerText: PropTypes.string,
   onFooterClick: PropTypes.func,
-  entryClass: PropTypes.string,
-  footerLink: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -60,7 +61,7 @@ MenuEntry.propTypes = {
   onClick: PropTypes.func,
 };
 
-MenuEntry.defaultProps = {
+Entry.defaultProps = {
   icon: null,
   labelType: 'success',
   children: null,
@@ -68,9 +69,8 @@ MenuEntry.defaultProps = {
   headerText: null,
   footerText: null,
   onFooterClick: null,
-  entryClass: null,
-  footerLink: null,
+  className: null,
   onClick: null,
 };
 
-export default MenuEntry;
+export default Entry;
