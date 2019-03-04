@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Tab, TabContent, Nav, NavItem,
 } from 'react-bootstrap';
 import uuidv4 from 'uuid';
-import { splitIcon } from '../Utilities';
+import TabTitle from './TabTitle';
 
 class Tabs extends Component {
   state = {
@@ -34,10 +33,6 @@ class Tabs extends Component {
       unmountOnExit = false, id = uuidv4(), icon, title, titleLeft = false, activeKey,
     } = this.props;
     const { stateActiveKey } = this.state;
-    const hasIcon = !!(icon);
-    const localIcon = hasIcon ? splitIcon(icon) : null;
-    const hasTitle = !!(title);
-    const hasIconOrHeader = hasIcon || hasTitle;
     const localChildren = children && children.length ? children : [children];
     return (
       <Tab.Container
@@ -55,12 +50,9 @@ class Tabs extends Component {
                 {p.props.title}
               </NavItem>
             ))}
-            {hasIconOrHeader && (
-            <li className={`header${titleLeft ? ' pull-left' : ''}`}>
-              {hasIcon && <FontAwesomeIcon icon={localIcon} />}
-              {hasTitle ? ` ${title}` : ''}
-            </li>
-            )}
+            {
+              <TabTitle icon={icon} title={title} titleLeft={titleLeft} />
+            }
           </Nav>
           <TabContent
             bsclass="tab"
