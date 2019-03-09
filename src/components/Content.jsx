@@ -21,7 +21,7 @@ class Content extends Component {
 
   render() {
     const {
-      title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true, 
+      title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true,
       modalFooter, children, history, onHide, modalSize, modalType, modalCloseButton,
     } = this.props;
 
@@ -36,6 +36,7 @@ class Content extends Component {
           onExited={() => { if (modalCloseTo) { history.push(modalCloseTo); } }}
           bsSize={modalSize}
           dialogClassName={dialogClassName}
+          enforceFocus={false}
         >
           <Modal.Header closeButton={modalCloseButton}>
             <Modal.Title>{title}</Modal.Title>
@@ -69,7 +70,8 @@ class Content extends Component {
         <section className="content">
           {children}
         </section>
-      </React.Fragment>);
+      </React.Fragment>
+    );
   }
 }
 
