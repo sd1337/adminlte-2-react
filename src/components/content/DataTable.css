@@ -7,3 +7,15 @@
      url("../../fonts/glyphicons-halflings-regular.ttf") format("truetype"),
       url("../../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
 }
+.datatable-controlled-elems .pagination {
+  text-align: right;
+  float: right!important;
+}
+
+.select-info, .select-item{
+  margin-left: 0.5em;
+}
+
+.paging_simple_numbers{
+  display: none;
+}
