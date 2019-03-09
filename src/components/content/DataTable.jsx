@@ -72,27 +72,44 @@ class DataTable extends Component {
     return false;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate({ data: oldData }) {
     const { onClickEvents } = this.props;
-    const { api } = this;
+    const { api, main } = this;
     const ids = [];
-    $('.selected', this.main).each(function each() {
+    $('.selected', main).each(function each() {
       ids.push(this.id);
     });
-
-    api.clear();
     const { data } = this.props;
-    if (data) { api.rows.add(data); }
-    api.draw();
+    if (!arrayEquals(oldData, data)) {
+      const currentPage = api.page();
+      api.clear();
+      if (data) { api.rows.add(data); }
+      api.draw();
+      api.page(currentPage);
+    }
     let { selectedRows } = this.props;
     if (selectedRows) {
-      selectedRows = selectedRows.length ? selectedRows : [selectedRows];
-      selectedRows.forEach((item) => {
-        // eslint-disable-next-line eqeqeq
-        if (!ids.find(p => p == selectedRows[0])) api.row(`#${item}`).select();
-        else $(`#${item}`, this.main).addClass('selected');
+      // api.rows({ selected: true }).every(function every() {
+      //   this.deselect();
+      // });
+      selectedRows = typeof selectedRows !== 'string' && selectedRows.length ? selectedRows : [selectedRows];
+      const rowsToSelect = [];
+      api.rows().every(function every() {
+        if (selectedRows.indexOf(this.data().browser) >= 0) {
+          rowsToSelect.push(this.node());
+        }
       });
+      api.rows(rowsToSelect).select();
+      // selectedRows.forEach((item) => {
+      //   // eslint-disable-next-line eqeqeq
+      //   if (!ids.find(p => p == selectedRows[0])) {
+      //     api.row(`#${item}`).select();
+      //   } else {
+      //     $(`#${item}`, main).addClass('selected');
+      //   }
+      // });
     }
+    api.draw(false);
     if (onClickEvents) {
       this.bindOnClickEvents(onClickEvents, api);
     }
@@ -156,8 +173,8 @@ DataTable.propTypes = {
   }).isRequired,
   ajaxMap: PropTypes.func,
   ajaxResponseMap: PropTypes.func,
-  data: PropTypes.arrayOf(PropTypes.shape({ })),
-  columns: PropTypes.arrayOf(PropTypes.shape({ })),
+  data: PropTypes.arrayOf(PropTypes.shape({})),
+  columns: PropTypes.arrayOf(PropTypes.shape({})),
   setDataTableRef: PropTypes.func,
   onSelect: PropTypes.func,
   onDeselect: PropTypes.func,
@@ -167,11 +184,11 @@ DataTable.propTypes = {
   condensed: PropTypes.bool,
   selectedRows: PropTypes.oneOfType([
     PropTypes.number,
-    PropTypes.shape({ }),
-    PropTypes.arrayOf(PropTypes.number,),
-    PropTypes.arrayOf(PropTypes.shape({ })),
+    PropTypes.shape({}),
+    PropTypes.arrayOf(PropTypes.number),
+    PropTypes.arrayOf(PropTypes.shape({})),
   ]),
-  onClickEvents: PropTypes.shape({ }),
+  onClickEvents: PropTypes.shape({}),
 };
 
 DataTable.defaultProps = {
