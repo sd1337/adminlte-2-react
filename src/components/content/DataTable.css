@@ -10,12 +10,9 @@
 .datatable-controlled-elems .pagination {
   text-align: right;
   float: right!important;
+  margin: 0px;
 }
 
 .select-info, .select-item{
   margin-left: 0.5em;
-}
-
-.paging_simple_numbers{
-  display: none;
 }

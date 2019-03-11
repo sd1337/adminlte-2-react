@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap';
 
@@ -11,6 +12,7 @@ import { arrayEquals } from '../Utilities';
 
 const uuidv4 = require('uuid/v4');
 const $ = require('jquery');
+// $.DataTable = require('datatables.net');
 $.DataTable = require('datatables.net-bs');
 require('datatables.net-select-bs');
 
@@ -61,9 +63,20 @@ class DataTable extends Component {
 
   constructor(props) {
     super(props);
-    const { options } = props;
-    const { paging, info, pageLength, ...clearedOptions } = options;
-    this.state.options = { paging: 10, info: false, pageLength: pageLength || 10, ...clearedOptions };
+    const {
+      options, totalElements, hasMore, order,
+    } = props;
+    this.controlled = totalElements || hasMore;
+    if (!this.controlled) {
+      this.state.options = { order: this.orderToInternal(order), ...options };
+    } else {
+      const {
+        paging, info, pageLength, ...clearedOptions
+      } = options;
+      this.state.options = {
+        paging: false, info: false, order: this.orderToInternal(order), ...clearedOptions,
+      };
+    }
     this.state.domNode = this.createDomObject();
     this.setActivePage = this.setActivePage.bind(this);
   }
@@ -82,16 +95,19 @@ class DataTable extends Component {
   }
 
   shouldComponentUpdate({
-    data, selectedRows, footer, options,
-  }, { page: oldPage }) {
+    data, selectedRows, footer, options, page: oldPage,
+    order,
+  }) {
     const {
       data: propData, selectedRows: propSelectedRows, footer: propFooter, options: propOptions,
+      order: propOrder,
     } = this.props;
     const { page } = this.state;
     if (data !== propData
       || !arrayEquals(selectedRows, propSelectedRows)
       || footer !== propFooter
       || JSON.stringify(options) !== JSON.stringify(propOptions)
+      || JSON.stringify(order) !== JSON.stringify(propOrder)
       || oldPage !== page
     ) {
       return true;
@@ -99,8 +115,10 @@ class DataTable extends Component {
     return false;
   }
 
-  componentDidUpdate({ data: oldData, footer: oldFooter, selectedRows: oldSelectedRows }) {
-    const { onClickEvents, footer } = this.props;
+  componentDidUpdate({
+    data: oldData, footer: oldFooter, selectedRows: oldSelectedRows, order: oldOrder,
+  }) {
+    const { onClickEvents, footer, order } = this.props;
     const { api, main } = this;
 
     if (footer !== oldFooter) {
@@ -118,19 +136,46 @@ class DataTable extends Component {
       ids.push(this.id);
     });
     const { data } = this.props;
-    if (!arrayEquals(oldData, data)) {
+    const dataChanged = !arrayEquals(oldData, data);
+    if (dataChanged) {
       const currentPage = api.page();
       api.clear();
       if (data) { api.rows.add(data); }
-      api.draw();
-      this.setActivePage(currentPage);
+      this.setActivePage(currentPage, true);
+      // api.draw();
     }
+    this.selectRows(dataChanged, oldSelectedRows);
+    if (onClickEvents) {
+      this.bindOnClickEvents(onClickEvents, api);
+    }
+
+    if (JSON.stringify(order) !== JSON.stringify(oldOrder)) {
+      api.order(this.orderToInternal(order));
+    }
+    api.draw();
+  }
+
+  componentWillUnmount() {
+    this.destroyDatatables();
+  }
+
+  setActivePage(page, skipDraw) {
+    const { api } = this;
+    api.page(page);
+    if (!skipDraw) {
+      api.draw(false);
+    }
+  }
+
+  selectRows(dataChanged, oldSelectedRows) {
+    const { api } = this;
     let { selectedRows } = this.props;
     if (selectedRows) {
       selectedRows = typeof selectedRows !== 'string' && selectedRows.length ? selectedRows : [selectedRows];
-      api.rows({ selected: true }).deselect();
-      if (!arrayEquals(selectedRows, oldSelectedRows)) {
+      if (dataChanged || !arrayEquals(selectedRows, oldSelectedRows)) {
+        api.rows({ selected: true }).deselect();
         const rowsToSelect = [];
+        // eslint-disable-next-line array-callback-return
         api.rows().every(function every() {
           if (selectedRows.indexOf(this.data().browser) >= 0) {
             rowsToSelect.push(this.node());
@@ -141,33 +186,37 @@ class DataTable extends Component {
         this.disableRowSelectEvent = false;
       }
     }
-    if (onClickEvents) {
-      this.bindOnClickEvents(onClickEvents, api);
-    }
-  }
-
-  componentWillUnmount() {
-    this.destroyDatatables();
-  }
-
-  setActivePage(page) {
-    const { api } = this;
-    api.page(page);
-    api.draw(false);
-    this.setState({ page });
   }
 
   initializeDatatables() {
     const {
-      data, columns, setDataTableRef, onSelect, onDeselect, onClickEvents,
+      data, columns, setDataTableRef, onSelect, onDeselect, onClickEvents, onOrderChange,
+      onPageChange,
     } = this.props;
     const { options } = this.state;
+    const localColumns = ((options && options.columns) || columns)
+      .map((p) => {
+        if (p.render) {
+          const { render: externalRender, ...otherOptions } = p;
+          const render = (e) => {
+            const localValue = externalRender(e);
+            if (React.isValidElement(localValue)) {
+              return ReactDOMServer.renderToString(localValue);
+            }
+            return localValue;
+          };
+          return { render, ...otherOptions };
+        }
+        return p;
+      });
+
     const api = $(this.main).dataTable({
       data,
-      columns: (options && options.columns) || columns,
+      columns: localColumns,
       ...options,
     }).api();
     this.api = api;
+    this.selectRows();
     if (setDataTableRef) {
       setDataTableRef(api);
     }
@@ -188,10 +237,45 @@ class DataTable extends Component {
     api.on('page.dt', () => {
       this.setActivePage(api.page());
     });
+    if (onPageChange) {
+      api.on('page.dt', () => {
+        onPageChange(api.page());
+      });
+    }
+
+    if (onOrderChange) {
+      api.on('order.dt', (e, { aaSorting: order }) => {
+        const { order: oldOrder } = this;
+        if (!arrayEquals(order, oldOrder)) {
+          this.order = JSON.parse(JSON.stringify(order.slice(0)));
+          onOrderChange(this.orderToExternal(order));
+        }
+      });
+    }
 
     if (onClickEvents) {
       this.bindOnClickEvents(onClickEvents, api);
     }
+  }
+
+  orderToExternal(order) {
+    const {
+      columns,
+    } = this.props;
+    const { options } = this.state;
+    const localColumns = (options && options.columns) || columns;
+    return order.map(p => ({ index: p[0], column: localColumns[p[0]].data, direction: p[1] }));
+  }
+
+  orderToInternal(order) {
+    const {
+      columns,
+    } = this.props;
+    const { options } = this.state;
+    const localColumns = ((options && options.columns) || columns).map(p => p.data);
+    return order
+      ? order.map(p => ([p.index || localColumns.indexOf(p.column), p.direction || 'asc']))
+      : undefined;
   }
 
   destroyDatatables() {
@@ -246,11 +330,14 @@ class DataTable extends Component {
   }
 
   renderPagination() {
-    const { data, options } = this.props;
-    const { page } = this.state;
+    const {
+      options, page: propPage, totalElements, onPageChange, hasMore, pageSize, selectedRows,
+    } = this.props;
+    const localPage = propPage;
     const { paging, info: infoOption } = options;
     const language = options.language || defaultLanguageOptions;
-    const selected = (this.api && this.api.rows({ selected: true })[0].length) || 0;
+    const selected = (selectedRows && (selectedRows.length || 1)) || 0;
+    const pageLength = pageSize;
     const hasSelected = selected > 0;
     const {
       paginate: {
@@ -263,10 +350,12 @@ class DataTable extends Component {
       },
     } = language;
     let dtInfo;
-    if (data.length && data.length > 0) {
-      dtInfo = info.replace('_START_', 1 + 10 * page).replace('_END_', Math.min(10 * page + 10, data.length)).replace('_TOTAL_', data.length);
-    } else {
-      dtInfo = infoEmpty;
+    if (totalElements) {
+      if (totalElements > 0) {
+        dtInfo = info.replace('_START_', 1 + pageLength * localPage).replace('_END_', Math.min(pageLength * localPage + pageLength, totalElements)).replace('_TOTAL_', totalElements);
+      } else {
+        dtInfo = infoEmpty;
+      }
     }
     let selectInfo;
     if (hasSelected) {
@@ -298,10 +387,11 @@ class DataTable extends Component {
         {(!(paging === false)) && (
           <Col sm={7}>
             <Pagination
-              activePage={page}
-              totalElements={data.length}
-              pageSize={10}
-              onChange={this.setActivePage}
+              activePage={localPage}
+              totalElements={totalElements}
+              pageSize={pageLength}
+              onChange={onPageChange}
+              hasMore={hasMore}
               labels={{
                 first,
                 last,
@@ -320,7 +410,7 @@ class DataTable extends Component {
     return (
       <div className="datatable-controlled-elems">
         {domNode}
-        {this.renderPagination()}
+        {this.controlled && this.renderPagination()}
       </div>
     );
   }
@@ -343,11 +433,24 @@ DataTable.propTypes = {
   condensed: PropTypes.bool,
   selectedRows: PropTypes.oneOfType([
     PropTypes.number,
+    PropTypes.string,
     PropTypes.shape({}),
     PropTypes.arrayOf(PropTypes.number),
+    PropTypes.arrayOf(PropTypes.string),
     PropTypes.arrayOf(PropTypes.shape({})),
   ]),
   onClickEvents: PropTypes.shape({}),
+  page: PropTypes.number,
+  totalElements: PropTypes.number,
+  pageSize: PropTypes.number,
+  onPageChange: PropTypes.func,
+  onOrderChange: PropTypes.func,
+  hasMore: PropTypes.bool,
+  order: PropTypes.arrayOf(PropTypes.shape({
+    direction: PropTypes.oneOf(['asc', 'desc']).isRequired,
+    column: PropTypes.string,
+    index: PropTypes.number,
+  })),
 };
 
 DataTable.defaultProps = {
@@ -364,6 +467,13 @@ DataTable.defaultProps = {
   condensed: false,
   selectedRows: null,
   onClickEvents: null,
+  page: null,
+  totalElements: null,
+  pageSize: null,
+  onPageChange: null,
+  onOrderChange: null,
+  hasMore: undefined,
+  order: undefined,
 };
 
 export default DataTable;

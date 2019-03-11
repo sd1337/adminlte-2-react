@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import uuidv4 from 'uuid';
 import { Pagination as BsPagination } from 'react-bootstrap';
 
 class Pagination extends Component {
@@ -19,7 +18,7 @@ class Pagination extends Component {
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.totalPages = 1 + Math.floor(totalElements / pageSize);
+    this.totalPages = totalElements ? 1 + Math.floor(totalElements / pageSize) : null;
     this.onChange = this.onChange.bind(this);
   }
 
@@ -35,12 +34,11 @@ class Pagination extends Component {
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.totalPages = 1 + Math.floor(totalElements / pageSize);
+    this.totalPages = totalElements ? 1 + Math.floor(totalElements / pageSize) : null;
   }
 
   onChange(event) {
-    const { target: innerText } = event;
-    const { onChange, activePage } = this.props;
+    const { onChange, activePage, hasMore } = this.props;
     let value = null;
     switch (this.keyMaps[event.target.innerText] || '') {
       case 'first':
@@ -59,7 +57,7 @@ class Pagination extends Component {
         value = parseInt(event.target.innerText, 10) - 1;
         break;
     }
-    if (value >= 0 && value < this.totalPages) {
+    if (value >= 0 && (value < this.totalPages || hasMore !== undefined)) {
       onChange(value);
     }
   }
@@ -69,61 +67,95 @@ class Pagination extends Component {
       activePage, labels: {
         first, last, next, previous,
       },
+      hasMore,
     } = this.props;
     const { totalPages } = this;
-    const firstFourPages = activePage < 3;
-    const lastFourPages = totalPages - activePage < 4;
-    const links = [];
+    if (totalPages) {
+      const firstFourPages = activePage < 3;
+      const lastFourPages = totalPages - activePage < 4;
+      const links = [];
 
-    const getIntermediate = (from, to, arr) => {
-      // eslint-disable-next-line no-plusplus
-      for (let i = from; i < to; ++i) {
-        arr.push(<BsPagination.Item key={`page_${i}`} active={i === activePage} onClick={this.onChange}>{i + 1}</BsPagination.Item>);
-      }
-    };
-    const lastPage = totalPages - 1;
+      const getIntermediate = (from, to, arr) => {
+        // eslint-disable-next-line no-plusplus
+        for (let i = from; i < to; ++i) {
+          arr.push(<BsPagination.Item key={`page_${i}`} active={i === activePage} onClick={this.onChange}>{i + 1}</BsPagination.Item>);
+        }
+      };
+      const lastPage = totalPages - 1;
 
-    if (totalPages > 10) {
-      if (firstFourPages) {
-        getIntermediate(0, 5, links);
-        links.push(
-          <BsPagination.Ellipsis key="page_none" />,
-        );
-        links.push(
-          <BsPagination.Item key={`page_${lastPage}`} active={lastPage === activePage} onClick={this.onChange}>{lastPage + 1}</BsPagination.Item>,
-        );
-      } else if (lastFourPages) {
-        links.push(
-          <BsPagination.Item key="page_0" active={activePage === 0} onClick={this.onChange}>1</BsPagination.Item>,
-        );
-        links.push(
-          <BsPagination.Ellipsis key="page_none" />,
-        );
-        getIntermediate(totalPages - 5, totalPages, links);
+      if (totalPages > 10) {
+        if (firstFourPages) {
+          getIntermediate(0, 5, links);
+          links.push(
+            <BsPagination.Ellipsis key="page_none" />,
+          );
+          links.push(
+            <BsPagination.Item key={`page_${lastPage}`} active={lastPage === activePage} onClick={this.onChange}>{lastPage + 1}</BsPagination.Item>,
+          );
+        } else if (lastFourPages) {
+          links.push(
+            <BsPagination.Item key="page_0" active={activePage === 0} onClick={this.onChange}>1</BsPagination.Item>,
+          );
+          links.push(
+            <BsPagination.Ellipsis key="page_none" />,
+          );
+          getIntermediate(totalPages - 5, totalPages, links);
+        } else {
+          links.push(
+            <BsPagination.Item key="page_0" active={activePage === 0} onClick={this.onChange}>1</BsPagination.Item>,
+          );
+          links.push(
+            <BsPagination.Ellipsis key="page_none" />,
+          );
+          getIntermediate(activePage - 1, activePage + 2, links);
+          links.push(
+            <BsPagination.Ellipsis key="page_none_1" />,
+          );
+          links.push(
+            <BsPagination.Item key={`page_${lastPage}`} active={lastPage === activePage} onClick={this.onChange}>{lastPage + 1}</BsPagination.Item>,
+          );
+        }
       } else {
-        links.push(
-          <BsPagination.Item key="page_0" active={activePage === 0} onClick={this.onChange}>1</BsPagination.Item>,
-        );
-        links.push(
-          <BsPagination.Ellipsis key="page_none" />,
-        );
-        getIntermediate(activePage - 1, activePage + 2, links);
-        links.push(
-          <BsPagination.Ellipsis key="page_none_1" />,
-        );
-        links.push(
-          <BsPagination.Item key={`page_${lastPage}`} active={lastPage === activePage} onClick={this.onChange}>{lastPage + 1}</BsPagination.Item>,
-        );
+        getIntermediate(0, totalPages, links);
       }
-    } else {
-      getIntermediate(0, totalPages, links);
+      return (
+        <React.Fragment>
+          <BsPagination>
+            <BsPagination.Item
+              disabled={activePage === 0}
+              onClick={this.onChange}
+            >
+              {previous}
+            </BsPagination.Item>
+            {links}
+            <BsPagination.Item
+              disabled={lastPage === activePage}
+              onClick={this.onChange}
+            >
+              {next}
+            </BsPagination.Item>
+          </BsPagination>
+        </React.Fragment>
+      );
     }
     return (
       <React.Fragment>
         <BsPagination>
-          <BsPagination.Item disabled={activePage === 0} onClick={this.onChange}>{previous}</BsPagination.Item>
-          {links}
-          <BsPagination.Item disabled={lastPage === activePage} onClick={this.onChange}>{next}</BsPagination.Item>
+          <BsPagination.Item
+            disabled={activePage === 0}
+            onClick={this.onChange}
+          >
+            {previous}
+          </BsPagination.Item>
+          {(activePage > 0) && <BsPagination.Ellipsis key="page_none" />}
+          <BsPagination.Item key="page_active" active>{activePage + 1}</BsPagination.Item>
+          {hasMore && <BsPagination.Ellipsis key="page_none_1" />}
+          <BsPagination.Item
+            disabled={hasMore === false}
+            onClick={(hasMore === true && this.onChange) || undefined}
+          >
+            {next}
+          </BsPagination.Item>
         </BsPagination>
       </React.Fragment>
     );
@@ -134,6 +166,7 @@ Pagination.defaultProps = {
   activePage: null,
   totalElements: null,
   pageSize: null,
+  hasMore: null,
   labels: {
     first: 'First',
     last: 'Last',
@@ -146,6 +179,7 @@ Pagination.propTypes = {
   activePage: PropTypes.number,
   totalElements: PropTypes.number,
   pageSize: PropTypes.number,
+  hasMore: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   labels: PropTypes.shape({
     first: PropTypes.string,

@@ -16,7 +16,7 @@ const arrayEquals = (a, b) => {
     // Check if we have nested arrays
     if (a[i] instanceof Array && b[i] instanceof Array) {
       // recurse into the nested arrays
-      if (!a[i].equals(b[i])) {
+      if (!arrayEquals(a[i], b[i])) {
         return false;
       }
     } else if (a[i] !== b[i]) {

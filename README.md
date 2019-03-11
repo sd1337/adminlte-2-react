@@ -393,6 +393,22 @@ Undocumented use at your own risk
 | responsive | `bool` | `false` | Resize table of window resize |
 | selectedRows | `[object]` |  | Allows passing in the currently selected rows |
 | onClickEvents | `object` |  | Row level bound click events based on `class` on cell dom element. Example `render: (data) => ``<div class="on-click-event">${data}</div>``'` will bind to an object `{onClickEvent: (data, rowIndex, rowData) => {console.log("do stuff with row data")}}` |
+| page | `number` |  | Active page, can be left empty if uncontrolled |
+| totalElements | `func` |  | Passing this property or hasMore makes this component controlled, therefore pageSize, pageChange and orderChange props should be provided too |
+| pageSize | `number` |  | Allows passing in the currently selected rows |
+| onPageChange | `func` |  | Page change event handler |
+| onOrderChange | `func` |  | Order change event handler |
+| hasMore | `bool` |  | If you control data externally and are not exactly aware if additional pages exist you can provide hasMore instead to indicate if more data exists |
+| order | `[object]` |  | Allows passing in the currently selected rows |
+
+##### Order props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| title | `string` |  | Column title |
+| data | `string` |  | Data property containing the data to be rendered in the column |
+| width | `string` |  | Use this prop to give the column a fixed width |
+| render | `function` |  | Custom render function for the column with arguments `(data, rowData, rowIndex)` |
 
 #### Description
 
