@@ -66,7 +66,7 @@ class DataTable extends Component {
     const {
       options, totalElements, hasMore, order,
     } = props;
-    this.controlled = totalElements || hasMore;
+    this.controlled = typeof totalElements === 'number' || hasMore;
     if (!this.controlled) {
       this.state.options = { order: this.orderToInternal(order), ...options };
     } else {
@@ -96,19 +96,22 @@ class DataTable extends Component {
 
   shouldComponentUpdate({
     data, selectedRows, footer, options, page: oldPage,
-    order,
-  }) {
+    order, totalElements, hasMore,
+  }, { order: oldStateOrder }) {
     const {
       data: propData, selectedRows: propSelectedRows, footer: propFooter, options: propOptions,
-      order: propOrder,
+      order: propOrder, totalElements: propTe, hasMore: propHasmore,
     } = this.props;
-    const { page } = this.state;
+    const { page, order: stateOrder } = this.state;
     if (data !== propData
       || !arrayEquals(selectedRows, propSelectedRows)
       || footer !== propFooter
       || JSON.stringify(options) !== JSON.stringify(propOptions)
       || JSON.stringify(order) !== JSON.stringify(propOrder)
+      || JSON.stringify(oldStateOrder) !== JSON.stringify(stateOrder)
       || oldPage !== page
+      || totalElements !== propTe
+      || hasMore !== propHasmore
     ) {
       return true;
     }
@@ -117,8 +120,12 @@ class DataTable extends Component {
 
   componentDidUpdate({
     data: oldData, footer: oldFooter, selectedRows: oldSelectedRows, order: oldOrder,
-  }) {
-    const { onClickEvents, footer, order } = this.props;
+    hasMore: oldHasMore, totalElements: oldTe, options: oldOptions,
+  }, { options: oldStateOptions }) {
+    const {
+      onClickEvents, footer, order, hasMore, totalElements, options,
+    } = this.props;
+    const { options: stateOptions } = this.state;
     const { api, main } = this;
 
     if (footer !== oldFooter) {
@@ -130,6 +137,11 @@ class DataTable extends Component {
         $ref.find('tfoot').remove();
       }
     }
+
+    /* if (JSON.stringify(oldStateOptions) !== JSON.stringify(stateOptions)) {
+      this.destroyDatatables();
+      this.initializeDatatables();
+    } */
 
     const ids = [];
     $('.selected', main).each(function each() {
@@ -151,6 +163,25 @@ class DataTable extends Component {
 
     if (JSON.stringify(order) !== JSON.stringify(oldOrder)) {
       api.order(this.orderToInternal(order));
+    }
+
+    if (((oldHasMore === undefined || hasMore === undefined || oldHasMore === null || hasMore === undefined) && oldHasMore !== hasMore)
+      || oldTe !== totalElements) {
+      this.controlled = totalElements || hasMore;
+      if (!this.controlled) {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({ options: { order: this.orderToInternal(order), ...options } });
+      } else {
+        const {
+          paging, info, pageLength, ...clearedOptions
+        } = options;
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({
+          options: {
+            paging: false, info: false, order: this.orderToInternal(order), ...clearedOptions,
+          },
+        });
+      }
     }
     // api.draw();
   }
