@@ -18,7 +18,7 @@ class Pagination extends Component {
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.totalPages = totalElements ? 1 + Math.floor(totalElements / pageSize) : null;
+    this.totalPages = totalElements ? Math.max(1, Math.floor(totalElements / pageSize)) : null;
     this.onChange = this.onChange.bind(this);
   }
 
@@ -34,7 +34,7 @@ class Pagination extends Component {
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.totalPages = totalElements ? 1 + Math.floor(totalElements / pageSize) : null;
+    this.totalPages = totalElements ? Math.max(1, Math.floor(totalElements / pageSize)) : null;
   }
 
   onChange(event) {

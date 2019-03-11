@@ -142,7 +142,7 @@ class DataTable extends Component {
       api.clear();
       if (data) { api.rows.add(data); }
       this.setActivePage(currentPage, true);
-      // api.draw();
+      api.draw();
     }
     this.selectRows(dataChanged, oldSelectedRows);
     if (onClickEvents) {
@@ -152,7 +152,7 @@ class DataTable extends Component {
     if (JSON.stringify(order) !== JSON.stringify(oldOrder)) {
       api.order(this.orderToInternal(order));
     }
-    api.draw();
+    // api.draw();
   }
 
   componentWillUnmount() {
@@ -169,21 +169,23 @@ class DataTable extends Component {
 
   selectRows(dataChanged, oldSelectedRows) {
     const { api } = this;
-    let { selectedRows } = this.props;
+    let { selectedRows, options: { rowId } } = this.props;
     if (selectedRows) {
       selectedRows = typeof selectedRows !== 'string' && selectedRows.length ? selectedRows : [selectedRows];
       if (dataChanged || !arrayEquals(selectedRows, oldSelectedRows)) {
+        const currentPage = api.page();
         api.rows({ selected: true }).deselect();
         const rowsToSelect = [];
         // eslint-disable-next-line array-callback-return
         api.rows().every(function every() {
-          if (selectedRows.indexOf(this.data().browser) >= 0) {
+          if (selectedRows.indexOf(this.data()[rowId]) >= 0) {
             rowsToSelect.push(this.node());
           }
         });
         this.disableRowSelectEvent = true;
         api.rows(rowsToSelect).select();
         this.disableRowSelectEvent = false;
+        // api.draw();
       }
     }
   }
@@ -198,8 +200,8 @@ class DataTable extends Component {
       .map((p) => {
         if (p.render) {
           const { render: externalRender, ...otherOptions } = p;
-          const render = (e) => {
-            const localValue = externalRender(e);
+          const render = (...args) => {
+            const localValue = externalRender(...args);
             if (React.isValidElement(localValue)) {
               return ReactDOMServer.renderToString(localValue);
             }
