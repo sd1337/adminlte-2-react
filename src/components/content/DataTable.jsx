@@ -288,6 +288,9 @@ class DataTable extends Component {
 
     if (onClickEvents) {
       this.bindOnClickEvents(onClickEvents, api);
+      api.on('page.dt', () => {
+        this.bindOnClickEvents(onClickEvents, api);
+      });
     }
   }
 
