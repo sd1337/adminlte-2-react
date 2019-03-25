@@ -115,7 +115,7 @@ This component is used to render the sidebar entries. Multilevel entries can be 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
 | **text** | string |  | Display text of the item |
-| children | `<Item />` |  | A nested `Item` will be displayed as a sublevel item and allows for multilevel menus |
+| children | arrayOf: `<Item />` |  | A nested `Item` will be displayed as a sublevel item and allows for multilevel menus |
 | icon | [icon](#icons) | `'far-circle'` | Icon on the left side |
 | to | string | `'#'` | Relative links should refere to anonther page components `path` property and absolute links are simple anchors |
 | labels | arrayOf: `{small: boolean, color: string, text: string, type:string}`|  | Description for one or more labels |
