@@ -96,11 +96,11 @@ class DataTable extends Component {
 
   shouldComponentUpdate({
     data, selectedRows, footer, options, page: oldPage,
-    order, totalElements, hasMore,
+    order, totalElements, hasMore, searchValue,
   }, { order: oldStateOrder }) {
     const {
       data: propData, selectedRows: propSelectedRows, footer: propFooter, options: propOptions,
-      order: propOrder, totalElements: propTe, hasMore: propHasmore,
+      order: propOrder, totalElements: propTe, hasMore: propHasmore, searchValue: propSearchValue,
     } = this.props;
     const { page, order: stateOrder } = this.state;
     if (data !== propData
@@ -112,6 +112,7 @@ class DataTable extends Component {
       || oldPage !== page
       || totalElements !== propTe
       || hasMore !== propHasmore
+      || searchValue !== propSearchValue
     ) {
       return true;
     }
@@ -120,10 +121,10 @@ class DataTable extends Component {
 
   componentDidUpdate({
     data: oldData, footer: oldFooter, selectedRows: oldSelectedRows, order: oldOrder,
-    hasMore: oldHasMore, totalElements: oldTe, options: oldOptions,
+    hasMore: oldHasMore, totalElements: oldTe, options: oldOptions, searchValue: oldSearchValue,
   }, { options: oldStateOptions }) {
     const {
-      onClickEvents, footer, order, hasMore, totalElements, options,
+      onClickEvents, footer, order, hasMore, totalElements, options, searchValue,
     } = this.props;
     const { options: stateOptions } = this.state;
     const { api, main } = this;
@@ -143,6 +144,8 @@ class DataTable extends Component {
       this.initializeDatatables();
     } */
 
+    let redraw = false;
+
     const ids = [];
     $('.selected', main).each(function each() {
       ids.push(this.id);
@@ -154,7 +157,7 @@ class DataTable extends Component {
       api.clear();
       if (data) { api.rows.add(data); }
       this.setActivePage(currentPage, true);
-      api.draw();
+      redraw = true;
     }
     this.selectRows(dataChanged, oldSelectedRows);
     if (onClickEvents) {
@@ -165,7 +168,10 @@ class DataTable extends Component {
       api.order(this.orderToInternal(order));
     }
 
-    if (((oldHasMore === undefined || hasMore === undefined || oldHasMore === null || hasMore === undefined) && oldHasMore !== hasMore)
+    if (((oldHasMore === undefined
+      || hasMore === undefined
+      || oldHasMore === null
+      || hasMore === undefined) && oldHasMore !== hasMore)
       || oldTe !== totalElements) {
       this.controlled = totalElements || hasMore;
       if (!this.controlled) {
@@ -183,7 +189,15 @@ class DataTable extends Component {
         });
       }
     }
-    // api.draw();
+
+    if (oldSearchValue !== searchValue) {
+      api.search(oldSearchValue);
+      redraw = true;
+    }
+
+    if (redraw) {
+      api.draw();
+    }
   }
 
   componentWillUnmount() {
@@ -224,7 +238,7 @@ class DataTable extends Component {
   initializeDatatables() {
     const {
       data, columns, setDataTableRef, onSelect, onDeselect, onClickEvents, onOrderChange,
-      onPageChange,
+      onPageChange, searchValue, onSearchChange,
     } = this.props;
     const { options } = this.state;
     const localColumns = ((options && options.columns) || columns)
@@ -242,12 +256,17 @@ class DataTable extends Component {
         }
         return p;
       });
-
+    let search;
+    if (searchValue) {
+      search = { search: searchValue };
+    }
     const api = $(this.main).dataTable({
       data,
       columns: localColumns,
+      search,
       ...options,
     }).api();
+    let initialized = false;
     this.api = api;
     this.selectRows();
     if (setDataTableRef) {
@@ -278,10 +297,20 @@ class DataTable extends Component {
 
     if (onOrderChange) {
       api.on('order.dt', (e, { aaSorting: order }) => {
-        const { order: oldOrder } = this;
-        if (!arrayEquals(order, oldOrder)) {
-          this.order = JSON.parse(JSON.stringify(order.slice(0)));
-          onOrderChange(this.orderToExternal(order));
+        if (initialized) {
+          const { order: oldOrder } = this;
+          if (!arrayEquals(order, oldOrder)) {
+            this.order = JSON.parse(JSON.stringify(order.slice(0)));
+            onOrderChange(this.orderToExternal(order));
+          }
+        }
+      });
+    }
+
+    if (onSearchChange) {
+      api.on('search.dt', () => {
+        if (initialized) {
+          onSearchChange(api.search());
         }
       });
     }
@@ -292,6 +321,7 @@ class DataTable extends Component {
         this.bindOnClickEvents(onClickEvents, api);
       });
     }
+    initialized = true;
   }
 
   orderToExternal(order) {
@@ -487,6 +517,8 @@ DataTable.propTypes = {
     column: PropTypes.string,
     index: PropTypes.number,
   })),
+  onSearchChange: PropTypes.func,
+  searchValue: PropTypes.string,
 };
 
 DataTable.defaultProps = {
@@ -510,6 +542,8 @@ DataTable.defaultProps = {
   onOrderChange: null,
   hasMore: undefined,
   order: undefined,
+  onSearchChange: undefined,
+  searchValue: undefined,
 };
 
 export default DataTable;

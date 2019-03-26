@@ -400,6 +400,8 @@ Undocumented use at your own risk
 | onOrderChange | `func` |  | Order change event handler |
 | hasMore | `bool` |  | If you control data externally and are not exactly aware if additional pages exist you can provide hasMore instead to indicate if more data exists |
 | order | `[object]` |  | Allows passing in the currently selected rows |
+| searchValue | `string` | | Search value for datatable search field |
+| onSearchChange | `func` | | Search value change event |
 
 ##### Order props
 

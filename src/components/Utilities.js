@@ -6,6 +6,10 @@ const arrayEquals = (a, b) => {
     return false;
   }
 
+  if (!a) {
+    return false;
+  }
+
   // compare lengths - can save a lot of time
   if (a.length !== b.length) {
     return false;
