@@ -7,7 +7,7 @@ import 'select2/dist/css/select2.css';
 import './Select2.css';
 import InputWrapper from './InputWrapper';
 import { arrayEquals } from '../../Utilities';
-import { OptionShape, ValueShape, ListOfValueShape } from './InputShapes';
+import { OptionShape, ValueShape, ListOfValueShape, ArrayOfValueShape } from './InputShapes';
 
 class Select2 extends Component {
   state = {}
@@ -28,15 +28,47 @@ class Select2 extends Component {
   componentDidMount() {
     const {
       placeholder, multiple, options, defaultWidgetOptions, allowClear, value,
+      onFetchData, select2Options, fetchDataDelay,
       ...props
     } = this.props;
+    const actualWidgetOptions = {
+      ...select2Options,
+      ...defaultWidgetOptions,
+    };
     const data = this.internalOptions;
     const $temp = $(this.domRef);
+    let fakeAjax;
+    if (actualWidgetOptions.language) {
+      const newLanguage = {};
+      Object.entries(actualWidgetOptions.language).forEach(([key, value]) => {
+        if (typeof value === 'function') {
+          newLanguage[key] = value;
+        } else {
+          newLanguage[key] = () => value;
+        }
+      });
+      actualWidgetOptions.language = newLanguage;
+    }
+    if (onFetchData) {
+      const newTransport = (params, success, failure) => {
+        const { data: { term, page } } = params;
+        const highjackedSuccess = (data2, hasMore) => {
+          success({ results: this.optionsToSelect2(data2), pagination: { more: hasMore } });
+        };
+        const highjackedFailure = () => {
+          failure();
+        };
+        onFetchData({ page: page || 0, searchValue: term || '' }, highjackedSuccess, highjackedFailure);
+        return { status: 404 };
+      };
+      fakeAjax = { transport: newTransport, delay: fetchDataDelay };
+    }
     const $ref = $temp.select2({
       placeholder,
       data,
       allowClear,
-      ...defaultWidgetOptions,
+      ajax: fakeAjax,
+      ...actualWidgetOptions,
     });
 
     const handleEvent = (event, callback) => {
@@ -178,7 +210,8 @@ class Select2 extends Component {
     return { id: p, text: p };
   }
 
-  optionsToSelect2 = scopedOptions => scopedOptions && scopedOptions.map(this.singleOptionToSelect2);
+  optionsToSelect2 =
+   scopedOptions => scopedOptions && scopedOptions.map(this.singleOptionToSelect2);
 
   optionsFromSelect2 = select2Options => select2Options.map(({ id }) => this.mapped[id].actual);
 
@@ -282,12 +315,11 @@ Select2.propTypes = {
   placeholder: PropTypes.string,
   multiple: PropTypes.bool,
   options: ListOfValueShape,
-  value: ValueShape,
-  defaultValue: ValueShape,
+  value: PropTypes.oneOfType([ValueShape, ArrayOfValueShape]),
+  defaultValue: PropTypes.oneOfType([ValueShape, ArrayOfValueShape]),
   disabled: PropTypes.bool,
-  defaultWidgetOptions: PropTypes.shape({
-
-  }),
+  defaultWidgetOptions: PropTypes.shape({}),
+  select2Options: PropTypes.shape({}),
   name: PropTypes.string,
   allowClear: PropTypes.bool,
   onChange: PropTypes.func,
@@ -299,6 +331,8 @@ Select2.propTypes = {
   onSelect: PropTypes.func,
   onBeforeUnselect: PropTypes.func,
   onUnselect: PropTypes.func,
+  onFetchData: PropTypes.func,
+  fetchDataDelay: PropTypes.number,
 };
 
 Select2.defaultProps = {
@@ -310,6 +344,7 @@ Select2.defaultProps = {
   defaultValue: null,
   disabled: false,
   defaultWidgetOptions: {},
+  select2Options: {},
   name: null,
   allowClear: false,
   onChange: null,
@@ -321,6 +356,8 @@ Select2.defaultProps = {
   onSelect: null,
   onBeforeUnselect: null,
   onUnselect: null,
+  onFetchData: undefined,
+  fetchDataDelay: 100,
 };
 
 export default Select2;

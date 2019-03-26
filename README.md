@@ -615,6 +615,31 @@ All form elements are wrap in the Component `InputWrapper` with various styling 
 
 #### Select2
 
+This component is based on the popular jQuery select2 plugin. It has some improvements and events and select options are adjusted to provide a uniformal coding experience instead of dealing with ever changing api's. Additionally it is possible to provide an externally controlled datasource using `onDataFetch` callback.
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| id | `string` |  | Component id |
+| select2Options | `object` |  | Provide additional select2 options for the jQuery widget, see the select2 [homepage](https://select2.org) for the entire documention of those features |
+| multiple | `bool` |  | Allow multiple value selection |
+| options | `[object]` |  | All available options |
+| value | `number, string, [number], [string]` |  | Selected values |
+| defaultValue | `number, string, [number], [string]` |  | defaultValue selected values |
+| disabled | `bool` | `false` |  |
+| name | `string` |  | Name of `<input>` html field |
+| allowClear | `bool` | `false` | Allow empty field value |
+| onChange | `function` |  | On change event handler |
+| onBeforeClose | `function` |  | On before option select handler |
+| onClose | `function` |  | On after option select handler |
+| onBeforeOpening | `function` |  | On before option select open handler |
+| onOpen | `function` |  | On after option select open handler |
+| onBeforeSelect | `function` |  | On before option selection handler |
+| onSelect | `function` |  | On option selection handler |
+| onBeforeUnselect | `function` |  | On before option deselect handler |
+| onUnselect | `function` |  | On option deselect handler |
+| onFetchData | `function({page, searchValue}, success(data), failure())` |  | On data fetch handler, arguments are an object with `page` no and `searchValue` current search term, a success callback that should be called with new data and a failure handler on fail |
+| fetchDataDelay | `number` | 100 | Delay before onFetchData is being call when entering a search value, to prevent overfetching of data |
+
 #### Date
 
 This component in combination with `DateRange` is heavily based on [react-dates](https://github.com/airbnb/react-dates) with additional simplification and styling based on adminlte. It should replace `bootstrap-datepicker` component in the original theme with a pure react alternative. The most common props are directly exposed on the `Date` component, additional props can be passed by using the `dateProps` property. The full documentation of available props can be found in [react-dates SingleDatePicker documentation](https://github.com/airbnb/react-dates#singledatepicker)
