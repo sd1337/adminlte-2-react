@@ -1,6 +1,14 @@
 
 const splitIcon = icon => (icon ? icon.match(/^([fab|fas|far]*)-?(.+)/).splice(1, 2).filter(p => p.length > 0) : null);
 const arrayEquals = (a, b) => {
+  if (a === undefined && b === undefined) {
+    return true;
+  }
+  
+  if (a === null && b === null) {
+    return true;
+  }
+
   // if the other array is a falsy value, return
   if (!b) {
     return false;

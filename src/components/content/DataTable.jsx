@@ -160,9 +160,6 @@ class DataTable extends Component {
       redraw = true;
     }
     this.selectRows(dataChanged, oldSelectedRows);
-    if (onClickEvents) {
-      this.bindOnClickEvents(onClickEvents, api);
-    }
 
     if (JSON.stringify(order) !== JSON.stringify(oldOrder)) {
       api.order(this.orderToInternal(order));
@@ -198,6 +195,12 @@ class DataTable extends Component {
     if (redraw) {
       api.draw();
     }
+    
+    if (redraw && dataChanged) {
+      if (onClickEvents) {
+        this.bindOnClickEvents(onClickEvents, api);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -214,7 +217,7 @@ class DataTable extends Component {
 
   selectRows(dataChanged, oldSelectedRows) {
     const { api } = this;
-    let { selectedRows, options: { rowId } } = this.props;
+    let { selectedRows, options: { rowId = 'id' } } = this.props;
     if (selectedRows) {
       selectedRows = typeof selectedRows !== 'string' && selectedRows.length ? selectedRows : [selectedRows];
       if (dataChanged || !arrayEquals(selectedRows, oldSelectedRows)) {
@@ -353,7 +356,7 @@ class DataTable extends Component {
 
   createDomObject() {
     const {
-      border, hover, condensed, columns, footer, options,
+      border, hover, condensed, columns, footer, options, id,
     } = this.props;
     const columns2 = (options && options.columns) || columns;
     const headerColumns = columns2.map(p => (
@@ -374,7 +377,7 @@ class DataTable extends Component {
     ].join(' ');
 
     const domTable = (
-      <table ref={(c) => { this.main = c; }} className={classes} width="100%">
+      <table id={id} ref={(c) => { this.main = c; }} className={classes} width="100%">
         <thead><tr>{headerColumns}</tr></thead>
         {footer && <tfoot><tr>{headerColumns}</tr></tfoot>}
       </table>
@@ -400,7 +403,7 @@ class DataTable extends Component {
       options, page: propPage, totalElements, onPageChange, hasMore, pageSize, selectedRows,
     } = this.props;
     const localPage = propPage;
-    const { paging, info: infoOption } = options;
+    const { paging, info: infoOption, select } = options;
     const language = options.language || defaultLanguageOptions;
     const selected = (selectedRows && (selectedRows.length || 1)) || 0;
     const pageLength = pageSize;
@@ -436,12 +439,12 @@ class DataTable extends Component {
         rows.replace('%d', selected);
       }
     } else {
-      selectInfo = rows[0] || '';
+      selectInfo = (rows && rows.length && rows.length > 0 && rows[0]) || '';
     }
     return (
       <Row>
         <Col sm={5}>
-          {(!(infoOption === false)) && (
+          {(select && !(infoOption === false)) && (
             <div className="dataTables_info" role="status" aria-live="polite">
               {dtInfo}
               <span className="select-info">
@@ -483,6 +486,7 @@ class DataTable extends Component {
 }
 
 DataTable.propTypes = {
+  id: PropTypes.string,
   options: PropTypes.shape({
 
   }).isRequired,
@@ -522,6 +526,7 @@ DataTable.propTypes = {
 };
 
 DataTable.defaultProps = {
+  id: undefined,
   ajaxMap: null,
   ajaxResponseMap: null,
   data: null,
