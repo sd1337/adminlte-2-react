@@ -1,5 +1,6 @@
 /* eslint-disable import/first */
 /* eslint-disable global-require */
+
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router, Switch, Route, Redirect, Link,
@@ -145,32 +146,9 @@ class AdminLTE extends Component {
       menu = React.cloneElement(menu, { additionalMenus: [React.createElement(Navbar.ControlSidebarEntry, { key: 'control-sidebar-entry' })] });
     }
     const content = children.filter(p => p !== menu);
-    const routes = content.filter(p => (p.props && p.props.path) || (typeof p.type === 'function' && p.type === Redirect)).map((P) => {
-      if (P.type !== Route || P.type !== Redirect) {
-        if (P.type === AsyncContent) {
-          return (
-            <Route
-              modal={P.props.modal}
-              key={P.props.path}
-              path={P.props.path}
-              exact={P.props.exact}
-              component={AsyncComponent(() => import(P.props.component))}
-            />
-          );
-        }
-        return (
-          <Route
-            modal={P.props.modal}
-            key={P.props.path}
-            path={P.props.path}
-            exact={P.props.exact}
-            render={props => React.cloneElement(P,
-              { key: P.props.key ? P.props.key : P.props.path, ...props })}
-          />
-        );
-      }
-      return P;
-    });
+
+    const { routes } = this.props;
+
     const nonModalRoutes = routes.filter(p => !p.props.modal);
     const modalRoutes = routes.filter(p => p.props.modal);
 

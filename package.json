@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sd1337/adminlte-2-react.git"
+    "url": "git+https://github.com/avivbiton/adminlte-2-react.git"
   },
   "peerDependencies": {
     "react": "^16.6.0"
