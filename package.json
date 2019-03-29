@@ -1,6 +1,6 @@
 {
   "name": "adminlte-2-react",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "description": "AdminLTE 2.x.x. template ported to React",
   "main": "build/index.js",
   "scripts": {
