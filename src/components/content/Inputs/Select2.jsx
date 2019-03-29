@@ -53,6 +53,8 @@ class Select2 extends Component {
       const newTransport = (params, success, failure) => {
         const { data: { term, page } } = params;
         const highjackedSuccess = (data2, hasMore) => {
+          const newOptions = this.actualOptions.concat(data2);
+          this.mapOptions(newOptions);
           success({ results: this.optionsToSelect2(data2), pagination: { more: hasMore } });
         };
         const highjackedFailure = () => {
