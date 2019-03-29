@@ -173,41 +173,41 @@ class AdminLTE extends Component {
     const footer = childFooter || propFooter;
 
     return (
-      <Router>
-        <div className="wrapper">
-          <header className="main-header">
-            <Link className="logo" to={homeTo}>
-              <span className="logo-mini">
-                <b>{titleShortBold}</b>
-                {titleShotThin}
-              </span>
-              <span className="logo-lg">
-                <b>{titleBold}</b>
-                {titlethin}
-              </span>
-            </Link>
-            <nav className="navbar navbar-static-top">
-              <div className="sidebar-toggle" data-toggle="push-menu" role="button">
-                <FontAwesomeIcon icon={['fas', 'bars']} />
-                <span className="sr-only">Toggle navigation</span>
-              </div>
-              <div className="navbar-custom-menu">
-                {menu}
-              </div>
-            </nav>
-          </header>
-          {sidebar}
+
+      <div className="wrapper">
+        <header className="main-header">
+          <Link className="logo" to={homeTo}>
+            <span className="logo-mini">
+              <b>{titleShortBold}</b>
+              {titleShotThin}
+            </span>
+            <span className="logo-lg">
+              <b>{titleBold}</b>
+              {titlethin}
+            </span>
+          </Link>
+          <nav className="navbar navbar-static-top">
+            <div className="sidebar-toggle" data-toggle="push-menu" role="button">
+              <FontAwesomeIcon icon={['fas', 'bars']} />
+              <span className="sr-only">Toggle navigation</span>
+            </div>
+            <div className="navbar-custom-menu">
+              {menu}
+            </div>
+          </nav>
+        </header>
+        {sidebar}
+        <Switch>
+          {modalRoutes}
+        </Switch>
+        <div className="content-wrapper">
           <Switch>
-            {modalRoutes}
+            {nonModalRoutes}
           </Switch>
-          <div className="content-wrapper">
-            <Switch>
-              {nonModalRoutes}
-            </Switch>
-          </div>
-          {footer}
         </div>
-      </Router>
+        {footer}
+      </div>
+
     );
   }
 }
