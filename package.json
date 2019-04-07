@@ -11,13 +11,18 @@
   },
   "keywords": [
     "AdminLTE",
+    "admin-lte",
     "react",
     "reactjs",
     "admin",
     "template",
     "bootstrap",
     "datatables",
-    "admin"
+    "select2",
+    "react-datetime",
+    "react-dates",
+    "fullcalendar",
+    "icheck"
   ],
   "author": {
     "name": "Nikolaus Sperat",

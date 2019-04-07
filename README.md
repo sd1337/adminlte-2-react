@@ -609,7 +609,34 @@ All form elements are wrap in the Component `InputWrapper` with various styling 
 
 #### Slider
 
+A slider component that can be used either as a single slider or a (multi) range slider, it is based on [rc-slider](https://github.com/react-component/slider). As with most other components, the most import props/usedful props are directly exposed. All other props can be passed to the wrapped component using the `rcSliderProps` property.
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| color | [color](#types-and-colors) | 'light-blue' |  |
+| defaultValue | `number` |  |  |
+| value | `number` |  |  |
+| onChange | `func` |  |  |
+| tooltipRender | `func(value)` |  | Custom tooltip render function  |
+| tooltipVisible | `oneOf: 'always', 'dragging', 'never'` |  | Custom tooltip render function  |
+| handle | `element` |  | Pass a custom handle directly to rc-slider  |
+| rcSliderProps | `object` |  | Pass any other rc-slider prop directly to rc-slider, see [documentation](https://github.com/react-component/slider)  |
+
 #### Checkbox
+
+Simple unstyled checkbox
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| text | `string` |  | text next to checkbox |
+| onChange | `func` |  |  |
+| disabled | `bool` | `false` |  |
+| name | `string` |  |  |
+| value | `oneOf: string, number` |  | Value returned when box is checked |
 
 #### Radio
 
@@ -618,6 +645,8 @@ All form elements are wrap in the Component `InputWrapper` with various styling 
 #### Select2
 
 This component is based on the popular jQuery select2 plugin. It has some improvements and events and select options are adjusted to provide a uniformal coding experience instead of dealing with ever changing api's. Additionally it is possible to provide an externally controlled datasource using `onDataFetch` callback.
+
+##### Props
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
@@ -644,7 +673,7 @@ This component is based on the popular jQuery select2 plugin. It has some improv
 
 #### Date
 
-This component in combination with `DateRange` is heavily based on [react-dates](https://github.com/airbnb/react-dates) with additional simplification and styling based on adminlte. It should replace `bootstrap-datepicker` component in the original theme with a pure react alternative. The most common props are directly exposed on the `Date` component, additional props can be passed by using the `dateProps` property. The full documentation of available props can be found in [react-dates SingleDatePicker documentation](https://github.com/airbnb/react-dates#singledatepicker)
+This component in combination with `DateRange` is heavily based on [react-dates](https://github.com/airbnb/react-dates) with additional simplification and styling based on admin-lte. It should replace `bootstrap-datepicker` component in the original theme with a pure react alternative. The most common props are directly exposed on the `Date` component, additional props can be passed by using the `dateProps` property. The full documentation of available props can be found in [react-dates SingleDatePicker documentation](https://github.com/airbnb/react-dates#singledatepicker)
 
 ##### Props
 

@@ -74,7 +74,10 @@ class Slider extends Component {
       value, dragging, index,
       ...restProps
     } = props;
-    const { tooltipRender, tooltipVisible } = this.props;
+    const { tooltipRender, tooltipVisible, handle } = this.props;
+    if (handle) {
+      return handle(props);
+    }
     let tooltipValue;
     if (tooltipRender) {
       tooltipValue = tooltipRender(value);
@@ -236,6 +239,7 @@ Slider.propTypes = {
   onChange: PropTypes.func,
   tooltipRender: PropTypes.func,
   tooltipVisible: PropTypes.oneOf(['always', 'dragging', 'never']),
+  handle: PropTypes.element,
 };
 
 Slider.defaultProps = {
@@ -247,6 +251,7 @@ Slider.defaultProps = {
   onChange: undefined,
   tooltipRender: undefined,
   tooltipVisible: 'dragging',
+  handle: undefined,
 };
 
 export default Slider;
