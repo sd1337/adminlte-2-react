@@ -13,6 +13,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import jQuery from 'jquery';
 
 import '../css/bootstrap.min.css';
 import 'source-sans-pro/source-sans-pro.css';
@@ -118,6 +119,7 @@ class AdminLTE extends Component {
         require('../adminlte/css/skins/skin-blue.css');
         break;
     }
+    jQuery('body').layout();
   }
 
   render() {

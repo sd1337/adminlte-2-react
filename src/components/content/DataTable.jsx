@@ -188,7 +188,7 @@ class DataTable extends Component {
     }
 
     if (oldSearchValue !== searchValue) {
-      api.search(oldSearchValue);
+      api.search(searchValue);
       redraw = true;
     }
 

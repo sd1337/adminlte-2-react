@@ -521,9 +521,9 @@ if (typeof jQuery === 'undefined') {
 
   // Layout DATA-API
   // ===============
-  $(window).on('load', function () {
+  /*$(window).on('load', function () {
     Plugin.call($('body'));
-  });
+  });*/
 }(jQuery);
 
 
