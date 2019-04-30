@@ -4,6 +4,8 @@ import jQuery from 'jquery';
 
 import Item from './Item';
 import Header from './Header';
+import UserPanel from './UserPanel';
+import Searchbar from './Searchbar';
 
 class Sidebar extends Component {
   state = {}
@@ -66,4 +68,4 @@ Sidebar.propTypes = {
   },
 };
 export default Sidebar;
-export { Item, Sidebar as Core, Header };
+export { Item, Sidebar as Core, Header, UserPanel, Searchbar };
