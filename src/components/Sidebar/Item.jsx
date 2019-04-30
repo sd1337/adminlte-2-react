@@ -66,7 +66,7 @@ const Item = ({
   } else {
     actualComponent = (
       // eslint-disable-next-line no-script-url, jsx-a11y/anchor-is-valid
-      <a href="javascript:void(0)">
+      <a href="#">
         {actualComponent}
       </a>
     );
