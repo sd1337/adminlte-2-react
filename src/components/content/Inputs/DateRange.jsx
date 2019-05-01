@@ -21,7 +21,7 @@ class DateRange extends Component {
     this.onFocusChange = this.onFocusChange.bind(this);
   }
 
-  onChange({ startDate, endDate }, ...args) {
+  onChange({ startDate, endDate }) {
     const { startDate: currentStartDate, endDate: currentEndDate } = this.state;
     const {
       onStartChange, onEndChange, format, startDateId, endDateId,
@@ -51,7 +51,7 @@ class DateRange extends Component {
     this.setState({ startDate, endDate });
   }
 
-  onFocusChange(focused, ...args) {
+  onFocusChange(focused) {
     this.setState({ focused });
   }
 

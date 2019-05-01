@@ -68,6 +68,7 @@ import LoadingSpinner from './content/LoadingSpinner';
 import AsyncContent from './content/AsyncContent';
 import BoxPane from './content/BoxPane';
 import ButtonToolbar from './content/ButtonToolbar';
+import Label from './content/Label';
 
 library.add(fab, fas, far);
 
@@ -283,7 +284,7 @@ export {
   , TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox
   , Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem
   , Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar
-  , Divider, Inputs
+  , Divider, Inputs, Label
   , Colors, Types, Sizes, Themes, FormTypes
   , Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar,
 };
