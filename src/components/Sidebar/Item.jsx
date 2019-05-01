@@ -33,6 +33,8 @@ const Item = ({
   let localChildren = children;
   let activeChild = false;
   if (hasChildren) {
+    // eslint-disable-next-line no-param-reassign
+    children = children.length ? children : [children];
     localChildren = children.map(p => React.cloneElement(p, { key: p.to }));
     activeChild = !!(localChildren.find(p => isActiveItem({
       history,
