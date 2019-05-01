@@ -19,7 +19,7 @@ const isActiveItem = ({ link, activeOn, history }) => {
 };
 
 const Item = ({
-  icon, link, text, labels, color, history, children, activeOn, to,
+  icon, link, text, labels, color, history, children, activeOn, to, highlighted,
 }) => {
   const localTo = to || link;
   const active = isActiveItem({ link: localTo, activeOn, history });
@@ -77,6 +77,7 @@ const Item = ({
     (active) ? 'active' : null,
     hasChildren ? 'treeview' : null,
     activeChild ? 'menu-open' : null,
+    highlighted ? 'highlighted' : undefined,
   ].filter(p => p).join(' ');
   return (
     <li className={liClasses}>
@@ -119,6 +120,7 @@ Item.propTypes = {
     PropTypes.arrayOf(PropTypes.string),
   ]),
   to: PropTypes.string,
+  highlighted: PropTypes.bool,
 };
 
 Item.defaultProps = {
@@ -130,5 +132,6 @@ Item.defaultProps = {
   history: null,
   activeOn: null,
   to: undefined,
+  highlighted: false,
 };
 export default withRouter(Item);

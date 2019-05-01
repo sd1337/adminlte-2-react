@@ -12,7 +12,7 @@ class Searchbar extends Component {
     return (
       <div className="sidebar-form">
         <div className="input-group">
-          <input type="text" name="q" className="form-control" placeholder={placeholder} onChange={onChange} value={value} defaultValue={defaultValue} />
+          <input type="text" name="sidebar-search" className="form-control" placeholder={placeholder} onChange={onChange} value={value} defaultValue={defaultValue} />
           {includeButton && (
             <span className="input-group-btn">
               <button type="submit" name="search" id="search-btn" className="btn btn-flat" onClick={onButtonClick}>
