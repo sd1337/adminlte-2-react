@@ -119,9 +119,14 @@ class AdminLTE extends Component {
         require('../adminlte/css/skins/skin-blue.css');
         break;
     }
-    setTimeout(() => {
+    const docReady = jQuery.isReady;
+    if (docReady) {
       jQuery('body').layout();
-    }, 100);
+    } else {
+      jQuery(document).ready(() => {
+        jQuery('body').layout();
+      });
+    }
   }
 
   render() {
