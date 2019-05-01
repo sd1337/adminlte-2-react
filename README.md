@@ -130,7 +130,36 @@ Header is used to seperate side bar items into multiple groups
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
-| **text** | string |  | Display text of the item |
+| **text** | `string` |  | Display text of the item |
+
+#### UserPanel
+
+Include a user information in the sidebar
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| **username** | `string` |  | Display the username |
+| imageUrl | `string` |  | Show a image besides the name |
+| link | `string` |  | Include a link to a detail page |
+| status | `string` |  | Show the user status |
+| statusType | [type](#types-and-colors) |  | Color the user status |
+
+#### Searchbar
+
+Provide a sitewide search bar inside the sidebar
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| includeButton| `bool` |  | Show search icon/button |
+| onButtonClick| `func` |  | On click action |
+| onChange| `func` |  | On search change |
+| placeholder| `string` |  | Searchfield placeholder |
+| value| `string` |  |  |
+| defaultValue| `string` |  |  |
 
 ### Navbar
 
