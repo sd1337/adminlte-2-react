@@ -106,6 +106,8 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 
 ### Sidebar
 
+
+
 #### Item
 
 This component is used to render the sidebar entries. Multilevel entries can be achieved by simply passing furhter items as children.

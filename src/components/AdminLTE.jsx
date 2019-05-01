@@ -132,7 +132,7 @@ class AdminLTE extends Component {
 
   render() {
     let {
-      children, title, titleShort,
+      children, title, titleShort, searchbarFilter,
     } = this.props;
     const { homeTo } = this.props;
     {
@@ -201,7 +201,12 @@ class AdminLTE extends Component {
       // eslint-disable-next-line no-console
       console.error('Pass footer either as prop or child but not both');
     }
-    const sidebar = childSidebar || <Sidebar.Core>{propSidebar}</Sidebar.Core>;
+    const sidebar = childSidebar || (
+      <Sidebar.Core searchbarFilter={searchbarFilter}>
+        {searchbarFilter && <Sidebar.Searchbar placeholder="Search sidebar" />}
+        {propSidebar}
+      </Sidebar.Core>
+    );
     const footer = childFooter || propFooter;
 
     return (
@@ -262,6 +267,7 @@ AdminLTE.propTypes = {
   sidebar: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   footer: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
   homeTo: PropTypes.string,
+  searchbarFilter: PropTypes.bool,
 };
 
 AdminLTE.defaultProps = {
@@ -274,6 +280,7 @@ AdminLTE.defaultProps = {
   footer: null,
   sidebar: undefined,
   homeTo: '/',
+  searchbarFilter: false,
 };
 
 export default AdminLTE;
