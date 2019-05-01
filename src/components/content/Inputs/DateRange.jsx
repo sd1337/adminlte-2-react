@@ -49,7 +49,6 @@ class DateRange extends Component {
       onEndChange(fakeResult);
     }
     this.setState({ startDate, endDate });
-    // debugger;
   }
 
   onFocusChange(focused, ...args) {
@@ -90,7 +89,6 @@ class DateRange extends Component {
     if (typeof localEndDate === 'string') {
       localEndDate = moment(localEndDate, displayFormat);
     }
-    // debugger;
     return (
       <InputWrapper {...{ name: `${startDateId}-${endDateId}`, ...props }}>
         <div className={`date-${type}`}>

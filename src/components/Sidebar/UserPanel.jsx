@@ -22,7 +22,6 @@ class UserPanel extends Component {
           <p>{username}</p>
           <IconWrapper to={link}>
             <FontAwesomeIcon icon={['fas', 'circle']} className={`text-${statusType}`} />
-            {/* <i className="fa fa-circle text-success" /> */}
             {' '}
             {status}
           </IconWrapper>

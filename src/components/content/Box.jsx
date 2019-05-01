@@ -135,27 +135,6 @@ class Box extends Component {
           }
         });
       }
-      /*
-        var old = $.fn.boxWidget;
-
-        $.fn.boxWidget             = Plugin;
-        $.fn.boxWidget.Constructor = BoxWidget;
-
-        // No Conflict Mode
-        // ================
-        $.fn.boxWidget.noConflict = function () {
-          $.fn.boxWidget = old;
-          return this;
-        };
-
-        // BoxWidget Data API
-        // ==================
-        $(window).on('load', function () {
-          $(Selector.data).each(function () {
-            Plugin.call($(this));
-          });
-        }); */
-      // debugger;
       Plugin.call($(this.main));
     }
   }

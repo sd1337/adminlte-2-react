@@ -511,7 +511,7 @@ if (typeof jQuery === 'undefined') {
   var old = $.fn.layout;
 
   $.fn.layout = Plugin;
-  $.fn.layout.Constuctor = Layout;
+  $.fn.layout.Constructor = Layout;
 
   // No conflict mode
   // ================
