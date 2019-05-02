@@ -132,8 +132,9 @@ class AdminLTE extends Component {
 
   render() {
     let {
-      children, title, titleShort, searchbarFilter,
+      children, title, titleShort,
     } = this.props;
+    const { searchbarFilter } = this.props;
     const { homeTo } = this.props;
     {
       if (!children) children = [<div>No content</div>];
@@ -203,7 +204,6 @@ class AdminLTE extends Component {
     }
     const sidebar = childSidebar || (
       <Sidebar.Core searchbarFilter={searchbarFilter}>
-        {searchbarFilter && <Sidebar.Searchbar placeholder="Search sidebar" />}
         {propSidebar}
       </Sidebar.Core>
     );
