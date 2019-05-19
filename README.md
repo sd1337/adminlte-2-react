@@ -513,6 +513,7 @@ An alternative info box with similar props but other styling
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | **icon** | [icon](#icons) |  |  |
 | color | [color](#types-and-colors) |  |  |
 | title | `string` |  |  |
