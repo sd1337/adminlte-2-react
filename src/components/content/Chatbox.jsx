@@ -167,10 +167,11 @@ class Chatbox extends Component {
 
   render() {
     const {
-      type, iconClass, title, titleRight, collapsable, closable, async, loaded, noPadding,
+      id, type, iconClass, title, titleRight, collapsable, closable, async, loaded, noPadding,
     } = this.props;
     return (
       <Box
+        id={id}
         type={type}
         title={title}
         collapsable={collapsable}
@@ -193,6 +194,7 @@ class Chatbox extends Component {
 }
 
 Chatbox.propTypes = {
+  id: PropTypes.string,
   type: PropTypes.oneOf(Types),
   badgeColor: PropTypes.oneOf(Colors),
   contactsTitle: PropTypes.string,
@@ -207,6 +209,7 @@ Chatbox.propTypes = {
 };
 
 Chatbox.defaultProps = {
+  id: undefined,
   type: null,
   badgeColor: null,
   contactsTitle: 'Contacts',

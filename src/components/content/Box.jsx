@@ -144,7 +144,7 @@ class Box extends Component {
       type, options, icon, title, titleRight, collapsable, closable, loaded,
       noPadding, badge, toolIcon, customOptions, className, footerClass,
       solid, textCenter, padding, bodyClassName, border, style, footer: footerContent,
-      header: headerContent, children,
+      header: headerContent, children, id,
     } = this.props;
     const { collapsed } = this.state;
 
@@ -180,7 +180,7 @@ class Box extends Component {
     ].filter(p => p).join(' ');
 
     return (
-      <div ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>
+      <div id={id} ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>
         {hasHeader && (
           <div className={headerClass}>
             <h3 className={`box-title${titleRight ? ' pull-right' : ''}`}>
@@ -226,6 +226,7 @@ class Box extends Component {
 }
 
 Box.propTypes = {
+  id: PropTypes.string,
   title: PropTypes.string,
   collapsable: PropTypes.bool,
   closable: PropTypes.bool,
@@ -274,6 +275,7 @@ Box.propTypes = {
 };
 
 Box.defaultProps = {
+  id: undefined,
   title: ' ',
   collapsable: false,
   closable: false,

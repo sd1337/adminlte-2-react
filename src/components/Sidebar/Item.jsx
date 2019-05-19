@@ -19,7 +19,7 @@ const isActiveItem = ({ link, activeOn, history }) => {
 };
 
 const Item = ({
-  icon, link, text, labels, color, history, children, activeOn, to, highlighted,
+  id, icon, link, text, labels, color, history, children, activeOn, to, highlighted,
 }) => {
   const localTo = to || link;
   const active = isActiveItem({ link: localTo, activeOn, history });
@@ -92,6 +92,7 @@ const Item = ({
 };
 
 Item.propTypes = {
+  id: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
@@ -124,6 +125,7 @@ Item.propTypes = {
 };
 
 Item.defaultProps = {
+  id: undefined,
   children: null,
   icon: 'far-circle',
   link: undefined,

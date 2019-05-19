@@ -8,7 +8,7 @@ import { splitIcon } from '../Utilities';
 
 
 const Infobox = ({
-  icon, text, number, color, progress, progressText, iconColorOnly,
+  id, icon, text, number, color, progress, progressText, iconColorOnly,
 }) => {
   const hasProgressText = !!(progressText);
   const hasProgress = !!(progressText);
@@ -19,7 +19,7 @@ const Infobox = ({
   const iconClass = iconColorOnly ? `info-box-icon bg-${color}${isIonIcon ? ' info-box-ionicon' : ''}` : `info-box-icon${isIonIcon ? ' info-box-ionicon' : ''}`;
   const progressClass = iconColorOnly ? 'progress-bar progress-icon-only' : 'progress-bar';
   return (
-    <div className={infoBoxClass}>
+    <div id={id} className={infoBoxClass}>
       <span className={iconClass}>{iconLocal}</span>
 
       <div className="info-box-content">
@@ -41,10 +41,11 @@ const Infobox = ({
 };
 
 Infobox.propTypes = {
+  id: PropTypes.string,
   icon: PropTypes.string.isRequired,
   text: PropTypes.string,
   number: PropTypes.oneOfType([PropTypes.string, PropTypes.node,
-  PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node]))]),
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.node]))]),
   color: PropTypes.oneOf(Colors),
   progress: PropTypes.number,
   progressText: PropTypes.string,
@@ -52,6 +53,7 @@ Infobox.propTypes = {
 };
 
 Infobox.defaultProps = {
+  id: undefined,
   text: null,
   number: null,
   color: null,

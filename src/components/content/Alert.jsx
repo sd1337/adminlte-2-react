@@ -21,12 +21,12 @@ class Alert extends Component {
 
   render() {
     const {
-      closable, type, icon, title, children, onDismiss,
+      id, closable, type, icon, title, children, onDismiss,
     } = this.props;
     const { closed } = this.state;
     return (
       !closed && (
-        <BsAlert bsStyle={type} onDismiss={onDismiss || (closable ? this.onDismiss : null)}>
+        <BsAlert id={id} bsStyle={type} onDismiss={onDismiss || (closable ? this.onDismiss : null)}>
           {(icon || title) && (
             <h4>
               {icon && <FontAwesomeIcon className="icon" icon={splitIcon(icon)} />}
@@ -41,6 +41,7 @@ class Alert extends Component {
   }
 }
 Alert.propTypes = {
+  id: PropTypes.string,
   closable: PropTypes.bool,
   onDismiss: PropTypes.func,
   type: PropTypes.oneOf(Types),
@@ -53,6 +54,7 @@ Alert.propTypes = {
 };
 
 Alert.defaultProps = {
+  id: undefined,
   closable: false,
   onDismiss: null,
   type: null,

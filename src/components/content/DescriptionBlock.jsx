@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Colors } from '../PropTypes';
 
 const DescriptionBlock = ({
-  percentage, percentageColor, header, text, indication,
+  id, percentage, percentageColor, header, text, indication,
 }) => (
-  <div className="description-block border-right">
+  <div id={id} className="description-block border-right">
     <span className={`description-percentage text-${percentageColor}`}>
       <FontAwesomeIcon icon={['fas', `caret-${indication}`]} />
       {` ${percentage}%`}
@@ -18,11 +18,16 @@ const DescriptionBlock = ({
 );
 
 DescriptionBlock.propTypes = {
+  id: PropTypes.string,
   percentage: PropTypes.number.isRequired,
   percentageColor: PropTypes.oneOf(Colors).isRequired,
   header: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   indication: PropTypes.oneOf(['left', 'right', 'up', 'down']).isRequired,
+};
+
+DescriptionBlock.defaultProps = {
+  id: undefined,
 };
 
 export default DescriptionBlock;

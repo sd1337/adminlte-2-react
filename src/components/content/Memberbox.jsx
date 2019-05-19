@@ -55,7 +55,8 @@ class Memberbox extends Component {
         <img src={image} alt="User" />
         <a href="/" className="users-list-name">{name}</a>
         <span className="users-list-date">{lastOnline}</span>
-      </li>);
+      </li>
+    );
   }
 
   getUsers(users) {
@@ -65,13 +66,13 @@ class Memberbox extends Component {
 
   render() {
     const {
-      type, title, collapsable, closable, async, viewAllLink,
+      id, type, title, collapsable, closable, async, viewAllLink,
     } = this.props;
     const { users } = this.state;
     const badge = <span className={`label label-${type}`}>8 New Members</span>;
     const footer = <a href={viewAllLink} className="uppercase">View All Users</a>;
     return (
-      <Box type={type} title={title} collapsable={collapsable} closable={closable} badge={badge} footer={footer} footerClass="text-center" noPadding async={async} loaded={!!users}>
+      <Box id={id} type={type} title={title} collapsable={collapsable} closable={closable} badge={badge} footer={footer} footerClass="text-center" noPadding async={async} loaded={!!users}>
         <ul className="users-list clearfix">
           {this.getUsers(users)}
         </ul>
@@ -81,6 +82,7 @@ class Memberbox extends Component {
 }
 
 Memberbox.propTypes = {
+  id: PropTypes.string,
   type: PropTypes.oneOf(Types).isRequired,
   title: PropTypes.string,
   collapsable: PropTypes.bool,
@@ -90,6 +92,7 @@ Memberbox.propTypes = {
 };
 
 Memberbox.defaultProps = {
+  id: undefined,
   title: null,
   collapsable: false,
   closable: false,

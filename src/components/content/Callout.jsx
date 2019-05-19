@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { Types } from '../PropTypes';
 
 
-const Callout = ({ title, children, type = 'default' }) => (
-  <div className={`callout callout-${type}`}>
+const Callout = ({
+  id, title, children, type = 'default',
+}) => (
+  <div id={id} className={`callout callout-${type}`}>
     <h4>{title}</h4>
 
     <p>{children}</p>
@@ -13,6 +15,7 @@ const Callout = ({ title, children, type = 'default' }) => (
 );
 
 Callout.propTypes = {
+  id: PropTypes.string,
   title: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -22,6 +25,7 @@ Callout.propTypes = {
 };
 
 Callout.defaultProps = {
+  id: undefined,
   title: null,
   children: null,
   type: null,

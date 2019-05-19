@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Description = ({ horizontal, children }) => (
-  <dl className={horizontal ? 'dl-horizontal' : ''}>
+const Description = ({ id, horizontal, children }) => (
+  <dl id={id} className={horizontal ? 'dl-horizontal' : ''}>
     {children}
   </dl>
 );
 
 Description.propTypes = {
+  id: PropTypes.string,
   horizontal: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -16,6 +17,7 @@ Description.propTypes = {
 };
 
 Description.defaultProps = {
+  id: undefined,
   horizontal: false,
 };
 

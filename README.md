@@ -116,6 +116,7 @@ This component is used to render the sidebar entries. Multilevel entries can be 
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | string |  |  |
 | **text** | string |  | Display text of the item |
 | children | `<Item />` |  | A nested `Item` will be displayed as a sublevel item and allows for multilevel menus |
 | icon | [icon](#icons) | `'far-circle'` | Icon on the left side |
@@ -256,6 +257,7 @@ Main content container for normal and modal content
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | title | `string` |  | Boxtitle |
 | collapsable | `boolean` | `false` | Toggles the possibility to minimize |
 | closable | `boolean` | `false` | Toggles the possibility to close a box |
@@ -295,6 +297,7 @@ react-bootstrap `Row` component
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | closable | `boolean` | `false` | Make alert closable |
 | type | [type](#types-and-colors) |  | Alert acent |
 | icon | [icon](#icons) |  | Icon display left to text |
@@ -307,6 +310,7 @@ react-bootstrap `Row` component
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | color | [color](#types-and-colors) |  | Badge color |
 | text | `string` |  | Badge text |
 
@@ -367,6 +371,7 @@ jQuery full calendar component
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | type | [type](#types-and-colors) |  | Callout accent |
 | title | `string` |  | Callout title |
 | children | `node` |  | Callout content |
@@ -451,6 +456,7 @@ Simple wrapper over `<dl>`
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | horizontal | `bool` | `false` | Will render the list horizontal |
 
 #### DescriptionItem
@@ -471,6 +477,7 @@ A block content element containing several text elements (`text` and `header`) a
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | **percentage** | `number` |  |  |
 | **percentageColor** | [color](#types-and-colors) |  |  |
 | **header** | `string` |  |  |
@@ -489,6 +496,7 @@ Infobox with icon, text and optional progress information
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | **icon** | [icon](#icons) |  |  |
 | text | `string` |  |  |
 | number | `string` |  | Bold text displayed in center, usually a number |
@@ -551,6 +559,7 @@ Wrapper around react-bootstrap tabs, this can be either used as uncontrolled tab
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` |  |  |
 | activeKey | `string` |  | Currently active tab, if you provide an activeKey you should also provide an `onSelect` event handler prop |
 | defaultActiveKey | `string` |  | Initially active tab, similar to react behaviour of `defaultValue` on `<input>` components this prop provides an inital state for uncontrolled tabs |
 | onChange | `function` |  | Event handler fired when a tab is changed |
@@ -559,7 +568,6 @@ Wrapper around react-bootstrap tabs, this can be either used as uncontrolled tab
 | contentHeight | `string` |  | If the content height varies you can provide a fixed height to prevent moving elements when changing between tabs |
 | mountOnEnter | `false` |  | Adds the tab content to react's virtual dom at the first them it is selected |
 | unmountOnExit | `false` |  | Removes inactive tabs from react virtual dom |
-| id | `string` |  |  |
 | icon | [icon](#icons) |  | Header icon besides the title |
 | title | `string` |  |  |
 | titleLeft | `bool` | false | Pulls the title to the left side when using the `pullRight` property |

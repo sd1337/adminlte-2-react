@@ -8,7 +8,7 @@ import { Colors } from '../PropTypes';
 import { splitIcon } from '../Utilities';
 
 const Infobox2 = ({
-  color, title, subTitle, text, footerText, icon, footerIcon, onFooterClick, to,
+  id, color, title, subTitle, text, footerText, icon, footerIcon, onFooterClick, to,
 }) => {
   const isIonIcon = icon.startsWith('ion') || icon.startsWith('ios');
   let iconLocal;
@@ -20,7 +20,7 @@ const Infobox2 = ({
   }
   const localFooterIcon = splitIcon(footerIcon);
   return (
-    <div className={`small-box bg-${color}`}>
+    <div id={id} className={`small-box bg-${color}`}>
       <div className="inner">
         <h3>
           {title}
@@ -41,6 +41,7 @@ const Infobox2 = ({
 };
 
 Infobox2.propTypes = {
+  id: PropTypes.string,
   color: PropTypes.oneOf(Colors),
   title: PropTypes.string,
   subTitle: PropTypes.string,
@@ -53,6 +54,7 @@ Infobox2.propTypes = {
 };
 
 Infobox2.defaultProps = {
+  id: undefined,
   color: null,
   title: null,
   subTitle: null,

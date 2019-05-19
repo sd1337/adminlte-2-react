@@ -121,12 +121,11 @@ class DataTable extends Component {
 
   componentDidUpdate({
     data: oldData, footer: oldFooter, selectedRows: oldSelectedRows, order: oldOrder,
-    hasMore: oldHasMore, totalElements: oldTe, options: oldOptions, searchValue: oldSearchValue,
-  }, { options: oldStateOptions }) {
+    hasMore: oldHasMore, totalElements: oldTe, searchValue: oldSearchValue,
+  }) {
     const {
       onClickEvents, footer, order, hasMore, totalElements, options, searchValue,
     } = this.props;
-    const { options: stateOptions } = this.state;
     const { api, main } = this;
 
     if (footer !== oldFooter) {
@@ -195,7 +194,7 @@ class DataTable extends Component {
     if (redraw) {
       api.draw();
     }
-    
+
     if (redraw && dataChanged) {
       if (onClickEvents) {
         this.bindOnClickEvents(onClickEvents, api);
