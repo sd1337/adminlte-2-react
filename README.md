@@ -73,6 +73,7 @@ Several components have a property `type` or `color` that allows the usage of th
 | `success` | `green` | `#00a65a` |
 | `warning` | `yellow` | `#f39c12` |
 | `danger` | `red` | `#f56954` |
+| `error` | `red` | `#dd4b39` |
 
 ### Additional Colors
 
@@ -105,7 +106,14 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 | sidebar | arrayOf: `<Item />`, `<Header />`, `<li />`|  | Sidebar items |
 
 ### Sidebar
+Note that all sidebar elements are not directly exported by `AdminLTE` instead you should import `Sidebar` and destructure the required elements.
 
+```
+import AdminLTE, { Sidebar } from 'adminlte-2-react';
+
+const { Item, Header, UserPanel, Searchbar } = Sidebar;
+...
+```
 
 
 #### Item
@@ -632,7 +640,7 @@ All form elements are wrap in the Component `InputWrapper` with various styling 
 | label | `node` |  | Label for form element, can be a simple string or a more complex JSX component |
 | labelIcon | [icon](#icons) |  | Icon next to label |
 | labelPosition | oneOf: `above`, `left`, `none` | `left` |  |
-| labelClass | `string` |  | Additional label classes |
+| labelClass | `string` |  | Additional label classes, applied to form-group div (ex: used to add error for a filed) |
 | type | [type](#types-and-colors) |  | Input element accent |
 | name | `string` |  | Name property for screenreaders |
 | labelXs | `number` (0-12) |  | Bootstrap label column width, does only work when labelPosition `left` is used |
