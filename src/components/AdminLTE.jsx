@@ -248,7 +248,7 @@ class AdminLTE extends Component {
                     {titleShotThin}
                   </span>
                   <span className="logo-lg">
-                    <b>{titleBold}</b>
+                    <b>{titleBold}abc</b>
                     {titlethin}
                   </span>
                 </Link>
