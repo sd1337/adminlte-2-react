@@ -234,45 +234,45 @@ class AdminLTE extends Component {
       </Sidebar.Core>
     );
     const footer = childFooter || propFooter;
+    const pagina = window.location.pathname;
 
     return (
       <Router>
-        <Route
-          path="home"
-          render={() => (
-            <div className="wrapper">
-              <header className="main-header">
-                <Link className="logo" to={homeTo}>
-                  <span className="logo-mini">
-                    <b>{titleShortBold}</b>
-                    {titleShotThin}
-                  </span>
-                  <span className="logo-lg">
-                    <b>{titleBold}abc</b>
-                    {titlethin}
-                  </span>
-                </Link>
-                <nav className="navbar navbar-static-top">
-                  <div
-                    className="sidebar-toggle"
-                    data-toggle="push-menu"
-                    role="button"
-                  >
-                    <FontAwesomeIcon icon={["fas", "bars"]} />
-                    <span className="sr-only">Toggle navigation</span>
-                  </div>
-                  <div className="navbar-custom-menu">{menu}</div>
-                </nav>
-              </header>
-              {sidebar}
-              <Switch>{modalRoutes}</Switch>
-              <div className="content-wrapper">
-                <Switch>{nonModalRoutes}</Switch>
-              </div>
-              {footer}
+        {pagina != "login" ? (
+          <div className="wrapper">
+            <header className="main-header">
+              <Link className="logo" to={homeTo}>
+                <span className="logo-mini">
+                  <b>{titleShortBold}</b>
+                  {titleShotThin}
+                </span>
+                <span className="logo-lg">
+                  <b>{titleBold}abc</b>
+                  {titlethin}
+                </span>
+              </Link>
+              <nav className="navbar navbar-static-top">
+                <div
+                  className="sidebar-toggle"
+                  data-toggle="push-menu"
+                  role="button"
+                >
+                  <FontAwesomeIcon icon={["fas", "bars"]} />
+                  <span className="sr-only">Toggle navigation</span>
+                </div>
+                <div className="navbar-custom-menu">{menu}</div>
+              </nav>
+            </header>
+            {sidebar}
+            <Switch>{modalRoutes}</Switch>
+            <div className="content-wrapper">
+              <Switch>{nonModalRoutes}</Switch>
             </div>
-          )}
-        />
+            {footer}
+          </div>
+        ) : (
+          ""
+        )}
       </Router>
     );
   }
