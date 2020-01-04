@@ -21,6 +21,7 @@ class Content extends Component {
 
   render() {
     const {
+      noHead, 
       title, subTitle, homeRoute = '/', modal, modalCloseTo, show = true,
       modalFooter, children, history, onHide, modalSize, modalType, modalCloseButton,
     } = this.props;
@@ -51,22 +52,24 @@ class Content extends Component {
 
     return (
       <React.Fragment>
-        <section className="content-header">
-          <h1>
-            {title}
-            {' '}
-            {subTitle ? <small>{subTitle}</small> : ''}
-          </h1>
-          <ol className="breadcrumb">
-            <li>
-              <Link to={homeRoute}>
-                <FontAwesomeIcon icon={['fas', 'tachometer-alt']} />
-                {' Home'}
-              </Link>
-            </li>
-            <li className="active">{title}</li>
-          </ol>
-        </section>
+        {!noHead &&
+            <section className="content-header">
+              <h1>
+                {title}
+                {' '}
+                {subTitle ? <small>{subTitle}</small> : ''}
+              </h1>
+              <ol className="breadcrumb">
+                <li>
+                  <Link to={homeRoute}>
+                    <FontAwesomeIcon icon={['fas', 'tachometer-alt']} />
+                    {' Home'}
+                  </Link>
+                </li>
+                <li className="active">{title}</li>
+              </ol>
+            </section>
+        }
         <section className="content">
           {children}
         </section>
