@@ -4,9 +4,11 @@ import PropTypes from 'prop-types';
 
 import './ImageEntry.css';
 import { Types } from '../PropTypes';
+import { splitIcon } from '../Utilities';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ImageEntry = ({
-  imageUrl, imageAlt, text, labelType, labelValue, headerText, footerText, onFooterClick,
+  icon, imageUrl, imageAlt, text, labelType, labelValue, headerText, headerBadge,  footerText, onFooterClick,
   className, children, onClick,
 }) => {
 
@@ -23,6 +25,10 @@ const ImageEntry = ({
     className,
   ].filter(p => p).join(' ');
 
+  const hasIcon = !!(icon);
+  const localIcon = hasIcon ? splitIcon(icon) : null;
+ 
+
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <li className={listClasses} onClick={onClick}>
@@ -33,11 +39,13 @@ const ImageEntry = ({
               <img src={imageUrl} className="img-circle img-nav-bar" alt={imageAlt} />
             </div>
           )}
-        {text &&  <span style={{ paddingLeft: '5px' }}>{` ${text}`}</span>}
+          {text &&  <span style={{ paddingLeft: '5px' }}>{` ${text}`}</span>}
+          {hasIcon &&  <span style={{ paddingLeft: '5px' }}><FontAwesomeIcon icon={localIcon} /> </span>}
         {labelValue > 0 && <span className={`label label-${labelType}`}>{labelValue}</span>}
       </a>
       {hasChildren && (
         <ul className="dropdown-menu">
+          {headerBadge && <li className="header">{headerBadge}</li> }
           {headerText && <li className="header">{headerText}</li>}
           <li>
             <ul className="menu">{children}</ul>

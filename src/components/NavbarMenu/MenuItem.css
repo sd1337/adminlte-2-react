@@ -1,0 +1,19 @@
+
+.menu-item > a,
+.menu-item > div {
+  color: #444444;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 10px;
+}
+.menu-item > a > .glyphicon,
+.menu-item > a > .fa,
+.menu-item > a > .ion
+.menu-item > div > .glyphicon,
+.menu-item > div > .fa,
+.menu-item > div > .ion {
+  width: 20px;
+}
+.menu-item > div {
+  cursor:pointer;
+}

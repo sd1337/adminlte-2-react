@@ -6,6 +6,8 @@ import NotificationItem from './NotificationItem';
 import TaskItem from './TaskItem';
 import ControlSidebarEntry from './ControlSidebarEntry';
 import ImageEntry from './ImageEntry';
+import MenuItem from './MenuItem';
+
 
 const Navbar = ({ additionalMenus, children }) => (
   <ul className="nav navbar-nav">
@@ -32,5 +34,6 @@ Navbar.defaultProps = {
 };
 
 export {
-  Navbar as Core, Entry, MessageItem, NotificationItem, TaskItem, ControlSidebarEntry, ImageEntry,
+  Navbar as Core, Entry, MessageItem, NotificationItem,
+   TaskItem, ControlSidebarEntry, ImageEntry, MenuItem
 };// ;default Menu;
