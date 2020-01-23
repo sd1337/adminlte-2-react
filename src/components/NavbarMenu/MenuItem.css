@@ -1,5 +1,6 @@
 
 .menu-item > a,
+.menu-item > a > span, 
 .menu-item > div {
   color: #444444;
   overflow: hidden;
