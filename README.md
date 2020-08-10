@@ -1,6 +1,10 @@
 # adminlte-react
 Yet another project based on the great [AdminLTE](https://adminlte.io/) Control Panel Template. This is not because of a not invented here syndrom but because the other projects seem not very active or did not meet the expectations I had in using such a react component. The philosophy for this project was to make it as easy as possible to use from a developer standpoint and rework it where I've seen the use to. Currently it does still depend on jQuery here and there (especially the DataTables Component).
 
+
+## Version française
+
+
 Samples can be found under <a href="https://react.sper.at" ref="noopender noreferrer">react.sper.at</a> and sourcecode on <a href="https://github.com/sd1337/adminlte-2-react-examples" ref="noopender noreferrer">github</a>
 
 ## Installation
@@ -10,7 +14,7 @@ Samples can be found under <a href="https://react.sper.at" ref="noopender norefe
 ## Hello-World
 
 Easiest to achieve with `create-react-app`. Create a new project using `cra` and install `adminlte-2-react`.
-Copy this to App.js created by `create-react-app` 
+Copy this to App.js created by `create-react-app`
 ```
 import React, { Component } from 'react';
 import AdminLTE, { Sidebar, Content, Row, Col, Box, Button } from 'adminlte-2-react';
@@ -79,12 +83,12 @@ Several components have a property `type` or `color` that allows the usage of th
 In addition there are several colors available without a corresponding type
 | Color |
 | ----- |
-| `navy` | 
-| `teal` | 
-| `purple` | 
-| `orange` | 
-| `maroon` | 
-| `black` | 
+| `navy` |
+| `teal` |
+| `purple` |
+| `orange` |
+| `maroon` |
+| `black` |
 
 ### Icons
 
@@ -486,7 +490,7 @@ A block content element containing several text elements (`text` and `header`) a
 
 #### Divider
 
-Include a divider to give a better distinction between sidebar entries 
+Include a divider to give a better distinction between sidebar entries
 
 #### Infobox
 
