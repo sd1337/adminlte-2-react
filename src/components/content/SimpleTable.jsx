@@ -7,6 +7,45 @@ import uuidv4 from 'uuid';
 class SimpleTable extends Component {
   state = { key: uuidv4() }
 
+  constructor(props) {
+    super(props);
+    const {
+      data, columns,
+    } = props;
+    const { key, selectedRow } = this.state;
+    const mappedColumns = data ? data.map((row, rowIdx) => (
+      <tr className={selectedRow && selectedRow === rowIdx ? 'selected' : ''} key={`${key}-${rowIdx}`} onClick={() => { this.onSelect(row, rowIdx); }}>
+        {columns.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
+      </tr>
+    )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
+    this.state.mappedData = mappedColumns;
+  }
+
+  onSelect = (data, rowIdx) => {
+    const { onSelect } = this.props;
+    if (onSelect) {
+      onSelect(data);
+    }
+    this.setState({
+      selectedRow: rowIdx,
+    });
+  }
+
+  updateStateData = () => {
+    const {
+      data, columns,
+    } = this.props;
+    const { key, selectedRow } = this.state;
+    const mappedColumns = data ? data.map((row, rowIdx) => (
+      <tr className={selectedRow !== undefined && selectedRow === rowIdx ? 'selected' : ''} key={`${key}-${rowIdx}`} onClick={() => { this.onSelect(row, rowIdx); }}>
+        {columns.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
+      </tr>
+    )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
+    this.setState({
+      mappedData: mappedColumns,
+    });
+  }
+
   mapCell(data, column, rowData, rowIdx) {
     const { key } = this.state;
     if (column.render) {
@@ -17,14 +56,9 @@ class SimpleTable extends Component {
 
   render() {
     const {
-      data, columns, noMargin, condensed, striped, border, hover, responsive,
+      columns, noMargin, condensed, striped, border, hover, responsive,
     } = this.props;
-    const { key } = this.state;
-    const mappedColumns = data ? data.map((row, rowIdx) => (
-      <tr key={`${key}-${rowIdx}`}>
-        {columns.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
-      </tr>
-    )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
+    const { key, mappedData } = this.state;
     let headers;
     const hasHeaders = columns.filter(p => p.title).length > 0;
     if (hasHeaders) { headers = columns.map(p => <th key={`${key}-${p.title}`} style={{ width: p.width }}>{p.title}</th>); }
@@ -48,7 +82,7 @@ class SimpleTable extends Component {
           </thead>
         )}
         <tbody>
-          {mappedColumns}
+          {mappedData}
         </tbody>
       </table>
     );
@@ -75,6 +109,7 @@ SimpleTable.propTypes = {
   border: PropTypes.bool,
   responsive: PropTypes.bool,
   hover: PropTypes.bool,
+  onSelect: PropTypes.func,
 };
 
 SimpleTable.defaultProps = {
@@ -86,6 +121,7 @@ SimpleTable.defaultProps = {
   border: false,
   responsive: false,
   hover: false,
+  onSelect: undefined,
 };
 
 export default SimpleTable;

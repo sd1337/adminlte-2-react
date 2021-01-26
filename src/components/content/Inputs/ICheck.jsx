@@ -51,7 +51,7 @@ class ICheck extends Component {
     if (internalValue === e.target.value) {
       return;
     }
-    const { onChange, options } = this.props;
+    const { onChange } = this.props;
     const { target: { value } } = e;
     this.setState({ internalValue: value }, () => {
       this.updateOptions();
@@ -76,7 +76,7 @@ class ICheck extends Component {
         value: propValue,
         text,
         disabled: optionDisabled || disabled,
-        checked: (internalValue && internalValue == propValue) || false,
+        checked: (internalValue && internalValue === propValue) || false,
       };
     }
     return {
@@ -90,10 +90,10 @@ class ICheck extends Component {
 
   optionToJSXComponent = ({
     value, text, disabled, checked,
-  }) => {
+  }, idx) => {
     const { name, disabled: globalDisabled } = this.props;
     return (
-      <label htmlFor={`${name}`} id={name} key={value} style={{ marginRight: '8px' }}>
+      <label htmlFor={`${name}`} id={`label-${name}-option-${idx}`} key={value} style={{ marginRight: '8px' }}>
         <input
           ref={(c) => { this.ref[value] = c; }}
           name={name}

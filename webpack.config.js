@@ -51,6 +51,7 @@ module.exports = {
           loader: require.resolve('css-loader'),
           options: {
             sourceMap: true,
+            convertToAbsoluteUrls: false,
           },
         },
         'resolve-url-loader',

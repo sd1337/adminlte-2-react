@@ -123,14 +123,14 @@ class Pagination extends Component {
           <BsPagination>
             <BsPagination.Item
               disabled={activePage === 0}
-              onClick={(activePage !== 0) && this.onChange}
+              onClick={((activePage !== 0) && this.onChange) || undefined}
             >
               {previous}
             </BsPagination.Item>
             {links}
             <BsPagination.Item
               disabled={lastPage === activePage}
-              onClick={(lastPage !== activePage) && this.onChange}
+              onClick={((lastPage !== activePage) && this.onChange) || undefined}
             >
               {next}
             </BsPagination.Item>

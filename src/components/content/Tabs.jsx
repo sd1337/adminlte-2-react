@@ -7,9 +7,6 @@ import uuidv4 from 'uuid';
 import TabTitle from './TabTitle';
 
 class Tabs extends Component {
-  state = {
-    activeKey: null,
-  }
 
   constructor(props) {
     super(props);
@@ -31,6 +28,7 @@ class Tabs extends Component {
     const {
       children, pullRight = false, contentHeight, mountOnEnter = false,
       unmountOnExit = false, id = uuidv4(), icon, title, titleLeft = false, activeKey,
+      onChange,
     } = this.props;
     const { stateActiveKey } = this.state;
     const localChildren = children && children.length ? children : [children];
@@ -39,10 +37,11 @@ class Tabs extends Component {
         id={id}
         activeKey={activeKey || stateActiveKey}
         onSelect={this.onSelect}
+        onChange={onChange}
       >
         <div className="nav-tabs-custom">
           <Nav bsStyle="tabs" role="tablist" pullRight={pullRight} bsClass="nav">
-            {localChildren.map(p => (
+            {localChildren.filter(p => p.type === TabContent).map(p => (
               <NavItem
                 key={p.props.eventKey}
                 eventKey={p.props.eventKey}
@@ -89,6 +88,7 @@ Tabs.propTypes = {
   icon: PropTypes.string,
   title: PropTypes.string,
   titleLeft: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 Tabs.defaultProps = {
@@ -103,6 +103,7 @@ Tabs.defaultProps = {
   icon: null,
   title: null,
   titleLeft: false,
+  onChange: undefined,
 };
 
 export default Tabs;
