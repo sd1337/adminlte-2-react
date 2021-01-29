@@ -61,7 +61,14 @@ class Button extends Component {
       if (split) {
         return (
           <ButtonGroup>
-            {text && <button type="button" className={buttonClasses}>{text}</button>}
+            {(text || icon || badge) && (
+            <button type="button" className={buttonClasses}>
+              {badge}
+              {icon && <FontAwesomeIcon icon={localIcon} />}
+              {icon && text ? ' ' : ''}
+              {text || ''}
+            </button>
+            )}
             <button
               id={id || ''}
               type="button"
