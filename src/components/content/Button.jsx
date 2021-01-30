@@ -57,17 +57,25 @@ class Button extends Component {
       return (<Link to={to}>{button}</Link>);
     } if (children) {
       if (!children.length) { children = [children]; }
-      children = children.map(p => (p.type !== 'li' && p.type.name !== 'Divider' ? (<li key={uuidv4()}>{p}</li>) : React.cloneElement(p, { key: uuidv4() })));
+      if (children.length > 0) {
+        children = children.map(p => (p.type !== 'li' && p.type.name !== 'Divider' ? (<li key={uuidv4()}>{p}</li>) : React.cloneElement(p, { key: uuidv4() })));
+      } else {
+        children = undefined;
+      }
       if (split) {
         return (
           <ButtonGroup>
             {(text || icon || badge) && (
-            <button type="button" className={buttonClasses}>
-              {badge}
-              {icon && <FontAwesomeIcon icon={localIcon} />}
-              {icon && text ? ' ' : ''}
-              {text || ''}
-            </button>
+              <button
+                onClick={disabled ? null : onClick}
+                type="button"
+                className={buttonClasses}
+              >
+                {badge}
+                {icon && <FontAwesomeIcon icon={localIcon} />}
+                {icon && text ? ' ' : ''}
+                {text || ''}
+              </button>
             )}
             <button
               id={id || ''}

@@ -18,34 +18,43 @@ class Pagination extends Component {
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
+    this.state.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
+    // this.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
     this.onChange = this.onChange.bind(this);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate({ totalElements: oldTotalElements }, { totalPages: oldTotalPages }) {
     const {
       totalElements, pageSize, labels: {
         first, last, next, previous,
       },
     } = this.props;
+    const { totalPages } = this.state;
     const keyMaps = {};
     keyMaps[first] = 'first';
     keyMaps[last] = 'last';
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
+    // this.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
+    if (oldTotalElements !== totalElements) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        totalPages: totalElements ? Math.ceil(totalElements / pageSize) : null,
+      });
+    }
   }
 
   onChange(event) {
     const { onChange, activePage, hasMore } = this.props;
+    const { totalPages } = this.state;
     let value = null;
     switch (this.keyMaps[event.target.innerText] || '') {
       case 'first':
         value = 0;
         break;
       case 'last':
-        value = this.totalPages - 1;
+        value = totalPages - 1;
         break;
       case 'next':
         value = activePage + 1;
@@ -57,7 +66,7 @@ class Pagination extends Component {
         value = parseInt(event.target.innerText, 10) - 1;
         break;
     }
-    if (value >= 0 && (value < this.totalPages || hasMore !== undefined)) {
+    if (value >= 0 && (value < totalPages || hasMore !== undefined)) {
       onChange(value);
     }
   }
@@ -69,7 +78,7 @@ class Pagination extends Component {
       },
       hasMore,
     } = this.props;
-    const { totalPages } = this;
+    const { totalPages } = this.state;
     if (totalPages) {
       const firstFourPages = activePage < 3;
       const lastFourPages = totalPages - activePage < 4;
