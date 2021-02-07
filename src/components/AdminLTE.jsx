@@ -72,7 +72,8 @@ import AsyncContent from './content/AsyncContent';
 import BoxPane from './content/BoxPane';
 import ButtonToolbar from './content/ButtonToolbar';
 import Label from './content/Label';
-import Pagination from './content/Pagination'
+import Pagination from './content/Pagination';
+import SmartTable from './content/SmartTable';
 
 library.add(fab, fas, far);
 
@@ -372,4 +373,5 @@ export {
   BoxPane,
   ButtonToolbar,
   Pagination,
+  SmartTable,
 };

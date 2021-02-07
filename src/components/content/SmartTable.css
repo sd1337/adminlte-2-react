@@ -1,0 +1,30 @@
+.smartTable-wrapper .btn-group>.btn{
+  float: unset !important;
+}
+.smartTable-filter{
+}
+.smartTable-filter-active{
+  display: inline !important;
+  font-weight: bolder !important;
+}
+
+.smartTable-header{
+  display: inline;
+}
+
+.smartTable-filter-active-icon{
+  float: right;
+  margin: 0.3em;
+}
+
+.smartTable-column-header{
+  position: relative;
+}
+.smartTable-column-header-sort{
+  cursor: pointer;
+  display: inline;
+}
+
+.smartTable-row-selected{
+  background-color: #0088cc;
+}
