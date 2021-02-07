@@ -249,7 +249,6 @@ class AdminLTE extends Component {
                 <span className="logo-lg">
                   <b>
                     {titleBold}
-abc
                   </b>
                   {titlethin}
                 </span>
