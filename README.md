@@ -60,6 +60,9 @@ export default App;
 
 ## Components
 
+
+* [Box](#Box)
+
 ### General UI Type/Coloring options
 Several components have a property `type` or `color` that allows the usage of the following values to give different accents to the component
 
@@ -104,6 +107,9 @@ AdminLTE makes use of font-awesome icons and ionicons. Since we wanted to stay u
 | theme | oneOf: `'black-light'`, `'black'`, `'blue'`, `'blue-light'`, `'green'`, `'green-light'`, `'purple'`, `'purple-light'`, `'red'`, `'red-light'`, `'yellow'`, `'yellow-light'` | `'blue'` | Colortheme for AdminLTE |
 | browserTitle | string | Untitled | Browsertitle, can be set here globally or for each site indvidually |
 | sidebar | arrayOf: `<Item />`, `<Header />`, `<li />`|  | Sidebar items |
+| footer | oneOfType: `node`, [`node`] | `null` |  |
+| searchbarFilter | `boolean` | `false` | Include searchbar in sidebar |
+| homeTo | `string` | `'/'` | Homeroute when you click on App name in Sidebar |
 
 ### Sidebar
 Note that all sidebar elements are not directly exported by `AdminLTE` instead you should import `Sidebar` and destructure the required elements.
@@ -114,7 +120,13 @@ import AdminLTE, { Sidebar } from 'adminlte-2-react';
 const { Item, Header, UserPanel, Searchbar } = Sidebar;
 ...
 ```
+![Sidebar image](readme/images/sidebar.png)
+![2nd sidebar image](readme/images/sidebar_2.png)
 
+##### Props
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| searchbarFilter | `boolean` | `false` |  |
 
 #### Item
 
@@ -147,6 +159,8 @@ Header is used to seperate side bar items into multiple groups
 
 Include a user information in the sidebar
 
+![Userpanel](readme/images/userpanel.png)
+
 ##### Props
 
 | Name    | Type    | Default | Description |
@@ -160,6 +174,8 @@ Include a user information in the sidebar
 #### Searchbar
 
 Provide a sitewide search bar inside the sidebar
+
+![Searchbar](readme/images/searchbar.png)
 
 ##### Props
 
@@ -175,6 +191,14 @@ Provide a sitewide search bar inside the sidebar
 ### Navbar
 
 It is possible to enhance the top navigation bar with clickable icons and dropdown menus to show additional interactions (e.g. notification bars)
+
+![Navbar](readme/images/navbar.png)
+
+##### Props
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| additionalMenus | `oneOfType` | `null` |  |
+| children | `oneOfType` | `null` |  |
 
 #### Core
 
@@ -254,12 +278,32 @@ Instant message style notification
 
 Main content container for normal and modal content
 
+![Content](readme/images/content.png)
+
 ##### Props
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| title | `string` | `null` | Main title of the content window |
+| subTitle | `string` | `null` | Subtitle of the content window |
+| browserTitle | `string` | `null` | Browser tab title to display |
+| homeRoute | `string` | `'/'` |  |
+| modal | `boolean` | `false` | Toggle if content is modal or not |
+| modalCloseTo | `string` | `null` | Redirect route after closing modal |
+| show | `boolean` | `true` | Toggle show modal |
+| modalFooter | `node` | `null` |  |
+| children | `node` | `null` | Actual content |
+| history | `history` | `null` | React router history |
+| onHide | `function` | `null` | On modal hide callback |
+| modalSize | `oneOf` | `null` |  |
+| modalType | [type](#types-and-colors) | `null` |  |
+| modalCloseButton | `boolean` | `true` | Show modal close button |
 
 #### Box
+
+Main box used to wrap most components.
+
+![Box](readme/images/box.png)
 
 ##### Props
 
@@ -301,6 +345,8 @@ react-bootstrap `Row` component
 
 #### Alert
 
+![Alert](readme/images/alert.png)
+
 ##### Props
 
 | Name    | Type    | Default | Description |
@@ -311,6 +357,7 @@ react-bootstrap `Row` component
 | icon | [icon](#icons) |  | Icon display left to text |
 | title | `string` |  | Alert title |
 | children | `node` |  | Alert content |
+| onDismiss | `function` | `null` | Callback after closing alert |
 
 #### Badge
 
@@ -325,6 +372,8 @@ react-bootstrap `Row` component
 #### Button
 
 As mentioned in [`react-bootstrap`](https://react-bootstrap.github.io/components/buttons/), React does not render new elements on new lines thus buttons side by side will be rendered without margin, to counteract that you can wrap your `<Button/>`'s with `<ButtonGroup />`
+
+![Button](readme/images/button.png)
 
 ##### Props
 
@@ -350,8 +399,16 @@ As mentioned in [`react-bootstrap`](https://react-bootstrap.github.io/components
 | onClick | `function` |  | On click action |
 | split | `boolean` | `false` | Split button and submenu |
 | children | `node` |  | Button submenu entries |
+| alignRight | `boolean` | `false` |  |
+| name | `string` | `null` | Form name |
+| value | `oneOfType` | `null` | Form value |
+| className | `string` | `null` |  |
 
 #### ButtonGroup
+
+Wrap buttons with ButtonGroup to get them inline
+
+![Buttongroup](readme/images/buttongroup.png)
 
 ##### Props
 
@@ -384,13 +441,29 @@ jQuery full calendar component
 | title | `string` |  | Callout title |
 | children | `node` |  | Callout content |
 
-#### Chatbox - **_Work in progress_**
+#### Chatbox
 
 Undocumented use at your own risk
 
-#### Checkbox
+##### Props
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| id | `string` | `undefined` |  |
+| type | `oneOf` | `null` |  |
+| async | `boolean` | `false` |  |
+| loaded | `boolean` | `true` |  |
+| collapsable | `boolean` | `false` |  |
+| closable | `boolean` | `false` |  |
+| iconClass | `string` | `null` |  |
+| badgeColor | `oneOf` | `null` |  |
+| contactsTitle | `string` | `'Contacts'` |  |
+| noPadding | `boolean` | `false` |  |
+| title | `string` | `null` |  |
+| titleRight | `boolean` | `false` |  |
 
 #### SimpleTable
+
+Basic table component with not much functionality, provides onSelect callback to interact with selected rows
 
 ##### Props
 
@@ -404,6 +477,7 @@ Undocumented use at your own risk
 | border | `bool` |  `false`| Show borders around cells |
 | responsive | `bool` | `false` | Resize table of window resize |
 | hover | `bool` | `false` | Highlight hovered rows |
+| onSelect | `function` | `undefined` | On row select callback |
 
 ##### Column Options
 
@@ -420,6 +494,7 @@ Undocumented use at your own risk
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` | `undefined` |  |
 | options | `object` |  | Array of objects matching the column description |
 | ajaxMap | `function` |  | Allows custom argument mapping for ajax based data source, equivalent to `on('preXhr.dt')` |
 | ajaxResponseMap | `function` |  | Mapping function for data retrieved on ajax based data source, equivalent to `on('preXhr.dt')` |
@@ -428,13 +503,13 @@ Undocumented use at your own risk
 | setDataTableRef | `function` |  | Callback that gets passed the datatable api() ref |
 | onSelect | `function` |  | Callback after row gets selected - arguments `(rowdata)` |
 | onDeselect | `function` |  | Callback after row deselect - arguments `(rowdata)` |
-| footer | `bool` | `false` | Renders column headers on bottom of table |
-| hover | `bool` | `false` | Highlight hovered rows |
-| border | `bool` | `false` | Show borders around cells |
-| condensed | `bool` | `false` | Compact data layout |
-| striped | `bool` | `false` | Alternate row coloring |
-| noMargin | `bool` | `false` | Removes table margin |
-| responsive | `bool` | `false` | Resize table of window resize |
+| footer | `boolean` | `false` | Renders column headers on bottom of table |
+| hover | `boolean` | `false` | Highlight hovered rows |
+| border | `boolean` | `false` | Show borders around cells |
+| condensed | `boolean` | `false` | Compact data layout |
+| striped | `boolean` | `false` | Alternate row coloring |
+| noMargin | `boolean` | `false` | Removes table margin |
+| responsive | `boolean` | `false` | Resize table of window resize |
 | selectedRows | `[object]` |  | Allows passing in the currently selected rows |
 | onClickEvents | `object` |  | Row level bound click events based on `class` on cell dom element. Example `render: (data) => ``<div class="on-click-event">${data}</div>``'` will bind to an object `{onClickEvent: (data, rowIndex, rowData) => {console.log("do stuff with row data")}}` |
 | page | `number` |  | Active page, can be left empty if uncontrolled |
@@ -445,7 +520,7 @@ Undocumented use at your own risk
 | hasMore | `bool` |  | If you control data externally and are not exactly aware if additional pages exist you can provide hasMore instead to indicate if more data exists |
 | order | `[object]` |  | Allows passing in the currently selected rows |
 | searchValue | `string` | | Search value for datatable search field |
-| onSearchChange | `func` | | Search value change event |
+| onSearchChange | `function` | | Search value change event |
 
 ##### Order props
 
@@ -455,6 +530,33 @@ Undocumented use at your own risk
 | data | `string` |  | Data property containing the data to be rendered in the column |
 | width | `string` |  | Use this prop to give the column a fixed width |
 | render | `function` |  | Custom render function for the column with arguments `(data, rowData, rowIndex)` |
+
+#### SmartTable
+
+This will soon be replace Datatables as it Datatables is a jQuery widget and therefore breaks the entire React dom handling. SmartTable has a lot of auto configuration in it. It has a build in sort, filter and column selection functionality.
+
+##### Props
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| data | `arrayOf` | `null` |  |
+| columns | `arrayOf` | `undefined` |  |
+| condensed | `boolean` | `false` |  |
+| responsive | `boolean` | `false` |  |
+| page | `number` | `undefined` |  |
+| striped | `boolean` | `false` |  |
+| onPageChange | `function` | `undefined` |  |
+| onSearch | `function` | `undefined` |  |
+| border | `boolean` | `false` |  |
+| filterExternal | `boolean` | `false` |  |
+| pageSize | `number` | `20` |  |
+| hover | `boolean` | `false` |  |
+| noMargin | `boolean` | `false` |  |
+| onOrderChange | `function` | `undefined` |  |
+| onRowSelect | `function` | `undefined` |  |
+| onSearchChange | `function` | `undefined` |  |
+| defaultFilterColumn | `string` | `'$all'` |  |
+| totalElements | `number` | `undefined` |  |
+
 
 #### Description
 
@@ -466,6 +568,7 @@ Simple wrapper over `<dl>`
 | --------|---------|---------|-------------|
 | id | `string` |  |  |
 | horizontal | `bool` | `false` | Will render the list horizontal |
+| children | oneOfType: `node`, [`node`] | `` |  |
 
 #### DescriptionItem
 
@@ -534,29 +637,171 @@ An alternative info box with similar props but other styling
 
 #### Label
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| pullRight | `boolean` | `false` |  |
+| children | `oneOfType` | `null` |  |
+| type | `oneOf` | `null` |  |
+| name | `string` | `uuidv4()` |  |
+| labelSm | `number` | `2` |  |
+| xs | `number` | `null` |  |
+| label | `oneOfType` | `null` |  |
+| labelLg | `number` | `null` |  |
+| sm | `number` | `10` |  |
+| labelMd | `number` | `null` |  |
+| labelIcon | `string` | `null` |  |
+| id | `string` | `undefined` |  |
+| lg | `number` | `null` |  |
+| md | `number` | `null` |  |
+| labelXs | `number` | `null` |  |
+| labelClass | `string` | `null` |  |
+| labelPosition | `oneOf` | `'left'` |  |
+
 #### LoadingSpinner
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| icon | `string` | `'fas-sync-alt'` |  |
+| size | `string` | `'3x'` |  |
 
 #### LoginCore
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| children | `oneOfType` | `null` |  |
+
 #### Margin
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| pullRight | `boolean` | `false` |  |
+| children | `oneOfType` | `` |  |
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
 
 #### Memberbox
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| viewAllLink | `string` | `'/'` |  |
+| id | `string` | `undefined` |  |
+| type | `oneOf` | `` |  |
+| collapsable | `boolean` | `false` |  |
+| async | `boolean` | `false` |  |
+| closable | `boolean` | `false` |  |
+| title | `string` | `null` |  |
+
 #### NavList
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| pills | `boolean` | `false` |  |
+| stacked | `boolean` | `false` |  |
+| children | `oneOfType` | `` |  |
 
 #### NavListItem
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| text | `string` | `null` |  |
+| color | `oneOf` | `'red'` |  |
+| to | `string` | `null` |  |
+| icon | `string` | `'far-circle'` |  |
+| onClick | `function` | `null` |  |
+| iconLabel | `string` | `null` |  |
+
 #### Pagination
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| hasMore | `boolean` | `null` |  |
+| activePage | `number` | `null` |  |
+| pageSize | `number` | `null` |  |
+| onChange | `function` | `` |  |
+| totalElements | `number` | `null` |  |
+| labels | `shape` | `{` |  |
 
 #### ProductList
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| children | `oneOfType` | `` |  |
+| inBox | `boolean` | `false` |  |
+
 #### ProductListItem
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| image | `string` | `null` |  |
+| description | `string` | `null` |  |
+| labelType | `oneOf` | `'info'` |  |
+| label | `string` | `false` |  |
+| title | `string` | `null` |  |
+| to | `string` | `'/'` |  |
 
 #### ProgressBar
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| xs | `boolean` | `false` |  |
+| type | `oneOf` | `'primary'` |  |
+| color | `oneOf` | `null` |  |
+| active | `boolean` | `false` |  |
+| xxs | `boolean` | `false` |  |
+| text | `string` | `null` |  |
+| value | `number` | `` |  |
+| sm | `boolean` | `false` |  |
+| vertical | `boolean` | `false` |  |
+| striped | `boolean` | `false` |  |
+| max | `number` | `100` |  |
+| min | `number` | `0` |  |
+
 #### ProgressGroup
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| color | `oneOf` | `` |  |
+| currentValue | `number` | `` |  |
+| maxValue | `number` | `` |  |
+| text | `string` | `null` |  |
+
 #### Sparkbar
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| color | `string` | `` |  |
+| data | `arrayOf` | `` |  |
+| height | `oneOfType` | `` |  |
+| padding | `boolean` | `false` |  |
 
 #### SparklineBox
 
@@ -580,6 +825,7 @@ Wrapper around react-bootstrap tabs, this can be either used as uncontrolled tab
 | icon | [icon](#icons) |  | Header icon besides the title |
 | title | `string` |  |  |
 | titleLeft | `bool` | false | Pulls the title to the left side when using the `pullRight` property |
+| onSelect | `function` | `null` | Callback on changing tab |
 
 #### TabContent
 
@@ -671,6 +917,7 @@ A slider component that can be used either as a single slider or a (multi) range
 | tooltipVisible | `oneOf: 'always', 'dragging', 'never'` |  | Custom tooltip render function  |
 | handle | `element` |  | Pass a custom handle directly to rc-slider  |
 | rcSliderProps | `object` |  | Pass any other rc-slider prop directly to rc-slider, see [documentation](https://github.com/react-component/slider)  |
+| vertical | `boolean` | `false` | Display slider vertical |
 
 #### Checkbox
 
@@ -685,10 +932,31 @@ Simple unstyled checkbox
 | disabled | `bool` | `false` |  |
 | name | `string` |  |  |
 | value | `oneOf: string, number` |  | Value returned when box is checked |
+| checked | `boolean` | `null` |  |
 
 #### Radio
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| onChange | `function` | `null` |  |
+| name | `string` | `uuidv4()` |  |
+| options | `arrayOf` | `` |  |
+
 #### Select
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| onChange | `function` | `null` |  |
+| options | `` | `null` |  |
+| label | `string` | `null` |  |
+| disabled | `boolean` | `false` |  |
+| value | `oneOfType` | `undefined` |  |
+| name | `string` | `uuidv4()` |  |
+| multiple | `boolean` | `false` |  |
 
 #### Select2
 
@@ -727,8 +995,11 @@ This component in combination with `DateRange` is heavily based on [react-dates]
 
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
+| id | `string` | `undefined` |  |
 | type | [type](#types-and-colors) |  | Calendar accent |
 | value | `string`, `moment object` |  | You can either pass in a string in combination with the `format` property or an already converted `moment.js` object, as the original this component used moment as its internal representation. Note that the onChange event will always return a `string` |
+| defaultValue | `` | `undefined` |  |
+| focused | `boolean` | `false` |  |
 | format | `string` |  | Format string based on moment.js formatting rules |
 | onChange | `function` |  | On change event handler |
 | onFocusChange | `function` |  | On focus change event handler |
@@ -751,6 +1022,49 @@ This component in combination with `DateRange` is heavily based on [react-dates]
 
 #### DateRange
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| endDateId | `string` | `` |  |
+| onFocusChange | `function` | `null` |  |
+| type | `oneOf` | `'default'` |  |
+| startDateId | `string` | `` |  |
+| endDate | `oneOfType` | `` |  |
+| format | `string` | `undefined` |  |
+| startDate | `oneOfType` | `` |  |
+| dateRangeProps | `shape` | `null` |  |
+| onStartChange | `function` | `` |  |
+| onEndChange | `function` | `` |  |
+| focused | `oneOf` | `null` |  |
+
 #### DateTime
 
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| dateTimeProps | `shape` | `undefined` |  |
+| id | `string` | `undefined` |  |
+| format | `string` | `true` |  |
+| timeFormat | `string` | `'hh:mm'` |  |
+| placeholder | `string` | `undefined` |  |
+| disabled | `boolean` | `false` |  |
+| value | `` | `undefined` |  |
+| name | `string` | `undefined` |  |
+| onChange | `function` | `undefined` |  |
+| onBlur | `function` | `undefined` |  |
+| defaultValue | `` | `undefined` |  |
+
 #### ICheck
+
+##### Props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| options | `` | `['']` |  |
+| disabled | `boolean` | `false` |  |
+| value | `oneOfType` | `undefined` |  |
+| name | `string` | `uuidv4()` |  |
+| onChange | `function` | `null` |  |
+| defaultValue | `oneOfType` | `undefined` |  |
