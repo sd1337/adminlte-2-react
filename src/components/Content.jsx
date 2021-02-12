@@ -80,7 +80,7 @@ Content.propTypes = {
   subTitle: PropTypes.string,
   homeRoute: PropTypes.string,
   modal: PropTypes.bool,
-  modalCloseTo: PropTypes.func,
+  modalCloseTo: PropTypes.string,
   show: PropTypes.bool,
   modalFooter: PropTypes.node,
   children: PropTypes.node,

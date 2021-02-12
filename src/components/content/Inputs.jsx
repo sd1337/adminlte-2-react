@@ -20,6 +20,15 @@ import ImportWrapper from './Inputs/InputWrapper';
 // const ICheck = import(/* webpackChunkName: "inputs.icheck" */ './Inputs/ICheck');
 
 export {
-  Slider, Text, Checkbox, Radio, Select, Select2, Date, DateRange, ICheck, DateTime,
+  Slider,
+  Text,
+  Checkbox,
+  Radio,
+  Select,
+  Select2,
+  Date,
+  DateRange,
+  ICheck,
+  DateTime,
   ImportWrapper,
 };
