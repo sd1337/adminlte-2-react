@@ -522,15 +522,6 @@ Basic table component with not much functionality, provides onSelect callback to
 | searchValue | `string` | | Search value for datatable search field |
 | onSearchChange | `function` | | Search value change event |
 
-##### Order props
-
-| Name    | Type    | Default | Description |
-| --------|---------|---------|-------------|
-| title | `string` |  | Column title |
-| data | `string` |  | Data property containing the data to be rendered in the column |
-| width | `string` |  | Use this prop to give the column a fixed width |
-| render | `function` |  | Custom render function for the column with arguments `(data, rowData, rowIndex)` |
-
 #### SmartTable
 
 This will soon be replace Datatables as it Datatables is a jQuery widget and therefore breaks the entire React dom handling. SmartTable has a lot of auto configuration in it. It has a build in sort, filter and column selection functionality.
@@ -539,7 +530,7 @@ This will soon be replace Datatables as it Datatables is a jQuery widget and the
 | Name    | Type    | Default | Description |
 | --------|---------|---------|-------------|
 | data | `arrayOf` | `null` |  |
-| columns | `arrayOf` | `undefined` |  |
+| columns | `array` |  | Column descriptions, see [column options](#column-options) for reference, if this prop is not provided smart table will infer them from the first entry in data as soon as data is supplied |
 | condensed | `boolean` | `false` |  |
 | responsive | `boolean` | `false` |  |
 | page | `number` | `undefined` |  |
@@ -556,6 +547,18 @@ This will soon be replace Datatables as it Datatables is a jQuery widget and the
 | onSearchChange | `function` | `undefined` |  |
 | defaultFilterColumn | `string` | `'$all'` |  |
 | totalElements | `number` | `undefined` |  |
+| hasMore | `boolean` | `undefined` |  |
+
+##### Order props
+
+| Name    | Type    | Default | Description |
+| --------|---------|---------|-------------|
+| title | `string` |  | Column title |
+| data | `string` |  | Data property containing the data to be rendered in the column |
+| width | `string` |  | Use this prop to give the column a fixed width |
+| render | `function` |  | Custom render function for the column with arguments `(data, rowData, rowIndex)` |
+| toggleHidden | `bool` |  | (SmartTable only) Disables option to show/hide column |
+| toggleOrder | `bool` |  | | toggleHidden | `bool` |  | (SmartTable only) Disables option to sort |
 
 
 #### Description

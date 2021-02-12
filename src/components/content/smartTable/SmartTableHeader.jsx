@@ -13,15 +13,14 @@ class SmartTableHeader extends Component {
 
   render() {
     const {
-      key, column, classPreFix, sortIcons,
-      order, orderChanged, setFilterValue,
+      smartTableKey: key, column, classPreFix, sortIcons,
+      order, orderChanged,
     } = this.props;
-    const tempFunc = (value) => {
-      setFilterValue({ target: { value } });
-    };
     const { open } = this.state;
-    const { data, width, title } = column;
-    const sortObject = order.find((p2) => p2.column === data);
+    const {
+      data, width, title, toggleOrder,
+    } = column;
+    const sortObject = order.find(p2 => p2.column === data);
     let icon = sortIcons.default;
     let param = 'asc';
     if (sortObject) {
@@ -43,26 +42,26 @@ class SmartTableHeader extends Component {
         param = 'none';
       }
     }
+    const canToggle = !(toggleOrder === false);
+    const onClick = !canToggle ? undefined : () => orderChanged(data, param);
+    const addition = canToggle ? '' : ` ${classPreFix}-column-header-sort-disabled`;
     return (
       <th key={`${key}-${title}`} className={`${classPreFix}-column-header${open ? ' open' : ''}`} style={{ width }}>
         {<span onClick={this.toggleOpen}>{title}</span>}
         {'  '}
-        <div className={`${classPreFix}-column-header-sort`} onClick={() => orderChanged(data, param)}>{icon}</div>
-        {/* <ul className="dropdown-menu">
-          <li><a onClick={() => { tempFunc("1234"); this.toggleOpen(); }}>1234</a></li>
-          <li><a onClick={() => { tempFunc("5678"); this.toggleOpen(); }}>5678</a></li>
-        </ul> */}
+        <div className={`${classPreFix}-column-header-sort${addition}`} onClick={onClick}>{icon}</div>
       </th>
     );
   }
 }
 
 SmartTableHeader.propTypes = {
-  key: PropTypes.string.isRequired,
+  smartTableKey: PropTypes.string.isRequired,
   column: PropTypes.shape({
     data: PropTypes.string,
     title: PropTypes.string,
     width: PropTypes.string,
+    toggleOrder: PropTypes.bool,
   }).isRequired,
   classPreFix: PropTypes.string.isRequired,
   sortIcons: PropTypes.shape({
@@ -72,7 +71,6 @@ SmartTableHeader.propTypes = {
   }).isRequired,
   order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
   orderChanged: PropTypes.func.isRequired,
-  setFilterValue: PropTypes.func.isRequired,
 };
 
 export default SmartTableHeader;
