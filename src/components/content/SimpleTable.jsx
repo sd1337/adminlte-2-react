@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid';
+import { arrayEquals } from '../Utilities';
 
 
 class SimpleTable extends Component {
@@ -19,6 +20,25 @@ class SimpleTable extends Component {
       </tr>
     )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
     this.state.mappedData = mappedColumns;
+  }
+
+  componentDidUpdate({
+    data: oldData,
+  }, { selectedRow: oldSelectedRow }) {
+    const {
+      data, simpleCompare,
+    } = this.props;
+    const { selectedRow } = this.state;
+    let dataChanged;
+    if (!simpleCompare) {
+      dataChanged = !arrayEquals(oldData, data);
+    } else {
+      dataChanged = oldData !== data || oldData.length !== data.length;
+    }
+    const rowSelectionChanged = oldSelectedRow !== selectedRow;
+    if (dataChanged || rowSelectionChanged) {
+      this.updateStateData();
+    }
   }
 
   onSelect = (data, rowIdx) => {
@@ -110,6 +130,7 @@ SimpleTable.propTypes = {
   responsive: PropTypes.bool,
   hover: PropTypes.bool,
   onSelect: PropTypes.func,
+  simpleCompare: PropTypes.bool,
 };
 
 SimpleTable.defaultProps = {
@@ -122,6 +143,7 @@ SimpleTable.defaultProps = {
   responsive: false,
   hover: false,
   onSelect: undefined,
+  simpleCompare: false,
 };
 
 export default SimpleTable;

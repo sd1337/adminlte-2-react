@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Tab, TabContent, Nav, NavItem,
+  Tab, TabContent as BsTabContent, Nav, NavItem,
 } from 'react-bootstrap';
 import uuidv4 from 'uuid';
 import TabTitle from './TabTitle';
+import TabContent from './TabContent';
 
 class Tabs extends Component {
-
   constructor(props) {
     super(props);
     const { activeKey, defaultActiveKey } = props;
@@ -53,7 +53,7 @@ class Tabs extends Component {
               <TabTitle icon={icon} title={title} titleLeft={titleLeft} />
             }
           </Nav>
-          <TabContent
+          <BsTabContent
             bsclass="tab"
             animation={false}
             mountOnEnter={mountOnEnter}
@@ -62,7 +62,7 @@ class Tabs extends Component {
             style={{ height: contentHeight || 'auto' }}
           >
             {children}
-          </TabContent>
+          </BsTabContent>
         </div>
       </Tab.Container>
     );
