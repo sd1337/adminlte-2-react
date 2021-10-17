@@ -91,7 +91,21 @@ type Props = {
   searchbarFilter: boolean;
 }
 
-class AdminLTE extends Component<Props, {}> {
+class AdminLTE extends Component<Props, {}> { 
+  
+  static defaultProps = {
+    children: null,
+    title: ['Admin', 'LTE'],
+    titleShort: ['A', 'LT'],
+    browserTitle: null,
+    theme: 'blue',
+    //  controlSidebar: null,
+    footer: null,
+    sidebar: undefined,
+    homeTo: '/',
+    searchbarFilter: false,
+  }
+
   componentDidMount() {
     const { theme = 'blue', browserTitle } = this.props;
     if (theme) {
@@ -329,19 +343,6 @@ class AdminLTE extends Component<Props, {}> {
 //   ]),
 //   homeTo: PropTypes.string,
 //   searchbarFilter: PropTypes.bool,
-// };
-
-// AdminLTE.defaultProps = {
-//   children: null,
-//   title: ['Admin', 'LTE'],
-//   titleShort: ['A', 'LT'],
-//   browserTitle: null,
-//   theme: 'blue',
-//   //  controlSidebar: null,
-//   footer: null,
-//   sidebar: undefined,
-//   homeTo: '/',
-//   searchbarFilter: false,
 // };
 
 export default AdminLTE;
