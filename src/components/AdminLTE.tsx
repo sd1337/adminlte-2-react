@@ -77,7 +77,21 @@ import SmartTable from './content/SmartTable';
 
 library.add(fab, fas, far);
 
-class AdminLTE extends Component {
+type Node = React.ReactNode | React.ReactNode[]
+
+type Props = {
+  children: Node;
+  title:string | string[];
+  titleShort: string | string[];
+  theme: Themes;
+  browserTitle: string;
+  sidebar: Node;
+  footer: Node;
+  homeTo: string;
+  searchbarFilter: boolean;
+}
+
+class AdminLTE extends Component<Props, {}> {
   componentDidMount() {
     const { theme = 'blue', browserTitle } = this.props;
     if (theme) {
@@ -125,12 +139,12 @@ class AdminLTE extends Component {
         require('../adminlte/css/skins/skin-blue.css');
         break;
     }
-    const docReady = jQuery.isReady;
+    const docReady = (jQuery as any).isReady;
     if (docReady) {
-      jQuery('body').layout();
+      (jQuery('body') as any).layout();
     } else {
       jQuery(document).ready(() => {
-        jQuery('body').layout();
+        (jQuery('body') as any).layout();
       });
     }
   }
@@ -139,34 +153,47 @@ class AdminLTE extends Component {
     let { children, title, titleShort } = this.props;
     const { searchbarFilter } = this.props;
     const { homeTo } = this.props;
+    let childrenArray:React.ReactNode[];
     {
       if (!children) children = [<div>No content</div>];
-      if (!children.length) {
+      if (!(children as []).length) {
         children = [children];
+        childrenArray = [children] as React.ReactNode[];
+      }else{
+        childrenArray = children as React.ReactNode [];
       }
-      let temp = children.filter(
+      let temp = childrenArray.filter(
         p => Object.prototype.toString.call(p) !== '[object Array]',
       );
-      children
+      childrenArray
         .filter(p => Object.prototype.toString.call(p) === '[object Array]')
         .forEach((p) => {
           temp = temp.concat(p);
         });
       children = temp;
     }
+    let titleArray:string[] = []; 
     if (!title.length) {
-      title = [title];
+      titleArray = [title as string];
+    }else{
+      titleArray = title as string[];
     }
-    const [titleBold, titlethin = ''] = title;
+    const [titleBold, titlethin = ''] = titleArray;
+    let titleShortArray:string[] = [];
     if (!titleShort.length) {
-      titleShort = [titleShort];
+      titleShortArray = [titleShort as string];
     }
-    const [titleShortBold, titleShotThin = ''] = titleShort;
-    let [menu] = children
-      && children.length
-      && children.filter(p => p.type === Navbar.Core);
-    if (children.findIndex(p => p.type === ControlSidebar) > 0) {
-      menu = React.cloneElement(menu, {
+    const [titleShortBold, titleShotThin = ''] = titleShortArray;
+    let menu:React.ReactNode;
+    if(childrenArray
+      && childrenArray.length){
+        let optionalMenu = childrenArray.filter(p => p instanceof Navbar.Core);
+        if(optionalMenu.length > 0){
+          menu = optionalMenu[0];
+        }
+      }
+    if (childrenArray.findIndex(p => p instanceof ControlSidebar) > 0) {
+      menu = React.cloneElement(menu as React.ReactElement, {
         additionalMenus: [
           React.createElement(Navbar.ControlSidebarEntry, {
             key: 'control-sidebar-entry',
@@ -174,46 +201,47 @@ class AdminLTE extends Component {
         ],
       });
     }
-    const content = children.filter(p => p !== menu);
+    const content = childrenArray.filter(p => p !== menu);
     const routes = content
       .filter(
-        p => (p.props && p.props.path)
-          || (typeof p.type === 'function' && p.type === Redirect),
+        p => ((p as React.ReactElement).props && (p as React.ReactElement).props.path)
+          || (p instanceof Redirect),
       )
-      .map((P) => {
-        if (P.type !== Route || P.type !== Redirect) {
-          if (P.type === AsyncContent) {
+      .map((p) => {
+        if (!(p instanceof Route) || !(p instanceof Redirect)) {
+          let reactElem:React.ReactElement = p as React.ReactElement;
+          if (p instanceof AsyncContent) {
             return (
               <Route
-                modal={P.props.modal}
-                key={P.props.path}
-                path={P.props.path}
-                exact={P.props.exact}
-                component={AsyncComponent(() => import(P.props.component))}
+                // modal={reactElem.props.modal}
+                key={reactElem.props.path}
+                path={reactElem.props.path}
+                exact={reactElem.props.exact}
+                component={AsyncComponent(() => import(reactElem.props.component))}
               />
             );
           }
           return (
             <Route
-              modal={P.props.modal}
-              key={P.props.path}
-              path={P.props.path}
-              exact={P.props.exact}
-              render={props => React.cloneElement(P, {
-                key: P.props.key ? P.props.key : P.props.path,
+              // modal={reactElem.props.modal}
+              key={reactElem.props.path}
+              path={reactElem.props.path}
+              exact={reactElem.props.exact}
+              render={props => React.cloneElement(reactElem, {
+                key: reactElem.props.key ? reactElem.props.key : reactElem.props.path,
                 ...props,
               })
               }
             />
           );
         }
-        return P;
+        return p;
       });
     const nonModalRoutes = routes.filter(p => !p.props.modal);
     const modalRoutes = routes.filter(p => p.props.modal);
 
-    const childSidebar = content.find(p => p.type === Sidebar.Core);
-    const childFooter = content.find(p => p.type === Footer);
+    const childSidebar = content.find(p => p instanceof Sidebar.Core);
+    const childFooter = content.find(p => p instanceof Footer);
     const {
       sidebar: propSidebar,
       // controlSidebar,
@@ -276,45 +304,45 @@ class AdminLTE extends Component {
   }
 }
 
-AdminLTE.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  title: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string,
-  ]),
-  titleShort: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string),
-    PropTypes.string,
-  ]),
-  theme: PropTypes.oneOf(Themes),
-  browserTitle: PropTypes.string,
-  sidebar: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  footer: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  homeTo: PropTypes.string,
-  searchbarFilter: PropTypes.bool,
-};
+// AdminLTE.propTypes = {
+//   children: PropTypes.oneOfType([
+//     PropTypes.arrayOf(PropTypes.node),
+//     PropTypes.node,
+//   ]),
+//   title: PropTypes.oneOfType([
+//     PropTypes.arrayOf(PropTypes.string),
+//     PropTypes.string,
+//   ]),
+//   titleShort: PropTypes.oneOfType([
+//     PropTypes.arrayOf(PropTypes.string),
+//     PropTypes.string,
+//   ]),
+//   theme: PropTypes.oneOf(Themes),
+//   browserTitle: PropTypes.string,
+//   sidebar: PropTypes.oneOfType([
+//     PropTypes.arrayOf(PropTypes.node),
+//     PropTypes.node,
+//   ]),
+//   footer: PropTypes.oneOfType([
+//     PropTypes.arrayOf(PropTypes.node),
+//     PropTypes.node,
+//   ]),
+//   homeTo: PropTypes.string,
+//   searchbarFilter: PropTypes.bool,
+// };
 
-AdminLTE.defaultProps = {
-  children: null,
-  title: ['Admin', 'LTE'],
-  titleShort: ['A', 'LT'],
-  browserTitle: null,
-  theme: 'blue',
-  //  controlSidebar: null,
-  footer: null,
-  sidebar: undefined,
-  homeTo: '/',
-  searchbarFilter: false,
-};
+// AdminLTE.defaultProps = {
+//   children: null,
+//   title: ['Admin', 'LTE'],
+//   titleShort: ['A', 'LT'],
+//   browserTitle: null,
+//   theme: 'blue',
+//   //  controlSidebar: null,
+//   footer: null,
+//   sidebar: undefined,
+//   homeTo: '/',
+//   searchbarFilter: false,
+// };
 
 export default AdminLTE;
 

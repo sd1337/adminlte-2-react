@@ -4,7 +4,7 @@ const arrayEquals = (a, b) => {
   if (a === undefined && b === undefined) {
     return true;
   }
-  
+
   if (a === null && b === null) {
     return true;
   }
