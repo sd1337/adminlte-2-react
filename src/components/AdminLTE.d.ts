@@ -63,6 +63,17 @@ declare type Props = {
     searchbarFilter: boolean;
 };
 declare class AdminLTE extends Component<Props, {}> {
+    static defaultProps: {
+        children: null;
+        title: string[];
+        titleShort: string[];
+        browserTitle: null;
+        theme: string;
+        footer: null;
+        sidebar: undefined;
+        homeTo: string;
+        searchbarFilter: boolean;
+    };
     componentDidMount(): void;
     render(): JSX.Element;
 }

@@ -9,7 +9,7 @@ import {
 import { splitIcon } from '../Utilities';
 
 type Props = {
-  icon: 'string',
+  icon: string,
   size: SizeProp
 }
 

@@ -92,7 +92,7 @@ type Props = {
 }
 
 class AdminLTE extends Component<Props, {}> { 
-  
+
   static defaultProps = {
     children: null,
     title: ['Admin', 'LTE'],
@@ -317,33 +317,6 @@ class AdminLTE extends Component<Props, {}> {
     );
   }
 }
-
-// AdminLTE.propTypes = {
-//   children: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.node),
-//     PropTypes.node,
-//   ]),
-//   title: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.string),
-//     PropTypes.string,
-//   ]),
-//   titleShort: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.string),
-//     PropTypes.string,
-//   ]),
-//   theme: PropTypes.oneOf(Themes),
-//   browserTitle: PropTypes.string,
-//   sidebar: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.node),
-//     PropTypes.node,
-//   ]),
-//   footer: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.node),
-//     PropTypes.node,
-//   ]),
-//   homeTo: PropTypes.string,
-//   searchbarFilter: PropTypes.bool,
-// };
 
 export default AdminLTE;
 
