@@ -5,7 +5,7 @@ import './LoadingSpinner.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   SizeProp,
-} from '@fortawesome/fontawesome-svg-core'
+} from '@fortawesome/fontawesome-svg-core';
 import { splitIcon } from '../Utilities';
 
 type Props = {
