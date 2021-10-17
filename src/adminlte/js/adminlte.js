@@ -1,4 +1,5 @@
 /* eslint-disable */
+// @ts-nocheck
 import jQuery from 'jquery';
 /*! AdminLTE app.js
 * ================

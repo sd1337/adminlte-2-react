@@ -3,11 +3,19 @@ import PropTypes from 'prop-types';
 
 import './LoadingSpinner.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  SizeProp,
+} from '@fortawesome/fontawesome-svg-core'
 import { splitIcon } from '../Utilities';
 
-const LoadingSpinner = ({ icon, size }) => (
+type Props = {
+  icon: 'string',
+  size: SizeProp
+}
+
+const LoadingSpinner = ({ icon, size }: Props) => (
   <div className="overlay">
-    <FontAwesomeIcon spin icon={splitIcon(icon)} size={size}/>
+    <FontAwesomeIcon spin icon={splitIcon(icon)} size={size} />
   </div>
 );
 

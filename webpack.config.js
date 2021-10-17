@@ -7,13 +7,13 @@ const devMode = process.env.NODE_ENV !== 'production';
 // if(!devMode){
 //   console.log('Production build started!');
 // }else{
-//   console.log('Building UNoptimized development build!');  
+//   console.log('Building UNoptimized development build!');
 // }
 
 module.exports = {
   mode: devMode ? 'development' : 'production',
   // mode: 'production',
-  entry: ['@babel/polyfill', './src/components/AdminLTE.jsx'],
+  entry: ['./src/components/AdminLTE.tsx', '@babel/polyfill'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
@@ -23,6 +23,11 @@ module.exports = {
   },
   module: {
     rules: [{
+      test: /\.tsx?$/,
+      use: 'ts-loader',
+      exclude: /(node_modules|bower_components|build)/,
+    },
+    {
       test: /\.js[x]?$/,
       include: path.resolve(__dirname, 'src'),
       exclude: /(node_modules|bower_components|build)/,
@@ -89,8 +94,8 @@ module.exports = {
     //   }],
     // },
     {
-      exclude: [/\.(js|jsx|mjs)$/,
-         /\.html$/,
+      exclude: [/\.(js|jsx|mjs|ts|tsx)$/,
+        /\.html$/,
         /\.json$/,
         /\.css$/,
         // /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -126,7 +131,7 @@ module.exports = {
     // select2: 'select2',
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.tsx', '.ts'],
   },
   devtool: 'source-map',
   plugins: [
