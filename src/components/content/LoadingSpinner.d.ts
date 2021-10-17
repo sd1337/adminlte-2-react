@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import './LoadingSpinner.css';
 import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 declare type Props = {
-    icon: 'string';
+    icon: string;
     size: SizeProp;
 };
 declare const LoadingSpinner: {

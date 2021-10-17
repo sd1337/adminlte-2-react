@@ -98,8 +98,8 @@
     "@babel/preset-stage-2": "^7.8.3",
     "@types/jquery": "^3.5.7",
     "@types/react-router-dom": "^5.3.1",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "autoprefixer": "^9.8.8",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -113,6 +113,7 @@
     "enzyme-to-json": "^3.6.2",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-typescript": "^14.0.1",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
@@ -133,7 +134,7 @@
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": "airbnb",
+    "extends": ["airbnb", "airbnb-typescript"],
     "globals": {
       "document": false,
       "$": false
@@ -143,7 +144,14 @@
       "commonjs": true
     },
     "rules": {
-      "react/jsx-filename-extension": [ "warn", {"extensions": [".tsx"]} ]
+      "react/jsx-filename-extension": [
+        "warn",
+        {
+          "extensions": [
+            ".tsx"
+          ]
+        }
+      ]
     }
   },
   "jest": {

@@ -1,17 +1,39 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Alert as BsAlert } from 'react-bootstrap';
 import { Types } from '../PropTypes';
 import { splitIcon } from '../Utilities';
 import './Alert.css';
 
+type Props = {
+  id?: string,
+  closable?: boolean,
+  onDismiss?: Function,
+  type?: Types,
+  icon?: string,
+  title?: string,
+  children?: React.ReactNode | React.ReactNode[]
+}
 
-class Alert extends Component {
-  state = { closed: false }
+type State = {
+  closed: boolean
+}
 
-  constructor() {
-    super();
+class Alert extends Component<Props, State> {
+  
+  static defaultProps = {
+    id: undefined,
+    closable: false,
+    onDismiss: null,
+    type: null,
+    icon: null,
+    title: null,
+    children: null,
+  }
+
+  constructor(props: Props) {
+    super(props);
+    this.state = { closed: false };
     this.onDismiss = this.onDismiss.bind(this);
   }
 
@@ -40,27 +62,5 @@ class Alert extends Component {
     );
   }
 }
-Alert.propTypes = {
-  id: PropTypes.string,
-  closable: PropTypes.bool,
-  onDismiss: PropTypes.func,
-  type: PropTypes.oneOf(Types),
-  icon: PropTypes.string,
-  title: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-};
-
-Alert.defaultProps = {
-  id: undefined,
-  closable: false,
-  onDismiss: null,
-  type: null,
-  icon: null,
-  title: null,
-  children: null,
-};
 
 export default Alert;
