@@ -10,6 +10,10 @@ import Header from './Header';
 import UserPanel from './UserPanel';
 import Searchbar from './Searchbar';
 
+type SidebarProps = {
+  children: React.ReactNode | React.ReactNode[];
+}
+
 class Sidebar extends Component {
   state = {
     searchValue: '',
