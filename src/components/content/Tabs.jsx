@@ -41,7 +41,7 @@ class Tabs extends Component {
       >
         <div className="nav-tabs-custom">
           <Nav bsStyle="tabs" role="tablist" pullRight={pullRight} bsClass="nav">
-            {localChildren.filter(p => p.type === TabContent).map(p => (
+            {localChildren.filter((p) => p.type === TabContent).map((p) => (
               <NavItem
                 key={p.props.eventKey}
                 eventKey={p.props.eventKey}
@@ -49,9 +49,7 @@ class Tabs extends Component {
                 {p.props.title}
               </NavItem>
             ))}
-            {
-              <TabTitle icon={icon} title={title} titleLeft={titleLeft} />
-            }
+            <TabTitle icon={icon} title={title} titleLeft={titleLeft} />
           </Nav>
           <BsTabContent
             bsclass="tab"

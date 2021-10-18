@@ -1,12 +1,43 @@
+// 'use strict';
+/* eslint-disable-next-line global-require */
+const $ = require('jquery');
+
+const DataKey = 'lte.boxwidget';
+
+const Default = {
+  animationSpeed: 500,
+  collapseTrigger: '[data-widget="collapse"]',
+  removeTrigger: '[data-widget="remove"]',
+};
+
+const Selector = {
+  data: '.box',
+  collapsed: '.collapsed-box',
+  header: '.box-header',
+  body: '.box-body',
+  footer: '.box-footer',
+  tools: '.box-tools',
+};
+
+const ClassName = {
+  collapsed: 'collapsed-box',
+};
+
+const Event = {
+  collapsed: 'collapsed.boxwidget',
+  expanded: 'expanded.boxwidget',
+  removed: 'removed.boxwidget',
+};
 // BoxWidget Class Definition
 // =====================
 
-function BoxWidget(element, options) {
+function BoxWidget(element, options, boxThis) {
+  this.boxThis = boxThis;
   this.element = element;
   this.options = options;
   /* eslint-disable-next-line no-underscore-dangle */
   this._setUpListeners();
-};
+}
 
 BoxWidget.prototype.toggle = function toggle() {
   const isOpen = !$(this.element).is(Selector.collapsed);
@@ -25,7 +56,7 @@ BoxWidget.prototype.expand = function expand() {
   $(this.element).children(`${Selector.body}, ${Selector.footer}`)
     .slideDown(this.options.animationSpeed, () => {
       $(this.element).trigger(expandedEvent);
-      that.setState({ collapsed: false });
+      this.boxThis.setState({ collapsed: false });
     });
 };
 
@@ -36,7 +67,7 @@ BoxWidget.prototype.collapse = function collapse() {
     .slideUp(this.options.animationSpeed, () => {
       $(this.element).addClass(ClassName.collapsed);
       $(this.element).trigger(collapsedEvent);
-      that.setState({ collapsed: true });
+      this.boxThis.setState({ collapsed: true });
     });
 };
 
@@ -52,7 +83,7 @@ BoxWidget.prototype.remove = function remove() {
 // Private
 
 /* eslint-disable-next-line no-underscore-dangle */
-BoxWidget.prototype._setUpListeners = function _setUpListeners() {
+BoxWidget.prototype._setUpListeners = function setUpListeners() {
   const that2 = this;
 
   $(this.element).on('click', this.options.collapseTrigger, function click(event) {
@@ -71,14 +102,15 @@ BoxWidget.prototype._setUpListeners = function _setUpListeners() {
 // Plugin Definition
 // =================
 /* eslint-disable no-inner-declarations */
-function Plugin(option) {
+function Plugin(option, boxThis) {
   return this.each(function each() {
     const $this = $(this);
     let data = $this.data(DataKey);
 
     if (!data) {
       const options = $.extend({}, Default, $this.data(), typeof option === 'object' && option);
-      $this.data(DataKey, (data = new BoxWidget($this, options)));
+      data = new BoxWidget($this, options, boxThis);
+      $this.data(DataKey, data);
     }
 
     if (typeof option === 'string') {

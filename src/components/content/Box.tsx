@@ -1,12 +1,10 @@
-import React, { Component, Ref } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   IconProp,
 } from '@fortawesome/fontawesome-svg-core';
 import { Types } from '../PropTypes';
 import LoadingSpinner from './LoadingSpinner';
-import Badge from './Badge';
 import { splitIcon } from '../Utilities';
 import { Plugin } from './BoxWidget';
 
@@ -36,81 +34,22 @@ type BoxProps = {
   style?: any,
   header?: React.ReactNode | React.ReactNode[],
   children?: React.ReactNode | React.ReactNode[]
-}
+};
 
 class Box extends Component<BoxProps, {}> {
-
-  static defaultProps = {
-    id: undefined,
-    title: ' ',
-    collapsable: false,
-    closable: false,
-    footer: null,
-    type: null,
-    options: null,
-    icon: null,
-    titleRight: false,
-    loaded: true,
-    noPadding: false,
-    badge: null,
-    toolIcon: 'fas-wrench',
-    customOptions: null,
-    className: null,
-    footerClass: null,
-    collapsed: false,
-    solid: false,
-    textCenter: false,
-    padding: false,
-    bodyClassName: null,
-    border: false,
-    style: null,
-    header: null,
-    children: null,
-  };
-
-  state = {
-    // eslint-disable-next-line react/destructuring-assignment
-    collapsed: this.props.collapsed,
-  }
-
   main: HTMLDivElement | null = null;
 
+  constructor() {
+    super();
+    this
+      .state = {
+      // eslint-disable-next-line react/destructuring-assignment
+        collapsed: this.props.collapsed,
+      };
+  }
+
   componentDidMount() {
-    {
-      const that = this;
-      // 'use strict';
-      /* eslint-disable-next-line global-require */
-      const $ = require('jquery');
-      const DataKey = 'lte.boxwidget';
-
-      const Default = {
-        animationSpeed: 500,
-        collapseTrigger: '[data-widget="collapse"]',
-        removeTrigger: '[data-widget="remove"]',
-      };
-
-      const Selector = {
-        data: '.box',
-        collapsed: '.collapsed-box',
-        header: '.box-header',
-        body: '.box-body',
-        footer: '.box-footer',
-        tools: '.box-tools',
-      };
-
-      const ClassName = {
-        collapsed: 'collapsed-box',
-      };
-
-      const Event = {
-        collapsed: 'collapsed.boxwidget',
-        expanded: 'expanded.boxwidget',
-        removed: 'removed.boxwidget',
-      };
-
-      
-      Plugin.call($(this.main));
-    }
+    Plugin.call($(this.main), this);
   }
 
   render() {
@@ -146,12 +85,12 @@ class Box extends Component<BoxProps, {}> {
       textCenter ? 'text-center' : '',
       padding ? 'pad' : '',
       bodyClassName,
-    ].filter(p => p).join(' ');
+    ].filter((p) => p).join(' ');
 
     const headerClass = [
       'box-header',
       border ? 'with-border' : '',
-    ].filter(p => p).join(' ');
+    ].filter((p) => p).join(' ');
 
     return (
       <div id={id} ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>
@@ -181,7 +120,7 @@ class Box extends Component<BoxProps, {}> {
                   </ul>
                 </div>
               )}
-              {closable && <button type="button" className="btn btn-box-tool" data-widget="remove"><FontAwesomeIcon icon="times" /></button>}
+              {closable && <button type="button" label="close box" className="btn btn-box-tool" data-widget="remove"><FontAwesomeIcon icon="times" /></button>}
             </div>
           </div>
         )}
@@ -198,5 +137,33 @@ class Box extends Component<BoxProps, {}> {
     );
   }
 }
+
+Box.defaultProps = {
+  id: undefined,
+  title: ' ',
+  collapsable: false,
+  closable: false,
+  footer: null,
+  type: null,
+  options: null,
+  icon: null,
+  titleRight: false,
+  loaded: true,
+  noPadding: false,
+  badge: null,
+  toolIcon: 'fas-wrench',
+  customOptions: null,
+  className: null,
+  footerClass: null,
+  collapsed: false,
+  solid: false,
+  textCenter: false,
+  padding: false,
+  bodyClassName: null,
+  border: false,
+  style: null,
+  header: null,
+  children: null,
+};
 
 export default Box;
