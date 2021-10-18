@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import jQuery from 'jquery';
 
 import './Sidebar.css';
@@ -12,15 +11,19 @@ import Searchbar from './Searchbar';
 
 type SidebarProps = {
   children: React.ReactNode | React.ReactNode[];
-}
+  searchbarFilter: boolean;
+};
 
-class Sidebar extends Component {
-  state = {
-    searchValue: '',
-  }
+type SidebarState = {
+  searchValue: string
+};
 
+class Sidebar extends Component<SidebarProps, SidebarState> {
   constructor() {
     super();
+    this.state = {
+      searchValue: '',
+    };
     this.onSearchValueChange = this.onSearchValueChange.bind(this);
   }
 
@@ -41,9 +44,9 @@ class Sidebar extends Component {
       localChildren = [];
     }
     if (searchbarFilter) {
-      const localSearchbar = localChildren.find(p => p.type === Searchbar);
+      const localSearchbar = localChildren.find((p) => p.type === Searchbar);
       if (localSearchbar) {
-        const index = localChildren.map(p => p.type).indexOf(Searchbar);
+        const index = localChildren.map((p) => p.type).indexOf(Searchbar);
         const temp = [];
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < localChildren.length; ++i) {
@@ -75,10 +78,10 @@ class Sidebar extends Component {
             }
             return [elemWithoutChildren];
           };
-          const flattenChildren = localChildren.filter(p => p.type === Item).map(flatten).flat().filter(p => p.props.to);
-          const others = localChildren.filter(p => p.type === UserPanel || p.type === Searchbar);
+          const flattenChildren = localChildren.filter((p) => p.type === Item).map(flatten).flat().filter((p) => p.props.to);
+          const others = localChildren.filter((p) => p.type === UserPanel || p.type === Searchbar);
           localChildren = others.concat(flattenChildren
-            .filter(p => p.props.text.toUpperCase().indexOf(searchValue.toUpperCase()) > -1));
+            .filter((p) => p.props.text.toUpperCase().indexOf(searchValue.toUpperCase()) > -1));
         }
       }
     }
@@ -99,22 +102,6 @@ Sidebar.defaultProps = {
   searchbarFilter: false,
 };
 
-Sidebar.propTypes = {
-  children(props, propName, componentName) {
-    const prop = props[propName];
-    let error;
-    React.Children.forEach(prop, (el) => {
-      if (error) return;
-      if (el.type !== Item && el.type !== Header && el.type !== 'li' && el.type !== UserPanel && el.type !== Searchbar) {
-        error = new Error(
-          `\`${componentName}\` only accepts \`Item's, Header's, UserPanel, Searchbar and li's\`.`,
-        );
-      }
-    });
-    return error;
-  },
-  searchbarFilter: PropTypes.bool,
-};
 export default Sidebar;
 export {
   Item, Sidebar as Core, Header, UserPanel, Searchbar,
