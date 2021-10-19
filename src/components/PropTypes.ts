@@ -1,10 +1,9 @@
-
-type Colors = 'light-blue'| 'aqua'| 'green'| 'yellow'| 'red'| 'gray'| 'navy'| 'teal'| 'purple'| 'orange'| 'maroon'| 'black';
-type Types = 'default'| 'info'| 'danger'| 'warning'| 'success'| 'primary';
-type Sizes = 'xs'| 'sm'| 'md'| 'lg';
-type FormTypes = 'warning'| 'success'| 'error';
-type Themes = 'black-light'| 'black'| 'blue'| 'blue-light'| 'green'| 'green-light'|
-  'purple'| 'purple-light'| 'red'| 'red-light'| 'yellow'| 'yellow-light';
+type Colors = 'light-blue' | 'aqua' | 'green' | 'yellow' | 'red' | 'gray' | 'navy' | 'teal' | 'purple' | 'orange' | 'maroon' | 'black';
+type Types = 'default' | 'info' | 'danger' | 'warning' | 'success' | 'primary';
+type Sizes = 'xs' | 'sm' | 'md' | 'lg';
+type FormTypes = 'warning' | 'success' | 'error';
+type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' |
+'purple' | 'purple-light' | 'red' | 'red-light' | 'yellow' | 'yellow-light';
 
 const localTypes = {
   default: {

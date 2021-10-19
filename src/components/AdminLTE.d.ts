@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 import '../css/bootstrap.min.css';
 import 'source-sans-pro/source-sans-pro.css';
 import '../adminlte/css/AdminLTE.css';
@@ -52,7 +52,7 @@ import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
 declare type Node = React.ReactNode | React.ReactNode[];
 declare type Props = {
-    children: Node;
+    children: ReactElement | ReactElement[];
     title: string | string[];
     titleShort: string | string[];
     theme: Themes;

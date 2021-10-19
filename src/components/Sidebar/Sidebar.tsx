@@ -19,8 +19,13 @@ type SidebarState = {
 };
 
 class Sidebar extends Component<SidebarProps, SidebarState> {
-  constructor() {
-    super();
+  static defaultProps = {
+    children: null,
+    searchbarFilter: false,
+  };
+
+  constructor(props: SidebarProps) {
+    super(props);
     this.state = {
       searchValue: '',
     };
@@ -28,25 +33,32 @@ class Sidebar extends Component<SidebarProps, SidebarState> {
   }
 
   componentDidMount() {
-    jQuery(this.widgetReference).tree();
+    (jQuery((this.widgetReference as any)) as any).tree();
   }
 
-  onSearchValueChange({ target: { value } }) {
+  onSearchValueChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { target: { value } } = e;
     this.setState({ searchValue: value });
   }
 
+  widgetReference: HTMLUListElement | null = null;
+
   render() {
     const { children, searchbarFilter } = this.props;
-    let localChildren;
+    let localChildren: React.ReactNode[];
     if (children) {
-      localChildren = children.length ? children : [children];
+      if (children as []) {
+        localChildren = children as [];
+      } else {
+        localChildren = [(children as React.ReactNode)];
+      }
     } else {
       localChildren = [];
     }
     if (searchbarFilter) {
-      const localSearchbar = localChildren.find((p) => p.type === Searchbar);
+      const localSearchbar: Searchbar = localChildren.find((p) => p instanceof Searchbar) as Searchbar;
       if (localSearchbar) {
-        const index = localChildren.map((p) => p.type).indexOf(Searchbar);
+        const index = localChildren.findIndex((p) => p instanceof Searchbar);
         const temp = [];
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < localChildren.length; ++i) {
@@ -54,18 +66,18 @@ class Sidebar extends Component<SidebarProps, SidebarState> {
             temp.push(localChildren[i]);
           } else {
             const { onChange, ...tempProps } = localSearchbar.props;
-            temp.push(React.cloneElement(localSearchbar, { onChange: this.onSearchValueChange, ...tempProps }));
+            temp.push(React.cloneElement(localSearchbar as any, { onChange: this.onSearchValueChange, ...tempProps }));
           }
         }
         localChildren = temp;
         const { searchValue } = this.state;
         if (searchValue.length > 0) {
-          const flatten = function flatten(element) {
-            if (!element.props) {
+          const flatten = function flatten(element: React.ReactNode): any {
+            if (!(element as React.ReactElement).props) {
               return [];
             }
-            const { children: elemChildren, ...otherProps } = element.props;
-            const elemWithoutChildren = React.cloneElement(element, otherProps, null);
+            const { children: elemChildren, ...otherProps } = (element as React.ReactElement).props;
+            const elemWithoutChildren = React.cloneElement((element as React.ReactElement), otherProps, null);
             if (elemChildren) {
               let intermediate;
               if (typeof elemChildren !== 'string' && elemChildren.length) {
@@ -78,8 +90,10 @@ class Sidebar extends Component<SidebarProps, SidebarState> {
             }
             return [elemWithoutChildren];
           };
-          const flattenChildren = localChildren.filter((p) => p.type === Item).map(flatten).flat().filter((p) => p.props.to);
-          const others = localChildren.filter((p) => p.type === UserPanel || p.type === Searchbar);
+          const flattenChildren = localChildren
+            .filter((p) => p instanceof Item)
+            .map(flatten).flat().filter((p) => p.props.to);
+          const others = localChildren.filter((p) => p instanceof UserPanel || p instanceof Searchbar);
           localChildren = others.concat(flattenChildren
             .filter((p) => p.props.text.toUpperCase().indexOf(searchValue.toUpperCase()) > -1));
         }
@@ -96,11 +110,6 @@ class Sidebar extends Component<SidebarProps, SidebarState> {
     );
   }
 }
-
-Sidebar.defaultProps = {
-  children: null,
-  searchbarFilter: false,
-};
 
 export default Sidebar;
 export {

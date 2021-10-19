@@ -98,8 +98,8 @@
     "@babel/preset-stage-2": "^7.8.3",
     "@types/jquery": "^3.5.7",
     "@types/react-router-dom": "^5.3.1",
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "autoprefixer": "^9.8.8",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -117,6 +117,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^2.0.0",
     "jest": "^24.9.0",
     "mini-css-extract-plugin": "^0.5.0",
@@ -132,28 +133,6 @@
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": ["airbnb", "airbnb-typescript"],
-    "globals": {
-      "document": false,
-      "$": false
-    },
-    "env": {
-      "jest": true,
-      "commonjs": true
-    },
-    "rules": {
-      "react/jsx-filename-extension": [
-        "warn",
-        {
-          "extensions": [
-            ".tsx"
-          ]
-        }
-      ]
-    }
-  },
   "jest": {
     "setupFiles": [
       "./src/setup-jest.js"
@@ -165,5 +144,11 @@
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/components/tests/fileMock.js",
       "\\.(css|less|scss)$": "<rootDir>/src/components/tests/styleMock.js"
     }
-  }
+  },
+  "browserslist": [
+    ">1%",
+    "last 4 versions",
+    "Firefox ESR",
+    "not ie < 9"
+  ]
 }
