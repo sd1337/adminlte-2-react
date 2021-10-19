@@ -31,7 +31,7 @@ class Button extends Component {
       flat ? 'btn-flat' : '',
       app ? 'btn-app' : '',
       outline ? 'btn-outline' : '',
-    ].filter(p => p).join(' ');
+    ].filter((p) => p).join(' ');
 
     const hasIcon = !!(icon);
     const localIcon = hasIcon ? splitIcon(icon) : null;
@@ -58,7 +58,7 @@ class Button extends Component {
     } if (children) {
       if (!children.length) { children = [children]; }
       if (children.length > 0) {
-        children = children.map(p => (p.type !== 'li' && p.type.name !== 'Divider' ? (<li key={uuidv4()}>{p}</li>) : React.cloneElement(p, { key: uuidv4() })));
+        children = children.map((p) => (p.type !== 'li' && p.type.name !== 'Divider' ? (<li key={uuidv4()}>{p}</li>) : React.cloneElement(p, { key: uuidv4() })));
       } else {
         children = undefined;
       }
@@ -92,7 +92,7 @@ class Button extends Component {
         );
       }
       return (
-        <React.Fragment>
+        <>
           <button type="button" className={`${buttonClasses} dropdown-toggle`} data-toggle="dropdown">
             {`${text || ''} `}
             <FontAwesomeIcon icon={['fas', 'caret-down']} />
@@ -100,7 +100,7 @@ class Button extends Component {
           <ul className="dropdown-menu">
             {children}
           </ul>
-        </React.Fragment>
+        </>
       );
     }
     return button;
