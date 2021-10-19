@@ -5,7 +5,20 @@ type FormTypes = 'warning' | 'success' | 'error';
 type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' |
 'purple' | 'purple-light' | 'red' | 'red-light' | 'yellow' | 'yellow-light';
 
-const localTypes = {
+type TypeDesc = {
+  type: string,
+  color: string,
+  colorCode: string,
+};
+
+const localTypes: {
+  default: TypeDesc,
+  primary: TypeDesc,
+  info: TypeDesc,
+  success: TypeDesc,
+  warning: TypeDesc,
+  danger: TypeDesc
+} = {
   default: {
     type: 'default',
     color: 'gray',
@@ -40,12 +53,18 @@ const localTypes = {
 const types = {
   byType: localTypes,
   byColor: {
-    gray: localTypes.default,
-    lightBlue: localTypes.primary,
+    'light-blue': localTypes.primary,
     aqua: localTypes.info,
     green: localTypes.success,
     yellow: localTypes.warning,
     red: localTypes.danger,
+    gray: localTypes.default,
+    navy: localTypes.default,
+    teal: localTypes.default,
+    purple: localTypes.default,
+    orange: localTypes.default,
+    maroon: localTypes.default,
+    black: localTypes.default,
   },
   byColorCode: {
     d2d6de: localTypes.default,

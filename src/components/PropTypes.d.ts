@@ -3,102 +3,41 @@ declare type Types = 'default' | 'info' | 'danger' | 'warning' | 'success' | 'pr
 declare type Sizes = 'xs' | 'sm' | 'md' | 'lg';
 declare type FormTypes = 'warning' | 'success' | 'error';
 declare type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'purple' | 'purple-light' | 'red' | 'red-light' | 'yellow' | 'yellow-light';
+declare type TypeDesc = {
+    type: string;
+    color: string;
+    colorCode: string;
+};
 declare const types: {
     byType: {
-        default: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        primary: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        info: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        success: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        warning: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        danger: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
+        default: TypeDesc;
+        primary: TypeDesc;
+        info: TypeDesc;
+        success: TypeDesc;
+        warning: TypeDesc;
+        danger: TypeDesc;
     };
     byColor: {
-        gray: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        lightBlue: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        aqua: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        green: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        yellow: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        red: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
+        'light-blue': TypeDesc;
+        aqua: TypeDesc;
+        green: TypeDesc;
+        yellow: TypeDesc;
+        red: TypeDesc;
+        gray: TypeDesc;
+        navy: TypeDesc;
+        teal: TypeDesc;
+        purple: TypeDesc;
+        orange: TypeDesc;
+        maroon: TypeDesc;
+        black: TypeDesc;
     };
     byColorCode: {
-        d2d6de: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        '3c8dbc': {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        '00c0ef': {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        '00a65a': {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        f39c12: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
-        f56954: {
-            type: string;
-            color: string;
-            colorCode: string;
-        };
+        d2d6de: TypeDesc;
+        '3c8dbc': TypeDesc;
+        '00c0ef': TypeDesc;
+        '00a65a': TypeDesc;
+        f39c12: TypeDesc;
+        f56954: TypeDesc;
     };
 };
 export { Colors, Types, Sizes, FormTypes, Themes, types as TypeMappings, };
