@@ -36,21 +36,52 @@ type BoxProps = {
   children?: React.ReactNode | React.ReactNode[]
 };
 
-class Box extends Component<BoxProps, {}> {
-  main: HTMLDivElement | null = null;
+type BoxState = {
+  collapsed?: boolean
+};
 
-  constructor() {
-    super();
-    this
-      .state = {
+class Box extends Component<BoxProps, BoxState> {
+  static defaultProps = {
+    id: undefined,
+    title: ' ',
+    collapsable: false,
+    closable: false,
+    footer: null,
+    type: null,
+    options: null,
+    icon: null,
+    titleRight: false,
+    loaded: true,
+    noPadding: false,
+    badge: null,
+    toolIcon: 'fas-wrench',
+    customOptions: null,
+    className: null,
+    footerClass: null,
+    collapsed: false,
+    solid: false,
+    textCenter: false,
+    padding: false,
+    bodyClassName: null,
+    border: false,
+    style: null,
+    header: null,
+    children: null,
+  };
+
+  constructor(props: BoxProps) {
+    super(props);
+    this.state = {
       // eslint-disable-next-line react/destructuring-assignment
-        collapsed: this.props.collapsed,
-      };
+      collapsed: this.props.collapsed,
+    };
   }
 
   componentDidMount() {
-    Plugin.call($(this.main), this);
+    Plugin.call($(this.main as any) as any, this);
   }
+
+  main: HTMLDivElement | null = null;
 
   render() {
     const {
@@ -120,7 +151,7 @@ class Box extends Component<BoxProps, {}> {
                   </ul>
                 </div>
               )}
-              {closable && <button type="button" label="close box" className="btn btn-box-tool" data-widget="remove"><FontAwesomeIcon icon="times" /></button>}
+              {closable && <button type="button" aria-label="close box" className="btn btn-box-tool" data-widget="remove"><FontAwesomeIcon icon="times" /></button>}
             </div>
           </div>
         )}
@@ -138,32 +169,6 @@ class Box extends Component<BoxProps, {}> {
   }
 }
 
-Box.defaultProps = {
-  id: undefined,
-  title: ' ',
-  collapsable: false,
-  closable: false,
-  footer: null,
-  type: null,
-  options: null,
-  icon: null,
-  titleRight: false,
-  loaded: true,
-  noPadding: false,
-  badge: null,
-  toolIcon: 'fas-wrench',
-  customOptions: null,
-  className: null,
-  footerClass: null,
-  collapsed: false,
-  solid: false,
-  textCenter: false,
-  padding: false,
-  bodyClassName: null,
-  border: false,
-  style: null,
-  header: null,
-  children: null,
-};
+// Box.
 
 export default Box;

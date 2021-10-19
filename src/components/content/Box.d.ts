@@ -28,7 +28,10 @@ declare type BoxProps = {
     header?: React.ReactNode | React.ReactNode[];
     children?: React.ReactNode | React.ReactNode[];
 };
-declare class Box extends Component<BoxProps, {}> {
+declare type BoxState = {
+    collapsed?: boolean;
+};
+declare class Box extends Component<BoxProps, BoxState> {
     static defaultProps: {
         id: undefined;
         title: string;
@@ -56,11 +59,9 @@ declare class Box extends Component<BoxProps, {}> {
         header: null;
         children: null;
     };
-    state: {
-        collapsed: boolean | undefined;
-    };
-    main: HTMLDivElement | null;
+    constructor(props: BoxProps);
     componentDidMount(): void;
+    main: HTMLDivElement | null;
     render(): JSX.Element;
 }
 export default Box;

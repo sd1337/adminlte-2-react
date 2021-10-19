@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const devMode = process.env.NODE_ENV !== 'production';
+const devMode = true; //process.env.NODE_ENV !== 'production';
 
 // if(!devMode){
 //   console.log('Production build started!');
@@ -13,7 +13,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: devMode ? 'development' : 'production',
   // mode: 'production',
-  entry: ['./src/components/AdminLTE.tsx', '@babel/polyfill'],
+  entry: ['@babel/polyfill', './src/components/AdminLTE.tsx'],
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
@@ -69,12 +69,6 @@ module.exports = {
               require('postcss-flexbugs-fixes'),
               // eslint-disable-next-line global-require
               require('autoprefixer')({
-                browsers: [
-                  '>1%',
-                  'last 4 versions',
-                  'Firefox ESR',
-                  'not ie < 9', // React doesn't support IE8 anyway
-                ],
                 flexbox: 'no-2009',
               }),
             ],

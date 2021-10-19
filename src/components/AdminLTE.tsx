@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 /* eslint-disable global-require */
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,7 +8,6 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -77,10 +76,10 @@ import SmartTable from './content/SmartTable';
 
 library.add(fab, fas, far);
 
-type Node = React.ReactNode | React.ReactNode[]
+type Node = React.ReactNode | React.ReactNode[];
 
 type Props = {
-  children: Node;
+  children: ReactElement | ReactElement[];
   title:string | string[];
   titleShort: string | string[];
   theme: Themes;
@@ -89,10 +88,9 @@ type Props = {
   footer: Node;
   homeTo: string;
   searchbarFilter: boolean;
-}
+};
 
-class AdminLTE extends Component<Props, {}> { 
-
+class AdminLTE extends Component<Props, {}> {
   static defaultProps = {
     children: null,
     title: ['Admin', 'LTE'],
@@ -104,7 +102,7 @@ class AdminLTE extends Component<Props, {}> {
     sidebar: undefined,
     homeTo: '/',
     searchbarFilter: false,
-  }
+  };
 
   componentDidMount() {
     const { theme = 'blue', browserTitle } = this.props;
@@ -164,32 +162,33 @@ class AdminLTE extends Component<Props, {}> {
   }
 
   render() {
-    let { children, title, titleShort } = this.props;
+    const { title, titleShort } = this.props;
+    let { children } = this.props;
     const { searchbarFilter } = this.props;
     const { homeTo } = this.props;
-    let childrenArray:React.ReactNode[];
+    let childrenArray:ReactElement[] = [];
     {
       if (!children) children = [<div>No content</div>];
       if (!(children as []).length) {
-        children = [children];
-        childrenArray = [children] as React.ReactNode[];
-      }else{
-        childrenArray = children as React.ReactNode [];
+        children = [children] as ReactElement[];
+        childrenArray = children;
+      } else {
+        childrenArray = children as ReactElement [];
       }
       let temp = childrenArray.filter(
-        p => Object.prototype.toString.call(p) !== '[object Array]',
+        (p) => Object.prototype.toString.call(p) !== '[object Array]',
       );
       childrenArray
-        .filter(p => Object.prototype.toString.call(p) === '[object Array]')
+        .filter((p) => Object.prototype.toString.call(p) === '[object Array]')
         .forEach((p) => {
           temp = temp.concat(p);
         });
       children = temp;
     }
-    let titleArray:string[] = []; 
+    let titleArray:string[] = [];
     if (!title.length) {
       titleArray = [title as string];
-    }else{
+    } else {
       titleArray = title as string[];
     }
     const [titleBold, titlethin = ''] = titleArray;
@@ -199,14 +198,14 @@ class AdminLTE extends Component<Props, {}> {
     }
     const [titleShortBold, titleShotThin = ''] = titleShortArray;
     let menu:React.ReactNode;
-    if(childrenArray
-      && childrenArray.length){
-        let optionalMenu = childrenArray.filter(p => p instanceof Navbar.Core);
-        if(optionalMenu.length > 0){
-          menu = optionalMenu[0];
-        }
+    if (childrenArray
+      && childrenArray.length) {
+      const optionalMenu = childrenArray.filter((p) => p instanceof Navbar.Core);
+      if (optionalMenu.length > 0) {
+        [menu] = optionalMenu;
       }
-    if (childrenArray.findIndex(p => p instanceof ControlSidebar) > 0) {
+    }
+    if (childrenArray.findIndex((p: React.ReactElement) => p.type === ControlSidebar) > 0) {
       menu = React.cloneElement(menu as React.ReactElement, {
         additionalMenus: [
           React.createElement(Navbar.ControlSidebarEntry, {
@@ -215,47 +214,45 @@ class AdminLTE extends Component<Props, {}> {
         ],
       });
     }
-    const content = childrenArray.filter(p => p !== menu);
+    const content = childrenArray.filter((p) => p !== menu);
     const routes = content
       .filter(
-        p => ((p as React.ReactElement).props && (p as React.ReactElement).props.path)
-          || (p instanceof Redirect),
+        (p: React.ReactElement) => (p.props && p.props.path)
+          || (p.type === Redirect),
       )
-      .map((p) => {
-        if (!(p instanceof Route) || !(p instanceof Redirect)) {
-          let reactElem:React.ReactElement = p as React.ReactElement;
-          if (p instanceof AsyncContent) {
+      .map((p: React.ReactElement) => {
+        if (p.type !== Route && p.type !== Redirect) {
+          if (p.type === AsyncContent) {
             return (
               <Route
-                // modal={reactElem.props.modal}
-                key={reactElem.props.path}
-                path={reactElem.props.path}
-                exact={reactElem.props.exact}
-                component={AsyncComponent(() => import(reactElem.props.component))}
+                // modal={p.props.modal}
+                key={p.props.path}
+                path={p.props.path}
+                exact={p.props.exact}
+                component={AsyncComponent(() => import(p.props.component))}
               />
             );
           }
           return (
             <Route
-              // modal={reactElem.props.modal}
-              key={reactElem.props.path}
-              path={reactElem.props.path}
-              exact={reactElem.props.exact}
-              render={props => React.cloneElement(reactElem, {
-                key: reactElem.props.key ? reactElem.props.key : reactElem.props.path,
+              // modal={p.props.modal}
+              key={p.props.path}
+              path={p.props.path}
+              exact={p.props.exact}
+              render={(props) => React.cloneElement(p, {
+                key: p.props.key ? p.props.key : p.props.path,
                 ...props,
-              })
-              }
+              })}
             />
           );
         }
         return p;
       });
-    const nonModalRoutes = routes.filter(p => !p.props.modal);
-    const modalRoutes = routes.filter(p => p.props.modal);
+    const nonModalRoutes = routes.filter((p) => !p.props.modal);
+    const modalRoutes = routes.filter((p) => p.props.modal);
 
-    const childSidebar = content.find(p => p instanceof Sidebar.Core);
-    const childFooter = content.find(p => p instanceof Footer);
+    const childSidebar = content.find((p: React.ReactElement) => p.type === Sidebar.Core);
+    const childFooter = content.find((p: React.ReactElement) => p.type === Footer);
     const {
       sidebar: propSidebar,
       // controlSidebar,
