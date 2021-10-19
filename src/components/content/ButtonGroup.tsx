@@ -1,14 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 
-const ButtonGroup = ({
+interface ButtonGroupProps {
+  pullRight?: boolean,
+  margin?: boolean,
+  vertical?: boolean,
+  children: ReactNode | ReactNode[],
+}
+
+type ButtonGroupComponent = React.FC<ButtonGroupProps>;
+
+const ButtonGroup: ButtonGroupComponent = ({
   pullRight, margin, vertical, children,
-}) => {
+}: ButtonGroupProps) => {
   const classNames = [
     vertical ? 'btn-group-vertical' : 'btn-group',
     pullRight ? 'pull-right' : null,
     margin ? 'margin' : null,
-  ].filter(p => p).join(' ');
+  ].filter((p) => p).join(' ');
   return (
     <div className={classNames}>
       {children}
@@ -16,21 +24,10 @@ const ButtonGroup = ({
   );
 };
 
-ButtonGroup.propTypes = {
-  pullRight: PropTypes.bool,
-  margin: PropTypes.bool,
-  vertical: PropTypes.bool,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-};
-
 ButtonGroup.defaultProps = {
   pullRight: false,
   margin: false,
   vertical: false,
 };
-
 
 export default ButtonGroup;
