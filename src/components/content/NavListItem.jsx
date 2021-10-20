@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Colors } from '../PropTypes';
 import { splitIcon } from '../Utilities';
 
 const NavListItem = ({
@@ -11,14 +10,14 @@ const NavListItem = ({
 }) => {
   const localIcon = splitIcon(icon);
   let jsxElement = (
-    <React.Fragment>
+    <>
       {text}
       <span className={`pull-right text-${color}`}>
         <FontAwesomeIcon icon={localIcon} />
         {' '}
         {iconLabel}
       </span>
-    </React.Fragment>
+    </>
   );
   if (to) {
     jsxElement = (
