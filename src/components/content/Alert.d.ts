@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import { Types } from '../PropTypes';
 import './Alert.css';
 declare type Props = {
@@ -8,7 +8,7 @@ declare type Props = {
     type?: Types;
     icon?: string;
     title?: string;
-    children?: React.ReactNode | React.ReactNode[];
+    children?: ReactNode;
 };
 declare type State = {
     closed: boolean;

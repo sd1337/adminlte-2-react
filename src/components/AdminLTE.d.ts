@@ -50,7 +50,7 @@ import ButtonToolbar from './content/ButtonToolbar';
 import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
-declare type Node = React.ReactNode | React.ReactNode[];
+declare type Node = React.ReactNode;
 declare type Props = {
     children: ReactElement | ReactElement[];
     title: string | string[];

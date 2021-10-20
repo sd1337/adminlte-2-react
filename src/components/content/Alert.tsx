@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Alert as BsAlert } from 'react-bootstrap';
 import { Types } from '../PropTypes';
@@ -12,15 +12,14 @@ type Props = {
   type?: Types,
   icon?: string,
   title?: string,
-  children?: React.ReactNode | React.ReactNode[]
-}
+  children?: ReactNode
+};
 
 type State = {
   closed: boolean
-}
+};
 
 class Alert extends Component<Props, State> {
-  
   static defaultProps = {
     id: undefined,
     closable: false,
@@ -29,7 +28,7 @@ class Alert extends Component<Props, State> {
     icon: null,
     title: null,
     children: null,
-  }
+  };
 
   constructor(props: Props) {
     super(props);

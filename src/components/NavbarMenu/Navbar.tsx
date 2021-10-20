@@ -6,8 +6,8 @@ import TaskItem from './TaskItem';
 import ControlSidebarEntry from './ControlSidebarEntry';
 
 interface NavbarProps {
-  additionalMenus?: ReactNode | ReactNode[],
-  children?: ReactNode | ReactNode[]
+  additionalMenus?: ReactNode,
+  children?: ReactNode
 }
 
 type NavbarComponent = React.FC<NavbarProps>;
@@ -26,4 +26,4 @@ Navbar.defaultProps = {
 
 export {
   Navbar as Core, Entry, MessageItem, NotificationItem, TaskItem, ControlSidebarEntry,
-};// ;default Menu;
+};

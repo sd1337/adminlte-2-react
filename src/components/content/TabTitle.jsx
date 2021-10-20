@@ -8,13 +8,15 @@ const TabTitle = ({ title, titleLeft, icon }) => {
   const localIcon = hasIcon ? splitIcon(icon) : null;
   const hasTitle = !!(title);
   const hasIconOrHeader = hasIcon || hasTitle;
-
-  return hasIconOrHeader && (
-  <li className={`header${titleLeft ? ' pull-left' : ''}`}>
-    {hasIcon && <FontAwesomeIcon icon={localIcon} />}
-    {hasTitle ? ` ${title}` : ''}
-  </li>
-  );
+  if (hasIconOrHeader) {
+    return (
+      <li className={`header${titleLeft ? ' pull-left' : ''}`}>
+        {hasIcon && <FontAwesomeIcon icon={localIcon} />}
+        {hasTitle ? ` ${title}` : ''}
+      </li>
+    );
+  }
+  return null;
 };
 
 TabTitle.propTypes = {

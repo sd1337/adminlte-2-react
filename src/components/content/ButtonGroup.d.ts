@@ -3,7 +3,7 @@ interface ButtonGroupProps {
     pullRight?: boolean;
     margin?: boolean;
     vertical?: boolean;
-    children: ReactNode | ReactNode[];
+    children: ReactNode;
 }
 declare type ButtonGroupComponent = React.FC<ButtonGroupProps>;
 declare const ButtonGroup: ButtonGroupComponent;

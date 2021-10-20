@@ -5,7 +5,7 @@ import Header from './Header';
 import UserPanel from './UserPanel';
 import Searchbar from './Searchbar';
 declare type SidebarProps = {
-    children: React.ReactNode | React.ReactNode[];
+    children: React.ReactNode;
     searchbarFilter: boolean;
 };
 declare type SidebarState = {

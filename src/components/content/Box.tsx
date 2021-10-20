@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   IconProp,
@@ -13,14 +13,14 @@ type BoxProps = {
   title?: string,
   collapsable?: boolean,
   closable?: boolean,
-  footer?: React.ReactNode | React.ReactNode[],
+  footer?: ReactNode,
   type?: Types,
-  options?: React.ReactNode | React.ReactNode[],
+  options?: ReactNode,
   icon?: IconProp,
   titleRight?: boolean,
   loaded?: boolean,
   noPadding?: boolean,
-  badge?: React.ReactNode | React.ReactNode[],
+  badge?: ReactNode,
   toolIcon?: IconProp,
   customOptions?: any,
   className?: string,
@@ -32,8 +32,8 @@ type BoxProps = {
   bodyClassName?: string,
   border?: boolean,
   style?: any,
-  header?: React.ReactNode | React.ReactNode[],
-  children?: React.ReactNode | React.ReactNode[]
+  header?: ReactNode,
+  children?: ReactNode
 };
 
 type BoxState = {
