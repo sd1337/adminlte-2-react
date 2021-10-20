@@ -14,7 +14,7 @@ interface EntryProps {
   footerText?: string,
   onFooterClick?: MouseEventHandler<HTMLLIElement>,
   className?: string,
-  children?: ReactNode | ReactNode[],
+  children?: ReactNode,
   onClick?: MouseEventHandler<HTMLLIElement>,
 }
 

@@ -76,7 +76,7 @@ import SmartTable from './content/SmartTable';
 
 library.add(fab, fas, far);
 
-type Node = React.ReactNode | React.ReactNode[];
+type Node = React.ReactNode;
 
 type Props = {
   children: ReactElement | ReactElement[];

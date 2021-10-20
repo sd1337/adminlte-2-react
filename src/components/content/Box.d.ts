@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Types } from '../PropTypes';
 declare type BoxProps = {
@@ -6,14 +6,14 @@ declare type BoxProps = {
     title?: string;
     collapsable?: boolean;
     closable?: boolean;
-    footer?: React.ReactNode | React.ReactNode[];
+    footer?: ReactNode;
     type?: Types;
-    options?: React.ReactNode | React.ReactNode[];
+    options?: ReactNode;
     icon?: IconProp;
     titleRight?: boolean;
     loaded?: boolean;
     noPadding?: boolean;
-    badge?: React.ReactNode | React.ReactNode[];
+    badge?: ReactNode;
     toolIcon?: IconProp;
     customOptions?: any;
     className?: string;
@@ -25,8 +25,8 @@ declare type BoxProps = {
     bodyClassName?: string;
     border?: boolean;
     style?: any;
-    header?: React.ReactNode | React.ReactNode[];
-    children?: React.ReactNode | React.ReactNode[];
+    header?: ReactNode;
+    children?: ReactNode;
 };
 declare type BoxState = {
     collapsed?: boolean;

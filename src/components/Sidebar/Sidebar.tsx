@@ -10,7 +10,7 @@ import UserPanel from './UserPanel';
 import Searchbar from './Searchbar';
 
 type SidebarProps = {
-  children: React.ReactNode | React.ReactNode[];
+  children: React.ReactNode;
   searchbarFilter: boolean;
 };
 

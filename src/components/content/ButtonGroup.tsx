@@ -4,7 +4,7 @@ interface ButtonGroupProps {
   pullRight?: boolean,
   margin?: boolean,
   vertical?: boolean,
-  children: ReactNode | ReactNode[],
+  children: ReactNode,
 }
 
 type ButtonGroupComponent = React.FC<ButtonGroupProps>;
