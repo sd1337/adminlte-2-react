@@ -8,6 +8,7 @@ import 'datatables.net-select-bs/css/select.bootstrap.css';
 import Pagination from './Pagination';
 import './DataTable.css';
 import { arrayEquals } from '../Utilities';
+import { ColumnType, DataType, SelectedRowType } from './TableProps';
 
 const uuidv4 = require('uuid/v4');
 const $ = require('jquery');
@@ -53,13 +54,6 @@ const defaultLanguageOptions = {
   },
 };
 
-type ColumnType = {
-  title?: string,
-  data?: string,
-  width?: string,
-  render?: Function
-};
-
 type OnClickEvents = {
   [key: string]: Function,
 };
@@ -69,12 +63,6 @@ type OrderType = {
   column?: string,
   index?: number,
 };
-
-type DataType = {
-  [key: string]: any,
-};
-
-type SelectedRowType = number | string | number[] | string[];
 
 interface DataTableProps {
   id?: string,

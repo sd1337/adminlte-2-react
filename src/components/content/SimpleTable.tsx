@@ -1,30 +1,61 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import uuidv4 from 'uuid';
 import { arrayEquals } from '../Utilities';
+import { ColumnType, DataType, SelectedRowType } from './TableProps';
 
+interface SimpleTableProps {
+  data?: DataType,
+  columns: Array<ColumnType>,
+  condensed?: boolean,
+  striped?: boolean,
+  noMargin?: boolean,
+  border?: boolean,
+  responsive?: boolean,
+  hover?: boolean,
+  onSelect?: Function,
+  simpleCompare?: boolean,
+}
 
-class SimpleTable extends Component {
-  state = { key: uuidv4() }
+interface SimpleTableState {
+  key: string,
+  selectedRow?: SelectedRowType
+  mappedData?: any
+}
 
-  constructor(props) {
+class SimpleTable extends Component<SimpleTableProps, SimpleTableState> {
+  static defaultProps = {
+    data: null,
+    columns: null,
+    condensed: false,
+    striped: false,
+    noMargin: false,
+    border: false,
+    responsive: false,
+    hover: false,
+    onSelect: undefined,
+    simpleCompare: false,
+  };
+
+  constructor(props: SimpleTableProps) {
     super(props);
     const {
       data, columns,
     } = props;
     const { key, selectedRow } = this.state;
-    const mappedColumns = data ? data.map((row, rowIdx) => (
+    const mappedColumns = data ? data.map((row: any, rowIdx: number) => (
       <tr className={selectedRow && selectedRow === rowIdx ? 'selected' : ''} key={`${key}-${rowIdx}`} onClick={() => { this.onSelect(row, rowIdx); }}>
-        {columns.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
+        {columns.map((col) => this.mapCell(row[col.data], col, row, rowIdx))}
       </tr>
     )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
     this.state.mappedData = mappedColumns;
   }
 
+  state: SimpleTableState = { key: uuidv4() };
+
   componentDidUpdate({
     data: oldData,
-  }, { selectedRow: oldSelectedRow }) {
+  }: SimpleTableProps, { selectedRow: oldSelectedRow }: SimpleTableState) {
     const {
       data, simpleCompare,
     } = this.props;
@@ -32,8 +63,8 @@ class SimpleTable extends Component {
     let dataChanged;
     if (!simpleCompare) {
       dataChanged = !arrayEquals(oldData, data);
-    } else {
-      dataChanged = oldData !== data || oldData.length !== data.length;
+    } else if (oldData !== data && oldData !== undefined && data !== undefined) {
+      dataChanged = oldData.length !== data.length;
     }
     const rowSelectionChanged = oldSelectedRow !== selectedRow;
     if (dataChanged || rowSelectionChanged) {
@@ -41,7 +72,7 @@ class SimpleTable extends Component {
     }
   }
 
-  onSelect = (data, rowIdx) => {
+  onSelect = (data: DataType, rowIdx: number) => {
     const { onSelect } = this.props;
     if (onSelect) {
       onSelect(data);
@@ -49,24 +80,24 @@ class SimpleTable extends Component {
     this.setState({
       selectedRow: rowIdx,
     });
-  }
+  };
 
   updateStateData = () => {
     const {
       data, columns,
     } = this.props;
     const { key, selectedRow } = this.state;
-    const mappedColumns = data ? data.map((row, rowIdx) => (
+    const mappedColumns = data ? data.map((row: DataType, rowIdx: number) => (
       <tr className={selectedRow !== undefined && selectedRow === rowIdx ? 'selected' : ''} key={`${key}-${rowIdx}`} onClick={() => { this.onSelect(row, rowIdx); }}>
-        {columns.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
+        {columns.map((col) => this.mapCell(row[col.data], col, row, rowIdx))}
       </tr>
     )) : <tr><td colSpan={columns.length} className="text-center">No matching records found</td></tr>;
     this.setState({
       mappedData: mappedColumns,
     });
-  }
+  };
 
-  mapCell(data, column, rowData, rowIdx) {
+  mapCell(data: any, column: any, rowData: any, rowIdx: number) {
     const { key } = this.state;
     if (column.render) {
       return <td key={`${key}-${rowIdx}-${column.data}`}>{column.render(data, rowData, rowIdx)}</td>;
@@ -80,8 +111,8 @@ class SimpleTable extends Component {
     } = this.props;
     const { key, mappedData } = this.state;
     let headers;
-    const hasHeaders = columns.filter(p => p.title).length > 0;
-    if (hasHeaders) { headers = columns.map(p => <th key={`${key}-${p.title}`} style={{ width: p.width }}>{p.title}</th>); }
+    const hasHeaders = columns.filter((p) => p.title).length > 0;
+    if (hasHeaders) { headers = columns.map((p) => <th key={`${key}-${p.title}`} style={{ width: p.width }}>{p.title}</th>); }
 
     const classNames = [
       'table',
@@ -90,7 +121,7 @@ class SimpleTable extends Component {
       striped ? 'table-striped' : null,
       border ? 'table-bordered' : null,
       hover ? 'table-hover' : null,
-    ].filter(p => p).join(' ');
+    ].filter((p) => p).join(' ');
 
     const table = (
       <table key={key} className={classNames}>
@@ -112,38 +143,5 @@ class SimpleTable extends Component {
     return <div className="table-responsive">{table}</div>;
   }
 }
-
-SimpleTable.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-
-  })),
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    data: PropTypes.string,
-    width: PropTypes.string,
-    render: PropTypes.func,
-  })),
-  condensed: PropTypes.bool,
-  striped: PropTypes.bool,
-  noMargin: PropTypes.bool,
-  border: PropTypes.bool,
-  responsive: PropTypes.bool,
-  hover: PropTypes.bool,
-  onSelect: PropTypes.func,
-  simpleCompare: PropTypes.bool,
-};
-
-SimpleTable.defaultProps = {
-  data: null,
-  columns: null,
-  condensed: false,
-  striped: false,
-  noMargin: false,
-  border: false,
-  responsive: false,
-  hover: false,
-  onSelect: undefined,
-  simpleCompare: false,
-};
 
 export default SimpleTable;
