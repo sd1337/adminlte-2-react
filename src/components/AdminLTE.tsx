@@ -183,7 +183,6 @@ class AdminLTE extends Component<Props, {}> {
         .forEach((p) => {
           temp = temp.concat(p);
         });
-      children = temp;
     }
     let titleArray:string[] = [];
     if (!title.length) {
@@ -249,6 +248,7 @@ class AdminLTE extends Component<Props, {}> {
         return p;
       });
     const nonModalRoutes = routes.filter((p) => !p.props.modal);
+    console.log('nonModalRoutes', nonModalRoutes);
     const modalRoutes = routes.filter((p) => p.props.modal);
 
     const childSidebar = content.find((p: React.ReactElement) => p.type === Sidebar.Core);
