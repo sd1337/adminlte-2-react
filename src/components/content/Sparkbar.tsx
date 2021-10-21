@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 const $ = require('jquery');
 require('jquery-sparkline');
 
-class Sparkbar extends Component {
+interface SparkbarProps {
+  color: string,
+  height?: string | number,
+  data: number[],
+  padding?: boolean
+}
+
+interface SparkbarState {
+
+}
+
+class Sparkbar extends Component<SparkbarProps, SparkbarState> {
+  static defaultProps = {
+    height: 30,
+    padding: false,
+  };
+
   componentDidMount() {
     const { color, height = 30 } = this.props;
     const elem = $(this.main);
@@ -15,6 +30,8 @@ class Sparkbar extends Component {
     });
   }
 
+  main: HTMLDivElement | null = null;
+
   render() {
     const { data, padding } = this.props;
     const classes = ['sparkpad',
@@ -22,19 +39,5 @@ class Sparkbar extends Component {
     return (<div className={classes} ref={(c) => { this.main = c; }}>{data.join(',')}</div>);
   }
 }
-
-Sparkbar.propTypes = {
-  color: PropTypes.string.isRequired,
-  height: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  data: PropTypes.arrayOf(PropTypes.number).isRequired,
-  padding: PropTypes.bool,
-};
-
-Sparkbar.defaultProps = {
-  padding: false,
-};
 
 export default Sparkbar;
