@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 
-const LoginCore = ({ children }) => (
+interface LoginCoreProps {
+  children?: ReactNode
+}
+
+type LoginCoreComponent = React.FC<LoginCoreProps>;
+
+const LoginCore: LoginCoreComponent = ({ children }: LoginCoreProps) => (
   <div className="login-box">
     <div className="login-logo">
       <a href="/">
         <b>Sper</b>
-          at
+        at
       </a>
     </div>
     <div className="login-box-body">
@@ -15,15 +20,8 @@ const LoginCore = ({ children }) => (
   </div>
 );
 
-LoginCore.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-};
-
 LoginCore.defaultProps = {
-  children: null,
+  children: undefined,
 };
 
 export default LoginCore;

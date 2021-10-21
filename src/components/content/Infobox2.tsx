@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { MouseEventHandler } from 'react';
 
 import Ionicon from 'react-ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,9 +6,24 @@ import './Infobox2.css';
 import { Colors } from '../PropTypes';
 import { splitIcon } from '../Utilities';
 
-const Infobox2 = ({
+interface Infobox2Props {
+  id?: string,
+  color?: Colors,
+  title?: string,
+  subTitle?: string,
+  text?: string,
+  footerText?: string,
+  icon: string,
+  footerIcon?: string,
+  onFooterClick?: MouseEventHandler<HTMLAnchorElement>,
+  to?: string,
+}
+
+type Infobox2Component = React.FC<Infobox2Props>;
+
+const Infobox2: Infobox2Component = ({
   id, color, title, subTitle, text, footerText, icon, footerIcon, onFooterClick, to,
-}) => {
+}: Infobox2Props) => {
   const isIonIcon = icon.startsWith('ion') || icon.startsWith('ios');
   let iconLocal;
   if (!isIonIcon) {
@@ -40,28 +54,15 @@ const Infobox2 = ({
   );
 };
 
-Infobox2.propTypes = {
-  id: PropTypes.string,
-  color: PropTypes.oneOf(Colors),
-  title: PropTypes.string,
-  subTitle: PropTypes.string,
-  text: PropTypes.string,
-  footerText: PropTypes.string,
-  icon: PropTypes.string.isRequired,
-  footerIcon: PropTypes.string,
-  onFooterClick: PropTypes.func,
-  to: PropTypes.string,
-};
-
 Infobox2.defaultProps = {
   id: undefined,
-  color: null,
-  title: null,
-  subTitle: null,
-  text: null,
-  footerText: null,
+  color: undefined,
+  title: undefined,
+  subTitle: undefined,
+  text: undefined,
+  footerText: undefined,
   footerIcon: 'fas-arrow-alt-circle-right',
-  onFooterClick: null,
+  onFooterClick: undefined,
   to: '/',
 };
 

@@ -1,11 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Types, Colors } from '../PropTypes';
 
-const ProgressBar = ({
+interface ProgressBarProps {
+  type?: Types,
+  color?: Colors,
+  striped?: boolean,
+  min?: number,
+  max?: number,
+  text?: string,
+  value: number,
+  active?: boolean,
+  sm?: boolean,
+  xs?: boolean,
+  xxs?: boolean,
+  vertical?: boolean,
+}
+
+type ProgressBarComponent = React.FC<ProgressBarProps>;
+
+const ProgressBar: ProgressBarComponent = ({
   type, color, striped, min, max, text, value, active, sm, xs, xxs, vertical,
-}) => {
+}: ProgressBarProps) => {
   const className = [
     'progress-bar',
     `progress-bar-${type}`,
@@ -29,28 +45,13 @@ const ProgressBar = ({
   );
 };
 
-ProgressBar.propTypes = {
-  type: PropTypes.oneOf(Types),
-  color: PropTypes.oneOf(Colors),
-  striped: PropTypes.bool,
-  min: PropTypes.number,
-  max: PropTypes.number,
-  text: PropTypes.string,
-  value: PropTypes.number.isRequired,
-  active: PropTypes.bool,
-  sm: PropTypes.bool,
-  xs: PropTypes.bool,
-  xxs: PropTypes.bool,
-  vertical: PropTypes.bool,
-};
-
 ProgressBar.defaultProps = {
   type: 'primary',
-  color: null,
+  color: undefined,
   striped: false,
   min: 0,
   max: 100,
-  text: null,
+  text: undefined,
   active: false,
   sm: false,
   xs: false,

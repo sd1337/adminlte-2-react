@@ -1,11 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Types } from '../PropTypes';
 
-const ProductListItem = ({
+interface ProductListItemProps {
+  description?: string,
+  title?: string,
+  label?: string,
+  labelType?: Types,
+  image?: string,
+  to?: string,
+}
+
+type ProductListItemComponent = React.FC<ProductListItemProps>;
+
+const ProductListItem: ProductListItemComponent = ({
   description, title, label, labelType = 'info', image, to,
-}) => (
+}: ProductListItemProps) => (
   <li className="item">
     <div className="product-img">
       <img src={image} alt="Product" />
@@ -22,21 +32,12 @@ const ProductListItem = ({
   </li>
 );
 
-ProductListItem.propTypes = {
-  description: PropTypes.string,
-  title: PropTypes.string,
-  label: PropTypes.string,
-  labelType: PropTypes.oneOf(Types),
-  image: PropTypes.string,
-  to: PropTypes.string,
-};
-
 ProductListItem.defaultProps = {
-  description: null,
-  title: null,
-  label: false,
+  description: undefined,
+  title: undefined,
+  label: undefined,
   labelType: 'info',
-  image: null,
+  image: undefined,
   to: '/',
 };
 

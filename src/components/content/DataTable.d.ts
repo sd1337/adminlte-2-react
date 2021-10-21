@@ -2,12 +2,7 @@ import { Component } from 'react';
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
 import 'datatables.net-select-bs/css/select.bootstrap.css';
 import './DataTable.css';
-declare type ColumnType = {
-    title?: string;
-    data?: string;
-    width?: string;
-    render?: Function;
-};
+import { ColumnType, DataType, SelectedRowType } from './TableProps';
 declare type OnClickEvents = {
     [key: string]: Function;
 };
@@ -16,10 +11,6 @@ declare type OrderType = {
     column?: string;
     index?: number;
 };
-declare type DataType = {
-    [key: string]: any;
-};
-declare type SelectedRowType = number | string | number[] | string[];
 interface DataTableProps {
     id?: string;
     options: any;

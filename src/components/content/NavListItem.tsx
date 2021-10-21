@@ -1,13 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { MouseEventHandler } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { splitIcon } from '../Utilities';
+import { Colors } from '../PropTypes';
 
-const NavListItem = ({
+interface NavListItemProps {
+  icon?: string,
+  text?: string,
+  iconLabel?: string,
+  onClick?: MouseEventHandler<HTMLAnchorElement>,
+  color?: Colors,
+  to?: string,
+}
+
+type NavListItemComponent = React.FC<NavListItemProps>;
+
+const NavListItem: NavListItemComponent = ({
   icon, text, iconLabel, onClick, color = 'red', to,
-}) => {
+}: NavListItemProps) => {
   const localIcon = splitIcon(icon);
   let jsxElement = (
     <>
@@ -40,22 +51,13 @@ const NavListItem = ({
   );
 };
 
-NavListItem.propTypes = {
-  icon: PropTypes.string,
-  text: PropTypes.string,
-  iconLabel: PropTypes.string,
-  onClick: PropTypes.func,
-  color: PropTypes.oneOf(Colors),
-  to: PropTypes.string,
-};
-
 NavListItem.defaultProps = {
   icon: 'far-circle',
-  text: null,
-  iconLabel: null,
-  onClick: null,
+  text: undefined,
+  iconLabel: undefined,
+  onClick: undefined,
   color: 'red',
-  to: null,
+  to: undefined,
 };
 
 export default NavListItem;
