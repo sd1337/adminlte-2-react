@@ -1,9 +1,11 @@
-import { Component, ReactNode } from 'react';
+import { Component } from 'react';
+import TabContent from './TabContent';
+declare type TabContentType = typeof TabContent;
 interface TabsProps {
     activeKey?: string;
     defaultActiveKey?: string;
     onSelect?: Function;
-    children: ReactNode;
+    children: TabContentType | TabContentType[];
     pullRight?: boolean;
     contentHeight: number | string;
     mountOnEnter?: boolean;
