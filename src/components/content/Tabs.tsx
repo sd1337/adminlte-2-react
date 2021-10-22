@@ -1,4 +1,4 @@
-import React, { Component, ReactElement, ReactNode } from 'react';
+import React, { Component, ReactElement } from 'react';
 import {
   TabContent as BsTabContent, Nav, NavItem, TabContainer,
 } from 'react-bootstrap';
@@ -6,11 +6,13 @@ import uuidv4 from 'uuid';
 import TabTitle from './TabTitle';
 import TabContent from './TabContent';
 
+type TabContentType = typeof TabContent;
+
 interface TabsProps {
   activeKey?: string,
   defaultActiveKey?: string,
   onSelect?: Function,
-  children: ReactNode,
+  children: TabContentType | TabContentType[],
   pullRight?: boolean,
   contentHeight: number | string,
   mountOnEnter?: boolean,
@@ -65,7 +67,7 @@ class Tabs extends Component<TabsProps, TabsState> {
       onChange,
     } = this.props;
     const { stateActiveKey } = this.state;
-    const localChildren: ReactNode = children && (children as []).length ? (children as ReactNode) : [children] as ReactNode;
+    const localChildren: ReactElement[] = children && (children as []).length ? (children as []) : [children as ReactElement] as ReactElement[];
     return (
       <TabContainer
         id={id}
@@ -75,7 +77,7 @@ class Tabs extends Component<TabsProps, TabsState> {
       >
         <div className="nav-tabs-custom">
           <Nav bsStyle="tabs" role="tablist" pullRight={pullRight} bsClass="nav">
-            {(localChildren as Array<ReactElement>).filter((p) => p.type === TabContent).map((p) => (
+            {(localChildren).filter((p) => p.type === TabContent).map((p) => (
               <NavItem
                 key={p.props.eventKey}
                 eventKey={p.props.eventKey}

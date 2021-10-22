@@ -1,11 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import AsyncComponent from '../AsyncComponent';
 
+interface AsyncContentProps {
+  paths?: string | string[],
+  exact?: boolean,
+  component: string,
+}
 
-const AsyncContent = ({ paths, exact, component }) => (
+type AsyncContentComponent = React.FC<AsyncContentProps>;
+
+const AsyncContent: AsyncContentComponent = ({ paths, exact, component }: AsyncContentProps) => (
   <Route
     path={paths}
     exact={exact}
@@ -13,16 +19,9 @@ const AsyncContent = ({ paths, exact, component }) => (
   />
 );
 
-AsyncContent.propTypes = {
-  paths: PropTypes.oneOf([PropTypes.arrayOf(PropTypes.string), PropTypes.string]),
-  exact: PropTypes.bool,
-  component: PropTypes.string,
-};
-
 AsyncContent.defaultProps = {
-  paths: null,
+  paths: undefined,
   exact: false,
-  component: null,
 };
 
 export default AsyncContent;
