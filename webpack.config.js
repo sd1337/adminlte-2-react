@@ -23,7 +23,7 @@ module.exports = {
   },
   module: {
     rules: [
-      {
+      /*{
         test: /\.(js|mjs|jsx|ts|tsx)$/,
         enforce: 'pre',
         use: [{
@@ -43,7 +43,7 @@ module.exports = {
             },
           },
         }],
-      }, {
+      },*/ {
         test: /\.ts[x]?$/,
         use: {
           loader: 'ts-loader',

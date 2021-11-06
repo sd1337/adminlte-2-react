@@ -199,7 +199,7 @@ class AdminLTE extends Component<Props, {}> {
     let menu:React.ReactNode;
     if (childrenArray
       && childrenArray.length) {
-      const optionalMenu = childrenArray.filter((p) => p instanceof Navbar.Core);
+      const optionalMenu = childrenArray.filter((p) => p.type === Navbar.Core);
       if (optionalMenu.length > 0) {
         [menu] = optionalMenu;
       }
@@ -214,15 +214,18 @@ class AdminLTE extends Component<Props, {}> {
       });
     }
     const content = childrenArray.filter((p) => p !== menu);
-    const routes = content
+    const nonModalRoutes: Route[] = [];
+    const modalRoutes: Route[] = [];
+    content
       .filter(
         (p: React.ReactElement) => (p.props && p.props.path)
           || (p.type === Redirect),
       )
-      .map((p: React.ReactElement) => {
+      .forEach((p: any) => {
+        let route: any = p as Route;
         if (p.type !== Route && p.type !== Redirect) {
           if (p.type === AsyncContent) {
-            return (
+            route = (
               <Route
                 // modal={p.props.modal}
                 key={p.props.path}
@@ -231,25 +234,27 @@ class AdminLTE extends Component<Props, {}> {
                 component={AsyncComponent(() => import(p.props.component))}
               />
             );
-          }
-          return (
-            <Route
+          } else {
+            route = (
+              <Route
               // modal={p.props.modal}
-              key={p.props.path}
-              path={p.props.path}
-              exact={p.props.exact}
-              render={(props) => React.cloneElement(p, {
-                key: p.props.key ? p.props.key : p.props.path,
-                ...props,
-              })}
-            />
-          );
+                key={p.props.path}
+                path={p.props.path}
+                exact={p.props.exact}
+                render={(props) => React.cloneElement(p, {
+                  key: p.props.key ? p.props.key : p.props.path,
+                  ...props,
+                })}
+              />
+            );
+          }
         }
-        return p;
+        if (p.props.modal) {
+          modalRoutes.push(route);
+        } else {
+          nonModalRoutes.push(route);
+        }
       });
-    const nonModalRoutes = routes.filter((p) => !p.props.modal);
-    console.log('nonModalRoutes', nonModalRoutes);
-    const modalRoutes = routes.filter((p) => p.props.modal);
 
     const childSidebar = content.find((p: React.ReactElement) => p.type === Sidebar.Core);
     const childFooter = content.find((p: React.ReactElement) => p.type === Footer);

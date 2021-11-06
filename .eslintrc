@@ -44,7 +44,8 @@
   ],
   "rules": {
     "react/static-property-placement": "off",
-    "max-len": "off"
+    "max-len": "off",
+    "no-plusplus": "off"
   },
   "globals": {
     "document": false,
