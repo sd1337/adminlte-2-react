@@ -243,11 +243,16 @@ export type DateType = Moment | string;
 export interface SelectOptionType {
   id?: string,
   text: string,
-  value: string,
+  value: string | number,
   disabled?: boolean,
 }
+
+export type CombinedOptionType = string | number | SelectOptionType;
 
 export interface RadioOptionType extends SelectOptionType{
   checked?: boolean,
   label: string,
+}
+export interface ICheckRadioOptionType extends SelectOptionType{
+  checked?: boolean,
 }
