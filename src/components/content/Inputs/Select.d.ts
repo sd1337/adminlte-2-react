@@ -11,7 +11,7 @@ interface SelectState {
 declare class Select extends Component<SelectProps, SelectState> {
     state: SelectState;
     mapOptions: (options: SelectOptionType[]) => ({
-        value: string;
+        value: string | number;
         text: string;
         disabled: boolean;
     } | {
@@ -20,7 +20,7 @@ declare class Select extends Component<SelectProps, SelectState> {
         disabled?: undefined;
     })[];
     mapSingleOption: (p: SelectOptionType) => {
-        value: string;
+        value: string | number;
         text: string;
         disabled: boolean;
     } | {

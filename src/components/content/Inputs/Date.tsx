@@ -15,7 +15,6 @@ interface DateProps extends SharedDateProps, InputWrapperProps {
   value: DateType,
   dateType: Types,
   defaultValue: DateType,
-  // onChange?: Function,
   onFocusChange?: Function,
   id?: string,
   name?: string,
@@ -201,7 +200,7 @@ class Date extends Component<DateProps, DateState> {
       dayAriaLabelFormat,
 
       renderMonthElement,
-    } = (dateProps as SingleDatePickerShape);
+    } = (dateProps as SingleDatePickerShape) || {};
 
     return (
       <InputWrapper

@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+// webpack configuration file
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
@@ -23,7 +25,7 @@ module.exports = {
   },
   module: {
     rules: [
-      /*{
+      /* {
         test: /\.(js|mjs|jsx|ts|tsx)$/,
         enforce: 'pre',
         use: [{
@@ -43,7 +45,7 @@ module.exports = {
             },
           },
         }],
-      },*/ {
+      }, */ {
         test: /\.ts[x]?$/,
         use: {
           loader: 'ts-loader',
@@ -157,6 +159,10 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
+    }),
+    new BundleAnalyzerPlugin({
+      // analyzerMode: 'static',
+      analyzerMode: 'disabled',
     }),
     // new MiniCssExtractPlugin({
     //   filename: 'style.css',
