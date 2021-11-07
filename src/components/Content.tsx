@@ -2,7 +2,7 @@ import React, { Component, ReactNode } from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Sizes, Types } from './PropTypes';
+import { Types } from './PropTypes';
 
 interface ContentProps extends RouteComponentProps {
   title?: string,
@@ -14,7 +14,7 @@ interface ContentProps extends RouteComponentProps {
   modalFooter?: ReactNode,
   browserTitle?: string,
   onHide?: Function,
-  modalSize?: Sizes,
+  modalSize?: ReactBootstrap.Sizes,
   modalType?: Types,
   modalCloseButton?: boolean,
 

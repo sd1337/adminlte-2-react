@@ -46,7 +46,7 @@ const MessageItem: MessageItemComponent = ({
       if (days.toFixed(0) === '1') {
         whenText = yesterdayText;
       } else {
-        whenText = when?.format(daysText);
+        whenText = when !== null ? (when as moment.Moment).format(daysText) : null;
       }
     }
   }

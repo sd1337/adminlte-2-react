@@ -1,5 +1,4 @@
 import React, { MouseEventHandler } from 'react';
-import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
@@ -20,8 +19,7 @@ type NotificationItemComponent = React.FC<NotificationItemProps>;
 const NotificationItem: NotificationItemComponent = ({
   icon, iconColor, text, to, onClick,
 }: NotificationItemProps) => {
-  const hasIcon = !!(icon);
-  const localIcon = hasIcon ? splitIcon(icon) : null;
+  const localIcon = splitIcon(icon);
   return (
     <li className="notification-item">
       {to ? (

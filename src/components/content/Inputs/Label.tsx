@@ -2,6 +2,7 @@
 import React, { ReactNode } from 'react';
 import uuidv4 from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 import Col from '../Col';
 import { FormTypes } from '../../PropTypes';
@@ -38,7 +39,7 @@ const Label: LabelComponent = ({
   let localIcon;
   if (localLabel && labelIcon) {
     const hasIcon = !!(labelIcon);
-    localIcon = hasIcon ? splitIcon(labelIcon) : null;
+    localIcon = hasIcon ? splitIcon(labelIcon) : undefined;
   }
   const groupClasses = [
     'form-group',
@@ -77,7 +78,7 @@ const Label: LabelComponent = ({
     return (
       <div className={groupClasses}>
         <label htmlFor={name} className={localLabelClasses}>
-          {labelIcon && <FontAwesomeIcon icon={localIcon} />}
+          {labelIcon && <FontAwesomeIcon icon={localIcon as IconProp} />}
           {labelIcon && ' '}
           {localLabel}
         </label>
@@ -91,7 +92,7 @@ const Label: LabelComponent = ({
     return (
       <div className={groupClasses}>
         <label htmlFor={name}>
-          {labelIcon && <FontAwesomeIcon icon={localIcon} />}
+          {labelIcon && <FontAwesomeIcon icon={localIcon as IconProp} />}
           {labelIcon && ' '}
           {label}
         </label>
@@ -105,33 +106,6 @@ const Label: LabelComponent = ({
     </div>
   );
 };
-
-// Label.propTypes = {
-
-//   label: PropTypes.oneOfType([
-//     PropTypes.string,
-//     PropTypes.node,
-//     PropTypes.arrayOf(PropTypes.node),
-//     PropTypes.number,
-//   ]),
-//   labelPosition: PropTypes.oneOf(['above', 'left', 'none']),
-//   labelXs: PropTypes.number,
-//   labelSm: PropTypes.number,
-//   labelMd: PropTypes.number,
-//   labelLg: PropTypes.number,
-//   name: PropTypes.string,
-//   xs: PropTypes.number,
-//   sm: PropTypes.number,
-//   md: PropTypes.number,
-//   lg: PropTypes.number,
-//   labelIcon: PropTypes.string,
-//   type: PropTypes.oneOf(FormTypes),
-//   children: PropTypes.oneOfType([
-//     PropTypes.arrayOf(PropTypes.node),
-//     PropTypes.node,
-//   ]).isRequired,
-//   labelClass: PropTypes.string,
-// };
 
 Label.defaultProps = {
   label: null,

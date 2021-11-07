@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import packageInfo from '../../package.json';
 
-type FooterComponent = React.FC<FooterProps>;
-
 interface FooterProps {
   children?: ReactNode,
   includeVersionInfo?: boolean
 }
+
+type FooterComponent = React.FC<FooterProps>;
 
 const { name, version: packageVersion, repository: { url } } = packageInfo;
 

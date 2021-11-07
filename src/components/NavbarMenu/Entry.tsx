@@ -1,6 +1,7 @@
 /* eslint-disable no-alert, jsx-a11y/no-noninteractive-element-interactions */
 import React, { MouseEventHandler, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 import './Entry.css';
 import { Types } from '../PropTypes';
@@ -43,7 +44,7 @@ const Entry: EntryComponent = ({
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <li className={listClasses} onClick={onClick}>
       <a href="/" className="dropdown-toggle" data-toggle="dropdown">
-        <FontAwesomeIcon icon={localIcon} />
+        <FontAwesomeIcon icon={localIcon as IconProp} />
         {labelValue > 0 && <span className={`label label-${labelType}`}>{labelValue}</span>}
       </a>
       {hasChildren && (

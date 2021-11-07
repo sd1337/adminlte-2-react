@@ -1,4 +1,5 @@
 import React, { AnimationEventHandler, ClipboardEventHandler, CompositionEventHandler, DragEventHandler, FocusEventHandler, FormEventHandler, KeyboardEventHandler, MouseEventHandler, PointerEventHandler, ReactEventHandler, ReactNode, TouchEventHandler, TransitionEventHandler, UIEventHandler, WheelEventHandler } from 'react';
+import { Moment } from 'moment';
 import { FormTypes } from '../../PropTypes';
 import { InputWrapperProps } from './InputWrapper';
 export interface IInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, InputWrapperProps {
@@ -166,5 +167,47 @@ export interface IInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaEl
     onAnimationIterationCapture?: AnimationEventHandler<any>;
     onTransitionEnd?: TransitionEventHandler<any>;
     onTransitionEndCapture?: TransitionEventHandler<any>;
+}
+export interface SharedInputProps {
+    name?: string;
+    id?: string;
+    onChange?: Function;
+    onBlur?: Function;
+    onFocus?: Function;
+    placeholder?: string;
+    disabled?: boolean;
+    readOnly?: boolean;
+}
+export interface SharedInputDefaultProps {
+    name: undefined;
+    id: undefined;
+    onChange: undefined;
+    onBlur: undefined;
+    onFocus: undefined;
+    placeholder: undefined;
+    disabled: false;
+    readOnly: false;
+}
+export interface SharedDateProps {
+    disabled?: boolean;
+    required?: boolean;
+    readOnly?: boolean;
+    showClearDate?: boolean;
+    inputIconPosition?: 'before' | 'after';
+    noBorder?: boolean;
+    block?: boolean;
+    small?: boolean;
+    regular?: boolean;
+}
+export declare type DateType = Moment | string;
+export interface SelectOptionType {
+    id?: string;
+    text: string;
+    value: string;
+    disabled?: boolean;
+}
+export interface RadioOptionType extends SelectOptionType {
+    checked?: boolean;
+    label: string;
 }
 //# sourceMappingURL=InputProps.d.ts.map

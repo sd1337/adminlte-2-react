@@ -72,8 +72,8 @@ class Tabs extends Component<TabsProps, TabsState> {
       <TabContainer
         id={id}
         activeKey={activeKey || stateActiveKey}
-        onSelect={this.onSelect}
-        onChange={onChange}
+        onSelect={this.onSelect as any}
+        onChange={onChange as any}
       >
         <div className="nav-tabs-custom">
           <Nav bsStyle="tabs" role="tablist" pullRight={pullRight} bsClass="nav">
@@ -88,7 +88,7 @@ class Tabs extends Component<TabsProps, TabsState> {
             <TabTitle icon={icon} title={title} titleLeft={titleLeft} />
           </Nav>
           <BsTabContent
-            bsclass="tab"
+            bsClass="tab"
             animation={false}
             mountOnEnter={mountOnEnter}
             unmountOnExit={unmountOnExit}
