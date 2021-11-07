@@ -41,7 +41,7 @@ import Divider from './content/Divider';
 import * as Inputs from './content/Inputs';
 import LoginCore from './content/LoginCore';
 import AsyncComponent from './AsyncComponent';
-import { Colors, Types, Sizes, FormTypes, Themes } from './PropTypes';
+import { Colors as Colors_, Types as Types_, Sizes as Sizes_, FormTypes as FormTypes_, Themes as Themes_ } from './PropTypes';
 import Badge from './content/Badge';
 import Calendar from './content/Calendar';
 import LoadingSpinner from './content/LoadingSpinner';
@@ -78,5 +78,10 @@ declare class AdminLTE extends Component<Props, {}> {
     render(): JSX.Element;
 }
 export default AdminLTE;
-export { Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar, Divider, Inputs, Label, Colors, Types, Sizes, Themes, FormTypes, Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar, Pagination, SmartTable, };
+export declare type Colors = Colors_;
+export declare type Types = Types_;
+export declare type Sizes = Sizes_;
+export declare type FormTypes = FormTypes_;
+export declare type Themes = Themes_;
+export { Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar, Divider, Inputs, Label, Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar, Pagination, SmartTable, };
 //# sourceMappingURL=AdminLTE.d.ts.map

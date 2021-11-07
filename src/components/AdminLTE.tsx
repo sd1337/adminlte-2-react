@@ -62,7 +62,7 @@ import * as Inputs from './content/Inputs';
 import LoginCore from './content/LoginCore';
 import AsyncComponent from './AsyncComponent';
 import {
-  Colors, Types, Sizes, FormTypes, Themes,
+  Colors as Colors_, Types as Types_, Sizes as Sizes_, FormTypes as FormTypes_, Themes as Themes_,
 } from './PropTypes';
 import Badge from './content/Badge';
 import Calendar from './content/Calendar';
@@ -322,6 +322,12 @@ class AdminLTE extends Component<Props, {}> {
 
 export default AdminLTE;
 
+export type Colors = Colors_;
+export type Types = Types_;
+export type Sizes = Sizes_;
+export type FormTypes = FormTypes_;
+export type Themes = Themes_;
+
 export {
   Content,
   Sidebar,
@@ -360,11 +366,6 @@ export {
   Divider,
   Inputs,
   Label,
-  Colors,
-  Types,
-  Sizes,
-  Themes,
-  FormTypes,
   Badge,
   Calendar,
   LoadingSpinner,

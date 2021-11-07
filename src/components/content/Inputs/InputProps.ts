@@ -238,4 +238,16 @@ export interface SharedDateProps {
   regular?: boolean,
 }
 
-export type DateType = Moment | String;
+export type DateType = Moment | string;
+
+export interface SelectOptionType {
+  id?: string,
+  text: string,
+  value: string,
+  disabled?: boolean,
+}
+
+export interface RadioOptionType extends SelectOptionType{
+  checked?: boolean,
+  label: string,
+}

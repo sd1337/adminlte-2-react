@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import { Sizes, Types } from './PropTypes';
+import { Types } from './PropTypes';
 interface ContentProps extends RouteComponentProps {
     title?: string;
     subTitle?: string;
@@ -11,7 +11,7 @@ interface ContentProps extends RouteComponentProps {
     modalFooter?: ReactNode;
     browserTitle?: string;
     onHide?: Function;
-    modalSize?: Sizes;
+    modalSize?: ReactBootstrap.Sizes;
     modalType?: Types;
     modalCloseButton?: boolean;
 }

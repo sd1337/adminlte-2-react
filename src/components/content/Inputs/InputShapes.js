@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import MomentPropTypes from 'react-moment-proptypes';
 
-
 const ValueShape = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number,

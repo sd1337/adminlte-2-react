@@ -1,5 +1,5 @@
-import { Component, ReactNode } from 'react';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Component, MouseEventHandler, ReactNode } from 'react';
+import './Box.scss';
 import { Types } from '../PropTypes';
 declare type BoxProps = {
     id?: string;
@@ -9,12 +9,12 @@ declare type BoxProps = {
     footer?: ReactNode;
     type?: Types;
     options?: ReactNode;
-    icon?: IconProp;
+    icon?: string;
     titleRight?: boolean;
     loaded?: boolean;
     noPadding?: boolean;
     badge?: ReactNode;
-    toolIcon?: IconProp;
+    toolIcon?: string;
     customOptions?: any;
     className?: string;
     footerClass?: string;
@@ -30,6 +30,8 @@ declare type BoxProps = {
 };
 declare type BoxState = {
     collapsed?: boolean;
+    closing: boolean;
+    closed: boolean;
 };
 declare class Box extends Component<BoxProps, BoxState> {
     static defaultProps: {
@@ -40,7 +42,7 @@ declare class Box extends Component<BoxProps, BoxState> {
         footer: null;
         type: null;
         options: null;
-        icon: null;
+        icon: undefined;
         titleRight: boolean;
         loaded: boolean;
         noPadding: boolean;
@@ -61,6 +63,8 @@ declare class Box extends Component<BoxProps, BoxState> {
     };
     constructor(props: BoxProps);
     componentDidMount(): void;
+    close: MouseEventHandler<HTMLButtonElement>;
+    toggleHide: MouseEventHandler<HTMLButtonElement>;
     main: HTMLDivElement | null;
     render(): JSX.Element;
 }

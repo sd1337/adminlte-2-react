@@ -1,8 +1,8 @@
-type Colors = 'light-blue' | 'aqua' | 'green' | 'yellow' | 'red' | 'gray' | 'navy' | 'teal' | 'purple' | 'orange' | 'maroon' | 'black';
-type Types = 'default' | 'info' | 'danger' | 'warning' | 'success' | 'primary';
-type Sizes = 'xs' | 'sm' | 'md' | 'lg';
-type FormTypes = 'warning' | 'success' | 'error';
-type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' |
+export type Colors = 'light-blue' | 'aqua' | 'green' | 'yellow' | 'red' | 'gray' | 'navy' | 'teal' | 'purple' | 'orange' | 'maroon' | 'black';
+export type Types = 'default' | 'info' | 'danger' | 'warning' | 'success' | 'primary';
+export type Sizes = 'xs' | 'sm' | 'md' | 'lg';
+export type FormTypes = 'warning' | 'success' | 'error';
+export type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' |
 'purple' | 'purple-light' | 'red' | 'red-light' | 'yellow' | 'yellow-light';
 
 type TypeDesc = {
@@ -76,6 +76,11 @@ const types = {
   },
 };
 
+export type Dictionary = { [fieldName: string]: any };
+
+// export type Colors
+
 export {
-  Colors, Types, Sizes, FormTypes, Themes, types as TypeMappings,
+  // eslint-disable-next-line import/prefer-default-export
+  types as TypeMappings,
 };

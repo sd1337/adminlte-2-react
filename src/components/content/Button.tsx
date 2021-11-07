@@ -4,6 +4,7 @@ import React, {
 import { Link } from 'react-router-dom';
 import uuidv4 from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 import { splitIcon } from '../Utilities';
 import ButtonGroup from './ButtonGroup';
@@ -101,7 +102,7 @@ class Button extends Component<ButtonProps, {}> {
         name={name}
       >
         {badge}
-        {icon && <FontAwesomeIcon icon={localIcon} />}
+        {icon && <FontAwesomeIcon icon={localIcon as IconProp} />}
         {icon && text ? ' ' : ''}
         {text || ''}
       </button>
@@ -126,7 +127,7 @@ class Button extends Component<ButtonProps, {}> {
                 className={buttonClasses}
               >
                 {badge}
-                {icon && <FontAwesomeIcon icon={localIcon} />}
+                {icon && <FontAwesomeIcon icon={localIcon as IconProp} />}
                 {icon && text ? ' ' : ''}
                 {text || ''}
               </button>

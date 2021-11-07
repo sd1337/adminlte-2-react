@@ -47,7 +47,7 @@ class Alert extends Component<Props, State> {
     const { closed } = this.state;
     return (
       !closed && (
-        <BsAlert id={id} bsStyle={type} onDismiss={onDismiss || (closable ? this.onDismiss : null)}>
+        <BsAlert id={id} bsStyle={type} onDismiss={onDismiss || (closable ? this.onDismiss : undefined)}>
           {(icon || title) && (
             <h4>
               {icon && <FontAwesomeIcon className="icon" icon={splitIcon(icon)} />}

@@ -1,12 +1,13 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component, MouseEventHandler, ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   IconProp,
 } from '@fortawesome/fontawesome-svg-core';
+import './Box.scss';
+import AnimateHeight from 'react-animate-height';
 import { Types } from '../PropTypes';
 import LoadingSpinner from './LoadingSpinner';
 import { splitIcon } from '../Utilities';
-import { Plugin } from './BoxWidget';
 
 type BoxProps = {
   id?: string,
@@ -16,12 +17,12 @@ type BoxProps = {
   footer?: ReactNode,
   type?: Types,
   options?: ReactNode,
-  icon?: IconProp,
+  icon?: string,
   titleRight?: boolean,
   loaded?: boolean,
   noPadding?: boolean,
   badge?: ReactNode,
-  toolIcon?: IconProp,
+  toolIcon?: string,
   customOptions?: any,
   className?: string,
   footerClass?: string,
@@ -37,7 +38,9 @@ type BoxProps = {
 };
 
 type BoxState = {
-  collapsed?: boolean
+  collapsed?: boolean,
+  closing: boolean,
+  closed: boolean
 };
 
 class Box extends Component<BoxProps, BoxState> {
@@ -49,7 +52,7 @@ class Box extends Component<BoxProps, BoxState> {
     footer: null,
     type: null,
     options: null,
-    icon: null,
+    icon: undefined,
     titleRight: false,
     loaded: true,
     noPadding: false,
@@ -74,12 +77,27 @@ class Box extends Component<BoxProps, BoxState> {
     this.state = {
       // eslint-disable-next-line react/destructuring-assignment
       collapsed: this.props.collapsed,
+      closing: false,
+      closed: false,
     };
   }
 
   componentDidMount() {
-    Plugin.call($(this.main as any) as any, this);
+    // Plugin.call($(this.main as any) as any, this);
   }
+
+  close: MouseEventHandler<HTMLButtonElement> = () => {
+    this.setState({
+      closing: true,
+    });
+  };
+
+  toggleHide: MouseEventHandler<HTMLButtonElement> = () => {
+    const { collapsed } = this.state;
+    this.setState({
+      collapsed: !collapsed,
+    });
+  };
 
   main: HTMLDivElement | null = null;
 
@@ -90,7 +108,11 @@ class Box extends Component<BoxProps, BoxState> {
       solid, textCenter, padding, bodyClassName, border, style, footer: footerContent,
       header: headerContent, children, id,
     } = this.props;
-    const { collapsed } = this.state;
+    const { collapsed, closing, closed } = this.state;
+
+    if (closed) {
+      return <></>;
+    }
 
     const localToolIcon = splitIcon(toolIcon);
     const hasOptions = !!(options);
@@ -104,11 +126,12 @@ class Box extends Component<BoxProps, BoxState> {
 
     const joinedClassName = [
       'box',
-      type ? `box-${type}` : '',
+      type && `box-${type}`,
       className || '',
-      collapsed ? ' collapsed-box' : '',
-      solid ? ' box-solid' : '',
-    ].join(' ');
+      // collapsed && 'collapsed-box',
+      solid && ' box-solid',
+      // closing && ' box-closing',
+    ].filter((p) => p).join(' ');
 
     const bodyClass = [
       'box-body',
@@ -124,25 +147,42 @@ class Box extends Component<BoxProps, BoxState> {
     ].filter((p) => p).join(' ');
 
     return (
-      <div id={id} ref={(c) => { this.main = c; }} className={joinedClassName} style={style}>
-        {hasHeader && (
+      <AnimateHeight
+        duration={500}
+        height={closing ? '0%' : 'auto'}
+      >
+        <div
+          id={id}
+          ref={(c) => { this.main = c; }}
+          className={joinedClassName}
+          style={style}
+        >
+          {hasHeader && (
           <div className={headerClass}>
             <h3 className={`box-title${titleRight ? ' pull-right' : ''}`}>
-              {hasIcon && <FontAwesomeIcon icon={localIcon} />}
+              {hasIcon && <FontAwesomeIcon icon={localIcon as IconProp} />}
               {title && ` ${title}`}
             </h3>
             {hasHeaderContent && headerContent}
             <div className="box-tools pull-right">
               {badge}
               {collapsable && (
-                <button type="button" className="btn btn-box-tool" data-widget="collapse">
+                <button
+                  type="button"
+                  className="btn btn-box-tool"
+                  onClick={this.toggleHide}
+                >
                   <FontAwesomeIcon icon={collapsed ? 'plus' : 'minus'} />
                 </button>
               )}
               {customOptions}
               {hasOptions && (
                 <div className="btn-group">
-                  <button type="button" className="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
+                  <button
+                    type="button"
+                    className="btn btn-box-tool dropdown-toggle"
+                    data-toggle="dropdown"
+                  >
                     <FontAwesomeIcon icon={localToolIcon} />
 
                   </button>
@@ -151,24 +191,28 @@ class Box extends Component<BoxProps, BoxState> {
                   </ul>
                 </div>
               )}
-              {closable && <button type="button" aria-label="close box" className="btn btn-box-tool" data-widget="remove"><FontAwesomeIcon icon="times" /></button>}
+              {closable && <button type="button" aria-label="close box" className="btn btn-box-tool" onClick={this.close}><FontAwesomeIcon icon="times" /></button>}
             </div>
           </div>
-        )}
-        <div className={bodyClass}>
-          {children}
+          )}
+          <AnimateHeight
+            duration={500}
+            height={collapsed ? '0%' : 'auto'}
+          >
+            <div className={bodyClass}>
+              {children}
+            </div>
+            {!loaded && <LoadingSpinner />}
+            {hasFooter && (
+            <div className={`box-footer${footerClass ? ` ${footerClass}` : ''}`}>
+              {footerContent}
+            </div>
+            )}
+          </AnimateHeight>
         </div>
-        {!loaded && <LoadingSpinner />}
-        {hasFooter && (
-          <div className={`box-footer${footerClass ? ` ${footerClass}` : ''}`}>
-            {footerContent}
-          </div>
-        )}
-      </div>
+      </AnimateHeight>
     );
   }
 }
-
-// Box.
 
 export default Box;
