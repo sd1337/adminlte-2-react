@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, FormEventHandler } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker, DateRangePickerShape } from 'react-dates';
@@ -9,6 +9,7 @@ import './Date.scss';
 import { Types } from '../../PropTypes';
 import { SharedDateDefaultProps } from './InputShapes';
 import { DateType, SharedDateProps } from './InputProps';
+import { createSyntheticEvent } from './InputUtilities';
 
 type Focused = 'startDate' | 'endDate';
 
@@ -18,8 +19,8 @@ interface DateRangeProps extends SharedDateProps, InputWrapperProps {
   endDate: DateType,
   startDateId: string,
   endDateId: string,
-  onStartChange: Function,
-  onEndChange: Function,
+  onStartChange: FormEventHandler<any>,
+  onEndChange: FormEventHandler<any>,
   focused: Focused,
   onFocusChange: Function,
   format: string,
@@ -58,26 +59,32 @@ class DateRange extends Component<DateRangeProps, DateRangeState> {
       onStartChange, onEndChange, format, startDateId, endDateId,
     } = this.props;
     if (startDate !== currentStartDate) {
-      const fakeResult = {
-        target: {
+      const rawEvent = new Event('change');
+      Object.defineProperty(rawEvent, 'target', {
+        writable: false,
+        value: {
           value: startDate ? startDate.format(format) : null,
           id: startDateId,
           type: 'text',
           name: startDateId,
         },
-      };
-      onStartChange(fakeResult);
+      });
+      const result = createSyntheticEvent(rawEvent);
+      onStartChange(result);
     }
     if (endDate !== currentEndDate) {
-      const fakeResult = {
-        target: {
+      const rawEvent = new Event('change');
+      Object.defineProperty(rawEvent, 'target', {
+        writable: false,
+        value: {
           value: endDate ? endDate.format(format) : null,
           id: endDateId,
           type: 'text',
           name: endDateId,
         },
-      };
-      onEndChange(fakeResult);
+      });
+      const result = createSyntheticEvent(rawEvent);
+      onEndChange(result);
     }
     this.setState({ startDate, endDate });
   }

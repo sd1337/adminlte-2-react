@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-for */
-import React, { ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 import uuidv4 from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -24,17 +24,15 @@ export interface LabelProps {
   lg?: ColSpacing,
   labelIcon?: string,
   type?: FormTypes,
-  children: ReactNode,
+  children?: ReactNode,
   labelClass?: string,
 }
 
-type LabelComponent = React.FC<LabelProps>;
-
-const Label: LabelComponent = ({
+export default function Label({
   label, labelXs, labelSm, labelMd, labelLg, name,
   xs, sm, md, lg, labelIcon, type, children,
   labelClass, labelPosition,
-}: LabelProps) => {
+}: LabelProps): ReactElement {
   const localLabel = label;
   let localIcon;
   if (localLabel && labelIcon) {
@@ -105,7 +103,7 @@ const Label: LabelComponent = ({
       {children}
     </div>
   );
-};
+}
 
 Label.defaultProps = {
   label: null,
@@ -123,5 +121,3 @@ Label.defaultProps = {
   name: uuidv4(),
   labelClass: undefined,
 };
-
-export default Label;

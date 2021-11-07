@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, FormEventHandler } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePickerShape } from 'react-dates';
@@ -14,8 +14,8 @@ interface DateRangeProps extends SharedDateProps, InputWrapperProps {
     endDate: DateType;
     startDateId: string;
     endDateId: string;
-    onStartChange: Function;
-    onEndChange: Function;
+    onStartChange: FormEventHandler<any>;
+    onEndChange: FormEventHandler<any>;
     focused: Focused;
     onFocusChange: Function;
     format: string;
