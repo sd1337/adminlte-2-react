@@ -1,36 +1,68 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, MouseEvent, ReactElement } from 'react';
 import { Pagination as BsPagination } from 'react-bootstrap';
+import PaginationItem from 'react-bootstrap/lib/PaginationItem';
+import { Dictionary } from '../PropTypes';
 
-class Pagination extends Component {
-  state = {}
+interface PaginationProps {
+  activePage?: number,
+  totalElements?: number,
+  pageSize?: number,
+  hasMore?: boolean,
+  onChange: (value: number) => void,
+  labels?: {
+    first?: string,
+    last?: string,
+    previous?: string,
+    next?: string,
+  },
+}
+interface PaginationState {
+  totalPages: number | null,
+}
 
-  constructor(props) {
+class Pagination extends Component<PaginationProps, PaginationState> {
+  static defaultProps = {
+    activePage: undefined,
+    totalElements: undefined,
+    pageSize: undefined,
+    hasMore: undefined,
+    labels: {
+      first: 'First',
+      last: 'Last',
+      previous: 'Previous',
+      next: 'Next',
+    },
+  };
+
+  constructor(props: PaginationProps) {
     super(props);
     const {
       totalElements, pageSize, labels: {
-        first, last, next, previous,
-      },
+        first = 'First', last = 'Last', next = 'Next', previous = 'Previous',
+      } = {},
     } = props;
-    const keyMaps = {};
+    const keyMaps: Dictionary = {};
     keyMaps[first] = 'first';
     keyMaps[last] = 'last';
     keyMaps[next] = 'next';
     keyMaps[previous] = 'previous';
     this.keyMaps = keyMaps;
-    this.state.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
+    this.state.totalPages = totalElements && pageSize ? Math.ceil(totalElements / pageSize) : null;
     // this.totalPages = totalElements ? Math.ceil(totalElements / pageSize) : null;
     this.onChange = this.onChange.bind(this);
   }
 
-  componentDidUpdate({ totalElements: oldTotalElements }, { totalPages: oldTotalPages }) {
+  state: PaginationState = {
+    totalPages: null,
+  };
+
+  componentDidUpdate({ totalElements: oldTotalElements }: PaginationProps) {
     const {
       totalElements, pageSize, labels: {
-        first, last, next, previous,
-      },
+        first = 'First', last = 'Last', next = 'Next', previous = 'Previous',
+      } = {},
     } = this.props;
-    const { totalPages } = this.state;
-    const keyMaps = {};
+    const keyMaps: Dictionary = {};
     keyMaps[first] = 'first';
     keyMaps[last] = 'last';
     keyMaps[next] = 'next';
@@ -40,12 +72,12 @@ class Pagination extends Component {
     if (oldTotalElements !== totalElements) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({
-        totalPages: totalElements ? Math.ceil(totalElements / pageSize) : null,
+        totalPages: totalElements && pageSize ? Math.ceil(totalElements / pageSize) : null,
       });
     }
   }
 
-  onChange(event) {
+  onChange(event: MouseEvent<PaginationItem>) {
     const { onChange, activePage, hasMore } = this.props;
     const { totalPages } = this.state;
     let value = null;
@@ -71,23 +103,33 @@ class Pagination extends Component {
     }
   }
 
+  keyMaps: Dictionary;
+
   render() {
     const {
       activePage, labels: {
-        first, last, next, previous,
-      },
+        next, previous,
+      } = {},
       hasMore,
     } = this.props;
     const { totalPages } = this.state;
     if (totalPages) {
       const firstFourPages = activePage < 3;
       const lastFourPages = totalPages - activePage < 4;
-      const links = [];
+      const links: ReactElement[] = [];
 
       const getIntermediate = (from, to, arr) => {
         // eslint-disable-next-line no-plusplus
         for (let i = from; i < to; ++i) {
-          arr.push(<BsPagination.Item key={`page_${i}`} active={i === activePage} onClick={this.onChange}>{i + 1}</BsPagination.Item>);
+          arr.push(
+            <BsPagination.Item
+              key={`page_${i}`}
+              active={i === activePage}
+              onClick={this.onChange}
+            >
+              {i + 1}
+            </BsPagination.Item>,
+          );
         }
       };
       const lastPage = totalPages - 1;
@@ -128,7 +170,7 @@ class Pagination extends Component {
         getIntermediate(0, totalPages, links);
       }
       return (
-        <React.Fragment>
+        <>
           <BsPagination>
             <BsPagination.Item
               disabled={activePage === 0}
@@ -144,18 +186,18 @@ class Pagination extends Component {
               {next}
             </BsPagination.Item>
           </BsPagination>
-        </React.Fragment>
+        </>
       );
     }
     return (
-      <React.Fragment>
+      <>
         <BsPagination>
-          <BsPagination.Item
+          <PaginationItem
             disabled={activePage === 0}
             onClick={this.onChange}
           >
             {previous}
-          </BsPagination.Item>
+          </PaginationItem>
           {(activePage > 0) && <BsPagination.Ellipsis key="page_none" />}
           <BsPagination.Item key="page_active" active>{activePage + 1}</BsPagination.Item>
           {hasMore && <BsPagination.Ellipsis key="page_none_1" />}
@@ -166,36 +208,9 @@ class Pagination extends Component {
             {next}
           </BsPagination.Item>
         </BsPagination>
-      </React.Fragment>
+      </>
     );
   }
 }
-
-Pagination.defaultProps = {
-  activePage: null,
-  totalElements: null,
-  pageSize: null,
-  hasMore: null,
-  labels: {
-    first: 'First',
-    last: 'Last',
-    previous: 'Previous',
-    next: 'Next',
-  },
-};
-
-Pagination.propTypes = {
-  activePage: PropTypes.number,
-  totalElements: PropTypes.number,
-  pageSize: PropTypes.number,
-  hasMore: PropTypes.bool,
-  onChange: PropTypes.func.isRequired,
-  labels: PropTypes.shape({
-    first: PropTypes.string,
-    last: PropTypes.string,
-    previous: PropTypes.string,
-    next: PropTypes.string,
-  }),
-};
 
 export default Pagination;
