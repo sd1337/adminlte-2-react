@@ -5,15 +5,21 @@ import './Calendar.css';
 
 const $ = require('jquery');
 
-class Calendar extends Component {
-  state = {}
+interface CalendarProps {
+
+}
+interface CalendarState {
+
+}
+
+class Calendar extends Component<CalendarProps, CalendarState> {
+  state: CalendarState = {};
 
   componentDidMount() {
     /* initialize the external events
-     -----------------------------------------------------------------*/
-    /* eslint-disable-next-line camelcase */
-    function init_events(ele) {
-      ele.each(function each() {
+    -----------------------------------------------------------------*/
+    function initEvents(ele: any) {
+      ele.each(function each(this: any) {
         // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
         // it doesn't need to have a start or end
         const eventObject = {
@@ -32,17 +38,15 @@ class Calendar extends Component {
       });
     }
 
-    init_events($('#external-events div.external-event'));
+    initEvents($('#external-events div.external-event'));
 
     /* initialize the calendar
-     -----------------------------------------------------------------*/
+    -----------------------------------------------------------------*/
     // Date for the calendar events (dummy data)
     const date = new Date();
     const d = date.getDate();
 
-
     const m = date.getMonth();
-
 
     const y = date.getFullYear();
     $(this.main).fullCalendar({
@@ -106,7 +110,7 @@ class Calendar extends Component {
       ],
       editable: true,
       droppable: true, // this allows things to be dropped onto the calendar !!!
-      drop(date2, allDay) { // this function is called when something is dropped
+      drop(date2: any, allDay: any) { // this function is called when something is dropped
         // retrieve the dropped element's stored Event Object
         const originalEventObject = $(this).data('eventObject');
 
@@ -133,14 +137,14 @@ class Calendar extends Component {
 
     /* ADDING EVENTS */
     let currColor = '#3c8dbc'; // Red by default
-    $('#color-chooser > li > a').click(function click(e) {
+    $('#color-chooser > li > a').click(function click(this: any, e: any) {
       e.preventDefault();
       // Save color
       currColor = $(this).css('color');
       // Add color effect to button
       $('#add-new-event').css({ 'background-color': currColor, 'border-color': currColor });
     });
-    $('#add-new-event').click((e) => {
+    $('#add-new-event').click((e: any) => {
       e.preventDefault();
       // Get value and make sure it is not null
       const val = $('#new-event').val();
@@ -159,12 +163,14 @@ class Calendar extends Component {
       $('#external-events').prepend(event);
 
       // Add draggable funtionality
-      init_events(event);
+      initEvents(event);
 
       // Remove event from text input
       $('#new-event').val('');
-    });
+    }); 
   }
+
+  main: HTMLDivElement | null = null;
 
   render() {
     return (<div ref={(c) => { this.main = c; }} />);

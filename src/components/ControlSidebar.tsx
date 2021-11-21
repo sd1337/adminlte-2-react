@@ -1,9 +1,17 @@
 /* eslint-disable */
-/*TODO: fix linter errors */
+/* TODO: fix linter errors */
 import React, { Component } from 'react';
 
-class ControlSidebar extends Component {
-  state = {}
+interface Props {
+
+}
+interface State {
+
+}
+
+class ControlSidebar extends Component<Props, State> {
+  state = {};
+
   render() {
     return (
       <div>
@@ -43,7 +51,7 @@ class ControlSidebar extends Component {
                     </h4>
 
                     <div className="progress progress-xxs">
-                      <div className="progress-bar progress-bar-danger" style={{ width: "70%" }} />
+                      <div className="progress-bar progress-bar-danger" style={{ width: '70%' }} />
                     </div>
                   </a>
                 </li>

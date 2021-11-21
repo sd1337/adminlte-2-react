@@ -1,7 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component, ReactElement } from 'react';
 import PropTypes from 'prop-types';
+import { SortIcons } from './smartTable/SmartTableTypes';
 
-class SmartTableHeader extends Component {
+
+
+interface Props {
+  smartTableKey: string,
+  column: PropTypes.shape({
+    data: PropTypes.string,
+    title: PropTypes.string,
+    width: PropTypes.string,
+    toggleOrder: PropTypes.bool,
+  }).isRequired,
+  classPreFix: string,
+  sortIcons: SortIcons,
+  order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
+  orderChanged: Function,
+}
+interface State {
+  open: boolean
+}
+
+class SmartTableHeader extends Component<Props, State> {
   state = { open: false }
 
   toggleOpen = () => {
@@ -55,22 +75,22 @@ class SmartTableHeader extends Component {
   }
 }
 
-SmartTableHeader.propTypes = {
-  smartTableKey: PropTypes.string.isRequired,
-  column: PropTypes.shape({
-    data: PropTypes.string,
-    title: PropTypes.string,
-    width: PropTypes.string,
-    toggleOrder: PropTypes.bool,
-  }).isRequired,
-  classPreFix: PropTypes.string.isRequired,
-  sortIcons: PropTypes.shape({
-    up: PropTypes.node,
-    down: PropTypes.node,
-    default: PropTypes.node,
-  }).isRequired,
-  order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
-  orderChanged: PropTypes.func.isRequired,
-};
+// SmartTableHeader.propTypes = {
+//   smartTableKey: PropTypes.string.isRequired,
+//   column: PropTypes.shape({
+//     data: PropTypes.string,
+//     title: PropTypes.string,
+//     width: PropTypes.string,
+//     toggleOrder: PropTypes.bool,
+//   }).isRequired,
+//   classPreFix: PropTypes.string.isRequired,
+//   sortIcons: PropTypes.shape({
+//     up: PropTypes.node,
+//     down: PropTypes.node,
+//     default: PropTypes.node,
+//   }).isRequired,
+//   order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
+//   orderChanged: PropTypes.func.isRequired,
+// };
 
 export default SmartTableHeader;

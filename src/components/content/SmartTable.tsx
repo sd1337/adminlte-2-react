@@ -2,9 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/no-array-index-key */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-// import uuidv4 from 'uuid/v4';
+import React, { Component, ReactElement } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Inputs from './Inputs';
@@ -12,6 +10,7 @@ import Button from './Button';
 import Divider from './Divider';
 import Pagination from './Pagination';
 
+import { ColumnType, DataType } from './TableProps';
 import './SmartTable.css';
 import SmartTableHeader from './smartTable/SmartTableHeader';
 import SmartTableModal from './smartTable/SmartTableModal';
@@ -21,21 +20,53 @@ const { Text } = Inputs;
 
 const classPreFix = 'smartTable';
 
-class SmartTable extends Component {
-  static columnsFromData(data) {
-    let cols = Object.keys(data[0]).filter(p => !p.startsWith('_'));
-    cols = cols.map(p => ({ data: p, title: p.replace(/^./, m => m.toUpperCase()).replaceAll(/([a-z])([A-Z])/g, '$1 $2') }));
+interface SmartTableProps {
+  data: DataType[],
+  columns: SmartColumnType[],
+  condensed?: boolean,
+  striped?: boolean,
+  noMargin?: boolean,
+  border?: boolean,
+  responsive?: boolean,
+  hover?: boolean,
+  onRowSelect?: Function,
+  onSearchChange?: Function,
+  onSearch?: Function,
+  defaultFilterColumn?: string,
+  pageSize?: number,
+  page?: number,
+  totalElements?: number,
+  hasMore?: boolean,
+  onPageChange?: Function,
+  filterExternal?: boolean,
+  onOrderChange?: Function,
+}
+
+interface SmartTableState {
+  key: string,
+  columns: ColumnType[],
+  filterColumn?: string,
+  placeholder: string,
+  actions: ReactElement[],
+  searchButtons: ReactElement[],
+  pagination: SmartPagination,
+}
+
+class SmartTable extends Component<SmartTableProps, SmartTableState> {
+  static columnsFromData(data: DataType[]): ColumnType[] {
+    const colNames = Object.keys(data[0]).filter((p) => !p.startsWith('_'));
+    const cols = colNames.map((p) => ({ data: p, title: p.replace(/^./, (m) => m.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2') } as ColumnType));
     return cols;
   }
 
-  static headersFromColumns(columns, key, order, orderChanged, setFilterValue, hiddenColumns) {
+  static headersFromColumns(columns: ColumnType[], key: string, order, orderChanged, setFilterValue, hiddenColumns) {
     const sortIcons = {
-      up: <FontAwesomeIcon icon={['fa', 'sort-up']} />,
-      down: <FontAwesomeIcon icon={['fa', 'sort-down']} />,
-      default: <FontAwesomeIcon icon={['fa', 'sort']} color="#d1d1d1" />,
+      up: <FontAwesomeIcon icon={['fas', 'sort-up']} />,
+      down: <FontAwesomeIcon icon={['fas', 'sort-down']} />,
+      default: <FontAwesomeIcon icon={['fas', 'sort']} color="#d1d1d1" />,
     };
     const headers = columns
-      .filter(p => hiddenColumns.find(p2 => p2 === p.data) === undefined)
+      .filter((p) => hiddenColumns.find((p2) => p2 === p.data) === undefined)
       .map((p, i) => (
         <>
           <SmartTableHeader
@@ -53,7 +84,7 @@ class SmartTable extends Component {
     return headers;
   }
 
-  static searchButtonsFromColumns(columns, filterColumn, setFilterColumn) {
+  static searchButtonsFromColumns(columns: SmartColumnType, filterColumn, setFilterColumn) {
     let searchButtons = [
       <>
         <a
@@ -67,7 +98,7 @@ class SmartTable extends Component {
       <Divider />];
     searchButtons = searchButtons
       .concat(columns
-        .map(p => (
+        .map((p) => (
           <>
             <a
               className={`${filterColumn === p.data ? `${classPreFix}-filter-active` : ''} ${classPreFix}-filter`}
@@ -84,24 +115,46 @@ class SmartTable extends Component {
     return searchButtons;
   }
 
-  constructor(props) {
+  static defaultProps = {
+    data: null,
+    columns: undefined,
+    condensed: false,
+    striped: false,
+    noMargin: false,
+    border: false,
+    responsive: false,
+    hover: false,
+    onRowSelect: undefined,
+    onSearchChange: undefined,
+    onSearch: undefined,
+    defaultFilterColumn: '$all',
+    pageSize: 20,
+    page: undefined,
+    totalElements: undefined,
+    hasMore: undefined,
+    onPageChange: undefined,
+    filterExternal: false,
+    onOrderChange: undefined,
+  };
+
+  constructor(props: SmartTableProps) {
     super(props);
     const {
       columns, data, defaultFilterColumn, pageSize,
     } = props;
     const key = uuidv4();
     const filterColumn = defaultFilterColumn;
-    let hiddenColumns = [];
-    let order = [];
+    let hiddenColumns: string[] = [];
+    let order: SmartOrderType[] = [];
     if (columns) {
       {
-        const temp = columns.filter(p => p.hidden).map(p => p.data);
+        const temp = columns.filter((p) => p.hidden).map((p) => p.data);
         if (temp.length > 0) {
           hiddenColumns = hiddenColumns.concat(temp);
         }
       }
       {
-        const temp = columns.filter(p => p.order).map(p => ({ column: p.data, direction: p.order }));
+        const temp = columns.filter((p) => p.order).map((p) => ({ column: p.data, direction: p.order } as SmartOrderType));
         if (temp.length > 0) {
           order = temp;
         }
@@ -200,7 +253,7 @@ class SmartTable extends Component {
       updateState.columns = cols;
       updateSearchButtons = true;
       updateMappedData = true;
-      updateHeaders = cols.filter(p => p.title).length > 0;
+      updateHeaders = cols.filter((p) => p.title).length > 0;
     }
     if (updateHeaders) {
       updateState.headers = SmartTable.headersFromColumns(cols, key, order, this.onOrderChanged, this.setFilterValueAndFilter, hiddenColumns);
@@ -255,9 +308,9 @@ class SmartTable extends Component {
     if (!filterExternal && filterChanged && isNotEmpty) {
       const { data: filterData, value: filterValue } = filter || {};
       if (filterValue) {
-        const defaultColFilter = value => (value ? value.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >= 0 : false);
+        const defaultColFilter = (value) => (value ? value.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >= 0 : false);
         const columnFilterFunc = cols
-          .map(p => ({ data: p.data, onFilter: p.onFilter ? value => p.onFilter(value, filterValue) : defaultColFilter }))
+          .map((p) => ({ data: p.data, onFilter: p.onFilter ? (value) => p.onFilter(value, filterValue) : defaultColFilter }))
           .reduce((prev, current) => {
             // eslint-disable-next-line no-param-reassign
             prev[current.data] = current.onFilter;
@@ -314,6 +367,29 @@ class SmartTable extends Component {
     }
   }
 
+  handleCloseModal = () => {
+    const modal = {
+      component: undefined,
+      props: undefined,
+      title: undefined,
+    };
+    this.setState({
+      modal,
+    });
+  };
+
+  handleAccept = (newState) => {
+    const modal = {
+      component: undefined,
+      props: undefined,
+      title: undefined,
+    };
+    this.setState({
+      ...newState,
+      modal,
+    });
+  };
+
   onFilterColumnChanged = (filterColumn, searchPlaceholder) => {
     const { onSearchChange, onSearch } = this.props;
     let filter;
@@ -334,30 +410,89 @@ class SmartTable extends Component {
       placeholder: `Search ${searchPlaceholder ? ` (${searchPlaceholder})` : ''}`,
       filter,
     });
-  }
+  };
 
-  handleCloseModal = () => {
-    const modal = {
-      component: undefined,
-      props: undefined,
-      title: undefined,
-    };
-    this.setState({
-      modal,
-    });
-  }
+  onOrderChanged = (column, direction) => {
+    const { order } = this.state;
+    const { onOrderChange } = this.props;
+    let newOrder = [...order];
+    const found = newOrder.find((p) => p.column === column);
+    if (found) {
+      if (direction === 'asc' || direction === 'desc') {
+        found.direction = direction;
+      } else {
+        newOrder = newOrder.filter((p) => p.column !== column);
+      }
+    } else {
+      newOrder.push({
+        column, direction,
+      });
+    }
+    if (onOrderChange) {
+      onOrderChange(newOrder);
+    }
+    this.setState({ order: newOrder });
+  };
 
-  handleAccept = (newState) => {
-    const modal = {
-      component: undefined,
-      props: undefined,
-      title: undefined,
+  onFilter = () => {
+    const { filterColumn } = this.state;
+    const filter = {
+      value: this.filterValue,
+      data: filterColumn,
     };
+    const { onSearchChange } = this.props;
+    if (onSearchChange) {
+      onSearchChange(filter);
+    }
     this.setState({
-      ...newState,
-      modal,
+      filter,
     });
-  }
+  };
+
+  onRowSelect = (data, rowIdx) => {
+    const { onRowSelect } = this.props;
+    if (onRowSelect) {
+      onRowSelect(data);
+    }
+    this.setState({
+      selectedRow: rowIdx,
+    });
+  };
+
+  onPageChange = (page) => {
+    const { onPageChange } = this.props;
+    const { pagination } = this.state;
+    this.setState({
+      pagination: {
+        ...pagination,
+        activePage: page,
+      },
+    });
+    if (onPageChange) {
+      onPageChange(page);
+    }
+  };
+
+  setFilterValueAndFilter = (event) => {
+    this.setFilterValue(event);
+    this.onFilter();
+  };
+
+  setFilterValue = (event) => {
+    const { target: { value } } = event;
+    this.filterValue = value;
+  };
+
+  getColumns = () => {
+    const {
+      columns: propCols,
+    } = this.props;
+    const {
+      columns: stateCols,
+    } = this.state;
+    const columns = propCols && propCols.length > 0 ? propCols : stateCols;
+    return columns;
+  };
 
   openColumnModal = () => {
     const { columns, order, hiddenColumns } = this.state;
@@ -374,89 +509,7 @@ class SmartTable extends Component {
     this.setState({
       modal,
     });
-  }
-
-  onOrderChanged = (column, direction) => {
-    const { order } = this.state;
-    const { onOrderChange } = this.props;
-    let newOrder = [...order];
-    const found = newOrder.find(p => p.column === column);
-    if (found) {
-      if (direction === 'asc' || direction === 'desc') {
-        found.direction = direction;
-      } else {
-        newOrder = newOrder.filter(p => p.column !== column);
-      }
-    } else {
-      newOrder.push({
-        column, direction,
-      });
-    }
-    if (onOrderChange) {
-      onOrderChange(newOrder);
-    }
-    this.setState({ order: newOrder });
-  }
-
-  onFilter = () => {
-    const { filterColumn } = this.state;
-    const filter = {
-      value: this.filterValue,
-      data: filterColumn,
-    };
-    const { onSearchChange } = this.props;
-    if (onSearchChange) {
-      onSearchChange(filter);
-    }
-    this.setState({
-      filter,
-    });
-  }
-
-  onRowSelect = (data, rowIdx) => {
-    const { onRowSelect } = this.props;
-    if (onRowSelect) {
-      onRowSelect(data);
-    }
-    this.setState({
-      selectedRow: rowIdx,
-    });
-  }
-
-  getColumns = () => {
-    const {
-      columns: propCols,
-    } = this.props;
-    const {
-      columns: stateCols,
-    } = this.state;
-    const columns = propCols && propCols.length > 0 ? propCols : stateCols;
-    return columns;
-  }
-
-  setFilterValue = (event) => {
-    const { target: { value } } = event;
-    this.filterValue = value;
-  }
-
-  setFilterValueAndFilter = (event) => {
-    this.setFilterValue(event);
-    this.onFilter();
-  }
-
-  onPageChange = (page) => {
-    const { onPageChange } = this.props;
-    const { pagination } = this.state;
-    this.setState({
-      pagination: {
-        ...pagination,
-        activePage: page,
-      },
-    });
-    if (onPageChange) {
-      onPageChange(page);
-    }
-  }
+  };
 
   mappedColumnsFromData = (data, columns = this.getColumns(), pagination, hiddenColumns) => {
     const {
@@ -465,7 +518,7 @@ class SmartTable extends Component {
     } = pagination;
     const { key, selectedRow } = this.state;
     let mappedColumns;
-    const colsFiltered = columns.filter(p => hiddenColumns.find(p2 => p2 === p.data) === undefined);
+    const colsFiltered = columns.filter((p) => hiddenColumns.find((p2) => p2 === p.data) === undefined);
     if (data) {
       mappedColumns = data;
       const { page: propsActivePage } = this.props;
@@ -486,7 +539,7 @@ class SmartTable extends Component {
               key={`${key}-${rowIdx}`}
               onClick={callback}
             >
-              {colsFiltered.map(col => this.mapCell(row[col.data], col, row, rowIdx))}
+              {colsFiltered.map((col) => this.mapCell(row[col.data], col, row, rowIdx))}
             </tr>
           );
         });
@@ -494,7 +547,7 @@ class SmartTable extends Component {
       mappedColumns = <tr><td colSpan={colsFiltered.length} className="text-center">No matching records found</td></tr>;
     }
     return mappedColumns;
-  }
+  };
 
   mapCell(data, column, rowData, rowIdx) {
     const { key } = this.state;
@@ -526,7 +579,7 @@ class SmartTable extends Component {
       striped ? 'table-striped' : null,
       border ? 'table-bordered' : null,
       hover ? 'table-hover' : null,
-    ].filter(p => p).join(' ');
+    ].filter((p) => p).join(' ');
     const table = (
       <div className={`${classPreFix}-wrapper`}>
         <SmartTableModal
@@ -605,37 +658,6 @@ class SmartTable extends Component {
     return <div className="table-responsive">{table}</div>;
   }
 }
-
-SmartTable.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-
-  })),
-  columns: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string,
-    data: PropTypes.string,
-    width: PropTypes.string,
-    render: PropTypes.func,
-    toggleHidden: PropTypes.bool,
-    toggleOrder: PropTypes.bool,
-  })),
-  condensed: PropTypes.bool,
-  striped: PropTypes.bool,
-  noMargin: PropTypes.bool,
-  border: PropTypes.bool,
-  responsive: PropTypes.bool,
-  hover: PropTypes.bool,
-  onRowSelect: PropTypes.func,
-  onSearchChange: PropTypes.func,
-  onSearch: PropTypes.func,
-  defaultFilterColumn: PropTypes.string,
-  pageSize: PropTypes.number,
-  page: PropTypes.number,
-  totalElements: PropTypes.number,
-  hasMore: PropTypes.bool,
-  onPageChange: PropTypes.func,
-  filterExternal: PropTypes.bool,
-  onOrderChange: PropTypes.func,
-};
 
 SmartTable.defaultProps = {
   data: null,
