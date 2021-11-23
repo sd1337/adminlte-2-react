@@ -1,8 +1,10 @@
+import { ReactElement } from 'react';
+
  type ColumnType = {
    title: string;
    data: string;
    width?: string;
-   render?: Function;
+   render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
  };
 
 type DataType = {

@@ -1,35 +1,30 @@
-import React, { Component, ReactElement } from 'react';
-import PropTypes from 'prop-types';
-import { SortIcons } from './smartTable/SmartTableTypes';
+import React, { Component } from 'react';
+import {
+  SmartColumnType, SmartOrderType, SmartTableHeaderSortIcons, SmartTableOrderChangedCallback,
+  SmartTableHeaderOrderDirection,
+} from './smartTable/SmartTableTypes';
 
-
-
-interface Props {
+interface SmartTableHeaderProps {
   smartTableKey: string,
-  column: PropTypes.shape({
-    data: PropTypes.string,
-    title: PropTypes.string,
-    width: PropTypes.string,
-    toggleOrder: PropTypes.bool,
-  }).isRequired,
+  column: SmartColumnType,
   classPreFix: string,
-  sortIcons: SortIcons,
-  order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
-  orderChanged: Function,
+  sortIcons: SmartTableHeaderSortIcons,
+  order: SmartOrderType[],
+  orderChanged: SmartTableOrderChangedCallback,
 }
-interface State {
+interface SmartTableHeaderState {
   open: boolean
 }
 
-class SmartTableHeader extends Component<Props, State> {
-  state = { open: false }
+class SmartTableHeader extends Component<SmartTableHeaderProps, SmartTableHeaderState> {
+  state = { open: false };
 
   toggleOpen = () => {
     const { open } = this.state;
     this.setState({
       open: !open,
     });
-  }
+  };
 
   render() {
     const {
@@ -40,9 +35,9 @@ class SmartTableHeader extends Component<Props, State> {
     const {
       data, width, title, toggleOrder,
     } = column;
-    const sortObject = order.find(p2 => p2.column === data);
+    const sortObject = order.find((p2) => p2.column === data);
     let icon = sortIcons.default;
-    let param = 'asc';
+    let param: SmartTableHeaderOrderDirection = 'asc';
     if (sortObject) {
       let isAsc;
       let isDesc;
@@ -67,30 +62,12 @@ class SmartTableHeader extends Component<Props, State> {
     const addition = canToggle ? '' : ` ${classPreFix}-column-header-sort-disabled`;
     return (
       <th key={`${key}-${title}`} className={`${classPreFix}-column-header${open ? ' open' : ''}`} style={{ width }}>
-        {<span onClick={this.toggleOpen}>{title}</span>}
+        <span onClick={this.toggleOpen} onKeyPress={() => {}} role="button" tabIndex={0}>{title}</span>
         {'  '}
         <div className={`${classPreFix}-column-header-sort${addition}`} onClick={onClick}>{icon}</div>
       </th>
     );
   }
 }
-
-// SmartTableHeader.propTypes = {
-//   smartTableKey: PropTypes.string.isRequired,
-//   column: PropTypes.shape({
-//     data: PropTypes.string,
-//     title: PropTypes.string,
-//     width: PropTypes.string,
-//     toggleOrder: PropTypes.bool,
-//   }).isRequired,
-//   classPreFix: PropTypes.string.isRequired,
-//   sortIcons: PropTypes.shape({
-//     up: PropTypes.node,
-//     down: PropTypes.node,
-//     default: PropTypes.node,
-//   }).isRequired,
-//   order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
-//   orderChanged: PropTypes.func.isRequired,
-// };
 
 export default SmartTableHeader;

@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
-import { ColumnType } from '../../TableProps';
+import { ColumnType, DataType } from '../../TableProps';
 
-export interface SortIcons {
+export interface SmartTableHeaderSortIcons {
   up: ReactElement
   down: ReactElement
   default: ReactElement
@@ -10,13 +10,13 @@ export interface SortIcons {
 export type SmartColumnType = ColumnType & {
   toggleHidden?: boolean;
   toggleOrder?: boolean;
-  order?: 'asc' | 'desc';
+  order?: SmartTableOrderDirection;
   hidden?: boolean;
 };
 
 export interface SmartOrderType {
   column: string;
-  direction: 'asc' | 'desc';
+  direction: SmartTableOrderDirection;
 }
 
 export interface SmartPagination {
@@ -24,3 +24,19 @@ export interface SmartPagination {
   totalElements: number,
   activePage: number,
 }
+
+export interface SmartTableModalParams {
+  component?: any,
+  props?: DataType,
+  title?: string,
+}
+
+export type MappedColumnType = {
+  [key: string]: SmartColumnType,
+};
+
+export type SmartTableOrderDirection = 'asc' | 'desc';
+
+export type SmartTableHeaderOrderDirection = 'asc' | 'desc' | 'none';
+
+export type SmartTableOrderChangedCallback = (data: string, order: SmartTableHeaderOrderDirection) => void;
