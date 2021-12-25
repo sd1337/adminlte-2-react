@@ -18,24 +18,24 @@ export interface LabelProps {
     children?: ReactNode;
     labelClass?: string;
 }
-// declare function Label({ label, labelXs, labelSm, labelMd, labelLg, name, xs, sm, md, lg, labelIcon, type, children, labelClass, labelPosition, }: LabelProps): ReactElement;
-// declare namespace Label {
-//     var defaultProps: {
-//         label: null;
-//         labelPosition: string;
-//         labelXs: undefined;
-//         labelSm: number;
-//         labelMd: undefined;
-//         labelLg: undefined;
-//         xs: undefined;
-//         sm: number;
-//         md: undefined;
-//         lg: undefined;
-//         labelIcon: undefined;
-//         type: undefined;
-//         name: string;
-//         labelClass: undefined;
-//     };
-// }
-// export default Label;
+declare function Label({ label, labelXs, labelSm, labelMd, labelLg, name, xs, sm, md, lg, labelIcon, type, children, labelClass, labelPosition, }: LabelProps): ReactElement;
+declare namespace Label {
+    var defaultProps: {
+        label: null;
+        labelPosition: string;
+        labelXs: undefined;
+        labelSm: number;
+        labelMd: undefined;
+        labelLg: undefined;
+        xs: undefined;
+        sm: number;
+        md: undefined;
+        lg: undefined;
+        labelIcon: undefined;
+        type: undefined;
+        name: string;
+        labelClass: undefined;
+    };
+}
+export default Label;
 //# sourceMappingURL=Label.d.ts.map

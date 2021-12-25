@@ -19,6 +19,6 @@ interface ItemProps extends RouteComponentProps {
     to?: string;
     highlighted?: boolean;
 }
-declare const _default: React.ComponentClass<Pick<ItemProps, "children" | "text" | "to" | "id" | "icon" | "color" | "labels" | "activeOn" | "highlighted">, any> & import("react-router").WithRouterStatics<ItemComponent>;
+declare const _default: React.ComponentClass<Pick<ItemProps, "children" | "text" | "to" | "icon" | "id" | "color" | "labels" | "activeOn" | "highlighted">, any> & import("react-router").WithRouterStatics<ItemComponent>;
 export default _default;
 //# sourceMappingURL=Item.d.ts.map

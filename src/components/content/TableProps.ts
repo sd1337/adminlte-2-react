@@ -1,16 +1,16 @@
 import { ReactElement } from 'react';
 
- type ColumnType = {
-   title: string;
-   data: string;
-   width?: string;
-   render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
- };
-
-type DataType = {
+export type DataType = {
   [key: string]: any,
 };
 
-type SelectedRowType = number | string | number[] | string[];
+export type ColumnType = {
+  title: string;
+  data: string;
+  width?: string;
+  render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
+};
 
-export { ColumnType, DataType, SelectedRowType };
+export type SelectedRowType = number | string | number[] | string[];
+
+// export { ColumnType, DataType, SelectedRowType };
