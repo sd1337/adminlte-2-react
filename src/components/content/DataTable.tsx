@@ -143,6 +143,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     }
     this.state.domNode = this.createDomObject();
     this.setActivePage = this.setActivePage.bind(this);
+    this.orderToExternal = this.orderToExternal.bind(this);
   }
 
   state: DataTableState = {
@@ -151,6 +152,8 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     domNode: undefined,
     order: undefined,
   };
+
+  order: any | undefined;
 
   componentDidMount() {
     const {
@@ -373,7 +376,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     }
 
     if (onOrderChange) {
-      api.on('order.dt', function (this: any, e: any, { aaSorting: order }: any) {
+      api.on('order.dt', (e: any, { aaSorting: order }: any) => {
         if (initialized) {
           const { order: oldOrder } = this;
           if (!arrayEquals(order, oldOrder)) {
