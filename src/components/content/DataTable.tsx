@@ -83,7 +83,7 @@ interface DataTableProps {
   page?: number,
   totalElements?: number,
   pageSize?: number,
-  onPageChange?: Function,
+  onPageChange?: (value: number) => void,
   onOrderChange?: Function,
   hasMore?: boolean,
   order?: OrderType[],
