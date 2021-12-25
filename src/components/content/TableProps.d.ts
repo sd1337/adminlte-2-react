@@ -1,12 +1,12 @@
-declare type ColumnType = {
+import { ReactElement } from 'react';
+export declare type DataType = {
+    [key: string]: any;
+};
+export declare type ColumnType = {
     title: string;
     data: string;
     width?: string;
-    render?: Function;
+    render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
 };
-declare type DataType = {
-    [key: string]: any;
-};
-declare type SelectedRowType = number | string | number[] | string[];
-export { ColumnType, DataType, SelectedRowType };
+export declare type SelectedRowType = number | string | number[] | string[];
 //# sourceMappingURL=TableProps.d.ts.map

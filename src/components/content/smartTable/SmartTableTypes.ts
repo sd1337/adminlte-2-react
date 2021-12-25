@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { ColumnType, DataType } from '../../TableProps';
+import { ColumnType, DataType } from '../TableProps';
 
 export interface SmartTableHeaderSortIcons {
   up: ReactElement
@@ -12,6 +12,8 @@ export type SmartColumnType = ColumnType & {
   toggleOrder?: boolean;
   order?: SmartTableOrderDirection;
   hidden?: boolean;
+  rawValue: any;
+  onFilter: (data: string, value: string) => boolean;
 };
 
 export interface SmartOrderType {

@@ -47,7 +47,7 @@ import Calendar from './content/Calendar';
 import LoadingSpinner from './content/LoadingSpinner';
 import BoxPane from './content/BoxPane';
 import ButtonToolbar from './content/ButtonToolbar';
-// import Label from './content/Label';
+import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
 declare type Node = React.ReactNode;
@@ -83,5 +83,5 @@ export declare type Types = Types_;
 export declare type Sizes = Sizes_;
 export declare type FormTypes = FormTypes_;
 export declare type Themes = Themes_;
-export { Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar, Divider, Inputs, /*Label,*/ Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar, Pagination, SmartTable, };
+export { Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar, Divider, Inputs, Label, Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar, Pagination, SmartTable, };
 //# sourceMappingURL=AdminLTE.d.ts.map

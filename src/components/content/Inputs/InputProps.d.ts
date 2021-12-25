@@ -6,7 +6,7 @@ export interface IInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaEl
     type?: FormTypes;
     size?: any;
     width?: string;
-    children: ReactNode;
+    children?: ReactNode;
     onCopy?: ClipboardEventHandler<any>;
     onCopyCapture?: ClipboardEventHandler<any>;
     onCut?: ClipboardEventHandler<any>;

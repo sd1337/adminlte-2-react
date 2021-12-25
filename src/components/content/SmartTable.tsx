@@ -17,7 +17,7 @@ import SmartTableModal from './smartTable/SmartTableModal';
 import SmartTableSelectColumns from './smartTable/SmartTableSelectColumns';
 import {
   SmartColumnType, SmartOrderType, SmartPagination, SmartTableOrderChangedCallback, SmartTableHeaderOrderDirection, SmartTableOrderDirection, SmartTableModalParams, MappedColumnType,
-} from './smartTable/smartTable/SmartTableTypes';
+} from './smartTable/SmartTableTypes';
 
 const { Text } = Inputs;
 
@@ -47,7 +47,7 @@ interface SmartTableProps {
 
 interface SmartTableState {
   key: string,
-  columns: ColumnType[],
+  columns: SmartColumnType[],
   filterColumn?: string,
   placeholder: string,
   actions: ReactElement[],
@@ -58,16 +58,24 @@ interface SmartTableState {
   modal: SmartTableModalParams,
   hiddenColumns: string[],
   headers?: ReactElement[],
+  mappedData: ReactElement[] | ReactElement,
+  filteredData?: DataType[],
+  filter?: { data: string, value: string },
 }
 
 class SmartTable extends Component<SmartTableProps, SmartTableState> {
-  static columnsFromData(data: DataType[]): ColumnType[] {
+  static columnsFromData(data: DataType[]): SmartColumnType[] {
     const colNames = Object.keys(data[0]).filter((p) => !p.startsWith('_'));
-    const cols = colNames.map((p) => ({ data: p, title: p.replace(/^./, (m) => m.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2') } as ColumnType));
+    const cols = colNames.map((p) => ({ data: p, title: p.replace(/^./, (m) => m.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2') } as SmartColumnType));
     return cols;
   }
 
-  static headersFromColumns(columns: ColumnType[], key: string, order: SmartOrderType[], orderChanged: SmartTableOrderChangedCallback, setFilterValue, hiddenColumns): ReactElement[] {
+  static headersFromColumns(columns: SmartColumnType[],
+    key: string,
+    order: SmartOrderType[],
+    orderChanged: SmartTableOrderChangedCallback,
+    setFilterValue: (temp: any) => void,
+    hiddenColumns: string[]): ReactElement[] {
     const sortIcons = {
       up: <FontAwesomeIcon icon={['fas', 'sort-up']} />,
       down: <FontAwesomeIcon icon={['fas', 'sort-down']} />,
@@ -84,24 +92,24 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
             sortIcons={sortIcons}
             order={order}
             orderChanged={orderChanged}
-            setFilterValue={setFilterValue}
-            open={i === 0}
+          // setFilterValue={setFilterValue}
+          // open={i === 0}
           />
         </>
       ));
     return headers;
   }
 
-  static searchButtonsFromColumns(columns: SmartColumnType[], filterColumn, setFilterColumn) {
+  static searchButtonsFromColumns(columns: SmartColumnType[], filterColumn: string | undefined, setFilterColumn: (column: string, title?: string) => void) {
     let searchButtons = [
       <>
         <a
           className={`${filterColumn === '$all' ? `${classPreFix}-filter-active` : ''} ${classPreFix}-filter`}
-          onClick={() => { setFilterColumn('$all'); }}
+          onClick={() => { setFilterColumn('$all', undefined); }}
         >
           All
         </a>
-        {filterColumn === '$all' && <FontAwesomeIcon className={`${classPreFix}-filter-active-icon`} icon={['fa', 'check']} />}
+        {filterColumn === '$all' && <FontAwesomeIcon className={`${classPreFix}-filter-active-icon`} icon={['fas', 'check']} />}
       </>,
       <Divider />];
     searchButtons = searchButtons
@@ -117,7 +125,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
                 p.title
               }
             </a>
-            {filterColumn === p.data && <FontAwesomeIcon className={`${classPreFix}-filter-active-icon`} icon={['fa', 'check']} />}
+            {filterColumn === p.data && <FontAwesomeIcon className={`${classPreFix}-filter-active-icon`} icon={['fas', 'check']} />}
           </>
         )));
     return searchButtons;
@@ -173,6 +181,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       totalElements: 0,
       activePage: 0,
     };
+    debugger;
     let cols = columns;
     if (!columns && data && data.length > 0) {
       cols = SmartTable.columnsFromData(data);
@@ -190,7 +199,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
           hiddenColumns);
       newSearchButtons = SmartTable
         .searchButtonsFromColumns(cols,
-          undefined,
+          '$all',
           this.onFilterColumnChanged);
     }
     if (data) {
@@ -200,9 +209,9 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
         activePage: 0,
       };
     }
-    this.state.mappedData = this.mappedColumnsFromData(data || [], cols || [], pagination, hiddenColumns);
+    // this.state.
     this.onFilterColumnChanged = this.onFilterColumnChanged.bind(this);
-    this.state = {
+    const newState = {
       key,
       // columns: columns || [],
       headers: newHeaders,
@@ -220,7 +229,15 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
         title: undefined,
       },
       hiddenColumns,
+      mappedData: [],
     };
+    const mapped = this.mappedColumnsFromData(data || [], cols || [], pagination, hiddenColumns, newState);
+    // newState.mappedData = 
+    this.state = {
+      ...newState,
+      mappedData: mapped,
+    };;
+    // this.state.mappedData = mapped;
   }
 
   componentDidUpdate(prevProps: SmartTableProps, prevState: SmartTableState) {
@@ -321,17 +338,18 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     if (!filterExternal && filterChanged && isNotEmpty) {
       const { data: filterData, value: filterValue } = filter || {};
       if (filterValue) {
-        const defaultColFilter = (value) => (value ? value.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >= 0 : false);
+        const defaultColFilter = (value: string | number | boolean) => (value ? value.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >= 0 : false);
+        const init: { [key: string]: any } = {};
         const columnFilterFunc = cols
-          .map((p) => ({ data: p.data, onFilter: p.onFilter ? (value) => p.onFilter(value, filterValue) : defaultColFilter }))
+          .map((p) => ({ data: p.data, onFilter: p.onFilter ? (value: string) => p.onFilter(value, filterValue) : defaultColFilter }))
           .reduce((prev, current) => {
             // eslint-disable-next-line no-param-reassign
             prev[current.data] = current.onFilter;
             return prev;
-          }, {});
+          }, init);
         let filterFunc;
         if (filterData === '$all') {
-          filterFunc = (row) => {
+          filterFunc = (row: DataType) => {
             const entries = Object.entries(row);
             const found = entries.find(([prop, value]) => {
               const func = columnFilterFunc[prop];
@@ -342,12 +360,14 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
             });
             return !!(found);
           };
-        } else {
+        } else if (filterData) {
           const func = columnFilterFunc[filterData];
-          filterFunc = (row) => {
+          filterFunc = (row: DataType) => {
             const value = row[filterData];
             return func(value);
           };
+        } else {
+          filterFunc = () => true;
         }
         tempData = data.filter(filterFunc);
         updateState.filteredData = tempData;
@@ -367,7 +387,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       updateState.pagination = localPagination;
     }
     if (updateMappedData) {
-      const mappedData = this.mappedColumnsFromData(tempData, cols, localPagination, hiddenColumns);
+      const mappedData = this.mappedColumnsFromData(tempData, cols, localPagination, hiddenColumns, this.state);
       updateState.mappedData = mappedData;
     }
     if (updateSearchButtons) {
@@ -381,7 +401,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
   }
 
   handleCloseModal = () => {
-    const modal: SmartTableModal = {
+    const modal: SmartTableModalParams = {
       component: undefined,
       props: [undefined],
       title: undefined,
@@ -391,7 +411,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     });
   };
 
-  handleAccept = (newState) => {
+  handleAccept = (newState: any) => {
     const modal = {
       component: undefined,
       props: undefined,
@@ -403,7 +423,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     });
   };
 
-  onFilterColumnChanged = (filterColumn, searchPlaceholder) => {
+  onFilterColumnChanged = (filterColumn: any, searchPlaceholder: any) => {
     const { onSearchChange, onSearch } = this.props;
     let filter;
     if (this.filterValue) {
@@ -457,9 +477,18 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     if (onSearchChange) {
       onSearchChange(filter);
     }
-    this.setState({
-      filter,
-    });
+    if (this.filterValue && filterColumn) {
+      this.setState({
+        filter: {
+          value: this.filterValue,
+          data: filterColumn,
+        },
+      });
+    } else {
+      this.setState({
+        filter: undefined,
+      });
+    }
   };
 
   onRowSelect = (data?: DataType, rowIdx?: number) => {
@@ -486,12 +515,12 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     }
   };
 
-  setFilterValueAndFilter = (event) => {
+  setFilterValueAndFilter = (event: any) => {
     this.setFilterValue(event);
     this.onFilter();
   };
 
-  setFilterValue = (event) => {
+  setFilterValue = (event: any) => {
     const { target: { value } } = event;
     this.filterValue = value;
   };
@@ -506,6 +535,8 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     const columns = propCols && propCols.length > 0 ? propCols : stateCols;
     return columns;
   };
+
+  filterValue?: string;
 
   openColumnModal = () => {
     const { columns, order, hiddenColumns } = this.state;
@@ -524,22 +555,23 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     });
   };
 
-  mappedColumnsFromData = (data: DataType[], columns = this.getColumns(), pagination, hiddenColumns) => {
+  mappedColumnsFromData = (data: DataType[], columns = this.getColumns(), pagination: any, hiddenColumns: string[], state: SmartTableState): ReactElement[] | ReactElement => {
     const {
       pageSize,
       activePage,
     } = pagination;
-    const { key, selectedRow } = this.state;
-    let mappedColumns;
+    const { key, selectedRow } = state;
+    let mappedColumns: ReactElement[] | ReactElement;
     const colsFiltered = columns.filter((p) => hiddenColumns.find((p2) => p2 === p.data) === undefined);
     if (data) {
-      mappedColumns = data;
+      let temp = data;
+      // mappedColumns = data;
       const { page: propsActivePage } = this.props;
       if (propsActivePage === undefined) {
-        mappedColumns = mappedColumns
+        temp = temp
           .slice(pageSize * activePage, pageSize * (activePage + 1));
       }
-      mappedColumns = mappedColumns
+      mappedColumns = temp
         .map((row, rowIdx) => {
           const isSelected = selectedRow !== undefined && selectedRow === rowIdx;
           let callback = () => { this.onRowSelect(row, rowIdx); };
@@ -552,7 +584,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
               key={`${key}-${rowIdx}`}
               onClick={callback}
             >
-              {colsFiltered.map((col) => this.mapCell(row[col.data], col, row, rowIdx))}
+              {colsFiltered.map((col) => this.mapCell(row[col.data], col, row, rowIdx, key))}
             </tr>
           );
         });
@@ -562,8 +594,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     return mappedColumns;
   };
 
-  mapCell(data: any, column: ColumnType, rowData: DataType, rowIdx: number) {
-    const { key } = this.state;
+  mapCell(data: any, column: ColumnType, rowData: DataType, rowIdx: number, key: string) {
     if (column.render) {
       return <td key={`${key}-${rowIdx}-${column.data}`}>{column.render(data, rowData, rowIdx)}</td>;
     }

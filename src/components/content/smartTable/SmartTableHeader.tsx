@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   SmartColumnType, SmartOrderType, SmartTableHeaderSortIcons, SmartTableOrderChangedCallback,
   SmartTableHeaderOrderDirection,
-} from './smartTable/SmartTableTypes';
+} from './SmartTableTypes';
 
 interface SmartTableHeaderProps {
   smartTableKey: string,
@@ -35,7 +35,7 @@ class SmartTableHeader extends Component<SmartTableHeaderProps, SmartTableHeader
     const {
       data, width, title, toggleOrder,
     } = column;
-    const sortObject = order.find((p2) => p2.column === data);
+    const sortObject = order.find(p2 => p2.column === data);
     let icon = sortIcons.default;
     let param: SmartTableHeaderOrderDirection = 'asc';
     if (sortObject) {
@@ -60,11 +60,15 @@ class SmartTableHeader extends Component<SmartTableHeaderProps, SmartTableHeader
     const canToggle = !(toggleOrder === false);
     const onClick = !canToggle ? undefined : () => orderChanged(data, param);
     const addition = canToggle ? '' : ` ${classPreFix}-column-header-sort-disabled`;
+    const handleKeyPress = (e: any) => {
+      //
+      console.log(e);
+    };
     return (
       <th key={`${key}-${title}`} className={`${classPreFix}-column-header${open ? ' open' : ''}`} style={{ width }}>
         <span onClick={this.toggleOpen} onKeyPress={() => {}} role="button" tabIndex={0}>{title}</span>
         {'  '}
-        <div className={`${classPreFix}-column-header-sort${addition}`} onClick={onClick}>{icon}</div>
+        <div role="button" tabIndex={0} className={`${classPreFix}-column-header-sort${addition}`} onClick={onClick} onKeyPress={handleKeyPress}>{icon}</div>
       </th>
     );
   }

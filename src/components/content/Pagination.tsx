@@ -8,7 +8,7 @@ interface PaginationProps {
   totalElements?: number,
   pageSize?: number,
   hasMore?: boolean,
-  onChange: (value: number) => void,
+  onChange?: (value: number) => void,
   labels?: {
     first?: string,
     last?: string,
@@ -77,28 +77,30 @@ class Pagination extends Component<PaginationProps, PaginationState> {
     }
   }
 
-  onChange(event: MouseEvent<PaginationItem>) {
+  onChange(event: any /* MouseEvent<PaginationItem> */) {
     const { onChange, activePage, hasMore } = this.props;
     const { totalPages } = this.state;
+    const totPages = totalPages || 0;
+    const actPage = activePage || 0;
     let value = null;
     switch (this.keyMaps[event.target.innerText] || '') {
       case 'first':
         value = 0;
         break;
       case 'last':
-        value = totalPages - 1;
+        value = totPages - 1;
         break;
       case 'next':
-        value = activePage + 1;
+        value = actPage + 1;
         break;
       case 'previous':
-        value = activePage - 1;
+        value = actPage - 1;
         break;
       default:
         value = parseInt(event.target.innerText, 10) - 1;
         break;
     }
-    if (value >= 0 && (value < totalPages || hasMore !== undefined)) {
+    if (onChange && value >= 0 && (value < totPages || hasMore !== undefined)) {
       onChange(value);
     }
   }
@@ -113,12 +115,13 @@ class Pagination extends Component<PaginationProps, PaginationState> {
       hasMore,
     } = this.props;
     const { totalPages } = this.state;
+    const actPage = activePage || 0;
     if (totalPages) {
-      const firstFourPages = activePage < 3;
-      const lastFourPages = totalPages - activePage < 4;
+      const firstFourPages = activePage && (activePage < 3);
+      const lastFourPages = activePage && (totalPages - activePage < 4);
       const links: ReactElement[] = [];
 
-      const getIntermediate = (from, to, arr) => {
+      const getIntermediate = (from: number, to: number, arr: ReactElement[]) => {
         // eslint-disable-next-line no-plusplus
         for (let i = from; i < to; ++i) {
           arr.push(
@@ -158,7 +161,7 @@ class Pagination extends Component<PaginationProps, PaginationState> {
           links.push(
             <BsPagination.Ellipsis key="page_none" />,
           );
-          getIntermediate(activePage - 1, activePage + 2, links);
+          getIntermediate(actPage - 1, actPage + 2, links);
           links.push(
             <BsPagination.Ellipsis key="page_none_1" />,
           );
@@ -198,8 +201,8 @@ class Pagination extends Component<PaginationProps, PaginationState> {
           >
             {previous}
           </PaginationItem>
-          {(activePage > 0) && <BsPagination.Ellipsis key="page_none" />}
-          <BsPagination.Item key="page_active" active>{activePage + 1}</BsPagination.Item>
+          {(actPage > 0) && <BsPagination.Ellipsis key="page_none" />}
+          <BsPagination.Item key="page_active" active>{actPage + 1}</BsPagination.Item>
           {hasMore && <BsPagination.Ellipsis key="page_none_1" />}
           <BsPagination.Item
             disabled={hasMore === false}

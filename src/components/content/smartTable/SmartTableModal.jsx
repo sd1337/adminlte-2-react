@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
-import Button from '../Button';
+import Button from '../Button.tsx';
 
 class SmartTableModal extends Component {
   updatedatableState = {};
