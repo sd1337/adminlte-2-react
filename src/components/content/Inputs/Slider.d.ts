@@ -1,16 +1,15 @@
 import { Component, ElementType, ReactElement } from 'react';
-import { GenericSliderProps } from 'rc-slider/lib/interface';
-import { HandleProps } from 'rc-slider/lib/Handle';
+import { CommonApiProps, HandleProps } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import { Colors } from '../../PropTypes';
 import './Slider.css';
-interface SliderProps extends GenericSliderProps {
+interface MySliderProps extends CommonApiProps {
     color?: Colors;
     vertical?: boolean;
     defaultValue?: number | number[];
     value?: number | number[];
-    rcSliderProps?: GenericSliderProps;
+    rcSliderProps?: CommonApiProps;
     onChange?: ((value: number) => void) | ((value: number[]) => void);
     onBeforeChange?: ((value: number) => void) | ((value: number[]) => void);
     onAfterChange?: ((value: number) => void) | ((value: number[]) => void);
@@ -20,7 +19,7 @@ interface SliderProps extends GenericSliderProps {
 }
 interface SliderState {
 }
-declare class Slider extends Component<SliderProps, SliderState> {
+declare class Slider extends Component<MySliderProps, SliderState> {
     static defaultProps: {
         color: string;
         vertical: boolean;
@@ -32,11 +31,11 @@ declare class Slider extends Component<SliderProps, SliderState> {
         tooltipVisible: string;
         handle: undefined;
     };
-    constructor(props: SliderProps);
+    constructor(props: MySliderProps);
     state: {};
     private static getTrackColor;
     getHandle: (props: HandleProps) => JSX.Element;
-    constructElement(props: SliderProps): void;
+    constructElement(props: MySliderProps): void;
     Element: ElementType;
     render(): JSX.Element;
 }

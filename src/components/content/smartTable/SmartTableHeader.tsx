@@ -35,7 +35,7 @@ class SmartTableHeader extends Component<SmartTableHeaderProps, SmartTableHeader
     const {
       data, width, title, toggleOrder,
     } = column;
-    const sortObject = order.find(p2 => p2.column === data);
+    const sortObject = order.find((p2) => p2.column === data);
     let icon = sortIcons.default;
     let param: SmartTableHeaderOrderDirection = 'asc';
     if (sortObject) {

@@ -71,6 +71,7 @@ declare class DataTable extends Component<DataTableProps, DataTableState> {
     };
     constructor(props: DataTableProps);
     state: DataTableState;
+    order: any | undefined;
     componentDidMount(): void;
     shouldComponentUpdate({ data, selectedRows, footer, options, page: oldPage, order, totalElements, hasMore, searchValue, }: DataTableProps, { order: oldStateOrder }: DataTableState): boolean;
     componentDidUpdate({ data: oldData, footer: oldFooter, selectedRows: oldSelectedRows, order: oldOrder, hasMore: oldHasMore, totalElements: oldTe, searchValue: oldSearchValue, }: DataTableProps): void;

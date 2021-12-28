@@ -153,8 +153,6 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     order: undefined,
   };
 
-  order: any | undefined;
-
   componentDidMount() {
     const {
       ajaxMap, ajaxResponseMap,
@@ -282,6 +280,8 @@ class DataTable extends Component<DataTableProps, DataTableState> {
       api.draw(false);
     }
   }
+
+  order: any | undefined;
 
   controlled: boolean | undefined;
 
