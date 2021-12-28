@@ -1,6 +1,6 @@
 {
   "name": "adminlte-2-react",
-  "version": "0.2.0-beta.3",
+  "version": "0.2.0-beta.5",
   "description": "AdminLTE 2.x.x. template ported to React",
   "main": "build/index.js",
   "typings": "src/components/AdminLTE.d.ts",
@@ -49,6 +49,7 @@
     "@types/jest": "^27.0.2",
     "@types/jquery": "^3.5.7",
     "@types/node": "^16.11.0",
+    "@types/rc-tooltip": "^3.7.3",
     "@types/react": "^17.0.30",
     "@types/react-bootstrap": "^0.32.28",
     "@types/react-dates": "^21.8.3",

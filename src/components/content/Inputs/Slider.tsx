@@ -193,7 +193,7 @@ class Slider extends Component<MySliderProps, SliderState> {
     return trackColor;
   }
 
-  getHandle = (props: HandleProps) => {
+  getHandle = (props: HandleProps): ReactElement => {
     const {
       value, // dragging,
       ...restProps
