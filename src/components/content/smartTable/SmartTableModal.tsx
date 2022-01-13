@@ -1,30 +1,47 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Modal } from 'react-bootstrap';
-import Button from '../Button.tsx';
+import Button from '../Button';
 
-class SmartTableModal extends Component {
-  updatedatableState = {};
+interface Props {
+  component: any,
+  props?: { [key: string]: any },
+  classPreFix: string,
+  title: string,
+  handleClose: Function,
+  handleAccept: Function,
+}
+interface State {
 
-  stateToUpdate = (newState) => {
-    this.updatedatableState = {
-      ...this.updatedatableState,
-      ...newState,
-    };
-  }
+}
+
+class SmartTableModal extends Component<Props, State> {
+  static defaultProps = {
+    component: undefined,
+    props: undefined,
+    title: undefined,
+  };
 
   handleAccept = () => {
     const { handleAccept } = this.props;
     handleAccept(this.updatedatableState);
     this.updatedatableState = {};
-  }
+  };
 
   handleClose = () => {
     const { handleClose } = this.props;
     handleClose();
     this.updatedatableState = {};
-  }
+  };
+
+  stateToUpdate = (newState: { [key: string]: any }) => {
+    this.updatedatableState = {
+      ...this.updatedatableState,
+      ...newState,
+    };
+  };
+
+  updatedatableState = {};
 
   render() {
     const {
@@ -39,7 +56,6 @@ class SmartTableModal extends Component {
         onHide={this.handleClose}
         dialogClassName={`${classPreFix}-modal`}
         enforceFocus={false}
-        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>{title}</Modal.Title>
@@ -52,20 +68,5 @@ class SmartTableModal extends Component {
     );
   }
 }
-
-SmartTableModal.propTypes = {
-  component: PropTypes.node,
-  props: PropTypes.shape({ }),
-  classPreFix: PropTypes.string.isRequired,
-  title: PropTypes.string,
-  handleClose: PropTypes.func.isRequired,
-  handleAccept: PropTypes.func.isRequired,
-};
-
-SmartTableModal.defaultProps = {
-  component: undefined,
-  props: undefined,
-  title: undefined,
-};
 
 export default SmartTableModal;
