@@ -1,13 +1,35 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import Draggable from 'react-draggable';
+import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import Button from '../Button';
 import { getSortDirection } from './SmartTableUtils';
+import { SmartColumnType, SmartOrderType, SmartTableOrderDirection } from './SmartTableTypes';
 
 const rowHeight = 51;
 
-class SmartTableSelectColumns extends Component {
-  constructor(props) {
+interface SmartTableSelectColumnsProps {
+  columns: SmartColumnType[]
+  order: SmartOrderType[],
+  hiddenColumns: string[],
+  stateToUpdate?: Function,
+  classPreFix: string,
+}
+
+interface SmartTableSelectColumnsState {
+  columns: SmartColumnType[]
+  order: SmartOrderType[],
+  hiddenColumns: string[],
+  drag?: {
+    index: number,
+    offset: number,
+  }
+}
+
+class SmartTableSelectColumns extends Component<SmartTableSelectColumnsProps, SmartTableSelectColumnsState> {
+  defaultProps = {
+    stateToUpdate: undefined,
+  };
+
+  constructor(props: SmartTableSelectColumnsProps) {
     super(props);
     const {
       hiddenColumns, order,
@@ -21,7 +43,85 @@ class SmartTableSelectColumns extends Component {
     };
   }
 
-  toggleVisibility = ({ target: { name, checked } }) => {
+  handleStart = (_event: DraggableEvent, info: DraggableData) => {
+    const {
+      classPreFix,
+    } = this.props;
+    const classListArray = Array.from(info?.node?.classList);
+    const foundClasses = classListArray.find((p) => p.startsWith(`${classPreFix}-select-col-`));
+    if (foundClasses) {
+      const index = parseInt(foundClasses.replace(`${classPreFix}-select-col-`, ''), 10);
+      this.dragIndex = index;
+    }
+  };
+
+  handleStop = (_event: DraggableEvent, info: DraggableData) => {
+    const { y } = info;
+    const {
+      columns,
+    } = this.state;
+    const {
+      stateToUpdate,
+    } = this.props;
+    const yNormalized = y / rowHeight;
+    if (this.dragIndex) {
+      const newIndex = Math.round(this.dragIndex + yNormalized);
+      let newColumns: SmartColumnType[] = [];
+      let isDirty = false;
+      if (newIndex - this.dragIndex > 0) {
+        newColumns = newColumns.concat(columns.slice(0, this.dragIndex));
+        newColumns = newColumns.concat(columns.slice(this.dragIndex + 1, newIndex + 1));
+        newColumns.push(columns[this.dragIndex]);
+        newColumns = newColumns.concat(columns.slice(newIndex + 1));
+        this.setState({
+          columns: newColumns,
+          drag: undefined,
+        });
+        isDirty = true;
+      } else if (newIndex - this.dragIndex < 0) {
+        newColumns = newColumns.concat(columns.slice(0, newIndex));
+        newColumns.push(columns[this.dragIndex]);
+        newColumns = newColumns.concat(columns.slice(newIndex, this.dragIndex));
+        newColumns = newColumns.concat(columns.slice(this.dragIndex + 1));
+        this.setState({
+          columns: newColumns,
+          drag: undefined,
+        });
+        isDirty = true;
+      } else {
+        this.setState({
+          drag: undefined,
+        });
+      }
+      if (isDirty) {
+        const newState = {
+          columns: newColumns,
+        };
+        this.setState(newState);
+        if (stateToUpdate) {
+          stateToUpdate(newState);
+        }
+      }
+      this.dragIndex = undefined;
+    }
+  };
+
+  handleDrag = (_event: DraggableEvent, info: DraggableData) => {
+    const { y } = info;
+    const yNormalized = y / rowHeight;
+    this.setState({
+      drag: {
+        index: (this.dragIndex as number),
+        offset: yNormalized,
+      },
+    });
+  };
+
+  dragIndex?: number;
+
+  toggleVisibility = (e: React.MouseEvent<HTMLInputElement>) => {
+    const { target } = e;
+    const { name, checked } = (target as HTMLInputElement);
     const {
       hiddenColumns,
     } = this.state;
@@ -30,10 +130,10 @@ class SmartTableSelectColumns extends Component {
     let newHiddenCols = [...hiddenColumns];
     const col = name.split('-')[1];
     if (checked) {
-      newHiddenCols = newHiddenCols.filter(p2 => p2 !== col);
+      newHiddenCols = newHiddenCols.filter((p2) => p2 !== col);
       isDirty = true;
     } else {
-      const isVisible = newHiddenCols.find(p2 => p2 === col) === undefined;
+      const isVisible = newHiddenCols.find((p2) => p2 === col) === undefined;
       if (isVisible) {
         newHiddenCols.push(col);
         isDirty = true;
@@ -48,9 +148,11 @@ class SmartTableSelectColumns extends Component {
         stateToUpdate(newState);
       }
     }
-  }
+  };
 
-  toggleOrder = ({ target: { name, value } }) => {
+  toggleOrder = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { target } = e;
+    const { name, value } = target;
     const {
       order,
     } = this.state;
@@ -58,19 +160,19 @@ class SmartTableSelectColumns extends Component {
     let isDirty = false;
     let newOrder = [...order];
     const col = name.split('-')[1];
-    const found = newOrder.find(p2 => p2.column === col);
+    const found = newOrder.find((p2) => p2.column === col);
     if (found) {
       isDirty = true;
       if (value !== 'none') {
-        found.direction = value;
+        found.direction = (value as SmartTableOrderDirection);
       } else {
-        newOrder = newOrder.filter(p2 => p2.column !== col);
+        newOrder = newOrder.filter((p2) => p2.column !== col);
       }
     } else if (value !== 'none') {
       isDirty = true;
       newOrder.push({
         column: col,
-        direction: value,
+        direction: (value as SmartTableOrderDirection),
       });
     }
     if (isDirty) {
@@ -82,77 +184,7 @@ class SmartTableSelectColumns extends Component {
         stateToUpdate(newState);
       }
     }
-  }
-
-  handleStart = (_event, info) => {
-    const {
-      classPreFix,
-    } = this.props;
-    const index = parseInt(Array.from(info.node.classList).find(p => p.startsWith(`${classPreFix}-select-col-`)).replace(`${classPreFix}-select-col-`, ''), 10);
-    this.dragIndex = index;
-    // debugger;
-  }
-
-  handleStop = (_event, info) => {
-    const { y } = info;
-    const {
-      columns,
-    } = this.state;
-    const {
-      stateToUpdate,
-    } = this.props;
-    const yNormalized = y / rowHeight;
-    const newIndex = Math.round(this.dragIndex + yNormalized);
-    let newColumns = [];
-    let isDirty = false;
-    if (newIndex - this.dragIndex > 0) {
-      newColumns = newColumns.concat(columns.slice(0, this.dragIndex));
-      newColumns = newColumns.concat(columns.slice(this.dragIndex + 1, newIndex + 1));
-      newColumns.push(columns[this.dragIndex]);
-      newColumns = newColumns.concat(columns.slice(newIndex + 1));
-      this.setState({
-        columns: newColumns,
-        drag: undefined,
-      });
-      isDirty = true;
-    } else if (newIndex - this.dragIndex < 0) {
-      newColumns = newColumns.concat(columns.slice(0, newIndex));
-      newColumns.push(columns[this.dragIndex]);
-      newColumns = newColumns.concat(columns.slice(newIndex, this.dragIndex));
-      newColumns = newColumns.concat(columns.slice(this.dragIndex + 1));
-      this.setState({
-        columns: newColumns,
-        drag: undefined,
-      });
-      isDirty = true;
-    } else {
-      this.setState({
-        drag: undefined,
-      });
-    }
-    if (isDirty) {
-      const newState = {
-        columns: newColumns,
-      };
-      this.setState(newState);
-      if (stateToUpdate) {
-        stateToUpdate(newState);
-      }
-    }
-    this.dragIndex = undefined;
-  }
-
-  handleDrag = (event, info) => {
-    const { y } = info;
-    const yNormalized = y / rowHeight;
-    this.setState({
-      drag: {
-        index: this.dragIndex,
-        offset: yNormalized,
-      },
-    });
-    // debugger;
-  }
+  };
 
   render() {
     const {
@@ -164,9 +196,9 @@ class SmartTableSelectColumns extends Component {
     } = this.state;
     const noOfCols = columns.length;
     const mappedData = columns.map((p, i) => {
-      const colOrdering = order.find(p2 => p2.column === p.data);
+      const colOrdering = order.find((p2) => p2.column === p.data);
       const direction = getSortDirection(colOrdering);
-      const isVisible = hiddenColumns.find(p2 => p2 === p.data) === undefined;
+      const isVisible = hiddenColumns.find((p2) => p2 === p.data) === undefined;
       const top = rowHeight * i * -1;
       const bottom = rowHeight * (noOfCols - i - 1);
       const position = { x: 0, y: 0 };
@@ -181,9 +213,7 @@ class SmartTableSelectColumns extends Component {
           if (i < index && i >= calcIndex) {
             position.y = rowHeight;
           }
-          // position.y = rowHeight;
         }
-        // debugger;
       }
       return (
         <Draggable
@@ -236,17 +266,5 @@ class SmartTableSelectColumns extends Component {
     );
   }
 }
-
-SmartTableSelectColumns.propTypes = {
-  columns: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  order: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
-  hiddenColumns: PropTypes.arrayOf(PropTypes.shape({ })).isRequired,
-  stateToUpdate: PropTypes.func,
-  classPreFix: PropTypes.string.isRequired,
-};
-
-SmartTableSelectColumns.defaultProps = {
-  stateToUpdate: undefined,
-};
 
 export default SmartTableSelectColumns;
