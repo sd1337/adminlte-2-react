@@ -1,4 +1,4 @@
-import React, { Component, MouseEvent, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 import { Pagination as BsPagination } from 'react-bootstrap';
 import PaginationItem from 'react-bootstrap/lib/PaginationItem';
 import { Dictionary } from '../PropTypes';
@@ -117,8 +117,8 @@ class Pagination extends Component<PaginationProps, PaginationState> {
     const { totalPages } = this.state;
     const actPage = activePage || 0;
     if (totalPages) {
-      const firstFourPages = activePage && (activePage < 3);
-      const lastFourPages = activePage && (totalPages - activePage < 4);
+      const firstFourPages = activePage !== undefined && (activePage < 3);
+      const lastFourPages = activePage !== undefined && (totalPages - activePage < 4);
       const links: ReactElement[] = [];
 
       const getIntermediate = (from: number, to: number, arr: ReactElement[]) => {
