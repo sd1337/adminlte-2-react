@@ -45,6 +45,9 @@ interface SmartTableProps {
   filterExternal?: boolean,
   onOrderChange?: Function,
   select?: 'single' | 'multiple'
+  selectedRows?: any[],
+  selectionMode: 'index' | 'property',
+  selectionProperty: string
 }
 
 interface SmartTableState {
@@ -163,6 +166,8 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     filterExternal: false,
     onOrderChange: undefined,
     select: 'single',
+    selectionMode: 'index',
+    selectionProperty: 'id',
   };
 
   constructor(props: SmartTableProps) {
@@ -526,7 +531,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
 
   onRowDeselect = (data: DataType, rowIdx: number) => {
     const { selectedRows } = this.state;
-    const { onRowDeselect, select } = this.props;
+    const { onRowDeselect } = this.props;
     if (onRowDeselect) {
       onRowDeselect(data, rowIdx);
     }
@@ -728,12 +733,6 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
             pageSize={pageSize}
             onChange={this.onPageChange}
             hasMore={hasMore}
-          // labels={{
-          //   first,
-          //   last,
-          //   next,
-          //   previous,
-          // }}
           />
         </div>
       </div>
