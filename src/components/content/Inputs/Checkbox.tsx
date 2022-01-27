@@ -9,7 +9,7 @@ interface CheckboxProps extends IInputProps{
   disabled: boolean,
   name: string,
   value?: string | number,
-  defaultvalue: string | number
+  defaultValue: string | number
 }
 
 interface CheckboxState {
@@ -19,18 +19,16 @@ interface CheckboxState {
 class Checkbox extends Component<CheckboxProps, CheckboxState> {
   static defaultProps = {
     text: null,
-    checked: null,
     onChange: null,
     disabled: false,
     name: null,
-    value: null,
   };
 
   state = {};
 
   render() {
     const {
-      text, onChange, disabled, name, value, checked,
+      text, onChange, disabled, name, value, checked, defaultValue,
       //  ...props
     } = this.props;
 
@@ -83,8 +81,10 @@ class Checkbox extends Component<CheckboxProps, CheckboxState> {
         <input
           name={name}
           onChange={onChange}
-          checked={value !== undefined || checked}
+          checked={checked}
           disabled={disabled}
+          value={value}
+          defaultValue={defaultValue}
           type="checkbox"
         />
         {text ? ` ${text}` : ''}
