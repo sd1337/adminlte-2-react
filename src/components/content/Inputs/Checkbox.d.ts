@@ -6,18 +6,16 @@ interface CheckboxProps extends IInputProps {
     disabled: boolean;
     name: string;
     value?: string | number;
-    defaultvalue: string | number;
+    defaultValue: string | number;
 }
 interface CheckboxState {
 }
 declare class Checkbox extends Component<CheckboxProps, CheckboxState> {
     static defaultProps: {
         text: null;
-        checked: null;
         onChange: null;
         disabled: boolean;
         name: null;
-        value: null;
     };
     state: {};
     render(): JSX.Element;
