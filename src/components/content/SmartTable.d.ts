@@ -24,6 +24,9 @@ interface SmartTableProps {
     filterExternal?: boolean;
     onOrderChange?: Function;
     select?: 'single' | 'multiple';
+    selectedRows?: any[];
+    selectionMode: 'index' | 'property' | 'object';
+    selectionProperty: string;
 }
 interface SmartTableState {
     key: string;
@@ -73,6 +76,8 @@ declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
         filterExternal: boolean;
         onOrderChange: undefined;
         select: string;
+        selectionMode: string;
+        selectionProperty: string;
     };
     constructor(props: SmartTableProps);
     componentDidUpdate(prevProps: SmartTableProps, prevState: SmartTableState): void;
