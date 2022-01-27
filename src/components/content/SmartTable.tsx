@@ -46,7 +46,7 @@ interface SmartTableProps {
   onOrderChange?: Function,
   select?: 'single' | 'multiple'
   selectedRows?: any[],
-  selectionMode: 'index' | 'property',
+  selectionMode: 'index' | 'property' | 'object',
   selectionProperty: string
 }
 
