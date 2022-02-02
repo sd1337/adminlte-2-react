@@ -213,7 +213,15 @@ class AdminLTE extends Component<Props, {}> {
         ],
       });
     }
-    const content = childrenArray.filter((p) => p !== menu);
+    const content = childrenArray.filter((p) => p !== menu).reduce((init: React.ReactElement[], p: React.ReactElement | React.ReactElement[]) => {
+      if (Array.isArray(p)) {
+        // eslint-disable-next-line no-param-reassign
+        init = init.concat(p as any);
+      } else {
+        init.push(p);
+      }
+      return init;
+    }, []);
     const nonModalRoutes: Route[] = [];
     const modalRoutes: Route[] = [];
     content
