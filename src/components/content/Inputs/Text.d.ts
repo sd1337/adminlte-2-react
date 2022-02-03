@@ -12,7 +12,7 @@ interface TextProps extends IInputProps {
 interface TextState {
 }
 declare class Text extends Component<TextProps, TextState> {
-    defaultProps: {
+    static defaultProps: {
         inputType: string;
         name: null;
         id: null;

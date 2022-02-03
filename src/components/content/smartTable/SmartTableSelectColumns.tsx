@@ -25,7 +25,7 @@ interface SmartTableSelectColumnsState {
 }
 
 class SmartTableSelectColumns extends Component<SmartTableSelectColumnsProps, SmartTableSelectColumnsState> {
-  defaultProps = {
+  static defaultProps = {
     stateToUpdate: undefined,
   };
 

@@ -19,7 +19,7 @@ interface TextState {
 }
 
 class Text extends Component<TextProps, TextState> {
-  defaultProps = {
+  static defaultProps = {
     inputType: 'text',
     name: null,
     id: null,

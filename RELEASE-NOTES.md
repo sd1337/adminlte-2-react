@@ -8,6 +8,7 @@
 ### Breaking Changes
 * [`<DateTime>`](/src/components/content/Inputs/DateTime.tsx) `onChange` event passes now a syntethic event instead of the value itself
 * [`<Checkbox>`](/src/components/content/Inputs/Checkbox.tsx) `checked` property is now used instead of `value`
+* [`<DateTime>`](/src/components/content/Inputs/DateTime.tsx) `id` must be passed as an direct property instead of passing it inside of `dateProp.inputProperty`
 
 ### New Features
 * Upgraded entire library to typescript
