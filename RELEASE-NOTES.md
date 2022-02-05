@@ -1,4 +1,4 @@
-## [0.2.0](https://github.com/sd1337/adminlte-2-react/compare/v0.1.31...v0.2.0) (2021-01-27)
+## [0.2.0](https://github.com/sd1337/adminlte-2-react/compare/v0.1.31...v0.2.0) (2021-02-05)
 
 > Big leap for the library as it is now typescript, improves type inspection when using the lib, fixed several potential bugs caused my inproper type conversions
 
@@ -13,9 +13,10 @@
 ### New Features
 * Upgraded entire library to typescript
 * SmartTable allows now different row select options (`single` | `multiple`)
+* SmartTable allows now three different options for passing selected rows `index`, `property`, `object`
 
 ### Bug Fixes
-* 
+* Several internal fixes based on the stricter typing rules from typescript
 * 
 
 ### Performance Improvements
