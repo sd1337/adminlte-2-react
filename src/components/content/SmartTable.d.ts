@@ -11,8 +11,8 @@ interface SmartTableProps {
     border?: boolean;
     responsive?: boolean;
     hover?: boolean;
-    onRowSelect?: (data?: DataType, index?: number) => void;
-    onRowDeselect?: (data?: DataType, index?: number) => void;
+    onRowSelect?: (data?: DataType, index?: number) => void | boolean;
+    onRowDeselect?: (data?: DataType, index?: number) => void | boolean;
     onSearchChange?: Function;
     onSearch?: Function;
     defaultFilterColumn?: string;
@@ -37,8 +37,8 @@ interface SmartTableState {
     searchButtons: ReactElement[];
     pagination: SmartPagination;
     order: SmartOrderType[];
-    selectedRow?: number;
-    selectedRows: number[];
+    selectedRow?: number | string;
+    selectedRows: (number | string)[];
     selectedRowsData: DataType[];
     modal: SmartTableModalParams;
     hiddenColumns: string[];
@@ -94,6 +94,7 @@ declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
     getColumns: () => SmartColumnType[];
     filterValue?: string;
     openColumnModal: () => void;
+    rowIsSelected(row: DataType, rowIdx: number, state: SmartTableState): boolean;
     mappedColumnsFromData: (data: DataType[], columns: SmartColumnType[] | undefined, pagination: any, hiddenColumns: string[], state: SmartTableState) => ReactElement[] | ReactElement;
     render(): JSX.Element;
 }

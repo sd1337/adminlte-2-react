@@ -32,8 +32,8 @@ interface SmartTableProps {
   border?: boolean,
   responsive?: boolean,
   hover?: boolean,
-  onRowSelect?: (data?: DataType, index?: number) => void,
-  onRowDeselect?: (data?: DataType, index?: number) => void,
+  onRowSelect?: (data?: DataType, index?: number) => void | boolean,
+  onRowDeselect?: (data?: DataType, index?: number) => void | boolean,
   onSearchChange?: Function,
   onSearch?: Function,
   defaultFilterColumn?: string,
@@ -59,8 +59,8 @@ interface SmartTableState {
   searchButtons: ReactElement[],
   pagination: SmartPagination,
   order: SmartOrderType[],
-  selectedRow?: number,
-  selectedRows: number[]
+  selectedRow?: number | string,
+  selectedRows: (number | string)[],
   selectedRowsData: DataType[]
   modal: SmartTableModalParams,
   hiddenColumns: string[],
@@ -173,7 +173,8 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
   constructor(props: SmartTableProps) {
     super(props);
     const {
-      columns, data, defaultFilterColumn, pageSize,
+      columns, data, defaultFilterColumn, pageSize, selectionMode,
+      selectedRows, selectionProperty,
     } = props;
     const key = uuidv4();
     const filterColumn = defaultFilterColumn;
@@ -225,6 +226,20 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
         activePage: 0,
       };
     }
+    let stateSelectedRows: (string | number)[] = [];
+    let stateSelectedRowsData: DataType[] = [];
+    if (selectedRows && data) {
+      if (selectionMode === 'index') {
+        stateSelectedRows = stateSelectedRows.concat(selectedRows);
+        stateSelectedRowsData = stateSelectedRowsData.concat(data.filter((p, i) => selectedRows.indexOf(i) > -1));
+      } else if (selectionMode === 'property') {
+        stateSelectedRows = stateSelectedRows.concat(selectedRows);
+        stateSelectedRowsData = stateSelectedRowsData.concat(data.filter((p) => selectedRows.indexOf(p[selectionProperty]) > -1));
+      } else if (selectionMode === 'object') {
+        stateSelectedRows = selectedRows;
+        stateSelectedRowsData = selectedRows;
+      }
+    }
     // this.state.
     this.onFilterColumnChanged = this.onFilterColumnChanged.bind(this);
     const newState = {
@@ -246,8 +261,8 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       },
       hiddenColumns,
       mappedData: [],
-      selectedRows: [],
-      selectedRowsData: [],
+      selectedRows: stateSelectedRows,
+      selectedRowsData: stateSelectedRowsData,
     };
     const mapped = this.mappedColumnsFromData(data || [], cols || [], pagination, hiddenColumns, newState);
     // newState.mappedData =
@@ -256,6 +271,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       mappedData: mapped,
     };
     // this.state.mappedData = mapped;
+    this.rowIsSelected = this.rowIsSelected.bind(this);
   }
 
   componentDidUpdate(prevProps: SmartTableProps, prevState: SmartTableState) {
@@ -266,9 +282,13 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       columns: prevColumns, selectedRows: prevSelectedRows,
     } = prevState;
     const { activePage: prevActivePage } = prevPagination;
-    const { data: prevData } = prevProps;
     const {
-      data, columns, pageSize, filterExternal,
+      data: prevData, totalElements: prevTotalElements,
+      selectedRows: prevPropsSelectedRows,
+    } = prevProps;
+    const {
+      data, columns, pageSize, filterExternal, totalElements, selectionMode,
+      selectionProperty, selectedRows: propsSelectedRows,
     } = this.props;
     const {
       key, filterColumn, columns: stateCols, filter, pagination,
@@ -277,8 +297,9 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     const { activePage } = pagination;
     const colsExists = (columns && columns.length > 0) || (stateCols && stateCols.length > 0);
     const colsChanged = stateCols !== prevColumns;
-    const isNotEmpty = data && data.length > 0;
-    const dataChanged = prevData !== data || ((prevData || []).length === 0 && isNotEmpty);
+    const dataIsNotEmpty = data && data.length > 0;
+    const dataIsControlledExternal = totalElements !== undefined;
+    const dataChanged = (!dataIsControlledExternal && (prevData !== data || ((prevData || []).length === 0 && dataIsNotEmpty))) || totalElements !== prevTotalElements;
     const filterColumnChanged = filterColumn !== prevFilterColumn;
     const filterChanged = prevFilter !== filter || filterColumnChanged;
     const pageChanged = activePage !== prevActivePage;
@@ -287,7 +308,9 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     const orderChanged = prevOrder !== order || dataChanged;
     const hiddenColsChanged = hiddenColumns !== prevHiddenColumns;
     const resetSelectedItem = dataChanged || orderChanged;
-    const selectedRowsChanged = prevSelectedRows.length !== selectedRows.length || selectedRows.filter((p) => prevSelectedRows.indexOf(p) === -1).length > 0;
+    const selectedRowsChanged = prevSelectedRows.length !== selectedRows.length || selectedRows.filter((p: number | string) => prevSelectedRows.indexOf(p) === -1).length > 0;
+    const propSelectionIsNotUndefined = Array.isArray(propsSelectedRows) && Array.isArray(prevPropsSelectedRows);
+    const propSelectedRowsChanged = propSelectionIsNotUndefined && (prevPropsSelectedRows.length !== propsSelectedRows.length || selectedRows.filter((p: number | string) => propsSelectedRows.indexOf(p) === -1).length > 0);
     let updateSearchButtons = filterColumn !== prevFilterColumn;
     let updateMappedData = dataChanged || filterChanged || selectedRowChanged || pageChanged || orderChanged || hiddenColsChanged || colsChanged || selectedRowsChanged;
     let updateHeaders = orderChanged || hiddenColsChanged || colsChanged;
@@ -354,7 +377,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
         return result;
       });
     }
-    if (!filterExternal && filterChanged && isNotEmpty) {
+    if (!filterExternal && filterChanged && dataIsNotEmpty) {
       const { data: filterData, value: filterValue } = filter || {};
       if (filterValue) {
         const defaultColFilter = (value: string | number | boolean) => (value ? value.toString().toLowerCase().indexOf(filterValue.toLowerCase()) >= 0 : false);
@@ -408,6 +431,20 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     if (updateMappedData) {
       const mappedData = this.mappedColumnsFromData(tempData, cols, localPagination, hiddenColumns, this.state);
       updateState.mappedData = mappedData;
+    }
+    if (updateMappedData || propSelectedRowsChanged) {
+      if (dataIsNotEmpty && propsSelectedRows) {
+        if (selectionMode === 'index') {
+          updateState.selectedRows = propsSelectedRows;
+          updateState.selectedRowsData = data.filter((p, i) => propsSelectedRows.indexOf(i) > -1);
+        } else if (selectionMode === 'property') {
+          updateState.selectedRows = propsSelectedRows;
+          updateState.selectedRowsData = data.filter((p) => propsSelectedRows.indexOf(p[selectionProperty]) > -1);
+        } else if (selectionMode === 'object') {
+          updateState.selectedRows = propsSelectedRows;
+          updateState.selectedRowsData = propsSelectedRows;
+        }
+      }
     }
     if (updateSearchButtons) {
       const searchButtons = SmartTable.searchButtonsFromColumns(cols, filterColumn, this.onFilterColumnChanged);
@@ -511,35 +548,102 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
   };
 
   onRowSelect = (data?: DataType, rowIdx?: number) => {
-    const { onRowSelect, select } = this.props;
+    const {
+      onRowSelect, select, selectionMode, selectionProperty,
+      selectedRows: propSelectedRows,
+    } = this.props;
+    let propRowSelectCallbackWasSuccess = true;
     if (onRowSelect) {
-      onRowSelect(data, rowIdx);
+      const result = onRowSelect(data, rowIdx);
+      if (result !== undefined) {
+        propRowSelectCallbackWasSuccess = result;
+      }
     }
-    if (select === 'single') {
-      this.setState({
-        selectedRow: rowIdx,
-      });
-    } else if (rowIdx !== undefined) {
-      const { selectedRows } = this.state;
-      const newRows = [...selectedRows];
-      newRows.push(rowIdx);
-      this.setState({
-        selectedRows: newRows,
-      });
+    const isDeselectSingleRow = !rowIdx;
+    const selectionManagedExternal = !!propSelectedRows;
+    const preventDeselect = isDeselectSingleRow && !propRowSelectCallbackWasSuccess;
+    const allowChange = !selectionManagedExternal && !preventDeselect;
+    if (allowChange) {
+      if (selectionMode === 'index') {
+        if (select === 'single') {
+          this.setState({
+            selectedRow: rowIdx,
+          });
+        } else if (rowIdx !== undefined) {
+          const { selectedRows } = this.state;
+          const newRows = [...selectedRows];
+          newRows.push(rowIdx);
+          this.setState({
+            selectedRows: newRows,
+          });
+        }
+      } else if (selectionMode === 'property') {
+        const selectedProp = data ? data[selectionProperty] : undefined;
+        if (select === 'single') {
+          this.setState({
+            selectedRow: selectedProp,
+          });
+        } else if (selectedProp !== undefined) {
+          const { selectedRows } = this.state;
+          const newRows = [...selectedRows];
+          newRows.push(selectedProp);
+          this.setState({
+            selectedRows: newRows,
+          });
+        }
+      } else if (selectionMode === 'object') {
+        if (select === 'single') {
+          this.setState({
+            selectedRowsData: data ? [data] : [],
+          });
+        } else if (data !== undefined) {
+          const { selectedRowsData } = this.state;
+          const newRows = [...selectedRowsData];
+          newRows.push(data);
+          this.setState({
+            selectedRowsData: newRows,
+          });
+        }
+      }
     }
   };
 
   onRowDeselect = (data: DataType, rowIdx: number) => {
-    const { selectedRows } = this.state;
-    const { onRowDeselect } = this.props;
+    const { selectedRows, selectedRowsData } = this.state;
+    const {
+      onRowDeselect, selectionMode, selectionProperty,
+      selectedRows: propSelectedRows,
+    } = this.props;
+    let deselect = true;
     if (onRowDeselect) {
-      onRowDeselect(data, rowIdx);
+      const result = onRowDeselect(data, rowIdx);
+      if (result !== undefined) {
+        deselect = result;
+      }
     }
-    const newRows = [...selectedRows];
-    newRows.splice(newRows.indexOf(rowIdx), 1);
-    this.setState({
-      selectedRows: [...newRows],
-    });
+    const selectionManagedExternal = !!propSelectedRows;
+    if (deselect && !selectionManagedExternal) {
+      if (selectionMode === 'index') {
+        const newRows = [...selectedRows];
+        newRows.splice(newRows.indexOf(rowIdx), 1);
+        this.setState({
+          selectedRows: [...newRows],
+        });
+      } else if (selectionMode === 'property') {
+        const selectedProp = data ? data[selectionProperty] : undefined;
+        const newRows = [...selectedRows];
+        newRows.splice(newRows.indexOf(selectedProp), 1);
+        this.setState({
+          selectedRows: [...newRows],
+        });
+      } else if (selectionMode === 'object') {
+        const newRows = [...selectedRowsData];
+        newRows.splice(newRows.indexOf(data), 1);
+        this.setState({
+          selectedRowsData: [...newRows],
+        });
+      }
+    }
     // if (onRowSelect) {
     //   onRowSelect(data);
     // }
@@ -609,12 +713,26 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     });
   };
 
+  rowIsSelected(row: DataType, rowIdx: number, state: SmartTableState) {
+    const { selectionMode } = this.props;
+    const { selectedRow, selectedRows, selectedRowsData } = state;
+    if (selectionMode === 'index') {
+      return (selectedRow !== undefined && selectedRow === rowIdx) || selectedRows.indexOf(rowIdx) > -1;
+    }
+    if (selectionMode === 'property') {
+      const { selectionProperty } = this.props;
+      const prop = row[selectionProperty];
+      return (selectedRow !== undefined && selectedRow === prop) || selectedRows.indexOf(prop) > -1;
+    }
+    return selectedRowsData.indexOf(row) > -1;
+  }
+
   mappedColumnsFromData = (data: DataType[], columns = this.getColumns(), pagination: any, hiddenColumns: string[], state: SmartTableState): ReactElement[] | ReactElement => {
     const {
       pageSize,
       activePage,
     } = pagination;
-    const { key, selectedRow, selectedRows } = state;
+    const { key } = state;
     let mappedColumns: ReactElement[] | ReactElement;
     const colsFiltered = columns.filter((p) => hiddenColumns.find((p2) => p2 === p.data) === undefined);
     if (data) {
@@ -625,24 +743,26 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
         temp = temp
           .slice(pageSize * activePage, pageSize * (activePage + 1));
       }
+      const indexOffset = pageSize * activePage;
       mappedColumns = temp
         .map((row, rowIdx) => {
-          const isSelected = (selectedRow !== undefined && selectedRow === rowIdx) || selectedRows.indexOf(rowIdx) > -1;
-          let callback = () => { this.onRowSelect(row, rowIdx); };
+          const calculatedRowIndex = rowIdx + indexOffset;
+          const isSelected = this.rowIsSelected(row, calculatedRowIndex, state);
+          let callback = () => { this.onRowSelect(row, calculatedRowIndex); };
           if (isSelected) {
             if (select === 'single') {
               callback = () => { this.onRowSelect(); };
             } else {
-              callback = () => { this.onRowDeselect(row, rowIdx); };
+              callback = () => { this.onRowDeselect(row, calculatedRowIndex); };
             }
           }
           return (
             <tr
               className={isSelected ? `${classPreFix}-row-selected` : ''}
-              key={`${key}-${rowIdx}`}
+              key={`${key}-${calculatedRowIndex}`}
               onClick={callback}
             >
-              {colsFiltered.map((col) => SmartTable.mapCell(row[col.data], col, row, rowIdx, key))}
+              {colsFiltered.map((col) => SmartTable.mapCell(row[col.data], col, row, calculatedRowIndex, key))}
             </tr>
           );
         });
