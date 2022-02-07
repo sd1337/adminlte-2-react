@@ -9,6 +9,7 @@ import * as Inputs from './Inputs';
 import Button from './Button';
 import Divider from './Divider';
 import Pagination from './Pagination';
+import { arrayEquals } from '../Utilities';
 
 import { ColumnType, DataType } from './TableProps';
 import './SmartTable.css';
@@ -47,7 +48,8 @@ interface SmartTableProps {
   select?: 'single' | 'multiple'
   selectedRows?: any[],
   selectionMode: 'index' | 'property' | 'object',
-  selectionProperty: string
+  selectionProperty: string,
+  simpleCompare: boolean
 }
 
 interface SmartTableState {
@@ -168,6 +170,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     select: 'single',
     selectionMode: 'index',
     selectionProperty: 'id',
+    simpleCompare: true,
   };
 
   constructor(props: SmartTableProps) {
@@ -244,10 +247,8 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     this.onFilterColumnChanged = this.onFilterColumnChanged.bind(this);
     const newState = {
       key,
-      // columns: columns || [],
       headers: newHeaders,
       searchButtons: newSearchButtons,
-      // searchButtons: [<a className={`${classPreFix}-filter-active ${classPreFix}-filter`}>All</a>],
       columns: cols,
       filterColumn,
       placeholder: 'Search',
@@ -265,12 +266,10 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       selectedRowsData: stateSelectedRowsData,
     };
     const mapped = this.mappedColumnsFromData(data || [], cols || [], pagination, hiddenColumns, newState);
-    // newState.mappedData =
     this.state = {
       ...newState,
       mappedData: mapped,
     };
-    // this.state.mappedData = mapped;
     this.rowIsSelected = this.rowIsSelected.bind(this);
   }
 
@@ -288,7 +287,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     } = prevProps;
     const {
       data, columns, pageSize, filterExternal, totalElements, selectionMode,
-      selectionProperty, selectedRows: propsSelectedRows,
+      selectionProperty, selectedRows: propsSelectedRows, simpleCompare,
     } = this.props;
     const {
       key, filterColumn, columns: stateCols, filter, pagination,
@@ -298,8 +297,12 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     const colsExists = (columns && columns.length > 0) || (stateCols && stateCols.length > 0);
     const colsChanged = stateCols !== prevColumns;
     const dataIsNotEmpty = data && data.length > 0;
-    const dataIsControlledExternal = totalElements !== undefined;
-    const dataChanged = (!dataIsControlledExternal && (prevData !== data || ((prevData || []).length === 0 && dataIsNotEmpty))) || totalElements !== prevTotalElements;
+    let dataChanged;
+    if (simpleCompare) {
+      dataChanged = (prevData !== data || ((prevData || []).length === 0 && dataIsNotEmpty)) || totalElements !== prevTotalElements;
+    } else {
+      dataChanged = !arrayEquals(prevData, data) || totalElements !== prevTotalElements;
+    }
     const filterColumnChanged = filterColumn !== prevFilterColumn;
     const filterChanged = prevFilter !== filter || filterColumnChanged;
     const pageChanged = activePage !== prevActivePage;
@@ -307,7 +310,6 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     const updatePagination = dataChanged || filterChanged || pageChanged || pagination.pageSize !== pageSize;
     const orderChanged = prevOrder !== order || dataChanged;
     const hiddenColsChanged = hiddenColumns !== prevHiddenColumns;
-    const resetSelectedItem = dataChanged || orderChanged;
     const selectedRowsChanged = prevSelectedRows.length !== selectedRows.length || selectedRows.filter((p: number | string) => prevSelectedRows.indexOf(p) === -1).length > 0;
     const propSelectionIsNotUndefined = Array.isArray(propsSelectedRows) && Array.isArray(prevPropsSelectedRows);
     const propSelectedRowsChanged = propSelectionIsNotUndefined && (prevPropsSelectedRows.length !== propsSelectedRows.length || selectedRows.filter((p: number | string) => propsSelectedRows.indexOf(p) === -1).length > 0);
@@ -316,9 +318,6 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     let updateHeaders = orderChanged || hiddenColsChanged || colsChanged;
     let localPagination = pagination;
     const updateState: any = {};
-    if (resetSelectedItem) {
-      updateState.selectedRow = undefined;
-    }
     let cols = stateCols;
     if (!colsExists && dataChanged) {
       cols = SmartTable.columnsFromData(data);

@@ -27,6 +27,7 @@ interface SmartTableProps {
     selectedRows?: any[];
     selectionMode: 'index' | 'property' | 'object';
     selectionProperty: string;
+    simpleCompare: boolean;
 }
 interface SmartTableState {
     key: string;
@@ -78,6 +79,7 @@ declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
         select: string;
         selectionMode: string;
         selectionProperty: string;
+        simpleCompare: boolean;
     };
     constructor(props: SmartTableProps);
     componentDidUpdate(prevProps: SmartTableProps, prevState: SmartTableState): void;
