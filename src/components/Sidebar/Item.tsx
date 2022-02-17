@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import uuidv4 from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -68,7 +68,7 @@ const Item: ItemComponent = ({
     } else {
       localChildren = children;
     }
-    localChildren = localChildren.map((p: any) => React.cloneElement(p as any, { key: p.props.to })) as any;
+    localChildren = localChildren.filter(p => p && p instanceof Component).map((p: any) => React.cloneElement(p as any, { key: p.props.to })) as any;
     activeChild = !!(localChildren.find((p: any) => isActiveItem({
       history,
       link: p.props.to || p.props.link,
