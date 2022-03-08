@@ -77,7 +77,7 @@ class Date extends Component<DateProps, DateState> {
   componentDidUpdate() {
     const { value } = this.props;
     const { internalValue } = this.state;
-    if ((value !== undefined && (internalValue !== value) && (internalValue && value && internalValue?.diff(value) > 0))) {
+    if ((value !== undefined && (internalValue !== value) && (internalValue && value && Math.abs(internalValue?.diff(value)) > 0))) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState({ internalValue: Date.toMoment(value) });
     }
