@@ -158,7 +158,6 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.tsx', '.ts'],
   },
-  // devtool: 'source-map',
   devtool: 'source-map',
   plugins: [
     new webpack.ProvidePlugin({
