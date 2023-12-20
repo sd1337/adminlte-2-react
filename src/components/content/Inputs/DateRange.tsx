@@ -1,4 +1,4 @@
-import React, { Component, FormEventHandler } from 'react';
+import { Component, FormEventHandler } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePicker, DateRangePickerShape } from 'react-dates';

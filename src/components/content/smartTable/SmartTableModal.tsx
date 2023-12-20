@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import Button from '../Button';
 

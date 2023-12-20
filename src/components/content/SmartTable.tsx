@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/no-array-index-key */
-import React, { Component, ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as Inputs from './Inputs';
@@ -82,7 +82,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     key: string,
     order: SmartOrderType[],
     orderChanged: SmartTableOrderChangedCallback,
-    setFilterValue: (temp: any) => void,
+    _setFilterValue: (temp: any) => void,
     hiddenColumns: string[]): ReactElement[] {
     const sortIcons = {
       up: <FontAwesomeIcon icon={['fas', 'sort-up']} />,
@@ -234,7 +234,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     if (selectedRows && data) {
       if (selectionMode === 'index') {
         stateSelectedRows = stateSelectedRows.concat(selectedRows);
-        stateSelectedRowsData = stateSelectedRowsData.concat(data.filter((p, i) => selectedRows.indexOf(i) > -1));
+        stateSelectedRowsData = stateSelectedRowsData.concat(data.filter((_p, i) => selectedRows.indexOf(i) > -1));
       } else if (selectionMode === 'property') {
         stateSelectedRows = stateSelectedRows.concat(selectedRows);
         stateSelectedRowsData = stateSelectedRowsData.concat(data.filter((p) => selectedRows.indexOf(p[selectionProperty]) > -1));
@@ -435,7 +435,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       if (dataIsNotEmpty && propsSelectedRows) {
         if (selectionMode === 'index') {
           updateState.selectedRows = propsSelectedRows;
-          updateState.selectedRowsData = data.filter((p, i) => propsSelectedRows.indexOf(i) > -1);
+          updateState.selectedRowsData = data.filter((_p, i) => propsSelectedRows.indexOf(i) > -1);
         } else if (selectionMode === 'property') {
           updateState.selectedRows = propsSelectedRows;
           updateState.selectedRowsData = data.filter((p) => propsSelectedRows.indexOf(p[selectionProperty]) > -1);

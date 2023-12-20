@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 import InputWrapper from './InputWrapper';
 import { IInputProps, SelectOptionType } from './InputProps';

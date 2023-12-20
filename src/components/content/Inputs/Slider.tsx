@@ -11,6 +11,7 @@ import 'rc-tooltip/assets/bootstrap.css';
 import { Colors } from '../../PropTypes';
 import './Slider.css';
 
+// @ts-ignore
 const { Handle, Range } = RcSlider;
 
 const trackStyle: React.CSSProperties = {

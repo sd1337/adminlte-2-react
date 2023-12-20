@@ -1,6 +1,4 @@
-/* eslint-disable */
-/* TODO: fix linter errors */
-import React, { Component } from 'react';
+import { Component } from 'react';
 
 interface Props {
 

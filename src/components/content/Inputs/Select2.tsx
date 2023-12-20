@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import $ from 'jquery';
 import 'select2/dist/js/select2';
 import 'select2/dist/css/select2.css';

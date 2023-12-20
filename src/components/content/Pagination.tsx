@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import { Pagination as BsPagination } from 'react-bootstrap';
 import PaginationItem from 'react-bootstrap/lib/PaginationItem';
 import { Dictionary } from '../PropTypes';

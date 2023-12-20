@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import {
   TabContent as BsTabContent, Nav, NavItem, TabContainer,
 } from 'react-bootstrap';

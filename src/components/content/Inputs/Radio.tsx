@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import uuidv4 from 'uuid';
 import InputWrapper from './InputWrapper';
 

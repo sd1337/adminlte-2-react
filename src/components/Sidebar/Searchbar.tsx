@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, Component, MouseEventHandler } from 'react';
+import { ChangeEventHandler, Component, MouseEventHandler } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface SearchbarProps {

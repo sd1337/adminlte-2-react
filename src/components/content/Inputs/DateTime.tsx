@@ -1,4 +1,4 @@
-import React, { Component, FocusEventHandler, FormEventHandler } from 'react';
+import { Component, FocusEventHandler, FormEventHandler } from 'react';
 import ReactDateTime, { DatetimepickerProps } from 'react-datetime';
 import moment, { Moment } from 'moment';
 import 'react-datetime/css/react-datetime.css';

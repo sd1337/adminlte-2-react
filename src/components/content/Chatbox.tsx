@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import uuidv4 from 'uuid';
 
 import Box from './Box';

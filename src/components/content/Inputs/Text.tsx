@@ -1,4 +1,4 @@
-import React, {
+import {
   Component,
 } from 'react';
 import { IInputProps } from './InputProps';

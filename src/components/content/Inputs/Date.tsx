@@ -1,4 +1,4 @@
-import React, { Component, FormEventHandler, ReactNode } from 'react';
+import { Component, FormEventHandler, ReactNode } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePicker, SingleDatePickerShape } from 'react-dates';

@@ -1,4 +1,4 @@
-import React, { Component, ReactElement } from 'react';
+import { Component, ReactElement } from 'react';
 import uuidv4 from 'uuid/v4';
 import 'icheck';
 import 'icheck/skins/all.css';

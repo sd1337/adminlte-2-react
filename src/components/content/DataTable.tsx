@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOMServer from 'react-dom/server';
+import uuidv4 from 'uuid/v4';
 import { Row, Col } from 'react-bootstrap';
 
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
@@ -10,7 +11,6 @@ import './DataTable.css';
 import { arrayEquals } from '../Utilities';
 import { ColumnType, DataType, SelectedRowType } from './TableProps';
 
-const uuidv4 = require('uuid/v4');
 const $ = require('jquery');
 $.DataTable = require('datatables.net-bs');
 require('datatables.net-select-bs');
@@ -353,7 +353,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
       setDataTableRef(api);
     }
     if (onSelect) {
-      api.on('select', (e: any, dt: any) => {
+      api.on('select', (_e: any, dt: any) => {
         if (!this.disableRowSelectEvent) {
           const data2 = dt.data();
           onSelect(data2);
@@ -361,7 +361,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
       });
     }
     if (onDeselect) {
-      api.on('deselect', (e: any, dt: any) => {
+      api.on('deselect', (_e: any, dt: any) => {
         const data2 = dt.data();
         onDeselect(data2);
       });
@@ -376,7 +376,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     }
 
     if (onOrderChange) {
-      api.on('order.dt', (e: any, { aaSorting: order }: any) => {
+      api.on('order.dt', (_e: any, { aaSorting: order }: any) => {
         if (initialized) {
           const { order: oldOrder } = this;
           if (!arrayEquals(order, oldOrder)) {

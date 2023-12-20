@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import uuidv4 from 'uuid';
 import { arrayEquals } from '../Utilities';
 import { ColumnType, DataType, SelectedRowType } from './TableProps';

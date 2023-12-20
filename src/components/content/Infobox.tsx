@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+// @ts-ignore
 import Ionicon from 'react-ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Infobox.css';

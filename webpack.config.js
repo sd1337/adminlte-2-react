@@ -143,7 +143,7 @@ module.exports = {
     '@fortawesome/free-regular-svg-icons': '@fortawesome/free-regular-svg-icons',
     '@fortawesome/react-fontawesome': '@fortawesome/react-fontawesome',
     // 'datatables.net': 'datatables.net',
-    fullcalendar: 'fullcalendar',
+    // fullcalendar: 'fullcalendar',
     // icheck: 'icheck',
     // jquery: 'jQuery',
     // 'jquery-sparkline': 'jquery-sparkline',

@@ -1,5 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 
+// @ts-ignore
 import Ionicon from 'react-ionicons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Infobox2.css';

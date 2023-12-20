@@ -6,7 +6,7 @@ import Select from './Inputs/Select';
 import Select2 from './Inputs/Select2';
 import Date from './Inputs/Date';
 import DateRange from './Inputs/DateRange';
-import ICheck from './Inputs/ICheck';
+// import ICheck from './Inputs/ICheck';
 import DateTime from './Inputs/DateTime';
 import ImportWrapper from './Inputs/InputWrapper';
 
@@ -28,7 +28,7 @@ export {
   Select2,
   Date,
   DateRange,
-  ICheck,
+  // ICheck,
   DateTime,
   ImportWrapper,
 };

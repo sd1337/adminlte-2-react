@@ -6,7 +6,8 @@
     "jest": true
   },
   "extends": [
-    "airbnb"
+    "airbnb",
+    "airbnb-typescript"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
