@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component, ReactElement, ReactNode } from 'react';
 import {
   TabContent as BsTabContent, Nav, NavItem, TabContainer,
 } from 'react-bootstrap';
@@ -6,13 +6,11 @@ import uuidv4 from 'uuid';
 import TabTitle from './TabTitle';
 import TabContent from './TabContent';
 
-type TabContentType = typeof TabContent;
-
 interface TabsProps {
   activeKey?: string,
   defaultActiveKey?: string,
   onSelect?: Function,
-  children: TabContentType | TabContentType[],
+  children: ReactNode | ReactNode[],
   pullRight?: boolean,
   contentHeight: number | string,
   mountOnEnter?: boolean,
@@ -67,7 +65,7 @@ class Tabs extends Component<TabsProps, TabsState> {
       onChange,
     } = this.props;
     const { stateActiveKey } = this.state;
-    const localChildren: ReactElement[] = children && (children as []).length ? (children as []) : [children as ReactElement] as ReactElement[];
+    const localChildren: ReactElement[] = children && (children as []).length ? (children as []) : [children as any] as ReactElement[];
     return (
       <TabContainer
         id={id}

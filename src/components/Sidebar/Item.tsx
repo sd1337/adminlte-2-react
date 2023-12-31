@@ -117,7 +117,7 @@ const Item: ItemComponent = ({
       {actualComponent}
       {hasChildren && (
         <ul className="treeview-menu" style={{ display: activeChild ? 'block' : 'none' }}>
-          {children}
+          {children as any}
         </ul>
       )}
     </li>

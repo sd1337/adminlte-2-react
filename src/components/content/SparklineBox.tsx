@@ -1,4 +1,5 @@
 import React from 'react';
+import Sparkbar from './Sparkbar';
 
 import { Colors } from '../PropTypes';
 
@@ -12,10 +13,10 @@ interface SparklineBoxProps {
 type SparklineBoxComponent = React.FC<SparklineBoxProps>;
 
 const SparklineBox: SparklineBoxComponent = ({
-  header, text
+  header, text, chartData, color,
 }: SparklineBoxProps) => (
   <div className="description-block margin-bottom">
-    {/*<Sparkbar padding color={`${color || '#fff'}`} data={chartData} />*/}
+    <Sparkbar padding color={`${color || '#fff'}`} data={chartData} />
     <h5 className="description-header">{header}</h5>
     <span className="description-text">{text}</span>
   </div>

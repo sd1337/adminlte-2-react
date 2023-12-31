@@ -1,4 +1,4 @@
-import React, {
+import {
   AnimationEventHandler, ClipboardEventHandler, CompositionEventHandler, DragEventHandler, FocusEventHandler,
   FormEventHandler, KeyboardEventHandler, MouseEventHandler, PointerEventHandler, ReactEventHandler, ReactNode,
   TouchEventHandler, TransitionEventHandler, UIEventHandler, WheelEventHandler,
@@ -95,6 +95,8 @@ export interface IInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaEl
   onProgressCapture?: ReactEventHandler<any>;
   onRateChange?: ReactEventHandler<any>;
   onRateChangeCapture?: ReactEventHandler<any>;
+  onResize?: ReactEventHandler<any>;
+  onResizeCapture?: ReactEventHandler<any>;
   onSeeked?: ReactEventHandler<any>;
   onSeekedCapture?: ReactEventHandler<any>;
   onSeeking?: ReactEventHandler<any>;

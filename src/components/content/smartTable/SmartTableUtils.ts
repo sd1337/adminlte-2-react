@@ -1,5 +1,5 @@
-const getSortDirection = (sortObject: any): 'none' | 'asc' | 'desc' => {
-  let param: 'none' | 'asc' | 'desc' = 'none';
+const getSortDirection = (sortObject: any) => {
+  let param = 'none';
   if (sortObject) {
     let isAsc;
     let isDesc;

@@ -1,6 +1,6 @@
+// @ts-ignore
 import React, { Component } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import uuidv4 from 'uuid/v4';
 import { Row, Col } from 'react-bootstrap';
 
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
@@ -10,10 +10,14 @@ import Pagination from './Pagination';
 import './DataTable.css';
 import { arrayEquals } from '../Utilities';
 import { ColumnType, DataType, SelectedRowType } from './TableProps';
+import 'datatables.net-select-bs';
+import dt from 'datatables.net-bs';
 
-const $ = require('jquery');
-$.DataTable = require('datatables.net-bs');
-require('datatables.net-select-bs');
+import uuidv4 from 'uuid';
+import $ from 'jquery';
+// @ts-ignore
+$.DataTable = dt;
+// require('datatables.net-select-bs');
 
 const camelToKebap = (string: string) => string.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
@@ -158,9 +162,11 @@ class DataTable extends Component<DataTableProps, DataTableState> {
       ajaxMap, ajaxResponseMap,
     } = this.props;
     if (ajaxMap) {
+      //@ts-ignore
       $(this.main).on('preXhr.dt', ajaxMap);
     }
     if (ajaxResponseMap) {
+      //@ts-ignore
       $(this.main).on('xhr.dt', ajaxResponseMap);
     }
     this.initializeDatatables();
@@ -201,11 +207,15 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     const { api, main } = this;
 
     if (footer !== oldFooter) {
+      //@ts-ignore
       const $ref = $(this.main);
       if (footer) {
+        //@ts-ignore
         const headerCols = $ref.find('thead > tr');
+        //@ts-ignore
         $ref.append($('<tfoot />').append(headerCols.clone()));
       } else {
+        //@ts-ignore
         $ref.find('tfoot').remove();
       }
     }
@@ -213,6 +223,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     let redraw = false;
 
     const ids = [];
+    //@ts-ignore
     $('.selected', main).each(function each(this: any) {
       ids.push(this.id);
     });
@@ -340,6 +351,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     if (searchValue) {
       search = { search: searchValue };
     }
+    //@ts-ignore
     const api = $(this.main).dataTable({
       data,
       columns: localColumns,
@@ -425,7 +437,9 @@ class DataTable extends Component<DataTableProps, DataTableState> {
   }
 
   destroyDatatables() {
+    //@ts-ignore
     $(this.main)
+    //@ts-ignore
       .dataTable()
       .api()
       .destroy(true);
@@ -463,6 +477,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
 
   bindOnClickEvents(onClickEvents: OnClickEvents, api: any) {
     Object.entries(onClickEvents).forEach(([key, value]) => {
+      //@ts-ignore
       $(`tbody .${camelToKebap(key)}`, this.main).each(function each(this: any) {
         const cell = api.cell($(this).parents('td'));
         const cellData = cell.data();

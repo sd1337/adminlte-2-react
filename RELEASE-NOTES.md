@@ -1,3 +1,7 @@
+## [0.3.0-beta.1](https://github.com/sd1337/adminlte-2-react/compare/v0.2.0...v0.3.0-beta.1) (2023-12-31)
+
+> Migrated from webpack to vite, updated linter, first beta release
+
 ## [0.2.0](https://github.com/sd1337/adminlte-2-react/compare/v0.1.31...v0.2.0) (2021-02-05)
 
 > Big leap for the library as it is now typescript, improves type inspection when using the lib, fixed several potential bugs caused my inproper type conversions

@@ -17,7 +17,7 @@ interface ContentProps extends RouteComponentProps {
   modalSize?: ReactBootstrap.Sizes,
   modalType?: Types,
   modalCloseButton?: boolean,
-
+  children: ReactNode | ReactNode[],
 }
 
 class Content extends Component<ContentProps, {}> {

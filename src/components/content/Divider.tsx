@@ -1,5 +1,3 @@
-function Divider() {
-  return <li className="divider" />;
-}
+const Divider = () => (<li className="divider" />);
 
 export default Divider;

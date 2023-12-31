@@ -56,7 +56,7 @@ class Sidebar extends Component<SidebarProps, SidebarState> {
       localChildren = [];
     }
     if (searchbarFilter) {
-      const localSearchbar: Searchbar = localChildren.find((p) => p instanceof Searchbar) as Searchbar;
+      const localSearchbar: Searchbar = localChildren.find((p) => p instanceof Searchbar) as any;
       if (localSearchbar) {
         const index = localChildren.findIndex((p) => p instanceof Searchbar);
         const temp = [];

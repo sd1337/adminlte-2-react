@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 /* eslint-disable global-require */
-import React, { Component, ReactElement } from 'react';
+import React, { Component, ReactElement, ReactNode } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,10 +18,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import jQuery from 'jquery';
 
 import '../css/bootstrap.min.css';
-import 'source-sans-pro/source-sans-pro.css';
+import 'source-sans/source-sans-3.css';
 import '../adminlte/css/AdminLTE.css';
+import '../adminlte/css/skins/_all-skins.css';
 
-import 'bootstrap';
+// import * as bootstrap from 'bootstrap';
+
+// function defineJQueryPlugin(plugin: any) {
+//   const name = plugin.NAME;
+//   const JQUERY_NO_CONFLICT = $.fn[name];
+//   $.fn[name] = plugin.jQueryInterface;
+//   $.fn[name].Constructor = plugin;
+//   $.fn[name].noConflict = () => {
+//     $.fn[name] = JQUERY_NO_CONFLICT;
+//     return plugin.jQueryInterface;
+//   }
+// }
+
+// bootstrap.trans
+
 import '../adminlte/js/adminlte';
 import 'jquery-sparkline';
 
@@ -38,7 +53,7 @@ import DescriptionBlock from './content/DescriptionBlock';
 import ProgressGroup from './content/ProgressGroup';
 import Button from './content/Button';
 import ButtonGroup from './content/ButtonGroup';
-// import DataTable from './content/DataTable';
+import DataTable from './content/DataTable';
 import Tabs from './content/Tabs';
 import TabContent from './content/TabContent';
 import Description from './content/Description';
@@ -48,6 +63,7 @@ import SparklineBox from './content/SparklineBox';
 import Chatbox from './content/Chatbox';
 import Memberbox from './content/Memberbox';
 import SimpleTable from './content/SimpleTable';
+import Sparkbar from './content/Sparkbar';
 import NavList from './content/NavList';
 import NavListItem from './content/NavListItem';
 import ProductList from './content/ProductList';
@@ -72,8 +88,6 @@ import ButtonToolbar from './content/ButtonToolbar';
 import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
-
-import '../adminlte/css/skins/skin-blue.css';
 
 library.add(fab, fas, far);
 
@@ -111,47 +125,6 @@ class AdminLTE extends Component<Props, {}> {
       document.body.className += ` skin-${theme} sidebar-mini`;
     }
     if (browserTitle) document.title = browserTitle;
-    // switch (theme) {
-    //   case 'black-light':
-    //     require('../adminlte/css/skins/skin-black-light.css');
-    //     break;
-    //   case 'black':
-    //     require('../adminlte/css/skins/skin-black.css');
-    //     break;
-    //   case 'blue':
-    //     require('../adminlte/css/skins/skin-blue.css');
-    //     break;
-    //   case 'blue-light':
-    //     require('../adminlte/css/skins/skin-blue-light.css');
-    //     break;
-    //   case 'green':
-    //     require('../adminlte/css/skins/skin-green.css');
-    //     break;
-    //   case 'green-light':
-    //     require('../adminlte/css/skins/skin-green-light.css');
-    //     break;
-    //   case 'purple':
-    //     require('../adminlte/css/skins/skin-purple.css');
-    //     break;
-    //   case 'purple-light':
-    //     require('../adminlte/css/skins/skin-purple-light.css');
-    //     break;
-    //   case 'red':
-    //     require('../adminlte/css/skins/skin-red.css');
-    //     break;
-    //   case 'red-light':
-    //     require('../adminlte/css/skins/skin-red-light.css');
-    //     break;
-    //   case 'yellow':
-    //     require('../adminlte/css/skins/skin-yellow.css');
-    //     break;
-    //   case 'yellow-light':
-    //     require('../adminlte/css/skins/skin-yellow-light.css');
-    //     break;
-    //   default:
-    //     require('../adminlte/css/skins/skin-blue.css');
-    //     break;
-    // }
     const docReady = (jQuery as any).isReady;
     if (docReady) {
       (jQuery('body') as any).layout();
@@ -223,8 +196,8 @@ class AdminLTE extends Component<Props, {}> {
       }
       return init;
     }, []);
-    const nonModalRoutes: Route[] = [];
-    const modalRoutes: Route[] = [];
+    const nonModalRoutes: ReactNode[] = [];
+    const modalRoutes: ReactNode[] = [];
     content
       .filter(
         (p: React.ReactElement) => (p.props && p.props.path)
@@ -350,7 +323,7 @@ export {
   DescriptionBlock,
   ProgressGroup,
   Button,
-  // DataTable,
+  DataTable,
   Tabs,
   TabContent,
   Description,
@@ -361,6 +334,7 @@ export {
   Chatbox,
   Memberbox,
   SimpleTable,
+  Sparkbar,
   NavListItem,
   NavList,
   ProductList,

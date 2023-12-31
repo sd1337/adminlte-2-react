@@ -6,7 +6,7 @@ export default function asyncComponent(importComponent: Function) {
   }
 
   interface AsyncComponentState {
-    component?: Function,
+    component?: any,
   }
 
   class AsyncComponent extends Component<AsyncComponentProps, AsyncComponentState> {

@@ -19,6 +19,7 @@ import { Moment } from 'moment';
 import * as MomentNS from 'moment';
 import { MouseEventHandler } from 'react';
 import { PointerEventHandler } from 'react';
+import PropTypes from 'prop-types';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { ReactEventHandler } from 'react';
@@ -228,6 +229,8 @@ export { ButtonToolbar }
 
 export declare class Calendar extends Component<CalendarProps, CalendarState> {
     state: CalendarState;
+    componentDidMount(): void;
+    main: HTMLDivElement | null;
     render(): JSX.Element;
 }
 
@@ -356,7 +359,9 @@ declare type ColumnType = {
     render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
 };
 
-export declare const Content: ComponentClass<Pick<ContentProps, "title" | "browserTitle" | "subTitle" | "homeRoute" | "modal" | "modalCloseTo" | "show" | "modalFooter" | "onHide" | "modalSize" | "modalType" | "modalCloseButton">, any> & WithRouterStatics<typeof Content_2>;
+declare type CombinedOptionType = string | number | SelectOptionType;
+
+export declare const Content: ComponentClass<Pick<ContentProps, "children" | "title" | "browserTitle" | "subTitle" | "homeRoute" | "modal" | "modalCloseTo" | "show" | "modalFooter" | "onHide" | "modalSize" | "modalType" | "modalCloseButton">, any> & WithRouterStatics<typeof Content_2>;
 
 declare class Content_2 extends Component<ContentProps, {}> {
     static defaultProps: {
@@ -392,6 +397,7 @@ declare interface ContentProps extends RouteComponentProps {
     modalSize?: ReactBootstrap.Sizes;
     modalType?: Types_2;
     modalCloseButton?: boolean;
+    children: ReactNode | ReactNode[];
 }
 
 export declare class ControlSidebar extends Component<Props_3, State> {
@@ -402,6 +408,89 @@ export declare class ControlSidebar extends Component<Props_3, State> {
 declare class ControlSidebarEntry extends Component<Props_4, State_2> {
     state: {};
     render(): JSX.Element;
+}
+
+export declare class DataTable extends Component<DataTableProps, DataTableState> {
+    static defaultProps: {
+        id: undefined;
+        ajaxMap: null;
+        ajaxResponseMap: null;
+        data: null;
+        columns: null;
+        setDataTableRef: null;
+        onSelect: null;
+        onDeselect: null;
+        footer: boolean;
+        hover: boolean;
+        border: boolean;
+        condensed: boolean;
+        selectedRows: null;
+        onClickEvents: null;
+        page: null;
+        totalElements: null;
+        pageSize: null;
+        onPageChange: null;
+        onOrderChange: null;
+        hasMore: undefined;
+        order: undefined;
+        onSearchChange: undefined;
+        searchValue: undefined;
+    };
+    constructor(props: DataTableProps);
+    state: DataTableState;
+    componentDidMount(): void;
+    shouldComponentUpdate({ data, selectedRows, footer, options, page: oldPage, order, totalElements, hasMore, searchValue, }: DataTableProps, { order: oldStateOrder }: DataTableState): boolean;
+    componentDidUpdate({ data: oldData, footer: oldFooter, selectedRows: oldSelectedRows, order: oldOrder, hasMore: oldHasMore, totalElements: oldTe, searchValue: oldSearchValue, }: DataTableProps): void;
+    componentWillUnmount(): void;
+    setActivePage(page: number, skipDraw?: boolean): void;
+    order: any | undefined;
+    controlled: boolean | undefined;
+    main: HTMLTableElement | null;
+    api: any | undefined;
+    disableRowSelectEvent: boolean;
+    selectRows(dataChanged?: boolean, oldSelectedRows?: SelectedRowType): void;
+    initializeDatatables(): void;
+    orderToExternal(order: any): any;
+    orderToInternal(order?: OrderType[]): any[][] | undefined;
+    destroyDatatables(): void;
+    createDomObject(): JSX.Element;
+    bindOnClickEvents(onClickEvents: OnClickEvents, api: any): void;
+    renderPagination(): JSX.Element;
+    render(): JSX.Element;
+}
+
+declare interface DataTableProps {
+    id?: string;
+    options: any;
+    ajaxMap?: Function;
+    ajaxResponseMap?: Function;
+    data?: DataType[];
+    columns?: ColumnType[];
+    setDataTableRef?: Function;
+    onSelect?: Function;
+    onDeselect?: Function;
+    footer?: boolean;
+    hover?: boolean;
+    border?: boolean;
+    condensed?: boolean;
+    selectedRows: SelectedRowType;
+    onClickEvents?: OnClickEvents;
+    page?: number;
+    totalElements?: number;
+    pageSize?: number;
+    onPageChange?: (value: number) => void;
+    onOrderChange?: Function;
+    hasMore?: boolean;
+    order?: OrderType[];
+    onSearchChange?: Function;
+    searchValue?: string;
+}
+
+declare interface DataTableState {
+    options: any;
+    page: number;
+    domNode?: JSX.Element;
+    order?: OrderType;
 }
 
 declare type DataType = {
@@ -580,7 +669,7 @@ declare type Dictionary = {
     [fieldName: string]: any;
 };
 
-export declare function Divider(): JSX.Element;
+export declare const Divider: () => JSX.Element;
 
 declare const Entry: EntryComponent;
 
@@ -622,22 +711,22 @@ declare interface GenericSliderProps {
     included?: boolean;
     disabled?: boolean;
     reverse?: boolean;
-    trackStyle?: React_2.CSSProperties | React_2.CSSProperties[];
-    handleStyle?: React_2.CSSProperties | React_2.CSSProperties[];
+    trackStyle?: React.CSSProperties | React.CSSProperties[];
+    handleStyle?: React.CSSProperties | React.CSSProperties[];
     autoFocus?: boolean;
-    onFocus?: (e: React_2.FocusEvent<HTMLDivElement>) => void;
-    onBlur?: (e: React_2.FocusEvent<HTMLDivElement>) => void;
+    onFocus?: (e: React.FocusEvent<HTMLDivElement>) => void;
+    onBlur?: (e: React.FocusEvent<HTMLDivElement>) => void;
     className?: string;
-    marks?: Record<number, React_2.ReactNode | {
-        style?: React_2.CSSProperties;
+    marks?: Record<number, React.ReactNode | {
+        style?: React.CSSProperties;
         label?: string;
     }>;
     dots?: boolean;
-    maximumTrackStyle?: React_2.CSSProperties;
-    style?: React_2.CSSProperties;
-    railStyle?: React_2.CSSProperties;
-    dotStyle?: React_2.CSSProperties;
-    activeDotStyle?: React_2.CSSProperties;
+    maximumTrackStyle?: React.CSSProperties;
+    style?: React.CSSProperties;
+    railStyle?: React.CSSProperties;
+    dotStyle?: React.CSSProperties;
+    activeDotStyle?: React.CSSProperties;
     draggableTrack?: boolean;
 }
 
@@ -647,7 +736,7 @@ declare interface HandleProps {
     vertical?: boolean;
     reverse?: boolean;
     offset?: number;
-    style?: React_2.CSSProperties;
+    style?: React.CSSProperties;
     disabled?: boolean;
     min?: number;
     max?: number;
@@ -656,13 +745,57 @@ declare interface HandleProps {
     ariaLabel?: string;
     ariaLabelledBy?: string;
     ariaValueTextFormatter?: (val: number) => string;
-    onMouseEnter?: React_2.MouseEventHandler;
-    onMouseLeave?: React_2.MouseEventHandler;
+    onMouseEnter?: React.MouseEventHandler;
+    onMouseLeave?: React.MouseEventHandler;
 }
 
-declare function Header({ text }: Props_2): JSX.Element;
+declare const Header: ({ text }: Props_2) => JSX.Element;
 
-declare interface IInputProps extends React_2.TextareaHTMLAttributes<HTMLTextAreaElement>, React_2.DetailedHTMLProps<React_2.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, InputWrapperProps {
+declare class ICheck_2 extends Component<ICheckProps, ICheckState> {
+    static defaultProps: {
+        options: string[];
+        name: string;
+        disabled: boolean;
+        value: undefined;
+        defaultValue: undefined;
+        onChange: null;
+    };
+    constructor(props: ICheckProps);
+    state: ICheckState;
+    componentDidMount(): void;
+    componentDidUpdate({ value: oldValue, disabled: oldDisabled, options: oldOptions }: ICheckProps): void;
+    componentWillUnmount(): void;
+    onChange(e: any): void;
+    ref: Dictionary;
+    $ref: any;
+    mapAllOptions: (options: CombinedOptionType | CombinedOptionType[]) => ReactElement[];
+    mapOptions: (options: CombinedOptionType | CombinedOptionType[]) => ICheckRadioOptionType[];
+    mapSingleOption: (p: CombinedOptionType) => ICheckRadioOptionType;
+    optionToJSXComponent: ({ value, text, disabled, checked, }: ICheckRadioOptionType, idx: number) => ReactElement;
+    updateOptions(): void;
+    initializeICheck(): void;
+    render(): JSX.Element;
+}
+
+declare interface ICheckProps extends InputWrapperProps {
+    options: CombinedOptionType[] | CombinedOptionType;
+    name?: string;
+    disabled?: boolean;
+    value?: any;
+    defaultValue: any;
+    onChange: Function;
+}
+
+declare interface ICheckRadioOptionType extends SelectOptionType {
+    checked?: boolean;
+}
+
+declare interface ICheckState {
+    internalValue?: any;
+    options?: ReactElement[];
+}
+
+declare interface IInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, InputWrapperProps {
     type?: FormTypes_2;
     size?: any;
     width?: string;
@@ -735,6 +868,8 @@ declare interface IInputProps extends React_2.TextareaHTMLAttributes<HTMLTextAre
     onProgressCapture?: ReactEventHandler<any>;
     onRateChange?: ReactEventHandler<any>;
     onRateChangeCapture?: ReactEventHandler<any>;
+    onResize?: ReactEventHandler<any>;
+    onResizeCapture?: ReactEventHandler<any>;
     onSeeked?: ReactEventHandler<any>;
     onSeekedCapture?: ReactEventHandler<any>;
     onSeeking?: ReactEventHandler<any>;
@@ -871,6 +1006,7 @@ declare namespace Inputs {
         Select2_2 as Select2,
         Date_2 as Date,
         DateRange,
+        ICheck_2 as ICheck,
         DateTime,
         InputWrapper as ImportWrapper
     }
@@ -908,13 +1044,13 @@ declare interface InputWrapperProps extends LabelProps {
     addonRight?: ReactNode;
     size?: Sizes_2;
     checkboxLeft?: boolean;
-    checkboxLeftProps?: React_2.DetailedHTMLProps<React_2.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    checkboxLeftProps?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     checkboxRight?: boolean;
-    checkboxRightProps?: React_2.DetailedHTMLProps<React_2.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    checkboxRightProps?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     radioLeft?: boolean;
-    radioLeftProps?: React_2.DetailedHTMLProps<React_2.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    radioLeftProps?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     radioRight?: boolean;
-    radioRightProps?: React_2.DetailedHTMLProps<React_2.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+    radioRightProps?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
     buttonLeft?: ReactNode;
     buttonRight?: ReactNode;
     children?: ReactNode;
@@ -974,7 +1110,18 @@ declare interface LabelProps {
     labelClass?: string;
 }
 
-export declare const LoadingSpinner: ({ icon, size }: Props_8) => JSX.Element;
+export declare function LoadingSpinner({ icon, size }: Props_8): JSX.Element;
+
+export declare namespace LoadingSpinner {
+    var propTypes: {
+        icon: PropTypes.Requireable<string>;
+        size: PropTypes.Requireable<string>;
+    };
+    var defaultProps: {
+        icon: string;
+        size: string;
+    };
+}
 
 export declare const LoginCore: LoginCoreComponent;
 
@@ -1114,6 +1261,16 @@ declare interface NotificationItemProps {
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
+declare type OnClickEvents = {
+    [key: string]: Function;
+};
+
+declare type OrderType = {
+    direction: 'asc' | 'desc';
+    column?: string;
+    index?: number;
+};
+
 export declare class Pagination extends Component<PaginationProps, PaginationState> {
     static defaultProps: {
         activePage: undefined;
@@ -1249,8 +1406,8 @@ declare interface Props_7 {
 }
 
 declare type Props_8 = {
-    icon?: string;
-    size?: SizeProp;
+    icon: string;
+    size: SizeProp;
 };
 
 declare function Radio(props: Props_6): ReactElement;
@@ -1647,6 +1804,26 @@ declare interface SmartTableState {
     };
 }
 
+export declare class Sparkbar extends Component<SparkbarProps, SparkbarState> {
+    static defaultProps: {
+        height: number;
+        padding: boolean;
+    };
+    componentDidMount(): void;
+    main: HTMLDivElement | null;
+    render(): JSX.Element;
+}
+
+declare interface SparkbarProps {
+    color: string;
+    height?: string | number;
+    data: number[];
+    padding?: boolean;
+}
+
+declare interface SparkbarState {
+}
+
 export declare const SparklineBox: SparklineBoxComponent;
 
 declare type SparklineBoxComponent = React_2.FC<SparklineBoxProps>;
@@ -1677,8 +1854,6 @@ declare interface TabContentProps {
     children: ReactNode;
 }
 
-declare type TabContentType = typeof TabContent;
-
 export declare class Tabs extends Component<TabsProps, TabsState> {
     static defaultProps: {
         activeKey: null;
@@ -1703,7 +1878,7 @@ declare interface TabsProps {
     activeKey?: string;
     defaultActiveKey?: string;
     onSelect?: Function;
-    children: TabContentType | TabContentType[];
+    children: ReactNode | ReactNode[];
     pullRight?: boolean;
     contentHeight: number | string;
     mountOnEnter?: boolean;

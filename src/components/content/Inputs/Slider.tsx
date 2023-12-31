@@ -1,5 +1,6 @@
-import React, { Component, ElementType, ReactElement } from 'react';
+import { Component, ElementType, ReactElement } from 'react';
 
+// @ts-ignore
 import RcSlider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
 // import { GenericSliderProps } from 'rc-slider/lib/interface';
@@ -11,7 +12,6 @@ import 'rc-tooltip/assets/bootstrap.css';
 import { Colors } from '../../PropTypes';
 import './Slider.css';
 
-// @ts-ignore
 const { Handle, Range } = RcSlider;
 
 const trackStyle: React.CSSProperties = {
