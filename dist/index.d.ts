@@ -361,7 +361,7 @@ declare type ColumnType = {
 
 declare type CombinedOptionType = string | number | SelectOptionType;
 
-export declare const Content: ComponentClass<Pick<ContentProps, "children" | "title" | "browserTitle" | "subTitle" | "homeRoute" | "modal" | "modalCloseTo" | "show" | "modalFooter" | "onHide" | "modalSize" | "modalType" | "modalCloseButton">, any> & WithRouterStatics<typeof Content_2>;
+export declare const Content: ComponentClass<Pick<ContentProps, "title" | "children" | "browserTitle" | "subTitle" | "homeRoute" | "modal" | "modalCloseTo" | "show" | "modalFooter" | "onHide" | "modalSize" | "modalType" | "modalCloseButton">, any> & WithRouterStatics<typeof Content_2>;
 
 declare class Content_2 extends Component<ContentProps, {}> {
     static defaultProps: {
@@ -630,7 +630,7 @@ declare interface DateTimeState {
 
 declare type DateType = Moment | string;
 
-declare const _default: React_2.ComponentClass<Pick<ItemProps, "text" | "activeOn" | "id" | "icon" | "labels" | "color" | "children" | "to" | "highlighted">, any> & WithRouterStatics<ItemComponent>;
+declare const _default: React_2.ComponentClass<Pick<ItemProps, "children" | "text" | "activeOn" | "id" | "icon" | "labels" | "color" | "to" | "highlighted">, any> & WithRouterStatics<ItemComponent>;
 
 export declare const Description: DescriptionComponent;
 
@@ -1363,15 +1363,15 @@ declare interface ProgressGroupProps {
 }
 
 declare type Props = {
-    children: ReactElement | ReactElement[];
-    title: string | string[];
-    titleShort: string | string[];
-    theme: Themes;
-    browserTitle: string;
-    sidebar: Node_2;
-    footer: Node_2;
-    homeTo: string;
-    searchbarFilter: boolean;
+    children?: ReactElement | ReactElement[];
+    title?: string | string[];
+    titleShort?: string | string[];
+    theme?: Themes;
+    browserTitle?: string;
+    sidebar?: Node_2;
+    footer?: Node_2;
+    homeTo?: string;
+    searchbarFilter?: boolean;
 };
 
 declare interface Props_2 {

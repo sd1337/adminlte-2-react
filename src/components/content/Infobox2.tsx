@@ -22,16 +22,18 @@ interface Infobox2Props {
 
 type Infobox2Component = React.FC<Infobox2Props>;
 
-const Infobox2: Infobox2Component = ({
+const Infobox2: Infobox2Component = function Infobox2({
   id, color, title, subTitle, text, footerText, icon, footerIcon, onFooterClick, to,
-}: Infobox2Props) => {
+}: Infobox2Props) {
   const isIonIcon = icon.startsWith('ion') || icon.startsWith('ios');
   let iconLocal;
   if (!isIonIcon) {
     const faIconClass = splitIcon(icon);
     iconLocal = <FontAwesomeIcon icon={faIconClass} size="sm" />;
   } else {
-    iconLocal = <Ionicon icon={icon} fontSize="90px" color="rgba(0,0,0,0.15)" />;
+    // iconLocal = <Ionicon icon={icon} fontSize="90px" color="rgba(0,0,0,0.15)" />;
+    const faIconClass = splitIcon(icon);
+    iconLocal = <FontAwesomeIcon icon={faIconClass} size="sm" />;
   }
   const localFooterIcon = splitIcon(footerIcon);
   return (

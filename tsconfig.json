@@ -19,11 +19,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
-  "exclude": [
-    "build",
-    "node_modules",
-    "src/adminlte/**/*"
-  ]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": ["src"],
 }

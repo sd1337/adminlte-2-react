@@ -9,12 +9,9 @@
     "airbnb",
     "airbnb-typescript"
   ],
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 12
+    "project": "./tsconfig.json"
   },
   "overrides": [
     {
@@ -46,8 +43,10 @@
   "rules": {
     "react/static-property-placement": "off",
     "max-len": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "react/react-in-jsx-scope": "off"
   },
+  "ignorePatterns": ["dist", ".eslintrc"],
   "globals": {
     "document": false,
     "$": false

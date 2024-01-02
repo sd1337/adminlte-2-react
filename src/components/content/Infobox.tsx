@@ -19,9 +19,9 @@ interface InfoboxProps {
 
 type InfoboxComponent = React.FC<InfoboxProps>;
 
-const Infobox: InfoboxComponent = ({
+const Infobox: InfoboxComponent = function Infobox({
   id, icon, text, number, color, progress, progressText, iconColorOnly,
-}: InfoboxProps) => {
+}: InfoboxProps) {
   const hasProgressText = !!(progressText);
   const hasProgress = !!(progressText);
   const isIonIcon = icon.startsWith('ion') || icon.startsWith('ios');

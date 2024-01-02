@@ -22,21 +22,7 @@ import 'source-sans/source-sans-3.css';
 import '../adminlte/css/AdminLTE.css';
 import '../adminlte/css/skins/_all-skins.css';
 
-// import * as bootstrap from 'bootstrap';
-
-// function defineJQueryPlugin(plugin: any) {
-//   const name = plugin.NAME;
-//   const JQUERY_NO_CONFLICT = $.fn[name];
-//   $.fn[name] = plugin.jQueryInterface;
-//   $.fn[name].Constructor = plugin;
-//   $.fn[name].noConflict = () => {
-//     $.fn[name] = JQUERY_NO_CONFLICT;
-//     return plugin.jQueryInterface;
-//   }
-// }
-
-// bootstrap.trans
-
+// import 'bootstrap';
 import '../adminlte/js/adminlte';
 import 'jquery-sparkline';
 
@@ -89,20 +75,22 @@ import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
 
+import '../adminlte/css/skins/skin-blue.css';
+
 library.add(fab, fas, far);
 
 type Node = React.ReactNode;
 
 type Props = {
-  children: ReactElement | ReactElement[];
-  title:string | string[];
-  titleShort: string | string[];
-  theme: Themes;
-  browserTitle: string;
-  sidebar: Node;
-  footer: Node;
-  homeTo: string;
-  searchbarFilter: boolean;
+  children?: ReactElement | ReactElement[];
+  title?:string | string[];
+  titleShort?: string | string[];
+  theme?: Themes;
+  browserTitle?: string;
+  sidebar?: Node;
+  footer?: Node;
+  homeTo?: string;
+  searchbarFilter?: boolean;
 };
 
 class AdminLTE extends Component<Props, {}> {
@@ -159,14 +147,14 @@ class AdminLTE extends Component<Props, {}> {
         });
     }
     let titleArray:string[] = [];
-    if (!title.length) {
+    if (!title?.length) {
       titleArray = [title as string];
     } else {
       titleArray = title as string[];
     }
     const [titleBold, titlethin = ''] = titleArray;
     let titleShortArray:string[] = [];
-    if (!titleShort.length) {
+    if (!titleShort?.length) {
       titleShortArray = [titleShort as string];
     }
     const [titleShortBold, titleShotThin = ''] = titleShortArray;
@@ -262,22 +250,36 @@ class AdminLTE extends Component<Props, {}> {
     );
     const footer = childFooter || propFooter;
 
+    const logoContent = (
+      <>
+        <span className="logo-mini">
+          <b>{titleShortBold}</b>
+          {titleShotThin}
+        </span>
+        <span className="logo-lg">
+          <b>
+            {titleBold}
+          </b>
+          {titlethin}
+        </span>
+
+      </>
+    );
+
     return (
       <Router>
         <div className="wrapper">
           <header className="main-header">
-            <Link className="logo" to={homeTo}>
-              <span className="logo-mini">
-                <b>{titleShortBold}</b>
-                {titleShotThin}
-              </span>
-              <span className="logo-lg">
-                <b>
-                  {titleBold}
-                </b>
-                {titlethin}
-              </span>
-            </Link>
+            {homeTo ? (
+              <Link className="logo" to={homeTo}>
+                {logoContent}
+              </Link>
+            )
+              : (
+                <div className="logo">
+                  {logoContent}
+                </div>
+              )}
             <nav className="navbar navbar-static-top">
               <div
                 className="sidebar-toggle"
