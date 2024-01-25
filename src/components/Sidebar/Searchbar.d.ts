@@ -1,5 +1,4 @@
 import React, { ChangeEventHandler, Component, MouseEventHandler } from 'react';
-
 interface SearchbarProps {
     includeButton: boolean;
     onButtonClick: MouseEventHandler<HTMLButtonElement>;
@@ -21,4 +20,4 @@ declare class Searchbar extends Component<SearchbarProps, {}> {
     render(): React.JSX.Element;
 }
 export default Searchbar;
-// # sourceMappingURL=Searchbar.d.ts.map
+//# sourceMappingURL=Searchbar.d.ts.map

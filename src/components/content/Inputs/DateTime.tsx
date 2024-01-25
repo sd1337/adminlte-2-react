@@ -1,5 +1,7 @@
-import React, { Component, FocusEventHandler, FormEventHandler } from 'react';
-import ReactDateTime, { DatetimepickerProps } from 'react-datetime';
+import React, {
+  FormEventHandler, useCallback,
+} from 'react';
+import ReactDateTime, { DatetimepickerProps, EventOrValueHandler } from 'react-datetime';
 import moment, { Moment } from 'moment';
 import 'react-datetime/css/react-datetime.css';
 import './DateTime.css';
@@ -12,48 +14,42 @@ interface DateTimeProps extends InputWrapperProps {
   value?: DateType,
   defaultValue?: DateType,
   onChange?: FormEventHandler<any>,
-  onBlur?: FocusEventHandler<any>,
+  onClose?: EventOrValueHandler<any>,
   id?: string,
   name?: string,
   placeholder?: string,
   disabled?: boolean,
   format?: string,
+  dateFormat?: string,
   timeFormat?: string,
   dateTimeProps?: DatetimepickerProps,
 }
-interface DateTimeState {
 
-}
+const DateTime = (props: DateTimeProps) => {
+  const {
+    value = undefined,
+    defaultValue = undefined,
+    onChange = undefined,
+    onClose = undefined,
+    id = undefined,
+    name = undefined,
+    placeholder = undefined,
+    disabled = false,
+    format = undefined,
+    dateFormat = 'DD.MM.YYYY',
+    timeFormat = 'hh:mm',
+    dateTimeProps = undefined,
+  } = props;
 
-class DateTime extends Component<DateTimeProps, DateTimeState> {
-  static defaultProps: DateTimeProps = {
-    value: undefined,
-    defaultValue: undefined,
-    onChange: undefined,
-    onBlur: undefined,
-    id: undefined,
-    name: undefined,
-    placeholder: undefined,
-    disabled: false,
-    format: undefined,
-    timeFormat: 'hh:mm',
-    dateTimeProps: undefined,
-  };
-
-  state: DateTimeState = {};
-
-  onChange: ((value: string | Moment) => void) | undefined = (value) => {
-    const {
-      onChange, format, id, name,
-    } = this.props;
+  const handleChange: ((value: string | Moment) => void) | undefined = useCallback((newValue) => {
     if (onChange) {
-      const rawEvent = new Event('change');
       let temp;
-      if (value instanceof moment) {
-        temp = (value as Moment).format(format);
+      if (newValue instanceof moment) {
+        temp = (newValue as Moment).format(format);
       } else {
-        temp = value;
+        temp = newValue;
       }
+      const rawEvent = new Event('change');
       Object.defineProperty(rawEvent, 'target', {
         writable: false,
         value: {
@@ -66,123 +62,107 @@ class DateTime extends Component<DateTimeProps, DateTimeState> {
       const result = createSyntheticEvent(rawEvent);
       onChange(result);
     }
-  };
+  }, [onChange, format, id, name]);
 
-  render() {
-    const {
-      name,
-      value,
-      defaultValue,
-      format,
-      timeFormat,
-      onBlur,
-      id,
-      placeholder,
-      disabled,
-      dateTimeProps,
-    } = this.props;
+  const {
+    iconLeft, iconRight, addonLeft, addonRight, size, checkboxLeft,
+    checkboxLeftProps, checkboxRight, checkboxRightProps, radioLeft, radioLeftProps,
+    radioRight, radioRightProps, buttonLeft, buttonRight, width, help,
+  } = props;
 
-    const {
-      iconLeft, iconRight, addonLeft, addonRight, size, checkboxLeft,
-      checkboxLeftProps, checkboxRight, checkboxRightProps, radioLeft, radioLeftProps,
-      radioRight, radioRightProps, buttonLeft, buttonRight, width, help,
-    } = this.props;
-
-    const {
-      label, labelPosition, labelXs, labelSm, labelMd, labelLg,
-      xs, sm, md, lg, labelIcon, type, labelClass,
-    } = this.props;
-    const {
-      viewDate,
-      input,
-      open,
-      locale,
-      utc,
-      displayTimeZone,
-      onViewModeChange,
-      onNavigateBack,
-      onNavigateForward,
-      viewMode,
-      className,
-      inputProps = {},
-      isValidDate,
-      renderDay,
-      renderMonth,
-      renderYear,
-      strictParsing,
-      closeOnSelect,
-      timeConstraints,
-      disableOnClickOutside,
-    } = (dateTimeProps as DatetimepickerProps) || {};
-    inputProps.id = id;
-    inputProps.placeholder = placeholder;
-    inputProps.disabled = disabled;
-    return (
-      <InputWrapper
-        iconLeft={iconLeft}
-        iconRight={iconRight}
-        addonLeft={addonLeft}
-        addonRight={addonRight}
-        size={size}
-        checkboxLeft={checkboxLeft}
-        checkboxLeftProps={checkboxLeftProps}
-        checkboxRight={checkboxRight}
-        checkboxRightProps={checkboxRightProps}
-        radioLeft={radioLeft}
-        radioLeftProps={radioLeftProps}
-        radioRight={radioRight}
-        radioRightProps={radioRightProps}
-        buttonLeft={buttonLeft}
-        buttonRight={buttonRight}
-        width={width}
-        help={help}
-//
-        label={label}
-        labelPosition={labelPosition}
-        labelXs={labelXs}
-        labelSm={labelSm}
-        labelMd={labelMd}
-        labelLg={labelLg}
-        name={name}
-        xs={xs}
-        sm={sm}
-        md={md}
-        lg={lg}
-        labelIcon={labelIcon}
-        type={type}
-        labelClass={labelClass}
-      >
-        <ReactDateTime
-          value={value}
-          defaultValue={defaultValue}
-          viewDate={viewDate}
-          dateFormat={format}
-          timeFormat={timeFormat}
-          input={input}
-          open={open}
-          locale={locale}
-          utc={utc}
-          displayTimeZone={displayTimeZone}
-          onChange={this.onChange}
-          onBlur={onBlur as any}
-          onViewModeChange={onViewModeChange}
-          onNavigateBack={onNavigateBack}
-          onNavigateForward={onNavigateForward}
-          viewMode={viewMode}
-          className={className}
-          inputProps={inputProps}
-          isValidDate={isValidDate}
-          renderDay={renderDay}
-          renderMonth={renderMonth}
-          renderYear={renderYear}
-          strictParsing={strictParsing}
-          closeOnSelect={closeOnSelect}
-          timeConstraints={timeConstraints}
-          disableOnClickOutside={disableOnClickOutside}
-        />
-      </InputWrapper>
-    );
-  }
-}
+  const {
+    label, labelPosition, labelXs, labelSm, labelMd, labelLg,
+    xs, sm, md, lg, labelIcon, type, labelClass,
+  } = props;
+  const {
+    initialViewDate,
+    input,
+    open,
+    locale = 'de',
+    utc,
+    displayTimeZone,
+    onNavigate,
+    onNavigateBack,
+    onNavigateForward,
+    initialViewMode,
+    className,
+    inputProps = {},
+    isValidDate,
+    renderDay,
+    renderMonth,
+    renderYear,
+    strictParsing,
+    closeOnSelect,
+    timeConstraints,
+    closeOnClickOutside,
+  } = (dateTimeProps as DatetimepickerProps) || {};
+  inputProps.id = id;
+  inputProps.placeholder = placeholder;
+  inputProps.disabled = disabled;
+  return (
+    <InputWrapper
+      iconLeft={iconLeft}
+      iconRight={iconRight}
+      addonLeft={addonLeft}
+      addonRight={addonRight}
+      size={size}
+      checkboxLeft={checkboxLeft}
+      checkboxLeftProps={checkboxLeftProps}
+      checkboxRight={checkboxRight}
+      checkboxRightProps={checkboxRightProps}
+      radioLeft={radioLeft}
+      radioLeftProps={radioLeftProps}
+      radioRight={radioRight}
+      radioRightProps={radioRightProps}
+      buttonLeft={buttonLeft}
+      buttonRight={buttonRight}
+      width={width}
+      help={help}
+      label={label}
+      labelPosition={labelPosition}
+      labelXs={labelXs}
+      labelSm={labelSm}
+      labelMd={labelMd}
+      labelLg={labelLg}
+      name={name}
+      xs={xs}
+      sm={sm}
+      md={md}
+      lg={lg}
+      labelIcon={labelIcon}
+      type={type}
+      labelClass={labelClass}
+    >
+      <ReactDateTime
+        value={value}
+        initialValue={defaultValue}
+        initialViewDate={initialViewDate}
+        dateFormat={dateFormat}
+        timeFormat={timeFormat}
+        input={input}
+        open={open}
+        locale={locale}
+        utc={utc}
+        displayTimeZone={displayTimeZone}
+        onChange={handleChange}
+        onClose={onClose}
+        onNavigate={onNavigate}
+        onNavigateBack={onNavigateBack}
+        onNavigateForward={onNavigateForward}
+        initialViewMode={initialViewMode}
+        className={className}
+        inputProps={inputProps}
+        isValidDate={isValidDate}
+        renderDay={renderDay}
+        renderMonth={renderMonth}
+        renderYear={renderYear}
+        strictParsing={strictParsing}
+        closeOnSelect={closeOnSelect}
+        timeConstraints={timeConstraints}
+        closeOnClickOutside={closeOnClickOutside}
+      />
+    </InputWrapper>
+  );
+};
 
 export default DateTime;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Types } from '../PropTypes';
 import './UserPanel.css';
-
 interface UserPanelProps {
     username: string;
     imageUrl?: string;
@@ -20,4 +19,4 @@ declare class UserPanel extends Component<UserPanelProps, {}> {
     render(): React.JSX.Element;
 }
 export default UserPanel;
-// # sourceMappingURL=UserPanel.d.ts.map
+//# sourceMappingURL=UserPanel.d.ts.map
