@@ -166,7 +166,7 @@ class Calendar extends Component<CalendarProps, CalendarState> {
 
       // Remove event from text input
       $('#new-event').val('');
-    }); 
+    });
   }
 
   main: HTMLDivElement | null = null;

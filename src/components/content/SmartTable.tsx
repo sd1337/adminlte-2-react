@@ -78,12 +78,14 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     return colNames.map((p) => ({ data: p, title: p.replace(/^./, (m) => m.toUpperCase()).replace(/([a-z])([A-Z])/g, '$1 $2') } as SmartColumnType));
   }
 
-  static headersFromColumns(columns: SmartColumnType[],
+  static headersFromColumns(
+    columns: SmartColumnType[],
     key: string,
     order: SmartOrderType[],
     orderChanged: SmartTableOrderChangedCallback,
     _setFilterValue: (temp: any) => void,
-    hiddenColumns: string[]): ReactElement[] {
+    hiddenColumns: string[],
+  ): ReactElement[] {
     const sortIcons = {
       up: <FontAwesomeIcon icon={['fas', 'sort-up']} />,
       down: <FontAwesomeIcon icon={['fas', 'sort-down']} />,
@@ -92,16 +94,14 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     return columns
       .filter((p) => hiddenColumns.find((p2) => p2 === p.data) === undefined)
       .map((p) => (
-        <>
-          <SmartTableHeader
-            column={p}
-            smartTableKey={key}
-            classPreFix={classPreFix}
-            sortIcons={sortIcons}
-            order={order}
-            orderChanged={orderChanged}
-          />
-        </>
+        <SmartTableHeader
+          column={p}
+          smartTableKey={key}
+          classPreFix={classPreFix}
+          sortIcons={sortIcons}
+          order={order}
+          orderChanged={orderChanged}
+        />
       ));
   }
 
@@ -211,16 +211,20 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
     let newSearchButtons = [<a className={`${classPreFix}-filter-active ${classPreFix}-filter`}>All</a>];
     if (cols) {
       newHeaders = SmartTable
-        .headersFromColumns(cols,
+        .headersFromColumns(
+          cols,
           key,
           order,
           this.onOrderChanged,
           this.setFilterValueAndFilter,
-          hiddenColumns);
+          hiddenColumns,
+        );
       newSearchButtons = SmartTable
-        .searchButtonsFromColumns(cols,
+        .searchButtonsFromColumns(
+          cols,
           '$all',
-          this.onFilterColumnChanged);
+          this.onFilterColumnChanged,
+        );
     }
     if (data) {
       pagination = {

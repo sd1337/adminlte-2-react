@@ -173,45 +173,41 @@ class Pagination extends Component<PaginationProps, PaginationState> {
         getIntermediate(0, totalPages, links);
       }
       return (
-        <>
-          <BsPagination>
-            <BsPagination.Item
-              disabled={activePage === 0}
-              onClick={((activePage !== 0) && this.onChange) || undefined}
-            >
-              {previous}
-            </BsPagination.Item>
-            {links}
-            <BsPagination.Item
-              disabled={lastPage === activePage}
-              onClick={((lastPage !== activePage) && this.onChange) || undefined}
-            >
-              {next}
-            </BsPagination.Item>
-          </BsPagination>
-        </>
-      );
-    }
-    return (
-      <>
         <BsPagination>
-          <PaginationItem
+          <BsPagination.Item
             disabled={activePage === 0}
-            onClick={this.onChange}
+            onClick={((activePage !== 0) && this.onChange) || undefined}
           >
             {previous}
-          </PaginationItem>
-          {(actPage > 0) && <BsPagination.Ellipsis key="page_none" />}
-          <BsPagination.Item key="page_active" active>{actPage + 1}</BsPagination.Item>
-          {hasMore && <BsPagination.Ellipsis key="page_none_1" />}
+          </BsPagination.Item>
+          {links}
           <BsPagination.Item
-            disabled={hasMore === false}
-            onClick={(hasMore === true && this.onChange) || undefined}
+            disabled={lastPage === activePage}
+            onClick={((lastPage !== activePage) && this.onChange) || undefined}
           >
             {next}
           </BsPagination.Item>
         </BsPagination>
-      </>
+      );
+    }
+    return (
+      <BsPagination>
+        <PaginationItem
+          disabled={activePage === 0}
+          onClick={this.onChange}
+        >
+          {previous}
+        </PaginationItem>
+        {(actPage > 0) && <BsPagination.Ellipsis key="page_none" />}
+        <BsPagination.Item key="page_active" active>{actPage + 1}</BsPagination.Item>
+        {hasMore && <BsPagination.Ellipsis key="page_none_1" />}
+        <BsPagination.Item
+          disabled={hasMore === false}
+          onClick={(hasMore === true && this.onChange) || undefined}
+        >
+          {next}
+        </BsPagination.Item>
+      </BsPagination>
     );
   }
 }

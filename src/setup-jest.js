@@ -4,5 +4,4 @@ import select2 from 'select2';
 // eslint-disable-next-line no-multi-assign
 global.$ = global.jQuery = $;
 
-
 $.select2 = select2();

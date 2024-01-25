@@ -24,7 +24,7 @@ const Infobox: InfoboxComponent = ({
   const hasProgress = !!(progressText);
   const faIconClass = splitIcon(icon);
   const infoBoxClass = iconColorOnly ? 'info-box' : `info-box bg-${color}`;
-  const iconClass = iconColorOnly ? `info-box-icon bg-${color}` : `info-box-icon`;
+  const iconClass = iconColorOnly ? `info-box-icon bg-${color}` : 'info-box-icon';
   const progressClass = iconColorOnly ? 'progress-bar progress-icon-only' : 'progress-bar';
   return (
     <div id={id} className={infoBoxClass}>

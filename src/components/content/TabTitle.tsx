@@ -9,7 +9,7 @@ interface Props {
   titleLeft?: boolean,
 }
 
-const TabTitle = ({ title, titleLeft, icon }: Props): ReactElement => {
+function TabTitle({ title, titleLeft, icon }: Props): ReactElement {
   const hasIcon = !!(icon);
   const localIcon = hasIcon ? splitIcon(icon) : null;
   const hasTitle = !!(title);
@@ -23,7 +23,7 @@ const TabTitle = ({ title, titleLeft, icon }: Props): ReactElement => {
     );
   }
   return <></>;
-};
+}
 
 TabTitle.defaultProps = {
   icon: undefined,

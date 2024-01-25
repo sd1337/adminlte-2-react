@@ -8,7 +8,8 @@
     "test": "jest",
     "start": "webpack --watch",
     "build": "cross-env NODE_ENV=production webpack",
-    "build-dev": "webpack"
+    "build-dev": "webpack",
+    "lint": "eslint src"
   },
   "keywords": [
     "AdminLTE",
@@ -102,8 +103,8 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-stage-2": "^7.8.3",
     "@microsoft/api-extractor": "^7.18.16",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
     "autoprefixer": "^9.8.8",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
