@@ -95,6 +95,7 @@ class SmartTable extends Component<SmartTableProps, SmartTableState> {
       .filter((p) => hiddenColumns.find((p2) => p2 === p.data) === undefined)
       .map((p) => (
         <SmartTableHeader
+          key={`${key}-${p.title}`}
           column={p}
           smartTableKey={key}
           classPreFix={classPreFix}
