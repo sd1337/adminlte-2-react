@@ -4,11 +4,11 @@ import Item from './Item';
 import Header from './Header';
 import UserPanel from './UserPanel';
 import Searchbar from './Searchbar';
-declare type SidebarProps = {
+type SidebarProps = {
     children: React.ReactNode;
     searchbarFilter: boolean;
 };
-declare type SidebarState = {
+type SidebarState = {
     searchValue: string;
 };
 declare class Sidebar extends Component<SidebarProps, SidebarState> {
@@ -20,7 +20,7 @@ declare class Sidebar extends Component<SidebarProps, SidebarState> {
     componentDidMount(): void;
     onSearchValueChange(e: React.ChangeEvent<HTMLInputElement>): void;
     widgetReference: HTMLUListElement | null;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Sidebar;
 export { Item, Sidebar as Core, Header, UserPanel, Searchbar, };

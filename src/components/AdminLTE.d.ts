@@ -33,25 +33,23 @@ import NavList from './content/NavList';
 import NavListItem from './content/NavListItem';
 import ProductList from './content/ProductList';
 import ProductListItem from './content/ProductListItem';
-import Infobox2 from './content/Infobox2';
 import Alert from './content/Alert';
 import Callout from './content/Callout';
 import ProgressBar from './content/ProgressBar';
 import Divider from './content/Divider';
 import * as Inputs from './content/Inputs';
 import LoginCore from './content/LoginCore';
-import AsyncComponent from './AsyncComponent';
 import { Colors as Colors_, Types as Types_, Sizes as Sizes_, FormTypes as FormTypes_, Themes as Themes_ } from './PropTypes';
 import Badge from './content/Badge';
 import Calendar from './content/Calendar';
-import LoadingSpinner from './content/LoadingSpinner';
+import { LoadingSpinner } from './content/LoadingSpinner';
 import BoxPane from './content/BoxPane';
 import ButtonToolbar from './content/ButtonToolbar';
 import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
-declare type Node = React.ReactNode;
-declare type Props = {
+type Node = React.ReactNode;
+type Props = {
     children: ReactElement | ReactElement[];
     title: string | string[];
     titleShort: string | string[];
@@ -75,13 +73,13 @@ declare class AdminLTE extends Component<Props, {}> {
         searchbarFilter: boolean;
     };
     componentDidMount(): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default AdminLTE;
-export declare type Colors = Colors_;
-export declare type Types = Types_;
-export declare type Sizes = Sizes_;
-export declare type FormTypes = FormTypes_;
-export declare type Themes = Themes_;
-export { Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, Infobox2, LoginCore, AsyncComponent, Alert, Callout, ProgressBar, Divider, Inputs, Label, Badge, Calendar, LoadingSpinner, BoxPane, ButtonToolbar, Pagination, SmartTable, };
+export type Colors = Colors_;
+export type Types = Types_;
+export type Sizes = Sizes_;
+export type FormTypes = FormTypes_;
+export type Themes = Themes_;
+export { LoadingSpinner, Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, LoginCore, Alert, Callout, ProgressBar, Divider, Inputs, Label, Badge, Calendar, BoxPane, ButtonToolbar, Pagination, SmartTable, };
 //# sourceMappingURL=AdminLTE.d.ts.map

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { SmartColumnType, SmartOrderType, SmartTableHeaderSortIcons, SmartTableOrderChangedCallback } from './SmartTableTypes';
 interface SmartTableHeaderProps {
     smartTableKey: string;
@@ -16,7 +16,7 @@ declare class SmartTableHeader extends Component<SmartTableHeaderProps, SmartTab
         open: boolean;
     };
     toggleOpen: () => void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SmartTableHeader;
 //# sourceMappingURL=SmartTableHeader.d.ts.map

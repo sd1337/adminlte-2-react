@@ -6,7 +6,7 @@ interface SparklineBoxProps {
     chartData: number[];
     color?: Colors;
 }
-declare type SparklineBoxComponent = React.FC<SparklineBoxProps>;
+type SparklineBoxComponent = React.FC<SparklineBoxProps>;
 declare const SparklineBox: SparklineBoxComponent;
 export default SparklineBox;
 //# sourceMappingURL=SparklineBox.d.ts.map

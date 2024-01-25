@@ -1,4 +1,4 @@
-import { Component, FormEventHandler, ReactNode } from 'react';
+import React, { Component, FormEventHandler, ReactNode } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { SingleDatePickerShape } from 'react-dates';
@@ -30,15 +30,6 @@ interface DateState {
 declare class Date extends Component<DateProps, DateState> {
     private static toMoment;
     static defaultProps: {
-        disabled: boolean;
-        required: boolean;
-        readOnly: boolean;
-        showClearDate: boolean;
-        noBorder: boolean;
-        block: boolean;
-        small: boolean;
-        regular: boolean;
-        inputIconPosition: null;
         value: null;
         defaultValue: undefined;
         onChange: undefined;
@@ -54,6 +45,15 @@ declare class Date extends Component<DateProps, DateState> {
         dateProps: null;
         name: string;
         format: undefined;
+        disabled: boolean;
+        required: boolean;
+        readOnly: boolean;
+        showClearDate: boolean;
+        noBorder: boolean;
+        block: boolean;
+        small: boolean;
+        regular: boolean;
+        inputIconPosition: null;
     };
     constructor(props: DateProps);
     state: DateState;
@@ -62,7 +62,7 @@ declare class Date extends Component<DateProps, DateState> {
     onFocusChange({ focused }: {
         focused: boolean;
     }): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Date;
 //# sourceMappingURL=Date.d.ts.map

@@ -1,4 +1,4 @@
-import { ChangeEventHandler, Component, MouseEventHandler } from 'react';
+import React, { ChangeEventHandler, Component, MouseEventHandler } from 'react';
 interface SearchbarProps {
     includeButton: boolean;
     onButtonClick: MouseEventHandler<HTMLButtonElement>;
@@ -17,7 +17,7 @@ declare class Searchbar extends Component<SearchbarProps, {}> {
         defaultValue: undefined;
     };
     state: {};
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Searchbar;
 //# sourceMappingURL=Searchbar.d.ts.map

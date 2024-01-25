@@ -199,14 +199,14 @@ export interface SharedDateProps {
     small?: boolean;
     regular?: boolean;
 }
-export declare type DateType = Moment | string;
+export type DateType = Moment | string;
 export interface SelectOptionType {
     id?: string;
     text: string;
     value: string | number;
     disabled?: boolean;
 }
-export declare type CombinedOptionType = string | number | SelectOptionType;
+export type CombinedOptionType = string | number | SelectOptionType;
 export interface RadioOptionType extends SelectOptionType {
     checked?: boolean;
     label: string;

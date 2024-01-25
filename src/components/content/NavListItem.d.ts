@@ -8,7 +8,7 @@ interface NavListItemProps {
     color?: Colors;
     to?: string;
 }
-declare type NavListItemComponent = React.FC<NavListItemProps>;
+type NavListItemComponent = React.FC<NavListItemProps>;
 declare const NavListItem: NavListItemComponent;
 export default NavListItem;
 //# sourceMappingURL=NavListItem.d.ts.map

@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 import { ColumnType, DataType } from './TableProps';
 import './SmartTable.css';
 import { SmartColumnType, SmartOrderType, SmartPagination, SmartTableOrderChangedCallback, SmartTableHeaderOrderDirection, SmartTableModalParams } from './smartTable/SmartTableTypes';
@@ -53,9 +53,9 @@ interface SmartTableState {
 }
 declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
     static columnsFromData(data: DataType[]): SmartColumnType[];
-    static headersFromColumns(columns: SmartColumnType[], key: string, order: SmartOrderType[], orderChanged: SmartTableOrderChangedCallback, setFilterValue: (temp: any) => void, hiddenColumns: string[]): ReactElement[];
-    static searchButtonsFromColumns(columns: SmartColumnType[], filterColumn: string | undefined, setFilterColumn: (column: string, title?: string) => void): JSX.Element[];
-    static mapCell(data: any, column: ColumnType, rowData: DataType, rowIdx: number, key: string): JSX.Element;
+    static headersFromColumns(columns: SmartColumnType[], key: string, order: SmartOrderType[], orderChanged: SmartTableOrderChangedCallback, _setFilterValue: (temp: any) => void, hiddenColumns: string[]): ReactElement[];
+    static searchButtonsFromColumns(columns: SmartColumnType[], filterColumn: string | undefined, setFilterColumn: (column: string, title?: string) => void): React.JSX.Element[];
+    static mapCell(data: any, column: ColumnType, rowData: DataType, rowIdx: number, key: string): React.JSX.Element;
     static defaultProps: {
         data: null;
         columns: undefined;
@@ -88,7 +88,7 @@ declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
     onFilterColumnChanged: (filterColumn: any, searchPlaceholder: any) => void;
     onOrderChanged: (column: string, direction: SmartTableHeaderOrderDirection) => void;
     onFilter: () => void;
-    onRowSelect: (data?: DataType | undefined, rowIdx?: number | undefined) => void;
+    onRowSelect: (data?: DataType, rowIdx?: number) => void;
     onRowDeselect: (data: DataType, rowIdx: number) => void;
     onPageChange: (page: number) => void;
     setFilterValueAndFilter: (event: any) => void;
@@ -98,7 +98,7 @@ declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
     openColumnModal: () => void;
     rowIsSelected(row: DataType, rowIdx: number, state: SmartTableState): boolean;
     mappedColumnsFromData: (data: DataType[], columns: SmartColumnType[] | undefined, pagination: any, hiddenColumns: string[], state: SmartTableState) => ReactElement[] | ReactElement;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SmartTable;
 //# sourceMappingURL=SmartTable.d.ts.map

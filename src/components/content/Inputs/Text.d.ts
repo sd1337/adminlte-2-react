@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { IInputProps } from './InputProps';
 interface TextProps extends IInputProps {
     inputType?: string;
@@ -31,7 +31,7 @@ declare class Text extends Component<TextProps, TextState> {
     };
     state: {};
     ref: HTMLInputElement | HTMLTextAreaElement | null;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Text;
 //# sourceMappingURL=Text.d.ts.map

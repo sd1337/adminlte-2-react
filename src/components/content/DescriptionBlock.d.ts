@@ -8,7 +8,7 @@ interface DescriptionBlockProps {
     text: string;
     indication: 'left' | 'right' | 'up' | 'down';
 }
-declare type DescriptionBlockComponent = React.FC<DescriptionBlockProps>;
+type DescriptionBlockComponent = React.FC<DescriptionBlockProps>;
 declare const DescriptionBlock: DescriptionBlockComponent;
 export default DescriptionBlock;
 //# sourceMappingURL=DescriptionBlock.d.ts.map

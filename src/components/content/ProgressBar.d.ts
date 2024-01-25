@@ -14,7 +14,7 @@ interface ProgressBarProps {
     xxs?: boolean;
     vertical?: boolean;
 }
-declare type ProgressBarComponent = React.FC<ProgressBarProps>;
+type ProgressBarComponent = React.FC<ProgressBarProps>;
 declare const ProgressBar: ProgressBarComponent;
 export default ProgressBar;
 //# sourceMappingURL=ProgressBar.d.ts.map

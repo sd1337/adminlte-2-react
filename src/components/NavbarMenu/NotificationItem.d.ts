@@ -8,7 +8,7 @@ interface NotificationItemProps {
     to?: string;
     onClick?: MouseEventHandler<HTMLDivElement>;
 }
-declare type NotificationItemComponent = React.FC<NotificationItemProps>;
+type NotificationItemComponent = React.FC<NotificationItemProps>;
 declare const NotificationItem: NotificationItemComponent;
 export default NotificationItem;
 //# sourceMappingURL=NotificationItem.d.ts.map

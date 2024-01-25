@@ -1,6 +1,6 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import TabContent from './TabContent';
-declare type TabContentType = typeof TabContent;
+type TabContentType = typeof TabContent;
 interface TabsProps {
     activeKey?: string;
     defaultActiveKey?: string;
@@ -36,7 +36,7 @@ declare class Tabs extends Component<TabsProps, TabsState> {
     };
     constructor(props: TabsProps);
     onSelect(activeKeyParam: string): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Tabs;
 //# sourceMappingURL=Tabs.d.ts.map

@@ -4,7 +4,7 @@ interface DescriptionProps {
     horizontal?: boolean;
     children: ReactNode;
 }
-declare type DescriptionComponent = React.FC<DescriptionProps>;
+type DescriptionComponent = React.FC<DescriptionProps>;
 declare const Description: DescriptionComponent;
 export default Description;
 //# sourceMappingURL=Description.d.ts.map

@@ -11,7 +11,7 @@ interface InfoboxProps {
     progressText?: string;
     iconColorOnly?: boolean;
 }
-declare type InfoboxComponent = React.FC<InfoboxProps>;
+type InfoboxComponent = React.FC<InfoboxProps>;
 declare const Infobox: InfoboxComponent;
 export default Infobox;
 //# sourceMappingURL=Infobox.d.ts.map

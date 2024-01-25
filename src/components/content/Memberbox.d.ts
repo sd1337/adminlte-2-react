@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Types } from '../PropTypes';
 interface MemberboxProps {
     id?: string;
@@ -23,14 +23,14 @@ declare class Memberbox extends Component<MemberboxProps, MemberboxState> {
     };
     state: MemberboxState;
     componentDidMount(): void;
-    getUser({ name, lastOnline, image }: any): JSX.Element;
+    getUser({ name, lastOnline, image }: any): React.JSX.Element;
     getUsers(users: any): any;
     users: {
         name: string;
         lastOnline: string;
         image: string;
     }[];
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Memberbox;
 //# sourceMappingURL=Memberbox.d.ts.map

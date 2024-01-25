@@ -28,7 +28,7 @@ declare class SmartTableSelectColumns extends Component<SmartTableSelectColumnsP
     dragIndex?: number;
     toggleVisibility: (e: React.MouseEvent<HTMLInputElement>) => void;
     toggleOrder: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SmartTableSelectColumns;
 //# sourceMappingURL=SmartTableSelectColumns.d.ts.map

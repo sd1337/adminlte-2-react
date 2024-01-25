@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react';
 import * as MomentNS from 'moment';
 import './MessageItem.css';
-declare type WhenFormatsType = {
+type WhenFormatsType = {
     minutes: string;
     hours: string;
     today: string;
@@ -17,7 +17,7 @@ interface MessageItemProps {
     when?: MomentNS.Moment;
     whenFormats?: WhenFormatsType;
 }
-declare type MessageItemComponent = React.FC<MessageItemProps>;
+type MessageItemComponent = React.FC<MessageItemProps>;
 declare const MessageItem: MessageItemComponent;
 export default MessageItem;
 //# sourceMappingURL=MessageItem.d.ts.map

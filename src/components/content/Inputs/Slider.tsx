@@ -1,17 +1,13 @@
 import React, { Component, ElementType, ReactElement } from 'react';
 
-import RcSlider from 'rc-slider';
+import RcSlider, { Handle, Range, HandleProps } from 'rc-slider';
 import Tooltip from 'rc-tooltip';
-// import { GenericSliderProps } from 'rc-slider/lib/interface';
-// import { SliderProps } from '@types/rc-slider';
-// import { HandleProps } from 'rc-slider/lib/Handle';
+
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 
 import { Colors } from '../../PropTypes';
 import './Slider.css';
-
-const { Handle, Range } = RcSlider;
 
 const trackStyle: React.CSSProperties = {
   height: '10px',
@@ -61,25 +57,6 @@ const railStyle: React.CSSProperties = {
   left: '0',
 };
 
-interface HandleProps {
-  prefixCls?: string;
-  className?: string;
-  vertical?: boolean;
-  reverse?: boolean;
-  offset?: number;
-  style?: React.CSSProperties;
-  disabled?: boolean;
-  min?: number;
-  max?: number;
-  value?: number;
-  tabIndex?: number;
-  ariaLabel?: string;
-  ariaLabelledBy?: string;
-  ariaValueTextFormatter?: (val: number) => string;
-  onMouseEnter?: React.MouseEventHandler;
-  onMouseLeave?: React.MouseEventHandler;
-}
-
 interface GenericSliderProps {
   min?: number;
   max?: number;
@@ -117,7 +94,7 @@ interface MySliderProps extends GenericSliderProps {
   onChange?: ((value: number) => void) | ((value: number[]) => void);
   onBeforeChange?: ((value: number) => void) | ((value: number[]) => void);
   onAfterChange?: ((value: number) => void) | ((value: number[]) => void);
-  tooltipRender: Function,
+  tooltipRender: (value: number) => string,
   tooltipVisible: 'always' | 'dragging' | 'never',
   handle: (props: HandleProps) => ReactElement,
 }
@@ -193,9 +170,9 @@ class Slider extends Component<MySliderProps, SliderState> {
     return trackColor;
   }
 
-  getHandle = (props: HandleProps): ReactElement => {
+  getHandle = (props: HandleProps & { value: number }): ReactElement => {
     const {
-      value, // dragging,
+      value,
       ...restProps
     } = props;
     const { tooltipRender, tooltipVisible, handle } = this.props;
@@ -233,7 +210,7 @@ class Slider extends Component<MySliderProps, SliderState> {
         // key={index}
       >
         {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-        <Handle value={value} {...restProps} />
+        <Handle {...restProps} />
       </Tooltip>
     );
   };

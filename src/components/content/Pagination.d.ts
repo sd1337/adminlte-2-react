@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Dictionary } from '../PropTypes';
 interface PaginationProps {
     activePage?: number;
@@ -34,7 +34,7 @@ declare class Pagination extends Component<PaginationProps, PaginationState> {
     componentDidUpdate({ totalElements: oldTotalElements }: PaginationProps): void;
     onChange(event: any): void;
     keyMaps: Dictionary;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Pagination;
 //# sourceMappingURL=Pagination.d.ts.map

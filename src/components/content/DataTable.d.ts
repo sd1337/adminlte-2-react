@@ -1,12 +1,12 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import 'datatables.net-bs/css/dataTables.bootstrap.css';
 import 'datatables.net-select-bs/css/select.bootstrap.css';
 import './DataTable.css';
 import { ColumnType, DataType, SelectedRowType } from './TableProps';
-declare type OnClickEvents = {
+type OnClickEvents = {
     [key: string]: Function;
 };
-declare type OrderType = {
+type OrderType = {
     direction: 'asc' | 'desc';
     column?: string;
     index?: number;
@@ -86,10 +86,10 @@ declare class DataTable extends Component<DataTableProps, DataTableState> {
     orderToExternal(order: any): any;
     orderToInternal(order?: OrderType[]): any[][] | undefined;
     destroyDatatables(): void;
-    createDomObject(): JSX.Element;
+    createDomObject(): React.JSX.Element;
     bindOnClickEvents(onClickEvents: OnClickEvents, api: any): void;
-    renderPagination(): JSX.Element;
-    render(): JSX.Element;
+    renderPagination(): React.JSX.Element;
+    render(): React.JSX.Element;
 }
 export default DataTable;
 //# sourceMappingURL=DataTable.d.ts.map

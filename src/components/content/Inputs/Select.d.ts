@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { IInputProps, SelectOptionType } from './InputProps';
 interface SelectProps extends IInputProps {
     options: SelectOptionType[];
@@ -28,7 +28,7 @@ declare class Select extends Component<SelectProps, SelectState> {
         text: never;
         disabled?: undefined;
     };
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Select;
 //# sourceMappingURL=Select.d.ts.map

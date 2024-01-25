@@ -1,4 +1,4 @@
-import { Component, FocusEventHandler, FormEventHandler } from 'react';
+import React, { Component, FocusEventHandler, FormEventHandler } from 'react';
 import { DatetimepickerProps } from 'react-datetime';
 import { Moment } from 'moment';
 import 'react-datetime/css/react-datetime.css';
@@ -24,7 +24,7 @@ declare class DateTime extends Component<DateTimeProps, DateTimeState> {
     static defaultProps: DateTimeProps;
     state: DateTimeState;
     onChange: ((value: string | Moment) => void) | undefined;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default DateTime;
 //# sourceMappingURL=DateTime.d.ts.map

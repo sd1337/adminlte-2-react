@@ -5,7 +5,7 @@ export interface SmartTableHeaderSortIcons {
     down: ReactElement;
     default: ReactElement;
 }
-export declare type SmartColumnType = ColumnType & {
+export type SmartColumnType = ColumnType & {
     toggleHidden?: boolean;
     toggleOrder?: boolean;
     order?: SmartTableOrderDirection;
@@ -27,10 +27,10 @@ export interface SmartTableModalParams {
     props?: DataType;
     title?: string;
 }
-export declare type MappedColumnType = {
+export type MappedColumnType = {
     [key: string]: SmartColumnType;
 };
-export declare type SmartTableOrderDirection = 'asc' | 'desc';
-export declare type SmartTableHeaderOrderDirection = 'asc' | 'desc' | 'none';
-export declare type SmartTableOrderChangedCallback = (data: string, order: SmartTableHeaderOrderDirection) => void;
+export type SmartTableOrderDirection = 'asc' | 'desc';
+export type SmartTableHeaderOrderDirection = 'asc' | 'desc' | 'none';
+export type SmartTableOrderChangedCallback = (data: string, order: SmartTableHeaderOrderDirection) => void;
 //# sourceMappingURL=SmartTableTypes.d.ts.map

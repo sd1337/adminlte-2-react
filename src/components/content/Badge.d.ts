@@ -5,7 +5,7 @@ interface BadgeProps {
     color: Colors;
     text?: string;
 }
-declare type BadgeComponent = React.FC<BadgeProps>;
+type BadgeComponent = React.FC<BadgeProps>;
 declare const Badge: BadgeComponent;
 export default Badge;
 //# sourceMappingURL=Badge.d.ts.map

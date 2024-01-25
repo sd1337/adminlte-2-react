@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 import 'icheck';
 import 'icheck/skins/all.css';
 import { InputWrapperProps } from './InputWrapper';
@@ -39,7 +39,7 @@ declare class ICheck extends Component<ICheckProps, ICheckState> {
     optionToJSXComponent: ({ value, text, disabled, checked, }: ICheckRadioOptionType, idx: number) => ReactElement;
     updateOptions(): void;
     initializeICheck(): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default ICheck;
 //# sourceMappingURL=ICheck.d.ts.map

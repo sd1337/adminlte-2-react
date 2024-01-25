@@ -4,7 +4,7 @@ interface AsyncContentProps {
     exact?: boolean;
     component: string;
 }
-declare type AsyncContentComponent = React.FC<AsyncContentProps>;
+type AsyncContentComponent = React.FC<AsyncContentProps>;
 declare const AsyncContent: AsyncContentComponent;
 export default AsyncContent;
 //# sourceMappingURL=AsyncContent.d.ts.map

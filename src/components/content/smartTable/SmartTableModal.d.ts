@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 interface Props {
     component: any;
     props?: {
@@ -23,7 +23,7 @@ declare class SmartTableModal extends Component<Props, State> {
         [key: string]: any;
     }) => void;
     updatedatableState: {};
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SmartTableModal;
 //# sourceMappingURL=SmartTableModal.d.ts.map

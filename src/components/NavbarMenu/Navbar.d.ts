@@ -8,7 +8,7 @@ interface NavbarProps {
     additionalMenus?: ReactNode;
     children?: ReactNode;
 }
-declare type NavbarComponent = React.FC<NavbarProps>;
+type NavbarComponent = React.FC<NavbarProps>;
 declare const Navbar: NavbarComponent;
 export { Navbar as Core, Entry, MessageItem, NotificationItem, TaskItem, ControlSidebarEntry, };
 //# sourceMappingURL=Navbar.d.ts.map

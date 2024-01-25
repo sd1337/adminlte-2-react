@@ -10,7 +10,7 @@ interface TaskItemProps {
     min?: number;
     max?: number;
 }
-declare type TaskItemComponent = React.FC<TaskItemProps>;
+type TaskItemComponent = React.FC<TaskItemProps>;
 declare const TaskItem: TaskItemComponent;
 export default TaskItem;
 //# sourceMappingURL=TaskItem.d.ts.map

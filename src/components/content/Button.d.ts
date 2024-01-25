@@ -1,4 +1,4 @@
-import { Component, MouseEventHandler, ReactElement, ReactNode } from 'react';
+import React, { Component, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import './Button.css';
 import { Colors, Sizes, Types } from '../PropTypes';
 interface ButtonProps {
@@ -52,7 +52,7 @@ declare class Button extends Component<ButtonProps, {}> {
         value: null;
         name: null;
     };
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Button;
 //# sourceMappingURL=Button.d.ts.map
