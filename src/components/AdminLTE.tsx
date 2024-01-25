@@ -236,7 +236,7 @@ class AdminLTE extends Component<Props, {}> {
               path={p.props.path}
               exact={p.props.exact}
               render={(props) => React.cloneElement(p, {
-                key: p.props.key ? p.props.key : p.props.path,
+                key: p.props.path,
                 ...props,
               })}
             />
