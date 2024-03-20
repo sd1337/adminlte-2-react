@@ -48,6 +48,8 @@ import ButtonToolbar from './content/ButtonToolbar';
 import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
+import { ColumnType, DataType } from './content/TableProps';
+import { SmartColumnType } from './content/smartTable/SmartTableTypes';
 type Node = React.ReactNode;
 type Props = {
     children: ReactElement | ReactElement[];
@@ -81,5 +83,5 @@ export type Types = Types_;
 export type Sizes = Sizes_;
 export type FormTypes = FormTypes_;
 export type Themes = Themes_;
-export { LoadingSpinner, Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, LoginCore, Alert, Callout, ProgressBar, Divider, Inputs, Label, Badge, Calendar, BoxPane, ButtonToolbar, Pagination, SmartTable, };
+export { LoadingSpinner, Content, Sidebar, Footer, ControlSidebar, Navbar, Row, Col, Infobox, Box, DescriptionBlock, ProgressGroup, Button, DataTable, Tabs, TabContent, Description, DescriptionItem, ButtonGroup, Margin, SparklineBox, Chatbox, Memberbox, SimpleTable, Sparkbar, NavListItem, NavList, ProductList, ProductListItem, LoginCore, Alert, Callout, ProgressBar, Divider, Inputs, Label, Badge, Calendar, BoxPane, ButtonToolbar, Pagination, SmartTable, DataType, ColumnType, SmartColumnType, };
 //# sourceMappingURL=AdminLTE.d.ts.map
