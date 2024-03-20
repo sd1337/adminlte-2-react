@@ -1,8 +1,10 @@
 import React, { ReactNode } from 'react';
 import { TabPane } from 'react-bootstrap';
 
-interface TabContentProps {
+export interface TabContentProps {
   eventKey: string,
+  // eslint-disable-next-line react/no-unused-prop-types
+  title?: string,
   children: ReactNode
 }
 

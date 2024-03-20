@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
-interface TabContentProps {
+export interface TabContentProps {
     eventKey: string;
+    title?: string;
     children: ReactNode;
 }
 type TabContentComponent = React.FC<TabContentProps>;

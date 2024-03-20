@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import TabContent from './TabContent';
-type TabContentType = typeof TabContent;
+import { TabContentProps } from './TabContent';
 interface TabsProps {
     activeKey?: string;
     defaultActiveKey?: string;
     onSelect?: Function;
-    children: TabContentType | TabContentType[];
+    children: React.ReactElement<TabContentProps> | React.ReactElement<TabContentProps>[];
     pullRight?: boolean;
     contentHeight: number | string;
     mountOnEnter?: boolean;
