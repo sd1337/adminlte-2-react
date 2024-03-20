@@ -8,7 +8,7 @@ export type ColumnType = {
     width?: string;
     className?: string;
     bSortable?: boolean;
-    render?: (data: any, rowIdx: number, rowData: DataType) => React.JSX.Element | string | null;
+    render?: (data: any, rowIdx: number, rowData: DataType) => React.JSX.Element | false | string | null;
 };
 export type SelectedRowType = number | string | number[] | string[];
 //# sourceMappingURL=TableProps.d.ts.map

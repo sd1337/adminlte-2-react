@@ -9,7 +9,7 @@ export type SmartColumnType = {
     title: string;
     data: string;
     width?: string;
-    render?: (data: any, rowData: DataType, rowIdx: number) => React.JSX.Element | string | null;
+    render?: (data: any, rowData: DataType, rowIdx: number) => React.JSX.Element | false | string | null;
     toggleHidden?: boolean;
     toggleOrder?: boolean;
     order?: SmartTableOrderDirection;
