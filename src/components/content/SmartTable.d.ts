@@ -1,5 +1,5 @@
 import React, { Component, ReactElement } from 'react';
-import { ColumnType, DataType } from './TableProps';
+import { DataType } from './TableProps';
 import './SmartTable.css';
 import { SmartColumnType, SmartOrderType, SmartPagination, SmartTableOrderChangedCallback, SmartTableHeaderOrderDirection, SmartTableModalParams } from './smartTable/SmartTableTypes';
 interface SmartTableProps {
@@ -55,7 +55,7 @@ declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
     static columnsFromData(data: DataType[]): SmartColumnType[];
     static headersFromColumns(columns: SmartColumnType[], key: string, order: SmartOrderType[], orderChanged: SmartTableOrderChangedCallback, _setFilterValue: (temp: any) => void, hiddenColumns: string[]): ReactElement[];
     static searchButtonsFromColumns(columns: SmartColumnType[], filterColumn: string | undefined, setFilterColumn: (column: string, title?: string) => void): React.JSX.Element[];
-    static mapCell(data: any, column: ColumnType, rowData: DataType, rowIdx: number, key: string): React.JSX.Element;
+    static mapCell(data: any, column: SmartColumnType, rowData: DataType, rowIdx: number, key: string): React.JSX.Element;
     static defaultProps: {
         data: null;
         columns: undefined;

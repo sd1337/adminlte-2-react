@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import React from 'react';
 export type DataType = {
     [key: string]: any;
 };
@@ -6,7 +6,9 @@ export type ColumnType = {
     title: string;
     data: string;
     width?: string;
-    render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
+    className?: string;
+    bSortable?: boolean;
+    render?: (data: any, rowIdx: number, rowData: DataType) => React.JSX.Element | string | null;
 };
 export type SelectedRowType = number | string | number[] | string[];
 //# sourceMappingURL=TableProps.d.ts.map

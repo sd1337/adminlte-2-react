@@ -17,7 +17,7 @@ interface DataTableProps {
     ajaxMap?: Function;
     ajaxResponseMap?: Function;
     data?: DataType[];
-    columns?: ColumnType[];
+    columns: ColumnType[];
     setDataTableRef?: Function;
     onSelect?: Function;
     onDeselect?: Function;

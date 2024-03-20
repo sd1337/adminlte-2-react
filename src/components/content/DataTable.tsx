@@ -70,7 +70,7 @@ interface DataTableProps {
   ajaxMap?: Function,
   ajaxResponseMap?: Function,
   data?: DataType[],
-  columns?: ColumnType[],
+  columns: ColumnType[],
   setDataTableRef?: Function,
   onSelect?: Function,
   onDeselect?: Function,
@@ -234,7 +234,7 @@ class DataTable extends Component<DataTableProps, DataTableState> {
     if (((oldHasMore === undefined
       || hasMore === undefined
       || oldHasMore === null
-      || hasMore === undefined) && oldHasMore !== hasMore)
+      || hasMore === null) && oldHasMore !== hasMore)
       || oldTe !== totalElements) {
       this.controlled = !!(totalElements) || hasMore;
       if (!this.controlled) {
@@ -321,20 +321,35 @@ class DataTable extends Component<DataTableProps, DataTableState> {
       onPageChange, searchValue, onSearchChange,
     } = this.props;
     const { options } = this.state;
-    const localColumns = ((options && options.columns) || columns)
-      .map((p: any) => {
+    const encoder = document.createElement('div');
+    const localColumns = columns
+      .map((p) => {
         if (p.render) {
           const { render: externalRender, ...otherOptions } = p;
-          const render = (...args: any[]) => {
-            const localValue = externalRender(...args);
+          const render = (dataArg: any, _ignore: any, rowData: any, meta: { col: number, row: number, settings: unknown }) => {
+            const localValue = externalRender(dataArg, meta.row, rowData);
             if (React.isValidElement(localValue)) {
               return ReactDOMServer.renderToString(localValue);
             }
-            return localValue;
+            if (typeof localValue === 'string') {
+              encoder.innerText = localValue;
+              return encoder.innerHTML;
+            }
+            return '';
           };
           return { render, ...otherOptions };
         }
-        return p;
+
+        return {
+          ...p,
+          render: (dataArg: any) => {
+            if (typeof dataArg === 'string') {
+              encoder.innerText = dataArg;
+              return encoder.innerHTML;
+            }
+            return dataArg;
+          },
+        };
       });
     let search;
     if (searchValue) {
