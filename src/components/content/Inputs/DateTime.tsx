@@ -2,7 +2,7 @@ import React, {
   FormEventHandler, useCallback,
 } from 'react';
 import ReactDateTime, { DatetimepickerProps, EventOrValueHandler } from 'react-datetime';
-import moment, { Moment } from 'moment';
+import moment, { isMoment, Moment } from 'moment';
 import 'react-datetime/css/react-datetime.css';
 import './DateTime.css';
 import InputWrapper, { InputWrapperProps } from './InputWrapper';
@@ -13,7 +13,16 @@ import { createSyntheticEvent } from './InputUtilities';
 interface DateTimeProps extends InputWrapperProps {
   value?: DateType,
   defaultValue?: DateType,
+  /**
+   * @deprecated use onValueChange instead
+   */
   onChange?: FormEventHandler<any>,
+  /**
+   * @param newValue either Moment (when valid) or string (when invalid)
+   * @param validValue
+   * @param invalidValue
+   */
+  onValueChange?: (newValue: Moment | string, validValue?: Moment, invalidValue?: string) => void,
   onClose?: EventOrValueHandler<any>,
   id?: string,
   name?: string,
@@ -30,6 +39,7 @@ const DateTime = (props: DateTimeProps) => {
     value = undefined,
     defaultValue = undefined,
     onChange = undefined,
+    onValueChange = undefined,
     onClose = undefined,
     id = undefined,
     name = undefined,
@@ -62,7 +72,14 @@ const DateTime = (props: DateTimeProps) => {
       const result = createSyntheticEvent(rawEvent);
       onChange(result);
     }
-  }, [onChange, format, id, name]);
+    if (onValueChange) {
+      if (isMoment(newValue)) {
+        onValueChange(newValue, newValue, undefined);
+      } else {
+        onValueChange(newValue, undefined, newValue);
+      }
+    }
+  }, [onChange, onValueChange, format, id, name]);
 
   const {
     iconLeft, iconRight, addonLeft, addonRight, size, checkboxLeft,
