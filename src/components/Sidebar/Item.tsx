@@ -68,7 +68,7 @@ const Item: ItemComponent = ({
     } else {
       localChildren = children;
     }
-    localChildren = localChildren.filter(p => p && p instanceof Component).map((p: any) => React.cloneElement(p as any, { key: p.props.to })) as any;
+    localChildren = localChildren.filter((p) => p && p instanceof Component).map((p: any) => React.cloneElement(p as any, { key: p.props.to })) as any;
     activeChild = !!(localChildren.find((p: any) => isActiveItem({
       history,
       link: p.props.to || p.props.link,

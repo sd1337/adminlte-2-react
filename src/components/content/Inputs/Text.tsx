@@ -4,7 +4,7 @@ import React, {
 import { IInputProps } from './InputProps';
 import InputWrapper from './InputWrapper';
 
-interface TextProps extends IInputProps{
+interface TextProps extends IInputProps {
   inputType?: string,
   name?: string,
   id?: string,

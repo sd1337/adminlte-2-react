@@ -6,7 +6,7 @@ interface CalloutProps {
     children?: ReactNode;
     type?: Types;
 }
-declare type CalloutComponent = React.FC<CalloutProps>;
+type CalloutComponent = React.FC<CalloutProps>;
 declare const Callout: CalloutComponent;
 export default Callout;
 //# sourceMappingURL=Callout.d.ts.map

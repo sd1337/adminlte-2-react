@@ -8,7 +8,6 @@ import uuid from 'uuid/v4';
 import InputWrapper, { InputWrapperProps } from './InputWrapper';
 import './Date.scss';
 import { Types } from '../../PropTypes';
-import { SharedDateDefaultProps } from './InputShapes';
 import { DateType, SharedDateProps } from './InputProps';
 
 interface DateProps extends SharedDateProps, InputWrapperProps {
@@ -57,7 +56,15 @@ class Date extends Component<DateProps, DateState> {
     dateProps: null,
     name: uuid(),
     format: undefined,
-    ...SharedDateDefaultProps,
+    disabled: false,
+    required: false,
+    readOnly: false,
+    showClearDate: false,
+    noBorder: false,
+    block: false,
+    small: false,
+    regular: false,
+    inputIconPosition: null,
   };
 
   constructor(props: DateProps) {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import InputWrapper from './InputWrapper';
 import { IInputProps, SelectOptionType } from './InputProps';
 
-interface SelectProps extends IInputProps{
+interface SelectProps extends IInputProps {
   options: SelectOptionType[],
   label: string,
   disabled: boolean,

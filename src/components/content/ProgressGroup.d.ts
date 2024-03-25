@@ -6,7 +6,7 @@ interface ProgressGroupProps {
     color: Colors;
     text?: string;
 }
-declare type ProgressGroupComponent = React.FC<ProgressGroupProps>;
+type ProgressGroupComponent = React.FC<ProgressGroupProps>;
 declare const ProgressGroup: ProgressGroupComponent;
 export default ProgressGroup;
 //# sourceMappingURL=ProgressGroup.d.ts.map

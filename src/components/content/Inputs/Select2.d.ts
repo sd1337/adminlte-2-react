@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import 'select2/dist/js/select2';
+import React, { Component } from 'react';
+import 'select2';
 import 'select2/dist/css/select2.css';
 import './Select2.css';
 import { InputWrapperProps } from './InputWrapper';
@@ -74,7 +74,7 @@ declare class Select2 extends Component<Select2Props, Select2State> {
     mapped?: Dictionary;
     mapOptions(options: any): void;
     toJQueryEvent(eventName: string): string | null;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Select2;
 //# sourceMappingURL=Select2.d.ts.map

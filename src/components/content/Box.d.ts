@@ -1,7 +1,7 @@
-import { Component, MouseEventHandler, ReactNode } from 'react';
+import React, { Component, MouseEventHandler, ReactNode } from 'react';
 import './Box.scss';
 import { Types } from '../PropTypes';
-declare type BoxProps = {
+type BoxProps = {
     id?: string;
     title?: string;
     collapsable?: boolean;
@@ -28,7 +28,7 @@ declare type BoxProps = {
     header?: ReactNode;
     children?: ReactNode;
 };
-declare type BoxState = {
+type BoxState = {
     collapsed?: boolean;
     closing: boolean;
     closed: boolean;
@@ -66,7 +66,7 @@ declare class Box extends Component<BoxProps, BoxState> {
     close: MouseEventHandler<HTMLButtonElement>;
     toggleHide: MouseEventHandler<HTMLButtonElement>;
     main: HTMLDivElement | null;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Box;
 //# sourceMappingURL=Box.d.ts.map

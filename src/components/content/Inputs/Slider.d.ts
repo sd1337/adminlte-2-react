@@ -1,26 +1,9 @@
 import React, { Component, ElementType, ReactElement } from 'react';
+import { HandleProps } from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import 'rc-tooltip/assets/bootstrap.css';
 import { Colors } from '../../PropTypes';
 import './Slider.css';
-interface HandleProps {
-    prefixCls?: string;
-    className?: string;
-    vertical?: boolean;
-    reverse?: boolean;
-    offset?: number;
-    style?: React.CSSProperties;
-    disabled?: boolean;
-    min?: number;
-    max?: number;
-    value?: number;
-    tabIndex?: number;
-    ariaLabel?: string;
-    ariaLabelledBy?: string;
-    ariaValueTextFormatter?: (val: number) => string;
-    onMouseEnter?: React.MouseEventHandler;
-    onMouseLeave?: React.MouseEventHandler;
-}
 interface GenericSliderProps {
     min?: number;
     max?: number;
@@ -57,7 +40,7 @@ interface MySliderProps extends GenericSliderProps {
     onChange?: ((value: number) => void) | ((value: number[]) => void);
     onBeforeChange?: ((value: number) => void) | ((value: number[]) => void);
     onAfterChange?: ((value: number) => void) | ((value: number[]) => void);
-    tooltipRender: Function;
+    tooltipRender: (value: number) => string;
     tooltipVisible: 'always' | 'dragging' | 'never';
     handle: (props: HandleProps) => ReactElement;
 }
@@ -78,10 +61,12 @@ declare class Slider extends Component<MySliderProps, SliderState> {
     constructor(props: MySliderProps);
     state: {};
     private static getTrackColor;
-    getHandle: (props: HandleProps) => ReactElement;
+    getHandle: (props: HandleProps & {
+        value: number;
+    }) => ReactElement;
     constructElement(props: MySliderProps): void;
     Element: ElementType;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Slider;
 //# sourceMappingURL=Slider.d.ts.map

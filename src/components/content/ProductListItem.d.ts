@@ -8,7 +8,7 @@ interface ProductListItemProps {
     image?: string;
     to?: string;
 }
-declare type ProductListItemComponent = React.FC<ProductListItemProps>;
+type ProductListItemComponent = React.FC<ProductListItemProps>;
 declare const ProductListItem: ProductListItemComponent;
 export default ProductListItem;
 //# sourceMappingURL=ProductListItem.d.ts.map

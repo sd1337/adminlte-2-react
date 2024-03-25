@@ -1,12 +1,14 @@
-import { ReactElement } from 'react';
-export declare type DataType = {
+import React from 'react';
+export type DataType = {
     [key: string]: any;
 };
-export declare type ColumnType = {
+export type ColumnType = {
     title: string;
     data: string;
     width?: string;
-    render?: (data: any, rowData: DataType, rowIdx: number) => ReactElement;
+    className?: string;
+    bSortable?: boolean;
+    render?: (data: any, rowIdx: number, rowData: DataType) => React.JSX.Element | false | string | null;
 };
-export declare type SelectedRowType = number | string | number[] | string[];
+export type SelectedRowType = number | string | number[] | string[];
 //# sourceMappingURL=TableProps.d.ts.map

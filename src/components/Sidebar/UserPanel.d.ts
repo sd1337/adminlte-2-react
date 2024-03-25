@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Types } from '../PropTypes';
 import './UserPanel.css';
 interface UserPanelProps {
@@ -16,7 +16,7 @@ declare class UserPanel extends Component<UserPanelProps, {}> {
         statusType: string;
     };
     state: {};
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default UserPanel;
 //# sourceMappingURL=UserPanel.d.ts.map

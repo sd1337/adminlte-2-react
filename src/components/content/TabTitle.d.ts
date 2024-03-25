@@ -4,13 +4,13 @@ interface Props {
     title?: string;
     titleLeft?: boolean;
 }
-declare const TabTitle: {
-    ({ title, titleLeft, icon }: Props): ReactElement;
-    defaultProps: {
+declare function TabTitle({ title, titleLeft, icon }: Props): ReactElement;
+declare namespace TabTitle {
+    var defaultProps: {
         icon: undefined;
         title: undefined;
         titleLeft: boolean;
     };
-};
+}
 export default TabTitle;
 //# sourceMappingURL=TabTitle.d.ts.map

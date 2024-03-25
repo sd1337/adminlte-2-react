@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 interface SparkbarProps {
     color: string;
     height?: string | number;
@@ -14,7 +14,7 @@ declare class Sparkbar extends Component<SparkbarProps, SparkbarState> {
     };
     componentDidMount(): void;
     main: HTMLDivElement | null;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Sparkbar;
 //# sourceMappingURL=Sparkbar.d.ts.map

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'fullcalendar';
-import 'fullcalendar/dist/fullcalendar.min.css';
 import './Calendar.css';
 
 const $ = require('jquery');
@@ -167,7 +166,7 @@ class Calendar extends Component<CalendarProps, CalendarState> {
 
       // Remove event from text input
       $('#new-event').val('');
-    }); 
+    });
   }
 
   main: HTMLDivElement | null = null;

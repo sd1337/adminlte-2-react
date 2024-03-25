@@ -12,7 +12,7 @@ interface EntryProps {
     children?: ReactNode;
     onClick?: MouseEventHandler<HTMLLIElement>;
 }
-declare type EntryComponent = React.FC<EntryProps>;
+type EntryComponent = React.FC<EntryProps>;
 declare const Entry: EntryComponent;
 export default Entry;
 //# sourceMappingURL=Entry.d.ts.map

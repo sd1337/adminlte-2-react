@@ -5,7 +5,7 @@ interface ButtonGroupProps {
     vertical?: boolean;
     children: ReactNode;
 }
-declare type ButtonGroupComponent = React.FC<ButtonGroupProps>;
+type ButtonGroupComponent = React.FC<ButtonGroupProps>;
 declare const ButtonGroup: ButtonGroupComponent;
 export default ButtonGroup;
 //# sourceMappingURL=ButtonGroup.d.ts.map

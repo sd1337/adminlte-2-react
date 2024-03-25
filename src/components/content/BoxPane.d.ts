@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Colors } from '../PropTypes';
-declare type BoxPaneComponent = React.FC<BoxPaneProps>;
+type BoxPaneComponent = React.FC<BoxPaneProps>;
 interface BoxPaneProps {
     children: ReactNode;
     color: Colors;

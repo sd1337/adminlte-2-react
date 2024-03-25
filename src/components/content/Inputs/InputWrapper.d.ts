@@ -44,7 +44,7 @@ declare class InputWrapper extends Component<InputWrapperProps, InputWrapperStat
         help: null;
     };
     state: {};
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default InputWrapper;
 //# sourceMappingURL=InputWrapper.d.ts.map

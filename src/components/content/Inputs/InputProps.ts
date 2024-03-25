@@ -9,7 +9,7 @@ import { InputWrapperProps } from './InputWrapper';
 
 export interface IInputProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  InputWrapperProps{
+  InputWrapperProps {
   type?: FormTypes,
   size?: any;
   width?: string;
@@ -249,10 +249,10 @@ export interface SelectOptionType {
 
 export type CombinedOptionType = string | number | SelectOptionType;
 
-export interface RadioOptionType extends SelectOptionType{
+export interface RadioOptionType extends SelectOptionType {
   checked?: boolean,
   label: string,
 }
-export interface ICheckRadioOptionType extends SelectOptionType{
+export interface ICheckRadioOptionType extends SelectOptionType {
   checked?: boolean,
 }

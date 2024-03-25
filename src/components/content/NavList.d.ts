@@ -4,7 +4,7 @@ interface NavListProps {
     pills?: boolean;
     stacked?: boolean;
 }
-declare type NavListComponent = React.FC<NavListProps>;
+type NavListComponent = React.FC<NavListProps>;
 declare const NavList: NavListComponent;
 export default NavList;
 //# sourceMappingURL=NavList.d.ts.map

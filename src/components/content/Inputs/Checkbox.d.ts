@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { IInputProps } from './InputProps';
 interface CheckboxProps extends IInputProps {
     text: string;
@@ -18,7 +18,7 @@ declare class Checkbox extends Component<CheckboxProps, CheckboxState> {
         name: null;
     };
     state: {};
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Checkbox;
 //# sourceMappingURL=Checkbox.d.ts.map

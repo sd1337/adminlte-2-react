@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const createSyntheticEvent = <T extends Element, E extends Event>(event: E): React.SyntheticEvent<T, E> => {
   let isDefaultPrevented = false;
   let isPropagationStopped = false;

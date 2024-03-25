@@ -1,6 +1,5 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import 'fullcalendar';
-import 'fullcalendar/dist/fullcalendar.min.css';
 import './Calendar.css';
 interface CalendarProps {
 }
@@ -10,7 +9,7 @@ declare class Calendar extends Component<CalendarProps, CalendarState> {
     state: CalendarState;
     componentDidMount(): void;
     main: HTMLDivElement | null;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Calendar;
 //# sourceMappingURL=Calendar.d.ts.map

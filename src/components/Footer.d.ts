@@ -3,7 +3,7 @@ interface FooterProps {
     children?: ReactNode;
     includeVersionInfo?: boolean;
 }
-declare type FooterComponent = React.FC<FooterProps>;
+type FooterComponent = React.FC<FooterProps>;
 declare const Footer: FooterComponent;
 export default Footer;
 //# sourceMappingURL=Footer.d.ts.map

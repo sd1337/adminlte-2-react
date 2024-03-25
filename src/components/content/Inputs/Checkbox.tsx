@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import InputWrapper from './InputWrapper';
 import { IInputProps } from './InputProps';
 
-interface CheckboxProps extends IInputProps{
+interface CheckboxProps extends IInputProps {
   text: string,
   checked?: boolean,
   disabled: boolean,

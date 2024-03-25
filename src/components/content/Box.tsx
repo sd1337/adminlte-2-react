@@ -6,7 +6,7 @@ import {
 import './Box.scss';
 import AnimateHeight from 'react-animate-height';
 import { Types } from '../PropTypes';
-import LoadingSpinner from './LoadingSpinner';
+import { LoadingSpinner } from './LoadingSpinner';
 import { splitIcon } from '../Utilities';
 
 type BoxProps = {

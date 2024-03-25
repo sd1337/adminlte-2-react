@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Colors, Types } from '../PropTypes';
 interface ChatboxProps {
     id?: string;
@@ -35,13 +35,13 @@ declare class Chatbox extends Component<ChatboxProps, ChatboxState> {
         message: string;
         timestamp: string;
         user: string;
-    }, users: any): JSX.Element;
-    getMessages(): JSX.Element;
-    getFooter(): JSX.Element;
-    getBadge(): JSX.Element;
-    getContactsToggle(): JSX.Element;
-    getContact({ name, image, lastTimestamp, lastMessage, to, }: any): JSX.Element;
-    getContacts(): JSX.Element;
+    }, users: any): React.JSX.Element;
+    getMessages(): React.JSX.Element;
+    getFooter(): React.JSX.Element;
+    getBadge(): React.JSX.Element;
+    getContactsToggle(): React.JSX.Element;
+    getContact({ name, image, lastTimestamp, lastMessage, to, }: any): React.JSX.Element;
+    getContacts(): React.JSX.Element;
     activeUsers: {
         one: {
             name: string;
@@ -65,7 +65,7 @@ declare class Chatbox extends Component<ChatboxProps, ChatboxState> {
         lastTimestamp: string;
         lastMessage: string;
     }[];
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default Chatbox;
 //# sourceMappingURL=Chatbox.d.ts.map

@@ -8,7 +8,7 @@ import InputWrapper, { InputWrapperProps } from './InputWrapper';
 import { CombinedOptionType, ICheckRadioOptionType } from './InputProps';
 import { Dictionary } from '../../PropTypes';
 
-interface ICheckProps extends InputWrapperProps{
+interface ICheckProps extends InputWrapperProps {
   options: CombinedOptionType[] | CombinedOptionType,
   name?: string,
   disabled?: boolean,

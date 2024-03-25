@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { ColumnType, DataType, SelectedRowType } from './TableProps';
 interface SimpleTableProps {
     data?: DataType;
@@ -35,8 +35,8 @@ declare class SimpleTable extends Component<SimpleTableProps, SimpleTableState> 
     componentDidUpdate({ data: oldData, }: SimpleTableProps, { selectedRow: oldSelectedRow }: SimpleTableState): void;
     onSelect: (data: DataType, rowIdx: number) => void;
     updateStateData: () => void;
-    mapCell(data: any, column: any, rowData: any, rowIdx: number): JSX.Element;
-    render(): JSX.Element;
+    mapCell(data: any, column: any, rowData: any, rowIdx: number): React.JSX.Element;
+    render(): React.JSX.Element;
 }
 export default SimpleTable;
 //# sourceMappingURL=SimpleTable.d.ts.map

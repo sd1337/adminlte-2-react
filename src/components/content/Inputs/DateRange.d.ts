@@ -1,4 +1,4 @@
-import { Component, FormEventHandler } from 'react';
+import React, { Component, FormEventHandler } from 'react';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import { DateRangePickerShape } from 'react-dates';
@@ -7,7 +7,7 @@ import { InputWrapperProps } from './InputWrapper';
 import './Date.scss';
 import { Types } from '../../PropTypes';
 import { DateType, SharedDateProps } from './InputProps';
-declare type Focused = 'startDate' | 'endDate';
+type Focused = 'startDate' | 'endDate';
 interface DateRangeProps extends SharedDateProps, InputWrapperProps {
     dateType: Types;
     startDate: DateType;
@@ -28,6 +28,11 @@ interface DateRangeState {
 }
 declare class DateRange extends Component<DateRangeProps, DateRangeState> {
     static defaultProps: {
+        type: string;
+        focused: null;
+        onFocusChange: null;
+        format: undefined;
+        dateRangeProps: null;
         disabled: boolean;
         required: boolean;
         readOnly: boolean;
@@ -37,11 +42,6 @@ declare class DateRange extends Component<DateRangeProps, DateRangeState> {
         small: boolean;
         regular: boolean;
         inputIconPosition: null;
-        type: string;
-        focused: null;
-        onFocusChange: null;
-        format: undefined;
-        dateRangeProps: null;
     };
     constructor(props: DateRangeProps);
     state: DateRangeState;
@@ -50,7 +50,7 @@ declare class DateRange extends Component<DateRangeProps, DateRangeState> {
         endDate: Moment | null;
     }): void;
     onFocusChange(focused: Focused | null): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export default DateRange;
 //# sourceMappingURL=DateRange.d.ts.map

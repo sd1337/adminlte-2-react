@@ -1,9 +1,9 @@
-export declare type Colors = 'light-blue' | 'aqua' | 'green' | 'yellow' | 'red' | 'gray' | 'navy' | 'teal' | 'purple' | 'orange' | 'maroon' | 'black';
-export declare type Types = 'default' | 'info' | 'danger' | 'warning' | 'success' | 'primary';
-export declare type Sizes = 'xs' | 'sm' | 'md' | 'lg';
-export declare type FormTypes = 'warning' | 'success' | 'error';
-export declare type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'purple' | 'purple-light' | 'red' | 'red-light' | 'yellow' | 'yellow-light';
-declare type TypeDesc = {
+export type Colors = 'light-blue' | 'aqua' | 'green' | 'yellow' | 'red' | 'gray' | 'navy' | 'teal' | 'purple' | 'orange' | 'maroon' | 'black';
+export type Types = 'default' | 'info' | 'danger' | 'warning' | 'success' | 'primary';
+export type Sizes = 'xs' | 'sm' | 'md' | 'lg';
+export type FormTypes = 'warning' | 'success' | 'error';
+export type Themes = 'black-light' | 'black' | 'blue' | 'blue-light' | 'green' | 'green-light' | 'purple' | 'purple-light' | 'red' | 'red-light' | 'yellow' | 'yellow-light';
+type TypeDesc = {
     type: string;
     color: string;
     colorCode: string;
@@ -40,7 +40,7 @@ declare const types: {
         f56954: TypeDesc;
     };
 };
-export declare type Dictionary = {
+export type Dictionary = {
     [fieldName: string]: any;
 };
 export { types as TypeMappings, };
