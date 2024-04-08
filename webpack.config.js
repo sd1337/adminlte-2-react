@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 // webpack configuration file
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const TerserPlugin = require('terser-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
@@ -151,7 +152,6 @@ module.exports = {
     // 'react-bootstrap': 'react-bootstrap',
     // 'react-dates': 'react-dates',
     'react-dom': 'react-dom',
-    'react-ionicons': 'react-ionicons',
     'source-sans-pro/source-sans-pro.css': 'source-sans-pro/source-sans-pro.css',
     // select2: 'select2',
   },
@@ -173,4 +173,8 @@ module.exports = {
     //   filename: 'style.css',
     // }),
   ],
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
 };

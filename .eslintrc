@@ -15,6 +15,7 @@
     },
     "ecmaVersion": 12
   },
+  "ignorePatterns": ["**/*.d.ts", "**/*.d.tsx", "**/*.min.js"],
   "overrides": [
     {
       "files": [
@@ -43,9 +44,13 @@
     "react"
   ],
   "rules": {
+    "react/require-default-props": "off",
+    "react/default-props-match-prop-types": "off",
     "react/static-property-placement": "off",
     "max-len": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "import/prefer-default-export": "off",
+    "react/function-component-definition": "off"
   },
   "globals": {
     "document": false,

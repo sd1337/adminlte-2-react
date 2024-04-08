@@ -53,26 +53,25 @@ import NavList from './content/NavList';
 import NavListItem from './content/NavListItem';
 import ProductList from './content/ProductList';
 import ProductListItem from './content/ProductListItem';
-import Infobox2 from './content/Infobox2';
 import Alert from './content/Alert';
 import Callout from './content/Callout';
 import ProgressBar from './content/ProgressBar';
 import Divider from './content/Divider';
 import * as Inputs from './content/Inputs';
 import LoginCore from './content/LoginCore';
-import AsyncComponent from './AsyncComponent';
 import {
   Colors as Colors_, Types as Types_, Sizes as Sizes_, FormTypes as FormTypes_, Themes as Themes_,
 } from './PropTypes';
 import Badge from './content/Badge';
 import Calendar from './content/Calendar';
-import LoadingSpinner from './content/LoadingSpinner';
-import AsyncContent from './content/AsyncContent';
+import { LoadingSpinner } from './content/LoadingSpinner';
 import BoxPane from './content/BoxPane';
 import ButtonToolbar from './content/ButtonToolbar';
 import Label from './content/Label';
 import Pagination from './content/Pagination';
 import SmartTable from './content/SmartTable';
+import { ColumnType, DataType } from './content/TableProps';
+import { SmartColumnType } from './content/smartTable/SmartTableTypes';
 
 library.add(fab, fas, far);
 
@@ -232,30 +231,18 @@ class AdminLTE extends Component<Props, {}> {
       .forEach((p: any) => {
         let route: any = p as Route;
         if (p.type !== Route && p.type !== Redirect) {
-          if (p.type === AsyncContent) {
-            route = (
-              <Route
-                // modal={p.props.modal}
-                key={p.props.path}
-                path={p.props.path}
-                exact={p.props.exact}
-                component={AsyncComponent(() => import(p.props.component))}
-              />
-            );
-          } else {
-            route = (
-              <Route
-              // modal={p.props.modal}
-                key={p.props.path}
-                path={p.props.path}
-                exact={p.props.exact}
-                render={(props) => React.cloneElement(p, {
-                  key: p.props.key ? p.props.key : p.props.path,
-                  ...props,
-                })}
-              />
-            );
-          }
+          route = (
+            <Route
+            // modal={p.props.modal}
+              key={p.props.path}
+              path={p.props.path}
+              exact={p.props.exact}
+              render={(props) => React.cloneElement(p, {
+                key: p.props.path,
+                ...props,
+              })}
+            />
+          );
         }
         if (p.props.modal) {
           modalRoutes.push(route);
@@ -337,6 +324,7 @@ export type FormTypes = FormTypes_;
 export type Themes = Themes_;
 
 export {
+  LoadingSpinner,
   Content,
   Sidebar,
   Footer,
@@ -365,9 +353,7 @@ export {
   NavList,
   ProductList,
   ProductListItem,
-  Infobox2,
   LoginCore,
-  AsyncComponent,
   Alert,
   Callout,
   ProgressBar,
@@ -376,9 +362,11 @@ export {
   Label,
   Badge,
   Calendar,
-  LoadingSpinner,
   BoxPane,
   ButtonToolbar,
   Pagination,
   SmartTable,
+  DataType,
+  ColumnType,
+  SmartColumnType,
 };

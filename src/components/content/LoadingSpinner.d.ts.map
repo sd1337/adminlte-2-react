@@ -1,1 +1,0 @@
-{"version":3,"file":"LoadingSpinner.d.ts","sourceRoot":"","sources":["LoadingSpinner.tsx"],"names":[],"mappings":"AACA,OAAO,SAAS,MAAM,YAAY,CAAC;AAEnC,OAAO,sBAAsB,CAAC;AAE9B,OAAO,EACL,QAAQ,EACT,MAAM,mCAAmC,CAAC;AAG3C,aAAK,KAAK,GAAG;IACX,IAAI,EAAE,MAAM,CAAC;IACb,IAAI,EAAE,QAAQ,CAAA;CACf,CAAA;AAED,QAAA,MAAM,cAAc;qBAAoB,KAAK;;;;;;;;;CAI5C,CAAC;AAWF,eAAe,cAAc,CAAC"}

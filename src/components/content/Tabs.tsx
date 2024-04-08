@@ -4,15 +4,13 @@ import {
 } from 'react-bootstrap';
 import uuidv4 from 'uuid';
 import TabTitle from './TabTitle';
-import TabContent from './TabContent';
-
-type TabContentType = typeof TabContent;
+import TabContent, { TabContentProps } from './TabContent';
 
 interface TabsProps {
   activeKey?: string,
   defaultActiveKey?: string,
   onSelect?: Function,
-  children: TabContentType | TabContentType[],
+  children: React.ReactElement<TabContentProps> | React.ReactElement<TabContentProps>[],
   pullRight?: boolean,
   contentHeight: number | string,
   mountOnEnter?: boolean,

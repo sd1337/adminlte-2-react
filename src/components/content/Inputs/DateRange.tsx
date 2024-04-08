@@ -7,7 +7,6 @@ import moment, { Moment } from 'moment';
 import InputWrapper, { InputWrapperProps } from './InputWrapper';
 import './Date.scss';
 import { Types } from '../../PropTypes';
-import { SharedDateDefaultProps } from './InputShapes';
 import { DateType, SharedDateProps } from './InputProps';
 import { createSyntheticEvent } from './InputUtilities';
 
@@ -40,7 +39,15 @@ class DateRange extends Component<DateRangeProps, DateRangeState> {
     onFocusChange: null,
     format: undefined,
     dateRangeProps: null,
-    ...SharedDateDefaultProps,
+    disabled: false,
+    required: false,
+    readOnly: false,
+    showClearDate: false,
+    noBorder: false,
+    block: false,
+    small: false,
+    regular: false,
+    inputIconPosition: null,
   };
 
   constructor(props: DateRangeProps) {

@@ -78,9 +78,6 @@ const types = {
 
 export type Dictionary = { [fieldName: string]: any };
 
-// export type Colors
-
 export {
-  // eslint-disable-next-line import/prefer-default-export
   types as TypeMappings,
 };

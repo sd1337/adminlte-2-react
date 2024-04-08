@@ -1,0 +1,104 @@
+import React, { Component, ReactElement } from 'react';
+import { DataType } from './TableProps';
+import './SmartTable.css';
+import { SmartColumnType, SmartOrderType, SmartPagination, SmartTableOrderChangedCallback, SmartTableHeaderOrderDirection, SmartTableModalParams } from './smartTable/SmartTableTypes';
+interface SmartTableProps {
+    data: DataType[];
+    columns: SmartColumnType[];
+    condensed?: boolean;
+    striped?: boolean;
+    noMargin?: boolean;
+    border?: boolean;
+    responsive?: boolean;
+    hover?: boolean;
+    onRowSelect?: (data?: DataType, index?: number) => void | boolean;
+    onRowDeselect?: (data?: DataType, index?: number) => void | boolean;
+    onSearchChange?: Function;
+    onSearch?: Function;
+    defaultFilterColumn?: string;
+    pageSize?: number;
+    page?: number;
+    totalElements?: number;
+    hasMore?: boolean;
+    onPageChange?: Function;
+    filterExternal?: boolean;
+    onOrderChange?: Function;
+    select?: 'single' | 'multiple';
+    selectedRows?: any[];
+    selectionMode: 'index' | 'property' | 'object';
+    selectionProperty: string;
+    simpleCompare: boolean;
+}
+interface SmartTableState {
+    key: string;
+    columns: SmartColumnType[];
+    filterColumn?: string;
+    placeholder: string;
+    actions: ReactElement[];
+    searchButtons: ReactElement[];
+    pagination: SmartPagination;
+    order: SmartOrderType[];
+    selectedRow?: number | string;
+    selectedRows: (number | string)[];
+    selectedRowsData: DataType[];
+    modal: SmartTableModalParams;
+    hiddenColumns: string[];
+    headers?: ReactElement[];
+    mappedData: ReactElement[] | ReactElement;
+    filteredData?: DataType[];
+    filter?: {
+        data: string;
+        value: string;
+    };
+}
+declare class SmartTable extends Component<SmartTableProps, SmartTableState> {
+    static columnsFromData(data: DataType[]): SmartColumnType[];
+    static headersFromColumns(columns: SmartColumnType[], key: string, order: SmartOrderType[], orderChanged: SmartTableOrderChangedCallback, _setFilterValue: (temp: any) => void, hiddenColumns: string[]): ReactElement[];
+    static searchButtonsFromColumns(columns: SmartColumnType[], filterColumn: string | undefined, setFilterColumn: (column: string, title?: string) => void): React.JSX.Element[];
+    static mapCell(data: any, column: SmartColumnType, rowData: DataType, rowIdx: number, key: string): React.JSX.Element;
+    static defaultProps: {
+        data: null;
+        columns: undefined;
+        condensed: boolean;
+        striped: boolean;
+        noMargin: boolean;
+        border: boolean;
+        responsive: boolean;
+        hover: boolean;
+        onRowSelect: undefined;
+        onSearchChange: undefined;
+        onSearch: undefined;
+        defaultFilterColumn: string;
+        pageSize: number;
+        page: undefined;
+        totalElements: undefined;
+        hasMore: undefined;
+        onPageChange: undefined;
+        filterExternal: boolean;
+        onOrderChange: undefined;
+        select: string;
+        selectionMode: string;
+        selectionProperty: string;
+        simpleCompare: boolean;
+    };
+    constructor(props: SmartTableProps);
+    componentDidUpdate(prevProps: SmartTableProps, prevState: SmartTableState): void;
+    handleCloseModal: () => void;
+    handleAccept: (newState: any) => void;
+    onFilterColumnChanged: (filterColumn: any, searchPlaceholder: any) => void;
+    onOrderChanged: (column: string, direction: SmartTableHeaderOrderDirection) => void;
+    onFilter: () => void;
+    onRowSelect: (data?: DataType, rowIdx?: number) => void;
+    onRowDeselect: (data: DataType, rowIdx: number) => void;
+    onPageChange: (page: number) => void;
+    setFilterValueAndFilter: (event: any) => void;
+    setFilterValue: (event: any) => void;
+    getColumns: () => SmartColumnType[];
+    filterValue?: string;
+    openColumnModal: () => void;
+    rowIsSelected(row: DataType, rowIdx: number, state: SmartTableState): boolean;
+    mappedColumnsFromData: (data: DataType[], columns: SmartColumnType[] | undefined, pagination: any, hiddenColumns: string[], state: SmartTableState) => ReactElement[] | ReactElement;
+    render(): React.JSX.Element;
+}
+export default SmartTable;
+//# sourceMappingURL=SmartTable.d.ts.map
